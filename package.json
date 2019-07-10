@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/CChalland/BEToken#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "next": "^4.1.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
