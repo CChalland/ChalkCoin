@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/CChalland/BEToken/issues"
   },
-  "homepage": "https://github.com/CChalland/BEToken#readme"
+  "homepage": "https://github.com/CChalland/BEToken#readme",
+  "dependencies": {
+    "next": "^4.1.4"
+  }
 }
