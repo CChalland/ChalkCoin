@@ -1,14 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import axios from "axios";
 
 class BetokenIndex extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      blockchain: {},
-      games: {}
-    };
+  static async getInitialProps() {
+    const getNode1 = `http://localhost:3001/blockchain`;
+    const response = await axios.get(getNode1);
+    const blockchain = response.data;
+    console.log(blockchain);
+
+    return { blockchain };
   }
 
-  async componentDidMount() {}
+  render() {
+    return <div>Betoken Index!</div>;
+  }
 }
+
+export default BetokenIndex;
