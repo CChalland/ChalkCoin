@@ -110,8 +110,6 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/pages/index.js";
 
 
 
-const unirest = __webpack_require__(/*! unirest */ "unirest");
-
 class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   static async getInitialProps() {
     const getNode1 = `http://localhost:3001/blockchain`;
@@ -149,7 +147,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 39
+        lineNumber: 38
       },
       __self: this
     }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
@@ -192,17 +190,6 @@ module.exports = require("axios");
 /***/ (function(module, exports) {
 
 module.exports = require("react");
-
-/***/ }),
-
-/***/ "unirest":
-/*!**************************!*\
-  !*** external "unirest" ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("unirest");
 
 /***/ })
 
