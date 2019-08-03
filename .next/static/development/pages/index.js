@@ -5858,10 +5858,10 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 15
+          lineNumber: 16
         },
         __self: this
-      }, "Betoken Index! ", this.props.blockchain.chain[0].index);
+      }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
     }
   }], [{
     key: "getInitialProps",
