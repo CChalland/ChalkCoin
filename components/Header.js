@@ -4,8 +4,17 @@ import { Dropdown, Icon, Menu, Segment } from "semantic-ui-react";
 export default () => {
   return (
     <div>
-      <Menu style={{ marginTop: "10px" }}>
+      <Menu
+        borderless
+        fitted
+        inverted
+        attached="top"
+        color=""
+        style={{ marginTop: "10px" }}
+      >
         <Menu.Item>Betoken</Menu.Item>
+        <Menu.Item>Today's Games</Menu.Item>
+        <Menu.Item>Open Bets</Menu.Item>
 
         <Menu.Menu position="right">
           <div className="ui right aligned category search item">
