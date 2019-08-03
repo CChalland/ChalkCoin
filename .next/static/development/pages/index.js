@@ -5858,7 +5858,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 34
+          lineNumber: 33
         },
         __self: this
       }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
@@ -5883,8 +5883,7 @@ function (_Component) {
                 blockchain = response.data;
                 console.log(blockchain);
                 today = new Date().toJSON().slice(0, 10);
-                console.log(today);
-                _context.next = 10;
+                _context.next = 9;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/".concat(today),
@@ -5898,7 +5897,7 @@ function (_Component) {
                   }
                 });
 
-              case 10:
+              case 9:
                 response = _context.sent;
                 sportsByDate = response.data;
                 console.log(sportsByDate);
@@ -5907,7 +5906,7 @@ function (_Component) {
                   sportsByDate: sportsByDate
                 });
 
-              case 14:
+              case 13:
               case "end":
                 return _context.stop();
             }

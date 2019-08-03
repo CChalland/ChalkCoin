@@ -117,7 +117,6 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     const blockchain = response.data;
     console.log(blockchain);
     var today = new Date().toJSON().slice(0, 10);
-    console.log(today);
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`,
@@ -142,7 +141,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 34
+        lineNumber: 33
       },
       __self: this
     }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
