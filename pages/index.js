@@ -1,6 +1,7 @@
-import "semantic-ui-css/semantic.min.css";
+//import "semantic-ui-css/semantic.min.css";
 import React, { Component } from "react";
 import axios from "axios";
+import { Card, Button } from "semantic-ui-react";
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
@@ -30,12 +31,20 @@ class BetokenIndex extends Component {
     return { blockchain, sportsByDate };
   }
 
+  renderCurrentBets() {
+    const items = this.props.blockchain.pendingTransactions.map(bet => {
+      return {
+        header: bet.amount,
+        description: <a>View Bet</a>,
+        fluid: true
+      };
+    });
+
+    return <Card.Group items={items} />;
+  }
+
   render() {
-    return (
-      <div>
-        Betoken Index! {this.props.blockchain.pendingTransactions[0].amount}
-      </div>
-    );
+    return <div>{this.renderCurrentBets()}</div>;
   }
 }
 
