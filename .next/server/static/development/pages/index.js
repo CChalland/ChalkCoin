@@ -113,11 +113,29 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/pages/index.js";
 class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   static async getInitialProps() {
     const getNode1 = `http://localhost:3001/blockchain`;
-    const response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(getNode1);
+    let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(getNode1);
     const blockchain = response.data;
     console.log(blockchain);
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+
+    let yyyy = today.getFullYear();
+    today = yyyy + "-" + mm + "-" + dd;
+    console.log(today);
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/{sport-id}/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      }
+    });
+    const sportsByDate = response.data;
+    console.log(sportsByDate);
     return {
-      blockchain
+      blockchain,
+      sportsByDate
     };
   }
 
@@ -125,7 +143,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 16
+        lineNumber: 34
       },
       __self: this
     }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
