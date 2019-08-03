@@ -23,7 +23,5 @@
     "url": "https://github.com/CChalland/BEToken/issues"
   },
   "homepage": "https://github.com/CChalland/BEToken#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0"
-  }
+  "dependencies": {}
 }
