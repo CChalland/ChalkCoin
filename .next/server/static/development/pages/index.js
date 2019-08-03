@@ -129,6 +129,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      query: {
+        include: ["all_periods", "scores"],
+        offset: "0"
       }
     });
     const sportsByDate = response.data;
@@ -143,7 +147,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 34
+        lineNumber: 38
       },
       __self: this
     }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
