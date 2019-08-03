@@ -116,12 +116,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(getNode1);
     const blockchain = response.data;
     console.log(blockchain);
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-
-    let yyyy = today.getFullYear();
-    today = yyyy + "-" + mm + "-" + dd;
+    var today = new Date().toJSON().slice(0, 10);
     console.log(today);
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
@@ -147,7 +142,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 38
+        lineNumber: 34
       },
       __self: this
     }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);

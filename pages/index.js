@@ -8,11 +8,7 @@ class BetokenIndex extends Component {
     const blockchain = response.data;
     console.log(blockchain);
 
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    today = yyyy + "-" + mm + "-" + dd;
+    var today = new Date().toJSON().slice(0, 10);
     console.log(today);
 
     response = await axios({

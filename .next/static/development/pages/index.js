@@ -5858,7 +5858,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 38
+          lineNumber: 34
         },
         __self: this
       }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
@@ -5869,7 +5869,7 @@ function (_Component) {
       var _getInitialProps = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
       /*#__PURE__*/
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var getNode1, response, blockchain, today, dd, mm, yyyy, sportsByDate;
+        var getNode1, response, blockchain, today, sportsByDate;
         return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -5882,14 +5882,9 @@ function (_Component) {
                 response = _context.sent;
                 blockchain = response.data;
                 console.log(blockchain);
-                today = new Date();
-                dd = String(today.getDate()).padStart(2, "0");
-                mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-
-                yyyy = today.getFullYear();
-                today = yyyy + "-" + mm + "-" + dd;
+                today = new Date().toJSON().slice(0, 10);
                 console.log(today);
-                _context.next = 14;
+                _context.next = 10;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/".concat(today),
@@ -5903,7 +5898,7 @@ function (_Component) {
                   }
                 });
 
-              case 14:
+              case 10:
                 response = _context.sent;
                 sportsByDate = response.data;
                 console.log(sportsByDate);
@@ -5912,7 +5907,7 @@ function (_Component) {
                   sportsByDate: sportsByDate
                 });
 
-              case 18:
+              case 14:
               case "end":
                 return _context.stop();
             }
