@@ -5861,7 +5861,7 @@ function (_Component) {
           lineNumber: 15
         },
         __self: this
-      }, "Betoken Index!");
+      }, "Betoken Index! ", this.props.blockchain.chain[0].index);
     }
   }], [{
     key: "getInitialProps",

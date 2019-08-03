@@ -12,7 +12,7 @@ class BetokenIndex extends Component {
   }
 
   render() {
-    return <div>Betoken Index!</div>;
+    return <div>Betoken Index! {this.props.blockchain.chain[0].index}</div>;
   }
 }
 
