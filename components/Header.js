@@ -23,15 +23,7 @@ export default () => {
 
         <Dropdown item icon="wrench" simple>
           <Dropdown.Menu style={{ left: "auto", right: 0 }}>
-            <Dropdown.Item>
-              <Icon name="dropdown" />
-              <span className="text">New</span>
-
-              <Dropdown.Menu>
-                <Dropdown.Item>Document</Dropdown.Item>
-                <Dropdown.Item>Image</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown.Item>
+            <Dropdown.Item>Balance</Dropdown.Item>
             <Dropdown.Item>Open</Dropdown.Item>
             <Dropdown.Item>Save...</Dropdown.Item>
             <Dropdown.Item>Edit Permissions</Dropdown.Item>
