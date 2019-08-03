@@ -9,8 +9,6 @@ class BetokenIndex extends Component {
     let response = await axios.get(getNode1);
     const blockchain = response.data;
 
-    console.log(blockchain);
-
     let today = new Date().toJSON().slice(0, 10);
     response = await axios({
       method: "GET",
@@ -25,8 +23,6 @@ class BetokenIndex extends Component {
       }
     });
     let sportsByDate = response.data;
-
-    console.log(sportsByDate);
 
     return { blockchain, sportsByDate };
   }
