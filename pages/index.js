@@ -15,7 +15,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.REACT_APP_THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
       },
       params: {
         include: ["all_periods", "scores"],

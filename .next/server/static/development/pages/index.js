@@ -122,7 +122,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
       },
       params: {
         include: ["all_periods", "scores"],
