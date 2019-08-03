@@ -5858,7 +5858,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 33
+          lineNumber: 34
         },
         __self: this
       }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
