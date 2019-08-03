@@ -45,7 +45,7 @@ Betoken.prototype.createNewTransaction = function(amount, sender, recipient) {
   return newTransaction;
 };
 
-Betoken.prototype.addTransactionToPendingTransaction = function(
+Betoken.prototype.addTransactionToPendingTransactions = function(
   transactionObj
 ) {
   this.pendingTransactions.push(transactionObj);
