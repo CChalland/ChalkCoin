@@ -3,7 +3,6 @@ import axios from "axios";
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
-    const API_KEY = process.env.REACT_APP_THERUNDOWN_API_KEY;
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios.get(getNode1);
     const blockchain = response.data;
@@ -16,7 +15,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": API_KEY
+        "x-rapidapi-key": process.env.REACT_APP_THERUNDOWN_API_KEY
       },
       params: {
         include: ["all_periods", "scores"],
