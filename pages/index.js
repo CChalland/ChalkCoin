@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+const unirest = require("unirest");
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
@@ -15,18 +16,28 @@ class BetokenIndex extends Component {
     today = yyyy + "-" + mm + "-" + dd;
     console.log(today);
 
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/{sport-id}/events/${today}`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
-      }
-    });
-    const sportsByDate = response.data;
-    console.log(sportsByDate);
+    let req = unirest(
+      "GET",
+      `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`
+    );
 
-    return { blockchain, sportsByDate };
+    req.query({
+      include: ["all_periods", "scores"],
+      offset: "0"
+    });
+
+    req.headers({
+      "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+      "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+    });
+
+    req.end(function(res) {
+      if (res.error) throw new Error(res.error);
+
+      console.log(res.body);
+    });
+
+    return { blockchain };
   }
 
   render() {

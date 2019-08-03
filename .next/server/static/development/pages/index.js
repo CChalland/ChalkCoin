@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -110,6 +110,8 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/pages/index.js";
 
 
 
+const unirest = __webpack_require__(/*! unirest */ "unirest");
+
 class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   static async getInitialProps() {
     const getNode1 = `http://localhost:3001/blockchain`;
@@ -123,23 +125,21 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     let yyyy = today.getFullYear();
     today = yyyy + "-" + mm + "-" + dd;
     console.log(today);
-    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/{sport-id}/events/${today}`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
-      },
-      query: {
-        include: ["all_periods", "scores"],
-        offset: "0"
-      }
+    let req = unirest("GET", `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`);
+    req.query({
+      include: ["all_periods", "scores"],
+      offset: "0"
     });
-    const sportsByDate = response.data;
-    console.log(sportsByDate);
+    req.headers({
+      "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+      "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+    });
+    req.end(function (res) {
+      if (res.error) throw new Error(res.error);
+      console.log(res.body);
+    });
     return {
-      blockchain,
-      sportsByDate
+      blockchain
     };
   }
 
@@ -147,7 +147,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 38
+        lineNumber: 45
       },
       __self: this
     }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
@@ -159,7 +159,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/
@@ -190,6 +190,17 @@ module.exports = require("axios");
 /***/ (function(module, exports) {
 
 module.exports = require("react");
+
+/***/ }),
+
+/***/ "unirest":
+/*!**************************!*\
+  !*** external "unirest" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("unirest");
 
 /***/ })
 
