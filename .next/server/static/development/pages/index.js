@@ -180,7 +180,16 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         lineNumber: 49
       },
       __self: this
-    }), this.renderCurrentBets());
+    }), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+      content: "Create Bet",
+      icon: "add circle",
+      primary: true,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 54
+      },
+      __self: this
+    }));
   }
 
 }
