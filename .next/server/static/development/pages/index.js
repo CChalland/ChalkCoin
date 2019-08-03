@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -125,21 +125,23 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     let yyyy = today.getFullYear();
     today = yyyy + "-" + mm + "-" + dd;
     console.log(today);
-    let req = unirest("GET", `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`);
-    req.query({
-      include: ["all_periods", "scores"],
-      offset: "0"
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
     });
-    req.headers({
-      "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-      "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
-    });
-    req.end(function (res) {
-      if (res.error) throw new Error(res.error);
-      console.log(res.body);
-    });
+    let sportsByDate = response.data;
+    console.log(sportsByDate);
     return {
-      blockchain
+      blockchain,
+      sportsByDate
     };
   }
 
@@ -147,7 +149,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 45
+        lineNumber: 39
       },
       __self: this
     }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
@@ -159,7 +161,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/

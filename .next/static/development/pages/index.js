@@ -13849,7 +13849,7 @@ module.exports = {
 
   var Buffer;
   try {
-    Buffer = __webpack_require__(/*! buffer */ 3).Buffer;
+    Buffer = __webpack_require__(/*! buffer */ 4).Buffer;
   } catch (e) {
   }
 
@@ -17291,7 +17291,7 @@ if (typeof self === 'object') {
 } else {
   // Node.js or Web worker with no crypto support
   try {
-    var crypto = __webpack_require__(/*! crypto */ 4);
+    var crypto = __webpack_require__(/*! crypto */ 5);
     if (typeof crypto.randomBytes !== 'function')
       throw new Error('Not supported');
 
@@ -48408,7 +48408,7 @@ util.inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inh
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(/*! util */ 1);
+var debugUtil = __webpack_require__(/*! util */ 2);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -50297,7 +50297,7 @@ Writable.prototype._destroy = function (err, cb) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer;
-var util = __webpack_require__(/*! util */ 2);
+var util = __webpack_require__(/*! util */ 3);
 
 function copyBuffer(src, target, offset) {
   src.copy(target, offset);
@@ -69390,7 +69390,7 @@ nacl.setPRNG = function(fn) {
     });
   } else if (true) {
     // Node.js.
-    crypto = __webpack_require__(/*! crypto */ 5);
+    crypto = __webpack_require__(/*! crypto */ 6);
     if (crypto && crypto.randomBytes) {
       nacl.setPRNG(function(x, n) {
         var i, v = crypto.randomBytes(n);
@@ -75369,7 +75369,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 45
+          lineNumber: 39
         },
         __self: this
       }, "Betoken Index! ", this.props.blockchain.pendingTransactions[0].amount);
@@ -75380,7 +75380,7 @@ function (_Component) {
       var _getInitialProps = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
       /*#__PURE__*/
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var getNode1, response, blockchain, today, dd, mm, yyyy, req;
+        var getNode1, response, blockchain, today, dd, mm, yyyy, sportsByDate;
         return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -75400,24 +75400,30 @@ function (_Component) {
                 yyyy = today.getFullYear();
                 today = yyyy + "-" + mm + "-" + dd;
                 console.log(today);
-                req = unirest("GET", "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/".concat(today));
-                req.query({
-                  include: ["all_periods", "scores"],
-                  offset: "0"
-                });
-                req.headers({
-                  "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                  "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
-                });
-                req.end(function (res) {
-                  if (res.error) throw new Error(res.error);
-                  console.log(res.body);
-                });
-                return _context.abrupt("return", {
-                  blockchain: blockchain
+                _context.next = 14;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
                 });
 
-              case 17:
+              case 14:
+                response = _context.sent;
+                sportsByDate = response.data;
+                console.log(sportsByDate);
+                return _context.abrupt("return", {
+                  blockchain: blockchain,
+                  sportsByDate: sportsByDate
+                });
+
+              case 18:
               case "end":
                 return _context.stop();
             }
@@ -75440,7 +75446,7 @@ function (_Component) {
 
 /***/ }),
 
-/***/ 0:
+/***/ 1:
 /*!********************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2F&absolutePagePath=%2FUsers%2Fcolechalland%2FProjects%2FBEToken%2Fpages%2Findex.js ***!
   \********************************************************************************************************************************/
@@ -75449,17 +75455,6 @@ function (_Component) {
 
 module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absolutePagePath=%2FUsers%2Fcolechalland%2FProjects%2FBEToken%2Fpages%2Findex.js! */"./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2FUsers%2Fcolechalland%2FProjects%2FBEToken%2Fpages%2Findex.js!./");
 
-
-/***/ }),
-
-/***/ 1:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
 
 /***/ }),
 
@@ -75475,6 +75470,17 @@ module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absol
 /***/ }),
 
 /***/ 3:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 4:
 /*!************************!*\
   !*** buffer (ignored) ***!
   \************************/
@@ -75485,7 +75491,7 @@ module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absol
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /*!************************!*\
   !*** crypto (ignored) ***!
   \************************/
@@ -75496,7 +75502,7 @@ module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absol
 
 /***/ }),
 
-/***/ 5:
+/***/ 6:
 /*!************************!*\
   !*** crypto (ignored) ***!
   \************************/
@@ -75518,5 +75524,5 @@ module.exports = dll_7aff549c98b978433226;
 
 /***/ })
 
-},[[0,"static/runtime/webpack.js"]]]);
+},[[1,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=index.js.map

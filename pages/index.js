@@ -16,28 +16,22 @@ class BetokenIndex extends Component {
     today = yyyy + "-" + mm + "-" + dd;
     console.log(today);
 
-    let req = unirest(
-      "GET",
-      `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`
-    );
-
-    req.query({
-      include: ["all_periods", "scores"],
-      offset: "0"
+    response = await axios({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
     });
+    let sportsByDate = response.data;
+    console.log(sportsByDate);
 
-    req.headers({
-      "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-      "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
-    });
-
-    req.end(function(res) {
-      if (res.error) throw new Error(res.error);
-
-      console.log(res.body);
-    });
-
-    return { blockchain };
+    return { blockchain, sportsByDate };
   }
 
   render() {
