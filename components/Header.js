@@ -4,7 +4,7 @@ import { Dropdown, Icon, Menu, Segment } from "semantic-ui-react";
 export default () => {
   return (
     <div>
-      <Menu attached="top">
+      <Menu style={{ marginTop: "10px" }}>
         <Menu.Item>Betoken</Menu.Item>
 
         <Menu.Menu position="right">
@@ -13,7 +13,7 @@ export default () => {
               <input
                 className="prompt"
                 type="text"
-                placeholder="Search animals..."
+                placeholder="Search sport games..."
               />
               <i className="search link icon" />
             </div>
@@ -22,7 +22,7 @@ export default () => {
         </Menu.Menu>
 
         <Dropdown item icon="wrench" simple>
-          <Dropdown.Menu>
+          <Dropdown.Menu style={{ left: "auto", right: 0 }}>
             <Dropdown.Item>
               <Icon name="dropdown" />
               <span className="text">New</span>

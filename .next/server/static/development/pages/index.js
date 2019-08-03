@@ -117,7 +117,9 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/components/Header.js";
     },
     __self: undefined
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Menu"], {
-    attached: "top",
+    style: {
+      marginTop: "10px"
+    },
     __source: {
       fileName: _jsxFileName,
       lineNumber: 7
@@ -153,7 +155,7 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/components/Header.js";
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     className: "prompt",
     type: "text",
-    placeholder: "Search animals...",
+    placeholder: "Search sport games...",
     __source: {
       fileName: _jsxFileName,
       lineNumber: 13
@@ -183,6 +185,10 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/components/Header.js";
     },
     __self: undefined
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Dropdown"].Menu, {
+    style: {
+      left: "auto",
+      right: 0
+    },
     __source: {
       fileName: _jsxFileName,
       lineNumber: 25
@@ -278,22 +284,25 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/components/Header.js";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header */ "./components/Header.js");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "semantic-ui-react");
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header */ "./components/Header.js");
 var _jsxFileName = "/Users/colechalland/Projects/BEToken/components/Layout.js";
 //import "semantic-ui-css/semantic.min.css";
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = (props => {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 7
-    },
-    __self: undefined
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Container"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 8
+    },
+    __self: undefined
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 9
     },
     __self: undefined
   }), props.children);
