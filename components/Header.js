@@ -32,16 +32,20 @@ export default () => {
 
         <Dropdown item icon="wrench" simple>
           <Dropdown.Menu style={{ left: "auto", right: 0 }}>
-            <Dropdown.Item>Balance</Dropdown.Item>
-            <Dropdown.Item>Open</Dropdown.Item>
-            <Dropdown.Item>Save...</Dropdown.Item>
-            <Dropdown.Item>Edit Permissions</Dropdown.Item>
+            <Dropdown.Header>"Current Username"</Dropdown.Header>
             <Dropdown.Divider />
-            <Dropdown.Header>Export</Dropdown.Header>
-            <Dropdown.Item>Share</Dropdown.Item>
+            <Dropdown.Header>Balance</Dropdown.Header>
+            <Dropdown.Item>Current Bets</Dropdown.Item>
+            <Dropdown.Item>Past Bets</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item>Settings</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu>
+
+      <Segment attached="bottom">
+        <img src="/images/wireframe/paragraph.png" />
+      </Segment>
     </div>
   );
 };
