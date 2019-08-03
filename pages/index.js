@@ -8,7 +8,7 @@ class BetokenIndex extends Component {
     const blockchain = response.data;
     console.log(blockchain);
 
-    var today = new Date().toJSON().slice(0, 10);
+    let today = new Date().toJSON().slice(0, 10);
 
     response = await axios({
       method: "GET",
