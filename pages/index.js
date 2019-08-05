@@ -23,7 +23,6 @@ class BetokenIndex extends Component {
       }
     });
     let sportsByDate = response.data;
-    console.log(sportsByDate);
 
     return { blockchain, sportsByDate };
   }
