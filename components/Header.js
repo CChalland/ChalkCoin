@@ -9,7 +9,7 @@ export default () => {
         fitted
         inverted
         attached="top"
-        color=""
+        color="black"
         style={{ marginTop: "10px" }}
       >
         <Menu.Item>Betoken</Menu.Item>
