@@ -28,8 +28,12 @@ class BetokenIndex extends Component {
     return { blockchain, sportsByDate };
   }
 
+  renderTodayGames() {
+    let gameItems;
+  }
+
   renderCurrentBets() {
-    const items = this.props.blockchain.pendingTransactions.map(bet => {
+    const betItems = this.props.blockchain.pendingTransactions.map(bet => {
       return {
         header: bet.amount,
         description: <a>View Bet</a>,
@@ -37,7 +41,7 @@ class BetokenIndex extends Component {
       };
     });
 
-    return <Card.Group items={items} />;
+    return <Card.Group items={betItems} />;
   }
 
   render() {
