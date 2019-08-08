@@ -33,9 +33,11 @@ class BetokenIndex extends Component {
       return {
         header: game.event_date,
         description: (
-          <b>
+          <h4>
             {game.teams_normalized[0].name} {game.teams_normalized[0].mascot}
-          </b>
+            <br />
+            {game.teams_normalized[1].name} {game.teams_normalized[1].mascot}
+          </h4>
         ),
         fluid: true
       };
