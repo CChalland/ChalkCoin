@@ -29,7 +29,19 @@ class BetokenIndex extends Component {
   }
 
   renderTodayGames() {
-    let gameItems;
+    let gameItems = this.props.sportsByDate.events.map(game => {
+      return {
+        header: game.event_date,
+        description: (
+          <b>
+            {game.teams_normalized[0].name} {game.teams_normalized[0].mascot}
+          </b>
+        ),
+        fluid: true
+      };
+    });
+
+    return <Card.Group items={gameItems} />;
   }
 
   renderCurrentBets() {
@@ -52,6 +64,8 @@ class BetokenIndex extends Component {
             rel="stylesheet"
             href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
           />
+          <h3>Today's Games</h3>
+          {this.renderTodayGames()}
           <h3>Open Bets</h3>
           {this.renderCurrentBets()}
           <Button content="Create Bet" icon="add circle" primary />
