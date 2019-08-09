@@ -198,8 +198,8 @@ class BetokenIndex extends Component {
     return { sportsData, blockchain };
   }
 
-  renderMLBGames() {
-    let gameItems = this.props.sportsData[2].data.events.map(game => {
+  renderGamesCards(sportId) {
+    let gameItems = this.props.sportsData[sportId - 1].data.events.map(game => {
       return {
         description: (
           <h4>
@@ -268,7 +268,7 @@ class BetokenIndex extends Component {
       <Layout>
         <div>
           <h3>MLB's Games</h3>
-          {this.renderMLBGames()}
+          {this.renderGamesCards(3)}
           <h3>Open Bets</h3>
           {this.renderCurrentBets()}
           <Button content="Create Bet" icon="add circle" primary />

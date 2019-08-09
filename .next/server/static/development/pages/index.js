@@ -519,8 +519,8 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     };
   }
 
-  renderMLBGames() {
-    let gameItems = this.props.sportsData[2].data.events.map(game => {
+  renderGamesCards(sportId) {
+    let gameItems = this.props.sportsData[sportId - 1].data.events.map(game => {
       return {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
           __source: {
@@ -669,7 +669,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         lineNumber: 270
       },
       __self: this
-    }, "MLB's Games"), this.renderMLBGames(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    }, "MLB's Games"), this.renderGamesCards(3), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 272
