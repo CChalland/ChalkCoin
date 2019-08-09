@@ -5,23 +5,24 @@ import Layout from "../components/Layout";
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
-    const sportId = [
-      { sport_id: 1, sport_name: "NCAA Football" },
-      { sport_id: 2, sport_name: "NFL" },
-      { sport_id: 3, sport_name: "MLB" },
-      { sport_id: 4, sport_name: "NBA" },
-      { sport_id: 5, sport_name: "NCAA Men's Basketball" },
-      { sport_id: 6, sport_name: "NHL" },
-      { sport_id: 7, sport_name: "UFC/MMA" },
-      { sport_id: 8, sport_name: "WNBA" },
-      { sport_id: 9, sport_name: "CFL" },
-      { sport_id: 10, sport_name: "MLS" }
+    let sportsData = [
+      { sport_id: 1, sport_name: "NCAA Football", data: {} },
+      { sport_id: 2, sport_name: "NFL", data: {} },
+      { sport_id: 3, sport_name: "MLB", data: {} },
+      { sport_id: 4, sport_name: "NBA", data: {} },
+      { sport_id: 5, sport_name: "NCAA Men's Basketball", data: {} },
+      { sport_id: 6, sport_name: "NHL", data: {} },
+      { sport_id: 7, sport_name: "UFC/MMA", data: {} },
+      { sport_id: 8, sport_name: "WNBA", data: {} },
+      { sport_id: 9, sport_name: "CFL", data: {} },
+      { sport_id: 10, sport_name: "MLS", data: {} }
     ];
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios.get(getNode1);
     const blockchain = response.data;
 
     let today = new Date().toJSON().slice(0, 10);
+
     response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events`,
@@ -33,8 +34,11 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let ncaafData = response.data;
+    }).then(
+      function(response) {
+        sportsData[0].data = response.data;
+      }.bind(this)
+    );
 
     response = await axios({
       method: "GET",
@@ -47,8 +51,11 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let nflData = response.data;
+    }).then(
+      function(response) {
+        sportsData[1].data = response.data;
+      }.bind(this)
+    );
 
     response = await axios({
       method: "GET",
@@ -61,8 +68,11 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let mlbData = response.data;
+    }).then(
+      function(response) {
+        sportsData[2].data = response.data;
+      }.bind(this)
+    );
 
     response = await axios({
       method: "GET",
@@ -75,8 +85,11 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let nbaData = response.data;
+    }).then(
+      function(response) {
+        sportsData[3].data = response.data;
+      }.bind(this)
+    );
 
     response = await axios({
       method: "GET",
@@ -89,8 +102,11 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let ncaabData = response.data;
+    }).then(
+      function(response) {
+        sportsData[4].data = response.data;
+      }.bind(this)
+    );
 
     response = await axios({
       method: "GET",
@@ -103,8 +119,11 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let nhlData = response.data;
+    }).then(
+      function(response) {
+        sportsData[5].data = response.data;
+      }.bind(this)
+    );
 
     response = await axios({
       method: "GET",
@@ -117,8 +136,11 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let ufcData = response.data;
+    }).then(
+      function(response) {
+        sportsData[6].data = response.data;
+      }.bind(this)
+    );
 
     response = await axios({
       method: "GET",
@@ -131,8 +153,11 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let wnbaData = response.data;
+    }).then(
+      function(response) {
+        sportsData[7].data = response.data;
+      }.bind(this)
+    );
 
     response = await axios({
       method: "GET",
@@ -145,8 +170,11 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let cflData = response.data;
+    }).then(
+      function(response) {
+        sportsData[8].data = response.data;
+      }.bind(this)
+    );
 
     response = await axios({
       method: "GET",
@@ -159,34 +187,24 @@ class BetokenIndex extends Component {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let mlsData = response.data;
+    }).then(
+      function(response) {
+        sportsData[9].data = response.data;
+      }.bind(this)
+    );
 
-    console.log(mlbData);
+    console.log(sportsData[2].data);
 
-    return {
-      sportId,
-      blockchain,
-      ncaafData,
-      nflData,
-      mlbData,
-      nbaData,
-      ncaabData,
-      nhlData,
-      ufcData,
-      wnbaData,
-      cflData,
-      mlsData
-    };
+    return { sportsData, blockchain };
   }
 
   renderMLBGames() {
-    let gameItems = this.props.mlbData.events.map(game => {
+    let gameItems = this.props.sportsData[2].data.events.map(game => {
       return {
         description: (
           <h4>
             <img
-              class="ui avatar image"
+              className="ui avatar image"
               src={`../static/media/${game.sport_id}-${
                 game.teams_normalized[0].abbreviation
               }.png`}
@@ -209,13 +227,13 @@ class BetokenIndex extends Component {
             <span style={{ position: "absolute", right: "150px" }}>
               {game.event_date}
               <br />
-              {this.props.sportId[game.sport_id - 1].sport_name}
+              {this.props.sportsData[game.sport_id - 1].sport_name}
               <br />
               {"Game's spread right here"}
             </span>
             <br />
             <img
-              class="ui avatar image"
+              className="ui avatar image"
               src={`../static/media/${game.sport_id}-${
                 game.teams_normalized[1].abbreviation
               }.png`}

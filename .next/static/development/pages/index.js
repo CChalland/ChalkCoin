@@ -41550,7 +41550,7 @@ var partitionHTMLProps = function partitionHTMLProps(props) {
 /*!*************************************************************!*\
   !*** ./node_modules/semantic-ui-react/dist/es/lib/index.js ***!
   \*************************************************************/
-/*! exports provided: AutoControlledComponent, getChildMapping, mergeChildMappings, childrenUtils, useKeyOnly, useKeyOrValueAndKey, useValueAndKey, useMultipleProp, useTextAlignProp, useVerticalAlignProp, useWidthProp, customPropTypes, eventStack, createShorthand, createShorthandFactory, createHTMLDivision, createHTMLIframe, createHTMLImage, createHTMLInput, createHTMLLabel, createHTMLParagraph, getUnhandledProps, getElementType, htmlInputAttrs, htmlInputEvents, htmlInputProps, htmlImageProps, partitionHTMLProps, isBrowser, doesNodeContainClick, leven, createPaginationItems, SUI, numberToWordMap, numberToWord, normalizeOffset, normalizeTransitionDuration, objectDiff, handleRef, isRefObject */
+/*! exports provided: AutoControlledComponent, getChildMapping, mergeChildMappings, childrenUtils, useKeyOnly, useKeyOrValueAndKey, useValueAndKey, useMultipleProp, useTextAlignProp, useVerticalAlignProp, useWidthProp, customPropTypes, eventStack, getUnhandledProps, getElementType, htmlInputAttrs, htmlInputEvents, htmlInputProps, htmlImageProps, partitionHTMLProps, isBrowser, doesNodeContainClick, leven, createPaginationItems, SUI, numberToWordMap, numberToWord, normalizeOffset, normalizeTransitionDuration, objectDiff, handleRef, isRefObject, createShorthand, createShorthandFactory, createHTMLDivision, createHTMLIframe, createHTMLImage, createHTMLInput, createHTMLLabel, createHTMLParagraph */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54449,20 +54449,20 @@ function (_Component) {
     value: function renderMLBGames() {
       var _this = this;
 
-      var gameItems = this.props.mlbData.events.map(function (game) {
+      var gameItems = this.props.sportsData[2].data.events.map(function (game) {
         return {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h4", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 187
+              lineNumber: 205
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
-            "class": "ui avatar image",
+            className: "ui avatar image",
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[0].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 188
+              lineNumber: 206
             },
             __self: this
           }), game.teams_normalized[0].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54472,13 +54472,13 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 195
+              lineNumber: 213
             },
             __self: this
           }, game.teams_normalized[0].record), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 198
+              lineNumber: 216
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54492,7 +54492,7 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 199
+              lineNumber: 217
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54502,33 +54502,33 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 209
+              lineNumber: 227
             },
             __self: this
           }, game.event_date, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 211
+              lineNumber: 229
             },
             __self: this
-          }), _this.props.sportId[game.sport_id - 1].sport_name, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
+          }), _this.props.sportsData[game.sport_id - 1].sport_name, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 213
+              lineNumber: 231
             },
             __self: this
           }), "Game's spread right here"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 216
+              lineNumber: 234
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
-            "class": "ui avatar image",
+            className: "ui avatar image",
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[1].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 217
+              lineNumber: 235
             },
             __self: this
           }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54538,7 +54538,7 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 224
+              lineNumber: 242
             },
             __self: this
           }, game.teams_normalized[1].record)),
@@ -54549,7 +54549,7 @@ function (_Component) {
         items: gameItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 233
+          lineNumber: 251
         },
         __self: this
       });
@@ -54563,7 +54563,7 @@ function (_Component) {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 240
+              lineNumber: 258
             },
             __self: this
           }, "View Bet"),
@@ -54574,7 +54574,7 @@ function (_Component) {
         items: betItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 245
+          lineNumber: 263
         },
         __self: this
       });
@@ -54585,25 +54585,25 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_10__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 250
+          lineNumber: 268
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 251
+          lineNumber: 269
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 252
+          lineNumber: 270
         },
         __self: this
       }, "MLB's Games"), this.renderMLBGames(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 254
+          lineNumber: 272
         },
         __self: this
       }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Button"], {
@@ -54612,7 +54612,7 @@ function (_Component) {
         primary: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 256
+          lineNumber: 274
         },
         __self: this
       })));
@@ -54623,41 +54623,51 @@ function (_Component) {
       var _getInitialProps = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
       /*#__PURE__*/
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var sportId, getNode1, response, blockchain, today, ncaafData, nflData, mlbData, nbaData, ncaabData, nhlData, ufcData, wnbaData, cflData, mlsData;
+        var sportsData, getNode1, response, blockchain, today;
         return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                sportId = [{
+                sportsData = [{
                   sport_id: 1,
-                  sport_name: "NCAA Football"
+                  sport_name: "NCAA Football",
+                  data: {}
                 }, {
                   sport_id: 2,
-                  sport_name: "NFL"
+                  sport_name: "NFL",
+                  data: {}
                 }, {
                   sport_id: 3,
-                  sport_name: "MLB"
+                  sport_name: "MLB",
+                  data: {}
                 }, {
                   sport_id: 4,
-                  sport_name: "NBA"
+                  sport_name: "NBA",
+                  data: {}
                 }, {
                   sport_id: 5,
-                  sport_name: "NCAA Men's Basketball"
+                  sport_name: "NCAA Men's Basketball",
+                  data: {}
                 }, {
                   sport_id: 6,
-                  sport_name: "NHL"
+                  sport_name: "NHL",
+                  data: {}
                 }, {
                   sport_id: 7,
-                  sport_name: "UFC/MMA"
+                  sport_name: "UFC/MMA",
+                  data: {}
                 }, {
                   sport_id: 8,
-                  sport_name: "WNBA"
+                  sport_name: "WNBA",
+                  data: {}
                 }, {
                   sport_id: 9,
-                  sport_name: "CFL"
+                  sport_name: "CFL",
+                  data: {}
                 }, {
                   sport_id: 10,
-                  sport_name: "MLS"
+                  sport_name: "MLS",
+                  data: {}
                 }];
                 getNode1 = "http://localhost:3001/blockchain";
                 _context.next = 4;
@@ -54679,12 +54689,13 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[0].data = response.data;
+                }.bind(this));
 
               case 9:
                 response = _context.sent;
-                ncaafData = response.data;
-                _context.next = 13;
+                _context.next = 12;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/2/events",
@@ -54696,12 +54707,13 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[1].data = response.data;
+                }.bind(this));
 
-              case 13:
+              case 12:
                 response = _context.sent;
-                nflData = response.data;
-                _context.next = 17;
+                _context.next = 15;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events",
@@ -54713,12 +54725,13 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[2].data = response.data;
+                }.bind(this));
 
-              case 17:
+              case 15:
                 response = _context.sent;
-                mlbData = response.data;
-                _context.next = 21;
+                _context.next = 18;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/4/events",
@@ -54730,12 +54743,13 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[3].data = response.data;
+                }.bind(this));
 
-              case 21:
+              case 18:
                 response = _context.sent;
-                nbaData = response.data;
-                _context.next = 25;
+                _context.next = 21;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/5/events",
@@ -54747,12 +54761,13 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[4].data = response.data;
+                }.bind(this));
 
-              case 25:
+              case 21:
                 response = _context.sent;
-                ncaabData = response.data;
-                _context.next = 29;
+                _context.next = 24;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/6/events",
@@ -54764,12 +54779,13 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[5].data = response.data;
+                }.bind(this));
 
-              case 29:
+              case 24:
                 response = _context.sent;
-                nhlData = response.data;
-                _context.next = 33;
+                _context.next = 27;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/7/events",
@@ -54781,12 +54797,13 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[6].data = response.data;
+                }.bind(this));
 
-              case 33:
+              case 27:
                 response = _context.sent;
-                ufcData = response.data;
-                _context.next = 37;
+                _context.next = 30;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/8/events",
@@ -54798,12 +54815,13 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[7].data = response.data;
+                }.bind(this));
 
-              case 37:
+              case 30:
                 response = _context.sent;
-                wnbaData = response.data;
-                _context.next = 41;
+                _context.next = 33;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/9/events",
@@ -54815,12 +54833,13 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[8].data = response.data;
+                }.bind(this));
 
-              case 41:
+              case 33:
                 response = _context.sent;
-                cflData = response.data;
-                _context.next = 45;
+                _context.next = 36;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/10/events",
@@ -54832,33 +54851,24 @@ function (_Component) {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                });
+                }).then(function (response) {
+                  sportsData[9].data = response.data;
+                }.bind(this));
 
-              case 45:
+              case 36:
                 response = _context.sent;
-                mlsData = response.data;
-                console.log(mlbData);
+                console.log(sportsData[2].data);
                 return _context.abrupt("return", {
-                  sportId: sportId,
-                  blockchain: blockchain,
-                  ncaafData: ncaafData,
-                  nflData: nflData,
-                  mlbData: mlbData,
-                  nbaData: nbaData,
-                  ncaabData: ncaabData,
-                  nhlData: nhlData,
-                  ufcData: ufcData,
-                  wnbaData: wnbaData,
-                  cflData: cflData,
-                  mlsData: mlsData
+                  sportsData: sportsData,
+                  blockchain: blockchain
                 });
 
-              case 49:
+              case 39:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, this);
       }));
 
       function getInitialProps() {

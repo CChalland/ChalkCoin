@@ -327,36 +327,46 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/pages/index.js";
 
 class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   static async getInitialProps() {
-    const sportId = [{
+    let sportsData = [{
       sport_id: 1,
-      sport_name: "NCAA Football"
+      sport_name: "NCAA Football",
+      data: {}
     }, {
       sport_id: 2,
-      sport_name: "NFL"
+      sport_name: "NFL",
+      data: {}
     }, {
       sport_id: 3,
-      sport_name: "MLB"
+      sport_name: "MLB",
+      data: {}
     }, {
       sport_id: 4,
-      sport_name: "NBA"
+      sport_name: "NBA",
+      data: {}
     }, {
       sport_id: 5,
-      sport_name: "NCAA Men's Basketball"
+      sport_name: "NCAA Men's Basketball",
+      data: {}
     }, {
       sport_id: 6,
-      sport_name: "NHL"
+      sport_name: "NHL",
+      data: {}
     }, {
       sport_id: 7,
-      sport_name: "UFC/MMA"
+      sport_name: "UFC/MMA",
+      data: {}
     }, {
       sport_id: 8,
-      sport_name: "WNBA"
+      sport_name: "WNBA",
+      data: {}
     }, {
       sport_id: 9,
-      sport_name: "CFL"
+      sport_name: "CFL",
+      data: {}
     }, {
       sport_id: 10,
-      sport_name: "MLS"
+      sport_name: "MLS",
+      data: {}
     }];
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(getNode1);
@@ -373,8 +383,9 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let ncaafData = response.data;
+    }).then(function (response) {
+      sportsData[0].data = response.data;
+    }.bind(this));
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/2/events`,
@@ -386,8 +397,9 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let nflData = response.data;
+    }).then(function (response) {
+      sportsData[1].data = response.data;
+    }.bind(this));
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
@@ -399,8 +411,9 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let mlbData = response.data;
+    }).then(function (response) {
+      sportsData[2].data = response.data;
+    }.bind(this));
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events`,
@@ -412,8 +425,9 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let nbaData = response.data;
+    }).then(function (response) {
+      sportsData[3].data = response.data;
+    }.bind(this));
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events`,
@@ -425,8 +439,9 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let ncaabData = response.data;
+    }).then(function (response) {
+      sportsData[4].data = response.data;
+    }.bind(this));
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events`,
@@ -438,8 +453,9 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let nhlData = response.data;
+    }).then(function (response) {
+      sportsData[5].data = response.data;
+    }.bind(this));
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events`,
@@ -451,8 +467,9 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let ufcData = response.data;
+    }).then(function (response) {
+      sportsData[6].data = response.data;
+    }.bind(this));
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events`,
@@ -464,8 +481,9 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let wnbaData = response.data;
+    }).then(function (response) {
+      sportsData[7].data = response.data;
+    }.bind(this));
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events`,
@@ -477,8 +495,9 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let cflData = response.data;
+    }).then(function (response) {
+      sportsData[8].data = response.data;
+    }.bind(this));
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events`,
@@ -490,40 +509,31 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         include: ["all_periods", "scores"],
         offset: "0"
       }
-    });
-    let mlsData = response.data;
-    console.log(mlbData);
+    }).then(function (response) {
+      sportsData[9].data = response.data;
+    }.bind(this));
+    console.log(sportsData[2].data);
     return {
-      sportId,
-      blockchain,
-      ncaafData,
-      nflData,
-      mlbData,
-      nbaData,
-      ncaabData,
-      nhlData,
-      ufcData,
-      wnbaData,
-      cflData,
-      mlsData
+      sportsData,
+      blockchain
     };
   }
 
   renderMLBGames() {
-    let gameItems = this.props.mlbData.events.map(game => {
+    let gameItems = this.props.sportsData[2].data.events.map(game => {
       return {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 187
+            lineNumber: 205
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          class: "ui avatar image",
+          className: "ui avatar image",
           src: `../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 188
+            lineNumber: 206
           },
           __self: this
         }), game.teams_normalized[0].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -533,13 +543,13 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 195
+            lineNumber: 213
           },
           __self: this
         }, game.teams_normalized[0].record), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 198
+            lineNumber: 216
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -553,7 +563,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 199
+            lineNumber: 217
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -563,33 +573,33 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 209
+            lineNumber: 227
           },
           __self: this
         }, game.event_date, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 211
+            lineNumber: 229
           },
           __self: this
-        }), this.props.sportId[game.sport_id - 1].sport_name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
+        }), this.props.sportsData[game.sport_id - 1].sport_name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 213
+            lineNumber: 231
           },
           __self: this
         }), "Game's spread right here"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 216
+            lineNumber: 234
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          class: "ui avatar image",
+          className: "ui avatar image",
           src: `../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 217
+            lineNumber: 235
           },
           __self: this
         }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -599,7 +609,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 224
+            lineNumber: 242
           },
           __self: this
         }, game.teams_normalized[1].record)),
@@ -610,7 +620,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: gameItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 233
+        lineNumber: 251
       },
       __self: this
     });
@@ -623,7 +633,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 240
+            lineNumber: 258
           },
           __self: this
         }, "View Bet"),
@@ -634,7 +644,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: betItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 245
+        lineNumber: 263
       },
       __self: this
     });
@@ -644,25 +654,25 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 250
+        lineNumber: 268
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 251
+        lineNumber: 269
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 252
+        lineNumber: 270
       },
       __self: this
     }, "MLB's Games"), this.renderMLBGames(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 254
+        lineNumber: 272
       },
       __self: this
     }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
@@ -671,7 +681,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       primary: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 256
+        lineNumber: 274
       },
       __self: this
     })));
