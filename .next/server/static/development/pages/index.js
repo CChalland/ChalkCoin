@@ -362,6 +362,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          class: "ui avatar image",
           src: `../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
@@ -375,6 +376,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          class: "ui avatar image",
           src: `../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,

@@ -34,10 +34,10 @@ class BetokenIndex extends Component {
         header: game.event_date,
         description: (
           <h3>
-            <img src={`../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`}/>
+            <img class="ui avatar image" src={`../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`}/>
             {game.teams_normalized[0].mascot}
             <br />
-            <img src={`../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`}/>
+            <img class="ui avatar image" src={`../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`}/>
             {game.teams_normalized[1].mascot}
           </h3>
         ),

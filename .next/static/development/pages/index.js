@@ -54457,6 +54457,7 @@ function (_Component) {
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
+            "class": "ui avatar image",
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[0].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
@@ -54470,6 +54471,7 @@ function (_Component) {
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
+            "class": "ui avatar image",
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[1].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
