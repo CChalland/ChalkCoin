@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Card, Button, Container } from "semantic-ui-react";
+import { Card, Button, Tab } from "semantic-ui-react";
 import Layout from "../components/Layout";
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
+    let activeIndex = 0;
     let sportsData = [
       { sport_id: 1, sport_name: "NCAA Football", data: {} },
       { sport_id: 2, sport_name: "NFL", data: {} },
-      { sport_id: 3, sport_name: "MLB", data: {} },
-      { sport_id: 4, sport_name: "NBA", data: {} },
+      { sport_id: 3, sport_name: "MLB", data: {} }
+      /*{ sport_id: 4, sport_name: "NBA", data: {} },
       { sport_id: 5, sport_name: "NCAA Men's Basketball", data: {} },
       { sport_id: 6, sport_name: "NHL", data: {} },
       { sport_id: 7, sport_name: "UFC/MMA", data: {} },
       { sport_id: 8, sport_name: "WNBA", data: {} },
       { sport_id: 9, sport_name: "CFL", data: {} },
-      { sport_id: 10, sport_name: "MLS", data: {} }
+      { sport_id: 10, sport_name: "MLS", data: {} }*/
     ];
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios.get(getNode1);
@@ -74,7 +75,7 @@ class BetokenIndex extends Component {
       }.bind(this)
     );
 
-    response = await axios({
+    /* response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events`,
       headers: {
@@ -192,14 +193,15 @@ class BetokenIndex extends Component {
         sportsData[9].data = response.data;
       }.bind(this)
     );
+  */
 
     console.log(sportsData[2].data);
 
-    return { sportsData, blockchain };
+    return { activeIndex, sportsData, blockchain };
   }
 
   renderGamesCards(sportId) {
-    let gameItems = this.props.sportsData[sportId - 1].data.events.map(game => {
+    let gameItems = this.props.sportsData[sportId].data.events.map(game => {
       return {
         description: (
           <h4>
@@ -251,6 +253,19 @@ class BetokenIndex extends Component {
     return <Card.Group items={gameItems} />;
   }
 
+  renderGamesTap() {
+    let gamePanes = this.props.sportsData.map(game => {
+      return {
+        menuItem: game.sport_name,
+        render: () => (
+          <Tab.Pane attached={false}>{this.renderGamesCards(game.id)}</Tab.Pane>
+        )
+      };
+    });
+
+    return <Tab menu={{ secondary: true, pointing: true }} panes={gamePanes} />;
+  }
+
   renderCurrentBets() {
     const betItems = this.props.blockchain.pendingTransactions.map(bet => {
       return {
@@ -267,8 +282,9 @@ class BetokenIndex extends Component {
     return (
       <Layout>
         <div>
-          <h3>MLB's Games</h3>
-          {this.renderGamesCards(3)}
+          <br />
+          {this.renderGamesCards(2)}
+          {/*this.renderGamesTap()*/}
           <h3>Open Bets</h3>
           {this.renderCurrentBets()}
           <Button content="Create Bet" icon="add circle" primary />

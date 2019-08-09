@@ -54449,12 +54449,12 @@ function (_Component) {
     value: function renderGamesCards(sportId) {
       var _this = this;
 
-      var gameItems = this.props.sportsData[sportId - 1].data.events.map(function (game) {
+      var gameItems = this.props.sportsData[sportId].data.events.map(function (game) {
         return {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h4", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 205
+              lineNumber: 207
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
@@ -54462,7 +54462,7 @@ function (_Component) {
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[0].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 206
+              lineNumber: 208
             },
             __self: this
           }), game.teams_normalized[0].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54472,13 +54472,13 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 213
+              lineNumber: 215
             },
             __self: this
           }, game.teams_normalized[0].record), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 216
+              lineNumber: 218
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54492,7 +54492,7 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 217
+              lineNumber: 219
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54502,25 +54502,25 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 227
+              lineNumber: 229
             },
             __self: this
           }, game.event_date, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 229
+              lineNumber: 231
             },
             __self: this
           }), _this.props.sportsData[game.sport_id - 1].sport_name, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 231
+              lineNumber: 233
             },
             __self: this
           }), "Game's spread right here"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 234
+              lineNumber: 236
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
@@ -54528,7 +54528,7 @@ function (_Component) {
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[1].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 235
+              lineNumber: 237
             },
             __self: this
           }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54538,7 +54538,7 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 242
+              lineNumber: 244
             },
             __self: this
           }, game.teams_normalized[1].record)),
@@ -54549,7 +54549,40 @@ function (_Component) {
         items: gameItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 251
+          lineNumber: 253
+        },
+        __self: this
+      });
+    }
+  }, {
+    key: "renderGamesTap",
+    value: function renderGamesTap() {
+      var _this2 = this;
+
+      var gamePanes = this.props.sportsData.map(function (game) {
+        return {
+          menuItem: game.sport_name,
+          render: function render() {
+            return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
+              attached: false,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 261
+              },
+              __self: this
+            }, _this2.renderGamesCards(game.id));
+          }
+        };
+      });
+      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Tab"], {
+        menu: {
+          secondary: true,
+          pointing: true
+        },
+        panes: gamePanes,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 266
         },
         __self: this
       });
@@ -54563,7 +54596,7 @@ function (_Component) {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 258
+              lineNumber: 273
             },
             __self: this
           }, "View Bet"),
@@ -54574,7 +54607,7 @@ function (_Component) {
         items: betItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 263
+          lineNumber: 278
         },
         __self: this
       });
@@ -54585,25 +54618,25 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_10__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 268
+          lineNumber: 283
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 269
+          lineNumber: 284
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 270
+          lineNumber: 285
         },
         __self: this
-      }, "MLB's Games"), this.renderGamesCards(3), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
+      }), this.renderGamesCards(2), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 272
+          lineNumber: 288
         },
         __self: this
       }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Button"], {
@@ -54612,7 +54645,7 @@ function (_Component) {
         primary: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 274
+          lineNumber: 290
         },
         __self: this
       })));
@@ -54623,11 +54656,12 @@ function (_Component) {
       var _getInitialProps = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
       /*#__PURE__*/
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var sportsData, getNode1, response, blockchain, today;
+        var activeIndex, sportsData, getNode1, response, blockchain, today;
         return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                activeIndex = 0;
                 sportsData = [{
                   sport_id: 1,
                   sport_name: "NCAA Football",
@@ -54640,44 +54674,24 @@ function (_Component) {
                   sport_id: 3,
                   sport_name: "MLB",
                   data: {}
-                }, {
-                  sport_id: 4,
-                  sport_name: "NBA",
-                  data: {}
-                }, {
-                  sport_id: 5,
-                  sport_name: "NCAA Men's Basketball",
-                  data: {}
-                }, {
-                  sport_id: 6,
-                  sport_name: "NHL",
-                  data: {}
-                }, {
-                  sport_id: 7,
-                  sport_name: "UFC/MMA",
-                  data: {}
-                }, {
-                  sport_id: 8,
-                  sport_name: "WNBA",
-                  data: {}
-                }, {
-                  sport_id: 9,
-                  sport_name: "CFL",
-                  data: {}
-                }, {
-                  sport_id: 10,
-                  sport_name: "MLS",
-                  data: {}
+                  /*{ sport_id: 4, sport_name: "NBA", data: {} },
+                  { sport_id: 5, sport_name: "NCAA Men's Basketball", data: {} },
+                  { sport_id: 6, sport_name: "NHL", data: {} },
+                  { sport_id: 7, sport_name: "UFC/MMA", data: {} },
+                  { sport_id: 8, sport_name: "WNBA", data: {} },
+                  { sport_id: 9, sport_name: "CFL", data: {} },
+                  { sport_id: 10, sport_name: "MLS", data: {} }*/
+
                 }];
                 getNode1 = "http://localhost:3001/blockchain";
-                _context.next = 4;
+                _context.next = 5;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default.a.get(getNode1);
 
-              case 4:
+              case 5:
                 response = _context.sent;
                 blockchain = response.data;
                 today = new Date().toJSON().slice(0, 10);
-                _context.next = 9;
+                _context.next = 10;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/1/events",
@@ -54693,9 +54707,9 @@ function (_Component) {
                   sportsData[0].data = response.data;
                 }.bind(this));
 
-              case 9:
+              case 10:
                 response = _context.sent;
-                _context.next = 12;
+                _context.next = 13;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/2/events",
@@ -54711,9 +54725,9 @@ function (_Component) {
                   sportsData[1].data = response.data;
                 }.bind(this));
 
-              case 12:
+              case 13:
                 response = _context.sent;
-                _context.next = 15;
+                _context.next = 16;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
                   url: "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events",
@@ -54729,141 +54743,130 @@ function (_Component) {
                   sportsData[2].data = response.data;
                 }.bind(this));
 
-              case 15:
+              case 16:
                 response = _context.sent;
-                _context.next = 18;
-                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+
+                /* response = await axios({
                   method: "GET",
-                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/4/events",
+                  url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events`,
                   headers: {
                     "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                    "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
                   },
                   params: {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                }).then(function (response) {
-                  sportsData[3].data = response.data;
-                }.bind(this));
-
-              case 18:
-                response = _context.sent;
-                _context.next = 21;
-                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                }).then(
+                  function(response) {
+                    sportsData[3].data = response.data;
+                  }.bind(this)
+                );
+                 response = await axios({
                   method: "GET",
-                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/5/events",
+                  url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events`,
                   headers: {
                     "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                    "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
                   },
                   params: {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                }).then(function (response) {
-                  sportsData[4].data = response.data;
-                }.bind(this));
-
-              case 21:
-                response = _context.sent;
-                _context.next = 24;
-                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                }).then(
+                  function(response) {
+                    sportsData[4].data = response.data;
+                  }.bind(this)
+                );
+                 response = await axios({
                   method: "GET",
-                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/6/events",
+                  url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events`,
                   headers: {
                     "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                    "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
                   },
                   params: {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                }).then(function (response) {
-                  sportsData[5].data = response.data;
-                }.bind(this));
-
-              case 24:
-                response = _context.sent;
-                _context.next = 27;
-                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                }).then(
+                  function(response) {
+                    sportsData[5].data = response.data;
+                  }.bind(this)
+                );
+                 response = await axios({
                   method: "GET",
-                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/7/events",
+                  url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events`,
                   headers: {
                     "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                    "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
                   },
                   params: {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                }).then(function (response) {
-                  sportsData[6].data = response.data;
-                }.bind(this));
-
-              case 27:
-                response = _context.sent;
-                _context.next = 30;
-                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                }).then(
+                  function(response) {
+                    sportsData[6].data = response.data;
+                  }.bind(this)
+                );
+                 response = await axios({
                   method: "GET",
-                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/8/events",
+                  url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events`,
                   headers: {
                     "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                    "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
                   },
                   params: {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                }).then(function (response) {
-                  sportsData[7].data = response.data;
-                }.bind(this));
-
-              case 30:
-                response = _context.sent;
-                _context.next = 33;
-                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                }).then(
+                  function(response) {
+                    sportsData[7].data = response.data;
+                  }.bind(this)
+                );
+                 response = await axios({
                   method: "GET",
-                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/9/events",
+                  url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events`,
                   headers: {
                     "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                    "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
                   },
                   params: {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                }).then(function (response) {
-                  sportsData[8].data = response.data;
-                }.bind(this));
-
-              case 33:
-                response = _context.sent;
-                _context.next = 36;
-                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                }).then(
+                  function(response) {
+                    sportsData[8].data = response.data;
+                  }.bind(this)
+                );
+                 response = await axios({
                   method: "GET",
-                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/10/events",
+                  url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events`,
                   headers: {
                     "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                    "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
                   },
                   params: {
                     include: ["all_periods", "scores"],
                     offset: "0"
                   }
-                }).then(function (response) {
-                  sportsData[9].data = response.data;
-                }.bind(this));
-
-              case 36:
-                response = _context.sent;
+                }).then(
+                  function(response) {
+                    sportsData[9].data = response.data;
+                  }.bind(this)
+                );
+                */
                 console.log(sportsData[2].data);
                 return _context.abrupt("return", {
+                  activeIndex: activeIndex,
                   sportsData: sportsData,
                   blockchain: blockchain
                 });
 
-              case 39:
+              case 19:
               case "end":
                 return _context.stop();
             }
