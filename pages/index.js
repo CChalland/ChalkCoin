@@ -24,7 +24,7 @@ class BetokenIndex extends Component {
     let today = new Date().toJSON().slice(0, 10);
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -34,11 +34,11 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let ncaafByDate = response.data;
+    let ncaafData = response.data;
 
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/2/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/2/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -48,11 +48,11 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let nflByDate = response.data;
+    let nflData = response.data;
 
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -62,11 +62,11 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let mlbByDate = response.data;
+    let mlbData = response.data;
 
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -76,11 +76,11 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let nbaByDate = response.data;
+    let nbaData = response.data;
 
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -90,11 +90,11 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let ncaabByDate = response.data;
+    let ncaabData = response.data;
 
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -104,11 +104,11 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let nhlByDate = response.data;
+    let nhlData = response.data;
 
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -118,11 +118,11 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let ufcByDate = response.data;
+    let ufcData = response.data;
 
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -132,11 +132,11 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let wnbaByDate = response.data;
+    let wnbaData = response.data;
 
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -146,11 +146,11 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let cflByDate = response.data;
+    let cflData = response.data;
 
     response = await axios({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
@@ -160,28 +160,28 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let mlsByDate = response.data;
+    let mlsData = response.data;
 
-    console.log(mlbByDate);
+    console.log(mlbData);
 
     return {
       sportId,
       blockchain,
-      ncaafByDate,
-      nflByDate,
-      mlbByDate,
-      nbaByDate,
-      ncaabByDate,
-      nhlByDate,
-      ufcByDate,
-      wnbaByDate,
-      cflByDate,
-      mlsByDate
+      ncaafData,
+      nflData,
+      mlbData,
+      nbaData,
+      ncaabData,
+      nhlData,
+      ufcData,
+      wnbaData,
+      cflData,
+      mlsData
     };
   }
 
-  renderMLBTodayGames() {
-    let gameItems = this.props.mlbByDate.events.map(game => {
+  renderMLBGames() {
+    let gameItems = this.props.mlbData.events.map(game => {
       return {
         description: (
           <h4>
@@ -249,8 +249,8 @@ class BetokenIndex extends Component {
     return (
       <Layout>
         <div>
-          <h3>Today's Games</h3>
-          {this.renderMLBTodayGames()}
+          <h3>MLB's Games</h3>
+          {this.renderMLBGames()}
           <h3>Open Bets</h3>
           {this.renderCurrentBets()}
           <Button content="Create Bet" icon="add circle" primary />

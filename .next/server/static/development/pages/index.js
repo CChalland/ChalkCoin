@@ -364,7 +364,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     let today = new Date().toJSON().slice(0, 10);
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -374,10 +374,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let ncaafByDate = response.data;
+    let ncaafData = response.data;
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/2/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/2/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -387,10 +387,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let nflByDate = response.data;
+    let nflData = response.data;
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -400,10 +400,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let mlbByDate = response.data;
+    let mlbData = response.data;
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -413,10 +413,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let nbaByDate = response.data;
+    let nbaData = response.data;
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -426,10 +426,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let ncaabByDate = response.data;
+    let ncaabData = response.data;
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -439,10 +439,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let nhlByDate = response.data;
+    let nhlData = response.data;
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -452,10 +452,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let ufcByDate = response.data;
+    let ufcData = response.data;
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -465,10 +465,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let wnbaByDate = response.data;
+    let wnbaData = response.data;
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -478,10 +478,10 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let cflByDate = response.data;
+    let cflData = response.data;
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events/${today}`,
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
         "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -491,26 +491,26 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let mlsByDate = response.data;
-    console.log(mlbByDate);
+    let mlsData = response.data;
+    console.log(mlbData);
     return {
       sportId,
       blockchain,
-      ncaafByDate,
-      nflByDate,
-      mlbByDate,
-      nbaByDate,
-      ncaabByDate,
-      nhlByDate,
-      ufcByDate,
-      wnbaByDate,
-      cflByDate,
-      mlsByDate
+      ncaafData,
+      nflData,
+      mlbData,
+      nbaData,
+      ncaabData,
+      nhlData,
+      ufcData,
+      wnbaData,
+      cflData,
+      mlsData
     };
   }
 
-  renderMLBTodayGames() {
-    let gameItems = this.props.mlbByDate.events.map(game => {
+  renderMLBGames() {
+    let gameItems = this.props.mlbData.events.map(game => {
       return {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
           __source: {
@@ -659,7 +659,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         lineNumber: 252
       },
       __self: this
-    }, "Today's Games"), this.renderMLBTodayGames(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    }, "MLB's Games"), this.renderMLBGames(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 254
