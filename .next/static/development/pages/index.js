@@ -54511,7 +54511,7 @@ function (_Component) {
               lineNumber: 211
             },
             __self: this
-          }), _this.props.sportId[game.sport_id - 1], react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
+          }), _this.props.sportId[game.sport_id - 1].sport_name, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
               lineNumber: 213
@@ -54628,7 +54628,37 @@ function (_Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                sportId = ["NCAA Football", "NFL", "MLB", "NBA", "NCAA Men's Basketball", "NHL", "UFC/MMA", "WNBA", "CFL", "MLS"];
+                sportId = [{
+                  sport_id: 1,
+                  sport_name: "NCAA Football"
+                }, {
+                  sport_id: 2,
+                  sport_name: "NFL"
+                }, {
+                  sport_id: 3,
+                  sport_name: "MLB"
+                }, {
+                  sport_id: 4,
+                  sport_name: "NBA"
+                }, {
+                  sport_id: 5,
+                  sport_name: "NCAA Men's Basketball"
+                }, {
+                  sport_id: 6,
+                  sport_name: "NHL"
+                }, {
+                  sport_id: 7,
+                  sport_name: "UFC/MMA"
+                }, {
+                  sport_id: 8,
+                  sport_name: "WNBA"
+                }, {
+                  sport_id: 9,
+                  sport_name: "CFL"
+                }, {
+                  sport_id: 10,
+                  sport_name: "MLS"
+                }];
                 getNode1 = "http://localhost:3001/blockchain";
                 _context.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default.a.get(getNode1);

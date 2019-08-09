@@ -327,7 +327,37 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/pages/index.js";
 
 class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   static async getInitialProps() {
-    const sportId = ["NCAA Football", "NFL", "MLB", "NBA", "NCAA Men's Basketball", "NHL", "UFC/MMA", "WNBA", "CFL", "MLS"];
+    const sportId = [{
+      sport_id: 1,
+      sport_name: "NCAA Football"
+    }, {
+      sport_id: 2,
+      sport_name: "NFL"
+    }, {
+      sport_id: 3,
+      sport_name: "MLB"
+    }, {
+      sport_id: 4,
+      sport_name: "NBA"
+    }, {
+      sport_id: 5,
+      sport_name: "NCAA Men's Basketball"
+    }, {
+      sport_id: 6,
+      sport_name: "NHL"
+    }, {
+      sport_id: 7,
+      sport_name: "UFC/MMA"
+    }, {
+      sport_id: 8,
+      sport_name: "WNBA"
+    }, {
+      sport_id: 9,
+      sport_name: "CFL"
+    }, {
+      sport_id: 10,
+      sport_name: "MLS"
+    }];
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(getNode1);
     const blockchain = response.data;
@@ -542,7 +572,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
             lineNumber: 211
           },
           __self: this
-        }), this.props.sportId[game.sport_id - 1], react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
+        }), this.props.sportId[game.sport_id - 1].sport_name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
             lineNumber: 213
