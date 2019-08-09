@@ -54449,7 +54449,7 @@ function (_Component) {
     value: function renderTodayGames() {
       var _this = this;
 
-      var gameItems = this.props.sportsByDate.events.map(function (game) {
+      var gameItems = this.props.mlbByDate.events.map(function (game) {
         return {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h4", {
             __source: {
@@ -54623,7 +54623,7 @@ function (_Component) {
       var _getInitialProps = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
       /*#__PURE__*/
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var sportId, getNode1, response, blockchain, today, sportsByDate;
+        var sportId, getNode1, response, blockchain, today, mlbByDate;
         return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -54653,12 +54653,12 @@ function (_Component) {
 
               case 9:
                 response = _context.sent;
-                sportsByDate = response.data;
-                console.log(sportsByDate);
+                mlbByDate = response.data;
+                console.log(mlbByDate);
                 return _context.abrupt("return", {
                   sportId: sportId,
                   blockchain: blockchain,
-                  sportsByDate: sportsByDate
+                  mlbByDate: mlbByDate
                 });
 
               case 13:

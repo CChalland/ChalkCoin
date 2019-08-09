@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Card, Button } from "semantic-ui-react";
+import { Card, Button, Container } from "semantic-ui-react";
 import Layout from "../components/Layout";
 
 class BetokenIndex extends Component {
@@ -34,14 +34,14 @@ class BetokenIndex extends Component {
         offset: "0"
       }
     });
-    let sportsByDate = response.data;
-    console.log(sportsByDate);
+    let mlbByDate = response.data;
+    console.log(mlbByDate);
 
-    return { sportId, blockchain, sportsByDate };
+    return { sportId, blockchain, mlbByDate };
   }
 
   renderTodayGames() {
-    let gameItems = this.props.sportsByDate.events.map(game => {
+    let gameItems = this.props.mlbByDate.events.map(game => {
       return {
         description: (
           <h4>

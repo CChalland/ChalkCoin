@@ -344,17 +344,17 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         offset: "0"
       }
     });
-    let sportsByDate = response.data;
-    console.log(sportsByDate);
+    let mlbByDate = response.data;
+    console.log(mlbByDate);
     return {
       sportId,
       blockchain,
-      sportsByDate
+      mlbByDate
     };
   }
 
   renderTodayGames() {
-    let gameItems = this.props.sportsByDate.events.map(game => {
+    let gameItems = this.props.mlbByDate.events.map(game => {
       return {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
           __source: {
