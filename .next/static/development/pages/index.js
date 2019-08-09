@@ -54445,8 +54445,8 @@ function (_Component) {
   }
 
   Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(BetokenIndex, [{
-    key: "renderTodayGames",
-    value: function renderTodayGames() {
+    key: "renderMLBTodayGames",
+    value: function renderMLBTodayGames() {
       var _this = this;
 
       var gameItems = this.props.mlbByDate.events.map(function (game) {
@@ -54454,7 +54454,7 @@ function (_Component) {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h4", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 47
+              lineNumber: 187
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
@@ -54462,7 +54462,7 @@ function (_Component) {
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[0].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 48
+              lineNumber: 188
             },
             __self: this
           }), game.teams_normalized[0].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54472,13 +54472,13 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 55
+              lineNumber: 195
             },
             __self: this
           }, game.teams_normalized[0].record), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 58
+              lineNumber: 198
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54492,7 +54492,7 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 59
+              lineNumber: 199
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54502,25 +54502,25 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 69
+              lineNumber: 209
             },
             __self: this
           }, game.event_date, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 71
+              lineNumber: 211
             },
             __self: this
           }), _this.props.sportId[game.sport_id - 1], react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 73
+              lineNumber: 213
             },
             __self: this
           }), "Game's spread right here"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 76
+              lineNumber: 216
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
@@ -54528,7 +54528,7 @@ function (_Component) {
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[1].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 77
+              lineNumber: 217
             },
             __self: this
           }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54538,7 +54538,7 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 84
+              lineNumber: 224
             },
             __self: this
           }, game.teams_normalized[1].record)),
@@ -54549,7 +54549,7 @@ function (_Component) {
         items: gameItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 93
+          lineNumber: 233
         },
         __self: this
       });
@@ -54563,7 +54563,7 @@ function (_Component) {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 100
+              lineNumber: 240
             },
             __self: this
           }, "View Bet"),
@@ -54574,7 +54574,7 @@ function (_Component) {
         items: betItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 105
+          lineNumber: 245
         },
         __self: this
       });
@@ -54585,25 +54585,25 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_10__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 110
+          lineNumber: 250
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 111
+          lineNumber: 251
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 112
+          lineNumber: 252
         },
         __self: this
-      }, "Today's Games"), this.renderTodayGames(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
+      }, "Today's Games"), this.renderMLBTodayGames(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 114
+          lineNumber: 254
         },
         __self: this
       }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Button"], {
@@ -54612,7 +54612,7 @@ function (_Component) {
         primary: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 116
+          lineNumber: 256
         },
         __self: this
       })));
@@ -54623,7 +54623,7 @@ function (_Component) {
       var _getInitialProps = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
       /*#__PURE__*/
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var sportId, getNode1, response, blockchain, today, mlbByDate;
+        var sportId, getNode1, response, blockchain, today, ncaafByDate, nflByDate, mlbByDate, nbaByDate, ncaabByDate, nhlByDate, ufcByDate, wnbaByDate, cflByDate, mlsByDate;
         return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -54640,7 +54640,7 @@ function (_Component) {
                 _context.next = 9;
                 return axios__WEBPACK_IMPORTED_MODULE_8___default()({
                   method: "GET",
-                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/".concat(today),
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/1/events/".concat(today),
                   headers: {
                     "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
                     "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
@@ -54653,15 +54653,177 @@ function (_Component) {
 
               case 9:
                 response = _context.sent;
+                ncaafByDate = response.data;
+                _context.next = 13;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/2/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
+                });
+
+              case 13:
+                response = _context.sent;
+                nflByDate = response.data;
+                _context.next = 17;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
+                });
+
+              case 17:
+                response = _context.sent;
                 mlbByDate = response.data;
+                _context.next = 21;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/4/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
+                });
+
+              case 21:
+                response = _context.sent;
+                nbaByDate = response.data;
+                _context.next = 25;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/5/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
+                });
+
+              case 25:
+                response = _context.sent;
+                ncaabByDate = response.data;
+                _context.next = 29;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/6/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
+                });
+
+              case 29:
+                response = _context.sent;
+                nhlByDate = response.data;
+                _context.next = 33;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/7/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
+                });
+
+              case 33:
+                response = _context.sent;
+                ufcByDate = response.data;
+                _context.next = 37;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/8/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
+                });
+
+              case 37:
+                response = _context.sent;
+                wnbaByDate = response.data;
+                _context.next = 41;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/9/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
+                });
+
+              case 41:
+                response = _context.sent;
+                cflByDate = response.data;
+                _context.next = 45;
+                return axios__WEBPACK_IMPORTED_MODULE_8___default()({
+                  method: "GET",
+                  url: "https://therundown-therundown-v1.p.rapidapi.com/sports/10/events/".concat(today),
+                  headers: {
+                    "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+                  },
+                  params: {
+                    include: ["all_periods", "scores"],
+                    offset: "0"
+                  }
+                });
+
+              case 45:
+                response = _context.sent;
+                mlsByDate = response.data;
                 console.log(mlbByDate);
                 return _context.abrupt("return", {
                   sportId: sportId,
                   blockchain: blockchain,
-                  mlbByDate: mlbByDate
+                  ncaafByDate: ncaafByDate,
+                  nflByDate: nflByDate,
+                  mlbByDate: mlbByDate,
+                  nbaByDate: nbaByDate,
+                  ncaabByDate: ncaabByDate,
+                  nhlByDate: nhlByDate,
+                  ufcByDate: ufcByDate,
+                  wnbaByDate: wnbaByDate,
+                  cflByDate: cflByDate,
+                  mlsByDate: mlsByDate
                 });
 
-              case 13:
+              case 49:
               case "end":
                 return _context.stop();
             }

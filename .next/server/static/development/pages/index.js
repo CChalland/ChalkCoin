@@ -334,6 +334,32 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     let today = new Date().toJSON().slice(0, 10);
     response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
       method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
+    });
+    let ncaafByDate = response.data;
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/2/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
+    });
+    let nflByDate = response.data;
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events/${today}`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
@@ -345,21 +371,121 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       }
     });
     let mlbByDate = response.data;
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
+    });
+    let nbaByDate = response.data;
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
+    });
+    let ncaabByDate = response.data;
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
+    });
+    let nhlByDate = response.data;
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
+    });
+    let ufcByDate = response.data;
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
+    });
+    let wnbaByDate = response.data;
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
+    });
+    let cflByDate = response.data;
+    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+      method: "GET",
+      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events/${today}`,
+      headers: {
+        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+      },
+      params: {
+        include: ["all_periods", "scores"],
+        offset: "0"
+      }
+    });
+    let mlsByDate = response.data;
     console.log(mlbByDate);
     return {
       sportId,
       blockchain,
-      mlbByDate
+      ncaafByDate,
+      nflByDate,
+      mlbByDate,
+      nbaByDate,
+      ncaabByDate,
+      nhlByDate,
+      ufcByDate,
+      wnbaByDate,
+      cflByDate,
+      mlsByDate
     };
   }
 
-  renderTodayGames() {
+  renderMLBTodayGames() {
     let gameItems = this.props.mlbByDate.events.map(game => {
       return {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 47
+            lineNumber: 187
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -367,7 +493,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           src: `../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 48
+            lineNumber: 188
           },
           __self: this
         }), game.teams_normalized[0].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -377,13 +503,13 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 55
+            lineNumber: 195
           },
           __self: this
         }, game.teams_normalized[0].record), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 58
+            lineNumber: 198
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -397,7 +523,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 59
+            lineNumber: 199
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -407,25 +533,25 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 69
+            lineNumber: 209
           },
           __self: this
         }, game.event_date, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 71
+            lineNumber: 211
           },
           __self: this
         }), this.props.sportId[game.sport_id - 1], react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 73
+            lineNumber: 213
           },
           __self: this
         }), "Game's spread right here"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 76
+            lineNumber: 216
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -433,7 +559,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           src: `../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 77
+            lineNumber: 217
           },
           __self: this
         }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -443,7 +569,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 84
+            lineNumber: 224
           },
           __self: this
         }, game.teams_normalized[1].record)),
@@ -454,7 +580,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: gameItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 93
+        lineNumber: 233
       },
       __self: this
     });
@@ -467,7 +593,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 100
+            lineNumber: 240
           },
           __self: this
         }, "View Bet"),
@@ -478,7 +604,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: betItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 105
+        lineNumber: 245
       },
       __self: this
     });
@@ -488,25 +614,25 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 110
+        lineNumber: 250
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 111
+        lineNumber: 251
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 112
+        lineNumber: 252
       },
       __self: this
-    }, "Today's Games"), this.renderTodayGames(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    }, "Today's Games"), this.renderMLBTodayGames(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 114
+        lineNumber: 254
       },
       __self: this
     }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
@@ -515,7 +641,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       primary: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 116
+        lineNumber: 256
       },
       __self: this
     })));
