@@ -33,13 +33,40 @@ class BetokenIndex extends Component {
       return {
         header: game.event_date,
         description: (
-          <h3>
-            <img class="ui avatar image" src={`../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`}/>
+          <div>
+            <img
+              class="ui avatar image"
+              src={`../static/media/${game.sport_id}-${
+                game.teams_normalized[0].abbreviation
+              }.png`}
+            />
             {game.teams_normalized[0].mascot}
+            <span style={{ position: "absolute", right: "400px" }}>
+              {game.teams_normalized[0].record}
+            </span>
             <br />
-            <img class="ui avatar image" src={`../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`}/>
+            <span
+              style={{
+                width: "1px",
+                background: "#000",
+                position: "absolute",
+                top: "0",
+                bottom: "0",
+                right: "350px"
+              }}
+            />
+            >
+            <img
+              class="ui avatar image"
+              src={`../static/media/${game.sport_id}-${
+                game.teams_normalized[1].abbreviation
+              }.png`}
+            />
             {game.teams_normalized[1].mascot}
-          </h3>
+            <span style={{ position: "absolute", right: "400px" }}>
+              {game.teams_normalized[1].record}
+            </span>
+          </div>
         ),
         fluid: true
       };

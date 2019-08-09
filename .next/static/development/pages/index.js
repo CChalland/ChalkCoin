@@ -54450,7 +54450,7 @@ function (_Component) {
       var gameItems = this.props.sportsByDate.events.map(function (game) {
         return {
           header: game.event_date,
-          description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
+          description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
             __source: {
               fileName: _jsxFileName,
               lineNumber: 36
@@ -54464,21 +54464,55 @@ function (_Component) {
               lineNumber: 37
             },
             __self: this
-          }), game.teams_normalized[0].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
+          }), game.teams_normalized[0].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
+            style: {
+              position: "absolute",
+              right: "400px"
+            },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 39
+              lineNumber: 44
             },
             __self: this
-          }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
+          }, game.teams_normalized[0].record), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 47
+            },
+            __self: this
+          }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
+            style: {
+              width: "1px",
+              background: "#000",
+              position: "absolute",
+              top: "0",
+              bottom: "0",
+              right: "350px"
+            },
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 48
+            },
+            __self: this
+          }), ">", react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
             "class": "ui avatar image",
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[1].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 40
+              lineNumber: 59
             },
             __self: this
-          }), game.teams_normalized[1].mascot),
+          }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
+            style: {
+              position: "absolute",
+              right: "400px"
+            },
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 66
+            },
+            __self: this
+          }, game.teams_normalized[1].record)),
           fluid: true
         };
       });
@@ -54486,7 +54520,7 @@ function (_Component) {
         items: gameItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 48
+          lineNumber: 75
         },
         __self: this
       });
@@ -54500,7 +54534,7 @@ function (_Component) {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 55
+              lineNumber: 82
             },
             __self: this
           }, "View Bet"),
@@ -54511,7 +54545,7 @@ function (_Component) {
         items: betItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 60
+          lineNumber: 87
         },
         __self: this
       });
@@ -54522,25 +54556,25 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_10__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 65
+          lineNumber: 92
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 66
+          lineNumber: 93
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 67
+          lineNumber: 94
         },
         __self: this
       }, "Today's Games"), this.renderTodayGames(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 69
+          lineNumber: 96
         },
         __self: this
       }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Button"], {
@@ -54549,7 +54583,7 @@ function (_Component) {
         primary: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 71
+          lineNumber: 98
         },
         __self: this
       })));
