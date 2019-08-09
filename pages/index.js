@@ -43,15 +43,6 @@ class BetokenIndex extends Component {
   renderTodayGames() {
     let gameItems = this.props.sportsByDate.events.map(game => {
       return {
-        header: (
-          <h3>
-            <img
-              class="ui avatar image"
-              src={`../static/media/${game.sport_id}.png`}
-            />
-            {this.props.sportId[game.sport_id - 1]}
-          </h3>
-        ),
         description: (
           <h4>
             <img
