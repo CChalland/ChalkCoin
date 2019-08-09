@@ -54449,8 +54449,8 @@ function (_Component) {
     value: function renderTodayGames() {
       var gameItems = this.props.sportsByDate.events.map(function (game) {
         return {
-          header: game.event_date,
-          description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+          header: game.event_id,
+          description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h4", {
             __source: {
               fileName: _jsxFileName,
               lineNumber: 36
@@ -54480,6 +54480,12 @@ function (_Component) {
               lineNumber: 47
             },
             __self: this
+          }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 48
+            },
+            __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
             style: {
               width: "1px",
@@ -54491,7 +54497,7 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 48
+              lineNumber: 49
             },
             __self: this
           }), ">", react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
@@ -54499,7 +54505,7 @@ function (_Component) {
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[1].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 59
+              lineNumber: 60
             },
             __self: this
           }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -54509,7 +54515,7 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 66
+              lineNumber: 67
             },
             __self: this
           }, game.teams_normalized[1].record)),
@@ -54520,7 +54526,7 @@ function (_Component) {
         items: gameItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 75
+          lineNumber: 76
         },
         __self: this
       });
@@ -54534,7 +54540,7 @@ function (_Component) {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 82
+              lineNumber: 83
             },
             __self: this
           }, "View Bet"),
@@ -54545,7 +54551,7 @@ function (_Component) {
         items: betItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 87
+          lineNumber: 88
         },
         __self: this
       });
@@ -54556,25 +54562,25 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_10__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 92
+          lineNumber: 93
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 93
+          lineNumber: 94
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 94
+          lineNumber: 95
         },
         __self: this
       }, "Today's Games"), this.renderTodayGames(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 96
+          lineNumber: 97
         },
         __self: this
       }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Button"], {
@@ -54583,7 +54589,7 @@ function (_Component) {
         primary: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 98
+          lineNumber: 99
         },
         __self: this
       })));

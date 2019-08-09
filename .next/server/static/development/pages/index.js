@@ -354,8 +354,8 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   renderTodayGames() {
     let gameItems = this.props.sportsByDate.events.map(game => {
       return {
-        header: game.event_date,
-        description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        header: game.event_id,
+        description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
           __source: {
             fileName: _jsxFileName,
             lineNumber: 36
@@ -385,6 +385,12 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
             lineNumber: 47
           },
           __self: this
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 48
+          },
+          __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           style: {
             width: "1px",
@@ -396,7 +402,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 48
+            lineNumber: 49
           },
           __self: this
         }), ">", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -404,7 +410,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           src: `../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 59
+            lineNumber: 60
           },
           __self: this
         }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -414,7 +420,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 66
+            lineNumber: 67
           },
           __self: this
         }, game.teams_normalized[1].record)),
@@ -425,7 +431,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: gameItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 75
+        lineNumber: 76
       },
       __self: this
     });
@@ -438,7 +444,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 82
+            lineNumber: 83
           },
           __self: this
         }, "View Bet"),
@@ -449,7 +455,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: betItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 87
+        lineNumber: 88
       },
       __self: this
     });
@@ -459,25 +465,25 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 92
+        lineNumber: 93
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 93
+        lineNumber: 94
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 94
+        lineNumber: 95
       },
       __self: this
     }, "Today's Games"), this.renderTodayGames(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 96
+        lineNumber: 97
       },
       __self: this
     }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
@@ -486,7 +492,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       primary: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 98
+        lineNumber: 99
       },
       __self: this
     })));

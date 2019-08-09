@@ -31,9 +31,9 @@ class BetokenIndex extends Component {
   renderTodayGames() {
     let gameItems = this.props.sportsByDate.events.map(game => {
       return {
-        header: game.event_date,
+        header: game.event_id,
         description: (
-          <div>
+          <h4>
             <img
               class="ui avatar image"
               src={`../static/media/${game.sport_id}-${
@@ -44,6 +44,7 @@ class BetokenIndex extends Component {
             <span style={{ position: "absolute", right: "400px" }}>
               {game.teams_normalized[0].record}
             </span>
+            <br />
             <br />
             <span
               style={{
@@ -66,7 +67,7 @@ class BetokenIndex extends Component {
             <span style={{ position: "absolute", right: "400px" }}>
               {game.teams_normalized[1].record}
             </span>
-          </div>
+          </h4>
         ),
         fluid: true
       };
