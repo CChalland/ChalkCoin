@@ -388,7 +388,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           style: {
             width: "1px",
-            background: "#000",
+            background: "rgba(34,36,38,.15)",
             position: "absolute",
             top: "0",
             bottom: "0",

@@ -48,7 +48,7 @@ class BetokenIndex extends Component {
             <span
               style={{
                 width: "1px",
-                background: "#000",
+                background: "rgba(34,36,38,.15)",
                 position: "absolute",
                 top: "0",
                 bottom: "0",
