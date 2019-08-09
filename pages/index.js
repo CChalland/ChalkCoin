@@ -5,6 +5,18 @@ import Layout from "../components/Layout";
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
+    const sportId = [
+      "NCAA Football",
+      "NFL",
+      "MLB",
+      "NBA",
+      "NCAA Men's Basketball",
+      "NHL",
+      "UFC/MMA",
+      "WNBA",
+      "CFL",
+      "MLS"
+    ];
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios.get(getNode1);
     const blockchain = response.data;
@@ -25,13 +37,21 @@ class BetokenIndex extends Component {
     let sportsByDate = response.data;
     console.log(sportsByDate);
 
-    return { blockchain, sportsByDate };
+    return { sportId, blockchain, sportsByDate };
   }
 
   renderTodayGames() {
     let gameItems = this.props.sportsByDate.events.map(game => {
       return {
-        header: game.event_id,
+        header: (
+          <h3>
+            <img
+              class="ui avatar image"
+              src={`../static/media/${game.sport_id}.png`}
+            />
+            {this.props.sportId[game.sport_id - 1]}
+          </h3>
+        ),
         description: (
           <h4>
             <img

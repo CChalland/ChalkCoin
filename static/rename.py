@@ -1,5 +1,6 @@
 import os
 
+
 def main():
 
     for filename in os.listdir("media"):

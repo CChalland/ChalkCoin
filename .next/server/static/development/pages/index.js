@@ -327,6 +327,7 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/pages/index.js";
 
 class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   static async getInitialProps() {
+    const sportId = ["NCAA Football", "NFL", "MLB", "NBA", "NCAA Men's Basketball", "NHL", "UFC/MMA", "WNBA", "CFL", "MLS"];
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(getNode1);
     const blockchain = response.data;
@@ -346,6 +347,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     let sportsByDate = response.data;
     console.log(sportsByDate);
     return {
+      sportId,
       blockchain,
       sportsByDate
     };
@@ -354,11 +356,25 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   renderTodayGames() {
     let gameItems = this.props.sportsByDate.events.map(game => {
       return {
-        header: game.event_id,
+        header: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 47
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          class: "ui avatar image",
+          src: `../static/media/${game.sport_id}.png`,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 48
+          },
+          __self: this
+        }), this.props.sportId[game.sport_id - 1]),
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 36
+            lineNumber: 56
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -366,7 +382,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           src: `../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 37
+            lineNumber: 57
           },
           __self: this
         }), game.teams_normalized[0].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -376,19 +392,19 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 44
+            lineNumber: 64
           },
           __self: this
         }, game.teams_normalized[0].record), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 47
+            lineNumber: 67
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 48
+            lineNumber: 68
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -402,7 +418,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 49
+            lineNumber: 69
           },
           __self: this
         }), ">", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -410,7 +426,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           src: `../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 60
+            lineNumber: 80
           },
           __self: this
         }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -420,7 +436,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 67
+            lineNumber: 87
           },
           __self: this
         }, game.teams_normalized[1].record)),
@@ -431,7 +447,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: gameItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 76
+        lineNumber: 96
       },
       __self: this
     });
@@ -444,7 +460,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 83
+            lineNumber: 103
           },
           __self: this
         }, "View Bet"),
@@ -455,7 +471,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: betItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 88
+        lineNumber: 108
       },
       __self: this
     });
@@ -465,25 +481,25 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 93
+        lineNumber: 113
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 94
+        lineNumber: 114
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 95
+        lineNumber: 115
       },
       __self: this
     }, "Today's Games"), this.renderTodayGames(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 97
+        lineNumber: 117
       },
       __self: this
     }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
@@ -492,7 +508,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       primary: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 99
+        lineNumber: 119
       },
       __self: this
     })));
