@@ -66,6 +66,13 @@ class BetokenIndex extends Component {
                 right: "350px"
               }}
             />
+            <span style={{ position: "absolute", right: "150px" }}>
+              {game.event_date}
+              <br />
+              {this.props.sportId[game.sport_id - 1]}
+              <br />
+              {"Game's spread right here"}
+            </span>
             <br />
             <img
               class="ui avatar image"
