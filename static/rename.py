@@ -3,12 +3,11 @@ import os
 def main():
 
     for filename in os.listdir("media"):
-        if filename[0:3] == "mlb":
-            char = filename.find('.')
-            dst = "3" + filename[3:char] + ".png"
+        if filename[0] == "3":
+            char = filename.find('-medium')
+            dst = filename[0:char] + ".png"
             src = "media/" + filename
             dst = "media/" + dst
-
             os.rename(src, dst)
 
         elif filename[0:3] == "mls":
@@ -16,15 +15,13 @@ def main():
             dst = "10" + filename[3:char] + ".png"
             src = "media/" + filename
             dst = "media/" + dst
-
             os.rename(src, dst)
 
-        elif filename[0:3] == "nba":
-            char = filename.find('.')
-            dst = "4" + filename[3:char] + ".png"
+        elif filename[0] == "4":
+            char = filename.find('-medium')
+            dst = filename[0:char] + ".png"
             src = "media/" + filename
             dst = "media/" + dst
-
             os.rename(src, dst)
 
         elif filename[0:5] == "ncaab":
@@ -32,7 +29,6 @@ def main():
             dst = "5" + filename[5:char] + ".png"
             src = "media/" + filename
             dst = "media/" + dst
-
             os.rename(src, dst)
 
         elif filename[0:5] == "ncaaf":
@@ -40,23 +36,20 @@ def main():
             dst = "1" + filename[5:char] + ".png"
             src = "media/" + filename
             dst = "media/" + dst
-
             os.rename(src, dst)
 
-        elif filename[0:3] == "nfl":
-            char = filename.find('.')
-            dst = "2" + filename[3:char] + ".png"
+        elif filename[0] == "2":
+            char = filename.find('-medium')
+            dst = filename[0:char] + ".png"
             src = "media/" + filename
             dst = "media/" + dst
-
             os.rename(src, dst)
 
-        elif filename[0:3] == "nhl":
-            char = filename.find('.')
-            dst = "6" + filename[3:char] + ".png"
+        elif filename[0] == "6":
+            char = filename.find('-medium')
+            dst = filename[0:char] + ".png"
             src = "media/" + filename
             dst = "media/" + dst
-
             os.rename(src, dst)
 
         elif filename[0:4] == "wnba":
@@ -64,7 +57,6 @@ def main():
             dst = "8" + filename[4:char] + ".png"
             src = "media/" + filename
             dst = "media/" + dst
-
             os.rename(src, dst)
 
 
