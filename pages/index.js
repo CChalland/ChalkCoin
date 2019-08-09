@@ -56,7 +56,6 @@ class BetokenIndex extends Component {
               {game.teams_normalized[0].record}
             </span>
             <br />
-            <br />
             <span
               style={{
                 width: "1px",
@@ -67,7 +66,7 @@ class BetokenIndex extends Component {
                 right: "350px"
               }}
             />
-            >
+            <br />
             <img
               class="ui avatar image"
               src={`../static/media/${game.sport_id}-${

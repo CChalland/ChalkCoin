@@ -386,12 +386,6 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
             lineNumber: 58
           },
           __self: this
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 59
-          },
-          __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           style: {
             width: "1px",
@@ -403,15 +397,21 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 60
+            lineNumber: 59
           },
           __self: this
-        }), ">", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 69
+          },
+          __self: this
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           class: "ui avatar image",
           src: `../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 71
+            lineNumber: 70
           },
           __self: this
         }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -421,7 +421,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 78
+            lineNumber: 77
           },
           __self: this
         }, game.teams_normalized[1].record)),
@@ -432,7 +432,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: gameItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 87
+        lineNumber: 86
       },
       __self: this
     });
@@ -445,7 +445,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 94
+            lineNumber: 93
           },
           __self: this
         }, "View Bet"),
@@ -456,7 +456,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: betItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 99
+        lineNumber: 98
       },
       __self: this
     });
@@ -466,25 +466,25 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 104
+        lineNumber: 103
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 105
+        lineNumber: 104
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 106
+        lineNumber: 105
       },
       __self: this
     }, "Today's Games"), this.renderTodayGames(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 108
+        lineNumber: 107
       },
       __self: this
     }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
@@ -493,7 +493,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       primary: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 110
+        lineNumber: 109
       },
       __self: this
     })));
