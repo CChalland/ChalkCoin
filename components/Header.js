@@ -6,7 +6,7 @@ export default () => {
     <div>
       <Menu
         borderless
-        fitted
+        fitted="true"
         inverted
         attached="top"
         color="black"

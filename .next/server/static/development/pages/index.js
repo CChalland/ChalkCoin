@@ -118,7 +118,7 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/components/Header.js";
     __self: undefined
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Menu"], {
     borderless: true,
-    fitted: true,
+    fitted: "true",
     inverted: true,
     attached: "top",
     color: "black",
