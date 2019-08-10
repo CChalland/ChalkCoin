@@ -40,7 +40,11 @@ app.post("/transaction/broadcast", function(req, res) {
   const newTransaction = betoken.createNewTransaction(
     req.body.amount,
     req.body.sender,
-    req.body.recipient
+    req.body.recipient,
+    req.body.sport,
+    req.body.event_id,
+    req.body.event_spread,
+    req.body.description
   );
   betoken.addTransactionToPendingTransactions(newTransaction);
 

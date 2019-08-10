@@ -32,11 +32,23 @@ Betoken.prototype.getLastBlock = function() {
   return this.chain[this.chain.length - 1];
 };
 
-Betoken.prototype.createNewTransaction = function(amount, sender, recipient) {
+Betoken.prototype.createNewTransaction = function(
+  amount,
+  sender,
+  recipient,
+  sport,
+  event_id,
+  event_spread,
+  description
+) {
   const newTransaction = {
     amount: amount,
     sender: sender,
     recipient: recipient,
+    sport: sport,
+    event_id: event_id,
+    event_spread: event_spread,
+    description: description,
     transactionId: uuid()
       .split("-")
       .join("")
