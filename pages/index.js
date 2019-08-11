@@ -10,14 +10,18 @@ class BetokenIndex extends Component {
     let sportsData = [
       { sport_id: 1, sport_name: "NCAA Football", data: {} },
       { sport_id: 2, sport_name: "NFL", data: {} },
-      { sport_id: 3, sport_name: "MLB", data: {} },
+      {
+        sport_id: 3,
+        sport_name: "MLB",
+        data: {}
+      } /*,
       { sport_id: 4, sport_name: "NBA", data: {} },
       { sport_id: 5, sport_name: "NCAA Men's Basketball", data: {} },
       { sport_id: 6, sport_name: "NHL", data: {} },
       { sport_id: 7, sport_name: "UFC/MMA", data: {} },
       { sport_id: 8, sport_name: "WNBA", data: {} },
       { sport_id: 9, sport_name: "CFL", data: {} },
-      { sport_id: 10, sport_name: "MLS", data: {} }
+      { sport_id: 10, sport_name: "MLS", data: {} }*/
     ];
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios.get(getNode1);
@@ -82,6 +86,7 @@ class BetokenIndex extends Component {
       }.bind(this)
     );
 
+    /*
     response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events`,
@@ -214,6 +219,7 @@ class BetokenIndex extends Component {
         sportsData[9].data = response.data;
       }.bind(this)
     );
+    */
 
     console.log(sportsData[2].data);
 
