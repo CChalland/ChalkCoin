@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Card, Button, Tab } from "semantic-ui-react";
 import Layout from "../components/Layout";
+let unirest = require("unirest");
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
@@ -24,16 +25,36 @@ class BetokenIndex extends Component {
 
     let today = new Date().toJSON().slice(0, 10);
 
+    var req = unirest(
+      "GET",
+      "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events"
+    );
+
+    req.query({
+      include: ["all_periods", "scores"]
+    });
+
+    req.headers({
+      "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+      "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
+    });
+
+    req.end(function(res) {
+      if (res.error) throw new Error(res.error);
+
+      console.log(res.body);
+    });
+
+    /*
     response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
-        offset: "0"
+        include: ["all_periods", "scores"]
       }
     }).then(
       function(response) {
@@ -46,11 +67,10 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/2/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
-        offset: "0"
+        include: ["all_periods", "scores"]
       }
     }).then(
       function(response) {
@@ -63,11 +83,10 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
-        offset: "0"
+        include: ["all_periods", "scores"]
       }
     }).then(
       function(response) {
@@ -80,7 +99,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -97,7 +116,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -114,7 +133,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -131,7 +150,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -148,7 +167,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -165,7 +184,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -182,7 +201,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -283,7 +302,7 @@ class BetokenIndex extends Component {
       <Layout>
         <div>
           <br />
-          {this.renderGamesCards(2)}
+          {/*this.renderGamesCards(2)*/}
           {/*this.renderGamesTap()*/}
           <h3>Open Bets</h3>
           {this.renderCurrentBets()}

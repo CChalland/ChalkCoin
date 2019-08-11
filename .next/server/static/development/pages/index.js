@@ -325,6 +325,8 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/pages/index.js";
 
 
 
+let unirest = __webpack_require__(/*! unirest */ "unirest");
+
 class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   static async getInitialProps() {
     let activeIndex = 0;
@@ -353,54 +355,70 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(getNode1);
     const blockchain = response.data;
     let today = new Date().toJSON().slice(0, 10);
-    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+    var req = unirest("GET", "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events");
+    req.query({
+      include: ["all_periods", "scores"]
+    });
+    req.headers({
+      "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+      "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+    });
+    req.end(function (res) {
+      if (res.error) throw new Error(res.error);
+      console.log(res.body);
+    });
+    /*
+    response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
-        offset: "0"
+        include: ["all_periods", "scores"]
       }
-    }).then(function (response) {
-      sportsData[0].data = response.data;
-    }.bind(this));
-    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+    }).then(
+      function(response) {
+        sportsData[0].data = response.data;
+      }.bind(this)
+    );
+     response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/2/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
-        offset: "0"
+        include: ["all_periods", "scores"]
       }
-    }).then(function (response) {
-      sportsData[1].data = response.data;
-    }.bind(this));
-    response = await axios__WEBPACK_IMPORTED_MODULE_1___default()({
+    }).then(
+      function(response) {
+        sportsData[1].data = response.data;
+      }.bind(this)
+    );
+     response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": "f010e18ceamsh44a01771378c10ep13cad0jsna22095d205e7"
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
-        offset: "0"
+        include: ["all_periods", "scores"]
       }
-    }).then(function (response) {
-      sportsData[2].data = response.data;
-    }.bind(this));
-    /* response = await axios({
+    }).then(
+      function(response) {
+        sportsData[2].data = response.data;
+      }.bind(this)
+    );
+     /* response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -416,7 +434,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -432,7 +450,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -448,7 +466,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -464,7 +482,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -480,7 +498,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -496,7 +514,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"],
@@ -523,7 +541,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 207
+            lineNumber: 226
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -531,7 +549,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           src: `../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 208
+            lineNumber: 227
           },
           __self: this
         }), game.teams_normalized[0].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -541,13 +559,13 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 215
+            lineNumber: 234
           },
           __self: this
         }, game.teams_normalized[0].record), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 218
+            lineNumber: 237
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -561,7 +579,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 219
+            lineNumber: 238
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -571,25 +589,25 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 229
+            lineNumber: 248
           },
           __self: this
         }, game.event_date, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 231
+            lineNumber: 250
           },
           __self: this
         }), this.props.sportsData[game.sport_id - 1].sport_name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 233
+            lineNumber: 252
           },
           __self: this
         }), "Game's spread right here"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 236
+            lineNumber: 255
           },
           __self: this
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -597,7 +615,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           src: `../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 237
+            lineNumber: 256
           },
           __self: this
         }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -607,7 +625,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 244
+            lineNumber: 263
           },
           __self: this
         }, game.teams_normalized[1].record)),
@@ -618,7 +636,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: gameItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 253
+        lineNumber: 272
       },
       __self: this
     });
@@ -632,7 +650,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           attached: false,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 261
+            lineNumber: 280
           },
           __self: this
         }, this.renderGamesCards(game.id))
@@ -646,7 +664,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       panes: gamePanes,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 266
+        lineNumber: 285
       },
       __self: this
     });
@@ -659,7 +677,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         description: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 273
+            lineNumber: 292
           },
           __self: this
         }, "View Bet"),
@@ -670,7 +688,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       items: betItems,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 278
+        lineNumber: 297
       },
       __self: this
     });
@@ -680,25 +698,25 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 283
+        lineNumber: 302
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 284
+        lineNumber: 303
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 285
+        lineNumber: 304
       },
       __self: this
-    }), this.renderGamesCards(2), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 288
+        lineNumber: 307
       },
       __self: this
     }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
@@ -707,7 +725,7 @@ class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       primary: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 290
+        lineNumber: 309
       },
       __self: this
     })));
@@ -761,6 +779,17 @@ module.exports = require("react");
 /***/ (function(module, exports) {
 
 module.exports = require("semantic-ui-react");
+
+/***/ }),
+
+/***/ "unirest":
+/*!**************************!*\
+  !*** external "unirest" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("unirest");
 
 /***/ })
 
