@@ -253,11 +253,12 @@ class BetokenIndex extends Component {
               }}
             />
             <span style={{ position: "absolute", right: "150px" }}>
-              {game.event_date}
+              {game.score.event_status_detail}
               <br />
               {this.props.sportsData[game.sport_id - 1].sport_name}
               <br />
-              {"Game's spread right here"}
+              Away Team's Spread{" "}
+              {game.line_periods["1"].period_full_game.spread.point_spread_away}
             </span>
             <br />
             <img

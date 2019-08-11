@@ -55337,7 +55337,7 @@ function (_Component) {
               lineNumber: 255
             },
             __self: this
-          }, game.event_date, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
+          }, game.score.event_status_detail, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
               lineNumber: 257
@@ -55349,10 +55349,10 @@ function (_Component) {
               lineNumber: 259
             },
             __self: this
-          }), "Game's spread right here"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
+          }), "Away Team's Spread", " ", game.line_periods["1"].period_full_game.spread.point_spread_away), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 262
+              lineNumber: 263
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
@@ -55360,7 +55360,7 @@ function (_Component) {
             src: "../static/media/".concat(game.sport_id, "-").concat(game.teams_normalized[1].abbreviation, ".png"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 263
+              lineNumber: 264
             },
             __self: this
           }), game.teams_normalized[1].mascot, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
@@ -55370,7 +55370,7 @@ function (_Component) {
             },
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 270
+              lineNumber: 271
             },
             __self: this
           }, game.teams_normalized[1].record)),
@@ -55381,7 +55381,7 @@ function (_Component) {
         items: gameItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 279
+          lineNumber: 280
         },
         __self: this
       });
@@ -55399,7 +55399,7 @@ function (_Component) {
               attached: false,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 287
+                lineNumber: 288
               },
               __self: this
             }, _this2.renderGamesCards(game.id));
@@ -55414,7 +55414,7 @@ function (_Component) {
         panes: gamePanes,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 292
+          lineNumber: 293
         },
         __self: this
       });
@@ -55428,7 +55428,7 @@ function (_Component) {
           description: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 299
+              lineNumber: 300
             },
             __self: this
           }, "View Bet"),
@@ -55439,7 +55439,7 @@ function (_Component) {
         items: betItems,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 304
+          lineNumber: 305
         },
         __self: this
       });
@@ -55450,25 +55450,25 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_10__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 309
+          lineNumber: 310
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 310
+          lineNumber: 311
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 311
+          lineNumber: 312
         },
         __self: this
       }), this.renderGamesCards(2), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 314
+          lineNumber: 315
         },
         __self: this
       }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Button"], {
@@ -55477,7 +55477,7 @@ function (_Component) {
         primary: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 316
+          lineNumber: 317
         },
         __self: this
       })));
