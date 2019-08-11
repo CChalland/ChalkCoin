@@ -25,27 +25,6 @@ class BetokenIndex extends Component {
 
     let today = new Date().toJSON().slice(0, 10);
 
-    var req = unirest(
-      "GET",
-      "https://therundown-therundown-v1.p.rapidapi.com/sports/3/events"
-    );
-
-    req.query({
-      include: ["all_periods", "scores"]
-    });
-
-    req.headers({
-      "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-      "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-    });
-
-    req.end(function(res) {
-      if (res.error) throw new Error(res.error);
-
-      console.log(res.body);
-    });
-
-    /*
     response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events`,
@@ -54,7 +33,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"]
+        include: "scores"
       }
     }).then(
       function(response) {
@@ -70,7 +49,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"]
+        include: "scores"
       }
     }).then(
       function(response) {
@@ -86,7 +65,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"]
+        include: "scores"
       }
     }).then(
       function(response) {
@@ -102,7 +81,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
+        include: "scores",
         offset: "0"
       }
     }).then(
@@ -119,7 +98,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
+        include: "scores",
         offset: "0"
       }
     }).then(
@@ -136,7 +115,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
+        include: "scores",
         offset: "0"
       }
     }).then(
@@ -153,7 +132,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
+        include: "scores",
         offset: "0"
       }
     }).then(
@@ -170,7 +149,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
+        include: "scores",
         offset: "0"
       }
     }).then(
@@ -187,7 +166,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
+        include: "scores",
         offset: "0"
       }
     }).then(
@@ -204,7 +183,7 @@ class BetokenIndex extends Component {
         "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
-        include: ["all_periods", "scores"],
+        include: "scores",
         offset: "0"
       }
     }).then(
@@ -302,7 +281,7 @@ class BetokenIndex extends Component {
       <Layout>
         <div>
           <br />
-          {/*this.renderGamesCards(2)*/}
+          {this.renderGamesCards(2)}
           {/*this.renderGamesTap()*/}
           <h3>Open Bets</h3>
           {this.renderCurrentBets()}
