@@ -325,7 +325,7 @@ var _jsxFileName = "/Users/colechalland/Projects/BEToken/pages/index.js";
 
 
 
-let qs = __webpack_require__(/*! qs */ "qs");
+const qs = __webpack_require__(/*! qs */ "qs");
 
 class BetokenIndex extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   static async getInitialProps() {
