@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Card, Button, Tab } from "semantic-ui-react";
 import Layout from "../components/Layout";
-let unirest = require("unirest");
 
 class BetokenIndex extends Component {
   static async getInitialProps() {

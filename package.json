@@ -38,7 +38,6 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.3",
     "sha256": "^0.2.0",
-    "unirest": "^0.6.0",
     "uuid": "^3.3.2"
   }
 }
