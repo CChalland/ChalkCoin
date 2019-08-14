@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import axios from "axios";
+import { Router } from "../../routes";
 
 class BetNew extends Component {
   state = {
@@ -35,6 +36,8 @@ class BetNew extends Component {
         .then(function(response) {
           console.log(response);
         });
+
+      Router.push("/");
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
