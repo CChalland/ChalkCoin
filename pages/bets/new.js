@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Input } from "semantic-ui-react";
+import { Form, Button, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import axios from "axios";
 
@@ -47,7 +47,7 @@ class BetNew extends Component {
       <Layout>
         <h3>Create a Bet</h3>
 
-        <Form onSubmit={this.onSubmit}>
+        <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
             <label>Bet Amount</label>
             <Input
@@ -60,7 +60,10 @@ class BetNew extends Component {
             />
           </Form.Field>
 
-          <Button primary>Create!</Button>
+          <Message error header="Oops!" content={this.state.errorMessage} />
+          <Button loading={this.state.loading} primary>
+            Create!
+          </Button>
         </Form>
       </Layout>
     );
