@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class GameIndex extends Component {
+class GameShow extends Component {
   render() {
     return (
       <div>
@@ -9,3 +9,5 @@ class GameIndex extends Component {
     );
   }
 }
+
+export default GameShow;
