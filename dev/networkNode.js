@@ -4,7 +4,6 @@ const Blockchain = require("./blockchain");
 const uuid = require("uuid/v1");
 const port = process.argv[2];
 const rp = require("request-promise");
-const cors = require("cors");
 
 const nodeAddress = uuid()
   .split("-")
@@ -13,7 +12,6 @@ const nodeAddress = uuid()
 const app = express();
 const betoken = new Blockchain();
 
-app.use(cors());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
