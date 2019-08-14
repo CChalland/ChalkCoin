@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { Form, Button } from "semantic-ui-react";
+import { Form, Button, Input } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 
 class BetNew extends Component {
+  state = {
+    betAmount: "",
+    errorMessage: "",
+    loading: false
+  };
+
   render() {
     return (
       <Layout>
@@ -11,7 +17,14 @@ class BetNew extends Component {
         <Form>
           <Form.Field>
             <label>Bet Amount</label>
-            <input />
+            <Input
+              labelPosition="right"
+              label="$ USD"
+              value={this.state.betAmount}
+              onChange={event =>
+                this.setState({ betAmount: event.target.value })
+              }
+            />
           </Form.Field>
 
           <Button primary>Create!</Button>
