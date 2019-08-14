@@ -1,8 +1,9 @@
+const qs = require("qs");
 import React, { Component } from "react";
 import axios from "axios";
 import { Card, Button, Tab } from "semantic-ui-react";
 import Layout from "../components/Layout";
-const qs = require("qs");
+import { Link } from "../routes";
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
@@ -262,12 +263,16 @@ class BetokenIndex extends Component {
                     .point_spread_away
                 }
               </span>
-              <Button
-                floated="right"
-                content="Create Bet"
-                icon="add circle"
-                primary
-              />
+              <Link route="/bets/new">
+                <a>
+                  <Button
+                    floated="right"
+                    content="Create Bet"
+                    icon="add circle"
+                    primary
+                  />
+                </a>
+              </Link>
               <br />
               <img
                 className="ui avatar image"
