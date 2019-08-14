@@ -285,7 +285,7 @@ class BetokenIndex extends Component {
                 {game.teams_normalized[1].record}
               </span>
             </h4>
-            <Link route={`/show/${game.event_id}`}>
+            <Link route={`/games/show/${game.event_id}`}>
               <a>View Game Details</a>
             </Link>
           </div>
