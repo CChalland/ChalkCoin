@@ -1,5 +1,6 @@
 import React from "react";
 import { Dropdown, Icon, Menu, Segment } from "semantic-ui-react";
+import { Link } from "../routes";
 
 export default () => {
   return (
@@ -12,9 +13,15 @@ export default () => {
         color="black"
         style={{ marginTop: "10px" }}
       >
-        <Menu.Item>Betoken</Menu.Item>
-        <Menu.Item>Today's Games</Menu.Item>
-        <Menu.Item>Open Bets</Menu.Item>
+        <Link route="/">
+          <a className="item">Betoken</a>
+        </Link>
+        <Link route="/">
+          <a className="item">Today's Games</a>
+        </Link>
+        <Link route="/">
+          <a className="item">Open Bets</a>
+        </Link>
 
         <Menu.Menu position="right">
           <div className="ui right aligned category search item">
@@ -35,10 +42,18 @@ export default () => {
             <Dropdown.Header>"Current Username"</Dropdown.Header>
             <Dropdown.Divider />
             <Dropdown.Header>Balance</Dropdown.Header>
-            <Dropdown.Item>Current Bets</Dropdown.Item>
-            <Dropdown.Item>Past Bets</Dropdown.Item>
+            <Link route="/">
+              <a className="item">Current Bets</a>
+            </Link>
+
+            <Link route="/">
+              <a className="item">Past Bets</a>
+            </Link>
+
             <Dropdown.Divider />
-            <Dropdown.Item>Settings</Dropdown.Item>
+            <Link route="/">
+              <a className="item">Settings</a>
+            </Link>
           </Dropdown.Menu>
         </Dropdown>
       </Menu>
