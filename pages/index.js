@@ -262,6 +262,12 @@ class BetokenIndex extends Component {
                     .point_spread_away
                 }
               </span>
+              <Button
+                floated="right"
+                content="Create Bet"
+                icon="add circle"
+                primary
+              />
               <br />
               <img
                 className="ui avatar image"
@@ -313,12 +319,6 @@ class BetokenIndex extends Component {
       <Layout>
         <div>
           <br />
-          <Button
-            floated="right"
-            content="Create Bet"
-            icon="add circle"
-            primary
-          />
           {this.renderGamesCards(2)}
           {/*this.renderGamesTap()*/}
           <h3>Open Bets</h3>
