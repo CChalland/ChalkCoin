@@ -6,7 +6,7 @@ import { Router } from "../../routes";
 
 class BetNew extends Component {
   state = {
-    betAmount: "100",
+    betAmount: "",
     betSender: "FQCQ4VQQRF43GFEGSDF",
     betRecipient: "AEFQ4FW4DASQ436645EG3DFDF",
     betSport: "NHL",
