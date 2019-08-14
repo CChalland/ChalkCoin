@@ -55465,22 +55465,33 @@ function (_Component) {
           lineNumber: 310
         },
         __self: this
-      }), this.renderGamesCards(2), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 313
-        },
-        __self: this
-      }, "Open Bets"), this.renderCurrentBets(), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+      }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+        floated: "right",
         content: "Create Bet",
         icon: "add circle",
         primary: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 315
+          lineNumber: 311
         },
         __self: this
-      })));
+      }), this.renderGamesCards(2), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 319
+        },
+        __self: this
+      }, "Open Bets"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+        floated: "right",
+        content: "Create Bet",
+        icon: "add circle",
+        primary: true,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 320
+        },
+        __self: this
+      }), this.renderCurrentBets()));
     }
   }], [{
     key: "getInitialProps",

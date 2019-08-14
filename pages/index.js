@@ -308,11 +308,22 @@ class BetokenIndex extends Component {
       <Layout>
         <div>
           <br />
+          <Button
+            floated="right"
+            content="Create Bet"
+            icon="add circle"
+            primary
+          />
           {this.renderGamesCards(2)}
           {/*this.renderGamesTap()*/}
           <h3>Open Bets</h3>
+          <Button
+            floated="right"
+            content="Create Bet"
+            icon="add circle"
+            primary
+          />
           {this.renderCurrentBets()}
-          <Button content="Create Bet" icon="add circle" primary />
         </div>
       </Layout>
     );
