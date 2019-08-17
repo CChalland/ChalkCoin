@@ -19,11 +19,7 @@ class GameTabs extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <GameCard sportsData={this.props.sportsData} />
-      </div>
-    );
+    return <div>{this.renderGamesTab()}</div>;
   }
 }
 
