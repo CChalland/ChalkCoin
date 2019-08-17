@@ -25,6 +25,7 @@ class BetokenIndex extends Component {
     let response = await axios.get(getNode1);
     const blockchain = response.data;
 
+    /*
     let today = new Date().toJSON().slice(0, 10);
 
     try {
@@ -53,8 +54,8 @@ class BetokenIndex extends Component {
     } catch (err) {
       console.log(err.message);
     }
+    */
 
-    /*
     response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
@@ -73,7 +74,6 @@ class BetokenIndex extends Component {
         sportsData[2].data = response.data;
       }.bind(this)
     );
-    */
 
     console.log(sportsData[2].data);
 
