@@ -27,46 +27,34 @@ class BetokenIndex extends Component {
 
     let today = new Date().toJSON().slice(0, 10);
 
+    try {
+      for (let i = 0; i < sportsData.length; i++) {
+        response = await axios({
+          method: "GET",
+          url: `https://therundown-therundown-v1.p.rapidapi.com/sports/${
+            sportsData[i].sport_id
+          }/events`,
+          headers: {
+            "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
+            "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
+          },
+          params: {
+            include: ["all_periods", "scores"]
+          },
+          paramsSerializer: function(params) {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          }
+        }).then(
+          function(response) {
+            sportsData[i].data = response.data;
+          }.bind(this)
+        );
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+
     /*
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/1/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[0].data = response.data;
-      }.bind(this)
-    );
-
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/2/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[1].data = response.data;
-      }.bind(this)
-    );
-    */
-
     response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
@@ -83,140 +71,6 @@ class BetokenIndex extends Component {
     }).then(
       function(response) {
         sportsData[2].data = response.data;
-      }.bind(this)
-    );
-
-    /*
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/4/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[3].data = response.data;
-      }.bind(this)
-    );
-
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/5/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[4].data = response.data;
-      }.bind(this)
-    );
-
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/6/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[5].data = response.data;
-      }.bind(this)
-    );
-
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/7/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[6].data = response.data;
-      }.bind(this)
-    );
-
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/8/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[7].data = response.data;
-      }.bind(this)
-    );
-
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/9/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[8].data = response.data;
-      }.bind(this)
-    );
-
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/10/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[9].data = response.data;
       }.bind(this)
     );
     */
