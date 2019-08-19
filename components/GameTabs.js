@@ -7,26 +7,39 @@ class GameTabs extends Component {
     super(props);
 
     this.state = {
-      activeTab: 1
-    }
+      activeIndex: 0
+    };
 
     this.renderGamesTab = this.renderGamesTab.bind(this);
   }
 
+  handleRangeChange = e => this.setState({ activeIndex: e.target.value });
+  handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
+
   renderGamesTab() {
+    const { activeIndex } = this.state;
+    
     let gamePanes = this.props.sportsData.map(game => {
       return {
         menuItem: game.sport_name,
         render: () => (
-          <Tab.Pane attached={false} name={game.sport_name} key={game.sport_id} active={this.state.activeTab === game.sport_id}>
-            <GameCard gameId={game.id} sportsData={this.props.sportsData} />
+          <Tab.Pane
+            attached={false}
+            name={game.sport_name}
+            
+          >
+            <GameCard
+              activeTab={this.state.activeTab}
+              sportsData={this.props.sportsData}
+              sportName={game.sport_name}
+              sportId={game.sport_id}
+            />
           </Tab.Pane>
         )
       };
     });
-    console.log(this.state.activeTab)
 
-    return <Tab menu={{ secondary: true, pointing: true }} panes={gamePanes} />;
+    return <Tab menu={{ secondary: true, pointing: true }} panes={gamePanes} activeIndex={activeIndex} onTabChange={this.handleTabChange}/>;
   }
 
   render() {

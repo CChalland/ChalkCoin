@@ -14,19 +14,18 @@ class BetokenIndex extends Component {
       { sport_id: 1, sport_name: "NCAA Football", data: {} },
       { sport_id: 2, sport_name: "NFL", data: {} },
       { sport_id: 3, sport_name: "MLB", data: {} },
-      { sport_id: 4, sport_name: "NBA", data: {} },
+      /*{ sport_id: 4, sport_name: "NBA", data: {} },
       { sport_id: 5, sport_name: "NCAA Men's Basketball", data: {} },
       { sport_id: 6, sport_name: "NHL", data: {} },
       { sport_id: 7, sport_name: "UFC/MMA", data: {} },
       { sport_id: 8, sport_name: "WNBA", data: {} },
-      { sport_id: 9, sport_name: "CFL", data: {} },
+      { sport_id: 9, sport_name: "CFL", data: {} },*/
       { sport_id: 10, sport_name: "MLS", data: {} }
     ];
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios.get(getNode1);
     const blockchain = response.data;
 
-    /*
     let today = new Date().toJSON().slice(0, 10);
 
     try {
@@ -49,20 +48,21 @@ class BetokenIndex extends Component {
         }).then(
           function(response) {
             sportsData[i].data = response.data;
+            console.log(sportsData[i].data);
           }.bind(this)
         );
       }
     } catch (err) {
       console.log(err.message);
     }
-    */
 
+    /*
     response = await axios({
       method: "GET",
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_2
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
       },
       params: {
         include: ["all_periods", "scores"]
@@ -75,8 +75,8 @@ class BetokenIndex extends Component {
         sportsData[2].data = response.data;
       }.bind(this)
     );
-
     console.log(sportsData[2].data);
+    */
 
     return { activeIndex, sportsData, blockchain };
   }
@@ -96,7 +96,7 @@ class BetokenIndex extends Component {
   render() {
     return (
       <Layout>
-        <BetContextProvider gameDetails={this.props.sportsData}/>
+        <BetContextProvider gameDetails={this.props.sportsData} />
         <div>
           <br />
           <GameTabs sportsData={this.props.sportsData} />
