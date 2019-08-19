@@ -36,10 +36,8 @@ class GameCard extends Component {
                 {this.props.sportName}
                 <br />
                 Away Team's Spread{" "}
-                {
-                  game.line_periods["1"].period_full_game.spread
-                    .point_spread_away
-                }
+                {/*game.line_periods["1"].period_full_game.spread
+                    .point_spread_away*/}
               </span>
               <Link route="/bets/new">
                 <a>
@@ -76,7 +74,7 @@ class GameCard extends Component {
   }
 
   render() {
-    return <div>{this.renderGamesCards(this.props.sportId - 1)}</div>;
+    return <div>{this.renderGamesCards(this.props.sportIndex)}</div>;
   }
 }
 

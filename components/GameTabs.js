@@ -18,28 +18,31 @@ class GameTabs extends Component {
 
   renderGamesTab() {
     const { activeIndex } = this.state;
-    
+
     let gamePanes = this.props.sportsData.map(game => {
       return {
         menuItem: game.sport_name,
         render: () => (
-          <Tab.Pane
-            attached={false}
-            name={game.sport_name}
-            
-          >
+          <Tab.Pane attached={false} name={game.sport_name}>
             <GameCard
               activeTab={this.state.activeTab}
               sportsData={this.props.sportsData}
               sportName={game.sport_name}
-              sportId={game.sport_id}
+              sportIndex={activeIndex}
             />
           </Tab.Pane>
         )
       };
     });
 
-    return <Tab menu={{ secondary: true, pointing: true }} panes={gamePanes} activeIndex={activeIndex} onTabChange={this.handleTabChange}/>;
+    return (
+      <Tab
+        menu={{ secondary: true, pointing: true }}
+        panes={gamePanes}
+        activeIndex={activeIndex}
+        onTabChange={this.handleTabChange}
+      />
+    );
   }
 
   render() {
