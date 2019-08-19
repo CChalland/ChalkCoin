@@ -56,28 +56,6 @@ class BetokenIndex extends Component {
       console.log(err.message);
     }
 
-    /*
-    response = await axios({
-      method: "GET",
-      url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
-      headers: {
-        "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
-      },
-      params: {
-        include: ["all_periods", "scores"]
-      },
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then(
-      function(response) {
-        sportsData[2].data = response.data;
-      }.bind(this)
-    );
-    console.log(sportsData[2].data);
-    */
-
     return { activeIndex, sportsData, blockchain };
   }
 
