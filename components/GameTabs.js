@@ -23,9 +23,8 @@ class GameTabs extends Component {
       return {
         menuItem: game.sport_name,
         render: () => (
-          <Tab.Pane attached={false} name={game.sport_name}>
+          <Tab.Pane attached={false}>
             <GameCard
-              activeTab={this.state.activeTab}
               sportsData={this.props.sportsData}
               sportName={game.sport_name}
               sportIndex={activeIndex}
