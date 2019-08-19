@@ -5,6 +5,7 @@ import { Card, Button, Tab } from "semantic-ui-react";
 import { Link } from "../routes";
 import Layout from "../components/Layout";
 import GameTabs from "../components/GameTabs";
+import BetContextProvider from "../components/provider/BetContextProvider";
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
@@ -61,7 +62,7 @@ class BetokenIndex extends Component {
       url: `https://therundown-therundown-v1.p.rapidapi.com/sports/3/events`,
       headers: {
         "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
+        "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_2
       },
       params: {
         include: ["all_periods", "scores"]
@@ -95,6 +96,7 @@ class BetokenIndex extends Component {
   render() {
     return (
       <Layout>
+        <BetContextProvider gameDetails={this.props.sportsData}/>
         <div>
           <br />
           <GameTabs sportsData={this.props.sportsData} />

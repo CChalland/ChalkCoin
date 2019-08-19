@@ -36,10 +36,7 @@ class GameCard extends Component {
                 {this.props.sportsData[game.sport_id - 1].sport_name}
                 <br />
                 Away Team's Spread{" "}
-                {
-                  game.line_periods["1"].period_full_game.spread
-                    .point_spread_away
-                }
+                {game.line_periods["1"].period_full_game.spread.point_spread_away}
               </span>
               <Link route="/bets/new">
                 <a>
