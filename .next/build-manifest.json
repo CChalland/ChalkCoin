@@ -16,7 +16,7 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/bets/new": [
+    "/games/show": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],

@@ -1,10 +1,31 @@
 import React, { Component } from "react";
 import { Card, Button } from "semantic-ui-react";
 import { Link } from "../routes";
+import GameCardModal from "./GameCardModal";
 
 class GameCard extends Component {
   renderGamesCards(sportId) {
     let gameItems = this.props.sportsData[sportId].data.events.map(game => {
+      let spread;
+      let spreadTeam = (spread = game.teams_normalized[0].is_away
+        ? game.teams_normalized[0].abbreviation
+        : game.teams_normalized[1].abbreviation);
+
+      if (
+        game.line_periods["1"].period_full_game.spread.point_spread_away <
+        game.line_periods["1"].period_full_game.spread.point_spread_home
+      ) {
+        spread =
+          spreadTeam +
+          " " +
+          game.line_periods["1"].period_full_game.spread.point_spread_away;
+      } else {
+        spread =
+          spreadTeam +
+          " " +
+          game.line_periods["1"].period_full_game.spread.point_spread_home;
+      }
+
       return {
         description: (
           <div>
@@ -35,9 +56,7 @@ class GameCard extends Component {
                 <br />
                 {this.props.sportName}
                 <br />
-                Away Team's Spread{" "}
-                {/*game.line_periods["1"].period_full_game.spread
-                    .point_spread_away*/}
+                {spread}
               </span>
               <Link route="/bets/new">
                 <a>
