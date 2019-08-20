@@ -5,7 +5,7 @@ import GameCardModal from "./GameCardModal";
 
 class GameCard extends Component {
   renderGamesCards(sportId) {
-    let gameItems = this.props.sportsData[sportId].data.events.map(game => {
+    let gameItems = this.props.sportsData[sportId].data.map(game => {
       let spread;
       let spreadTeam = (spread = game.teams_normalized[0].is_away
         ? game.teams_normalized[0].abbreviation
