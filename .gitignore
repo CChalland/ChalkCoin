@@ -3,3 +3,4 @@
 
 # Ignoring all '.next' files
 .next/
+.mockup/
