@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Card, Button } from "semantic-ui-react";
 import { Link } from "../routes";
-import GameCardModal from "./GameCardModal";
 
 class GameCard extends Component {
   renderGamesCards(sportId) {
