@@ -22,11 +22,10 @@ class BetokenIndex extends Component {
       { sport_id: 9, sport_name: "CFL", data: {} },
       { sport_id: 10, sport_name: "MLS", data: {} }
     ];
+
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios.get(getNode1);
     const blockchain = response.data;
-
-    let today = new Date().toJSON().slice(0, 10);
 
     try {
       for (let i = 0; i < sportsData.length; i++) {
