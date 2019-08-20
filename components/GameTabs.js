@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tab } from "semantic-ui-react";
+import { Tab, Menu } from "semantic-ui-react";
 import GameCard from "./GameCard";
 
 class GameTabs extends Component {
@@ -21,16 +21,14 @@ class GameTabs extends Component {
 
     let gamePanes = this.props.sportsData.map(game => {
       let img = (
-        <img className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
+        <div>
+          <img className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
+          {game.sport_name}
+        </div>
       );
 
       return {
-        menuItem: (
-          <div>
-            {img}
-            {game.sport_name}
-          </div>
-        ),
+        menuItem: <Menu.Item key={game.sport_id}>{img}</Menu.Item>,
         render: () => (
           <Tab.Pane attached={false}>
             <GameCard
