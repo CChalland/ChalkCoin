@@ -89,7 +89,6 @@ class BetokenIndex extends Component {
   render() {
     return (
       <Layout>
-        <BetContextProvider gameDetails={this.props.sportsData} />
         <div>
           <br />
           <GameTabs sportsData={this.props.sportsData} />

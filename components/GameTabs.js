@@ -20,8 +20,17 @@ class GameTabs extends Component {
     const { activeIndex } = this.state;
 
     let gamePanes = this.props.sportsData.map(game => {
+      let img = (
+        <img className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
+      );
+
       return {
-        menuItem: game.sport_name,
+        menuItem: (
+          <div>
+            {img}
+            {game.sport_name}
+          </div>
+        ),
         render: () => (
           <Tab.Pane attached={false}>
             <GameCard
