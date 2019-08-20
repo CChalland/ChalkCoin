@@ -47,7 +47,8 @@ class BetokenIndex extends Component {
           }
         }).then(
           function(response) {
-            sportsData[i].data = response.data.events.sort(function(a, b) {
+            sportsData[i].data = response.data;
+            sportsData[i].data.events = response.data.events.sort(function(a, b) {
               return new Date(a.event_date) - new Date(b.event_date);
             });
             console.log(sportsData[i].data);
@@ -81,12 +82,7 @@ class BetokenIndex extends Component {
           <br />
           <GameTabs sportsData={this.props.sportsData} />
           <h3>Open Bets</h3>
-          <Button
-            floated="right"
-            content="Create Bet"
-            icon="add circle"
-            primary
-          />
+          <Button floated="right" content="Create Bet" icon="add circle" primary />
           {this.renderCurrentBets()}
         </div>
       </Layout>
