@@ -6,24 +6,19 @@ import GameCardModal from "./GameCardModal";
 class GameCard extends Component {
   renderGamesCards(sportId) {
     let gameItems = this.props.sportsData[sportId].data.events.map(game => {
+      let defSpreadHelper =
+        game.sport_id !== 10
+          ? game.line_periods["1"].period_full_game.spread
+          : game.line_periods["2"].period_full_game.spread;
       let spread;
       let spreadTeam = (spread = game.teams_normalized[0].is_away
         ? game.teams_normalized[0].abbreviation
         : game.teams_normalized[1].abbreviation);
 
-      if (
-        game.line_periods["1"].period_full_game.spread.point_spread_away <
-        game.line_periods["1"].period_full_game.spread.point_spread_home
-      ) {
-        spread =
-          spreadTeam +
-          " " +
-          game.line_periods["1"].period_full_game.spread.point_spread_away;
+      if (defSpreadHelper.point_spread_away < defSpreadHelper.point_spread_home) {
+        spread = spreadTeam + " " + defSpreadHelper.point_spread_away;
       } else {
-        spread =
-          spreadTeam +
-          " " +
-          game.line_periods["1"].period_full_game.spread.point_spread_home;
+        spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
       }
 
       return {

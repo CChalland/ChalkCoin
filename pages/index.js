@@ -55,7 +55,6 @@ class BetokenIndex extends Component {
                 return new Date(a.event_date) - new Date(b.event_date);
               });
             }
-            console.log(sportsData[i].data);
           }.bind(this)
         );
       }
