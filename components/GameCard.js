@@ -51,7 +51,7 @@ class GameCard extends Component {
                   right: "350px"
                 }}
               />
-              <span style={{ position: "absolute", right: "100px" }}>
+              <span style={{ position: "absolute", right: "150px" }}>
                 {game.score.event_status_detail}
                 <br />
                 {this.props.sportName}
