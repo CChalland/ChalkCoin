@@ -5,6 +5,11 @@ import { Link } from "../routes";
 class GameCard extends Component {
   renderGamesCards(sportId) {
     let gameItems = this.props.sportsData[sportId].data.events.map(game => {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      let gameTime = new Date(game.event_date).toLocaleString("en-US", {
+        timeZone: timeZone
+      });
+
       let defSpreadHelper =
         game.sport_id !== 10
           ? game.line_periods["1"].period_full_game.spread
@@ -46,7 +51,7 @@ class GameCard extends Component {
                 }}
               />
               <span style={{ position: "absolute", right: "150px" }}>
-                {game.score.event_status_detail}
+                {gameTime}
                 <br />
                 {this.props.sportName}
                 <br />

@@ -5,7 +5,6 @@ import { Card, Button, Tab } from "semantic-ui-react";
 import { Link } from "../routes";
 import Layout from "../components/Layout";
 import GameTabs from "../components/GameTabs";
-import BetContextProvider from "../components/provider/BetContextProvider";
 
 class BetokenIndex extends Component {
   static async getInitialProps() {
