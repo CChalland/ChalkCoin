@@ -10,9 +10,34 @@ import { SportContext } from "../contexts/SportContext";
 class BetokenIndex extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      sportsData: [
+        { sport_id: 1, sport_name: "NCAA Football", data: {} },
+        { sport_id: 2, sport_name: "NFL", data: {} },
+        { sport_id: 3, sport_name: "MLB", data: {} },
+        { sport_id: 4, sport_name: "NBA", data: {} },
+        { sport_id: 5, sport_name: "NCAA Men's Basketball", data: {} },
+        { sport_id: 6, sport_name: "NHL", data: {} },
+        { sport_id: 7, sport_name: "UFC/MMA", data: {} },
+        { sport_id: 8, sport_name: "WNBA", data: {} },
+        { sport_id: 9, sport_name: "CFL", data: {} },
+        { sport_id: 10, sport_name: "MLS", data: {} }
+      ],
+      blockchain: {},
+      fetchingSportData: false
+    };
   }
 
   static contextType = SportContext;
+
+  async componentDidMount() {
+    const { sportsData, blockchain, fetchingSportData } = this.context;
+    this.setState({ sportsData, blockchain, fetchingSportData });
+  }
+
+  async componentDidUpdate() {
+    console.log("Did Update", this.context);
+  }
   /*
   static async getInitialProps() {
     let removeSportsData = [];
@@ -78,9 +103,10 @@ class BetokenIndex extends Component {
 
     return { sportsData, blockchain };
   }
+  */
 
   renderCurrentBets() {
-    const { blockchain } = this.props;
+    const { blockchain } = this.state;
     const betItems = blockchain.pendingTransactions.map(bet => {
       return {
         header: bet.amount,
@@ -91,11 +117,10 @@ class BetokenIndex extends Component {
 
     return <Card.Group items={betItems} />;
   }
-  */
 
   render() {
-    const { sportsData } = this.props;
-    console.log(this.context);
+    const { sportsData } = this.state;
+    //console.log(this.context);
 
     return (
       <Layout>

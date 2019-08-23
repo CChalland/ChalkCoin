@@ -161,12 +161,12 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
         sport_name: "MLS",
         data: {}
       }],
-      blockchain: {}
+      blockchain: {},
+      fetchingSportData: true
     };
-    this.fetchData = this.fetchData.bind(this);
   }
 
-  async fetchData() {
+  async componentDidMount() {
     console.log("HELLO");
     let removeSportsData = [];
     let sportsData = this.state.sportsData;
@@ -213,17 +213,14 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
     };
 
     sportsData = sportsData.diff(removeSportsData);
-    console.log(sportsData);
     this.setState({
-      sportsData: sportsData
-    });
-    this.setState({
-      blockchain: blockchain
+      sportsData,
+      blockchain,
+      fetchingSportData: false
     });
   }
 
   render() {
-    this.fetchData();
     return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SportContext.Provider, {
       value: Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, this.state)
     }, this.props.children);

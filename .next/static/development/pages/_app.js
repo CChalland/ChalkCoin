@@ -19,13 +19,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "./node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn.js");
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/getPrototypeOf */ "./node_modules/@babel/runtime-corejs2/helpers/esm/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime-corejs2/helpers/esm/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "./node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_10__);
-
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "./node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_9__);
 
 
 
@@ -39,11 +37,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var qs = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
 
-var SportContext = Object(react__WEBPACK_IMPORTED_MODULE_9__["createContext"])();
+var SportContext = Object(react__WEBPACK_IMPORTED_MODULE_8__["createContext"])();
 var SportProvider =
 /*#__PURE__*/
 function (_Component) {
-  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_8__["default"])(SportProvider, _Component);
+  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_7__["default"])(SportProvider, _Component);
 
   function SportProvider(props) {
     var _this;
@@ -93,16 +91,16 @@ function (_Component) {
         sport_name: "MLS",
         data: {}
       }],
-      blockchain: {}
+      blockchain: {},
+      fetchingSportData: true
     };
-    _this.fetchData = _this.fetchData.bind(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_7__["default"])(_this));
     return _this;
   }
 
   Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(SportProvider, [{
-    key: "fetchData",
+    key: "componentDidMount",
     value: function () {
-      var _fetchData = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(
+      var _componentDidMount = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(
       /*#__PURE__*/
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee() {
         var _this2 = this;
@@ -118,7 +116,7 @@ function (_Component) {
                 sportsData = this.state.sportsData;
                 getNode1 = "http://localhost:3001/blockchain";
                 _context2.next = 6;
-                return axios__WEBPACK_IMPORTED_MODULE_10___default.a.get(getNode1);
+                return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get(getNode1);
 
               case 6:
                 response = _context2.sent;
@@ -132,7 +130,7 @@ function (_Component) {
                       switch (_context.prev = _context.next) {
                         case 0:
                           _context.next = 2;
-                          return axios__WEBPACK_IMPORTED_MODULE_10___default()({
+                          return axios__WEBPACK_IMPORTED_MODULE_9___default()({
                             method: "GET",
                             url: "https://therundown-therundown-v1.p.rapidapi.com/sports/".concat(sportsData[i].sport_id, "/events"),
                             headers: {
@@ -200,15 +198,13 @@ function (_Component) {
                 };
 
                 sportsData = sportsData.diff(removeSportsData);
-                console.log(sportsData);
                 this.setState({
-                  sportsData: sportsData
-                });
-                this.setState({
-                  blockchain: blockchain
+                  sportsData: sportsData,
+                  blockchain: blockchain,
+                  fetchingSportData: false
                 });
 
-              case 26:
+              case 24:
               case "end":
                 return _context2.stop();
             }
@@ -216,24 +212,23 @@ function (_Component) {
         }, _callee, this, [[8, 18]]);
       }));
 
-      function fetchData() {
-        return _fetchData.apply(this, arguments);
+      function componentDidMount() {
+        return _componentDidMount.apply(this, arguments);
       }
 
-      return fetchData;
+      return componentDidMount;
     }()
   }, {
     key: "render",
     value: function render() {
-      this.fetchData();
-      return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(SportContext.Provider, {
+      return react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(SportContext.Provider, {
         value: Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, this.state)
       }, this.props.children);
     }
   }]);
 
   return SportProvider;
-}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_8__["Component"]);
 
 /***/ }),
 

@@ -20,13 +20,12 @@ export class SportProvider extends Component {
         { sport_id: 9, sport_name: "CFL", data: {} },
         { sport_id: 10, sport_name: "MLS", data: {} }
       ],
-      blockchain: {}
+      blockchain: {},
+      fetchingSportData: true
     };
-
-    this.fetchData = this.fetchData.bind(this);
   }
 
-  async fetchData() {
+  async componentDidMount() {
     console.log("HELLO");
     let removeSportsData = [];
     let sportsData = this.state.sportsData;
@@ -76,14 +75,11 @@ export class SportProvider extends Component {
     };
 
     sportsData = sportsData.diff(removeSportsData);
-    console.log(sportsData);
 
-    this.setState({ sportsData: sportsData });
-    this.setState({ blockchain: blockchain });
+    this.setState({ sportsData, blockchain, fetchingSportData: false });
   }
 
   render() {
-    this.fetchData();
     return (
       <SportContext.Provider value={{ ...this.state }}>
         {this.props.children}
