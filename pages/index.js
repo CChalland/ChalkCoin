@@ -7,6 +7,10 @@ import Layout from "../components/Layout";
 import GameTabs from "../components/GameTabs";
 
 class BetokenIndex extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   static async getInitialProps() {
     let removeSportsData = [];
     let sportsData = [
@@ -73,7 +77,8 @@ class BetokenIndex extends Component {
   }
 
   renderCurrentBets() {
-    const betItems = this.props.blockchain.pendingTransactions.map(bet => {
+    const { blockchain } = this.props;
+    const betItems = blockchain.pendingTransactions.map(bet => {
       return {
         header: bet.amount,
         description: <a>View Bet</a>,
@@ -85,11 +90,12 @@ class BetokenIndex extends Component {
   }
 
   render() {
+    const { sportsData } = this.props;
     return (
       <Layout>
         <div>
           <br />
-          <GameTabs sportsData={this.props.sportsData} />
+          <GameTabs sportsData={sportsData} />
           <h3>Open Bets</h3>
           <Button floated="right" content="Create Bet" icon="add circle" primary />
           {this.renderCurrentBets()}
