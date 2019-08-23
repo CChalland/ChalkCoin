@@ -53,8 +53,8 @@ app.post("/transaction/open", function(req, res) {
   });
 });
 
-// broadcast transaction
-app.post("/transaction/broadcast", function(req, res) {
+// broadcast open transaction
+app.post("/transaction/open/broadcast", function(req, res) {
   const newTransaction = betoken.createNewTransaction(
     req.body.amount,
     req.body.sender,
@@ -64,12 +64,12 @@ app.post("/transaction/broadcast", function(req, res) {
     req.body.event_spread,
     req.body.description
   );
-  betoken.addTransactionToPendingTransactions(newTransaction);
+  betoken.addTransactionToOpenTransactions(newTransaction);
 
   const requestPromises = [];
   betoken.networkNodes.forEach(networkNodeUrl => {
     const requestOptions = {
-      uri: networkNodeUrl + "/transaction",
+      uri: networkNodeUrl + "/transaction/open",
       method: "POST",
       body: newTransaction,
       json: true
@@ -80,7 +80,7 @@ app.post("/transaction/broadcast", function(req, res) {
 
   Promise.all(requestPromises).then(data => {
     res.json({
-      note: "Transaction created and broadcast successfully."
+      note: "Transaction created in Open Transaction and broadcast successfully."
     });
   });
 });

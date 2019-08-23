@@ -51,6 +51,8 @@ Betoken.prototype.createNewTransaction = function(
     event_id: event_id,
     event_spread: event_spread,
     description: description,
+    accepted: false,
+    completed: false,
     transactionId: uuid()
       .split("-")
       .join("")

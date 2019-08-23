@@ -48,7 +48,7 @@ class BetNew extends Component {
 
     try {
       await axios
-        .post("http://localhost:3001/transaction/open", {
+        .post("http://localhost:3001/transaction/open/broadcast", {
           amount: this.state.betAmount,
           sender: this.state.betSender,
           recipient: this.state.betRecipient,
