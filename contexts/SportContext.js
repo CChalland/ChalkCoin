@@ -1,6 +1,6 @@
+const qs = require("qs");
 import React, { Component, createContext } from "react";
 import axios from "axios";
-const qs = require("qs");
 
 export const SportContext = createContext();
 

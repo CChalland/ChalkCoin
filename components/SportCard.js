@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, Button } from "semantic-ui-react";
 import { Link } from "../routes";
 
-class GameCard extends Component {
+class SportCard extends Component {
   renderGamesCards(sportId) {
     let gameItems = this.props.sportsData[sportId].data.events.map(game => {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -101,4 +101,4 @@ class GameCard extends Component {
   }
 }
 
-export default GameCard;
+export default SportCard;

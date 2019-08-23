@@ -1,10 +1,8 @@
-const qs = require("qs");
 import React, { Component } from "react";
-import axios from "axios";
-import { Card, Button, Tab } from "semantic-ui-react";
+import { Card, Button } from "semantic-ui-react";
 import { Link } from "../routes";
 import Layout from "../components/Layout";
-import GameTabs from "../components/GameTabs";
+import SportTabs from "../components/SportTabs";
 import { SportContext } from "../contexts/SportContext";
 
 class BetokenIndex extends Component {
@@ -43,7 +41,7 @@ class BetokenIndex extends Component {
       result = (
         <div>
           <br />
-          {<GameTabs sportsData={sportsData} />}
+          {<SportTabs sportsData={sportsData} />}
           <h3>Open Bets</h3>
           <Button floated="right" content="Create Bet" icon="add circle" primary />
           {this.renderCurrentBets(blockchain)}

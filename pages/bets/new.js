@@ -11,7 +11,6 @@ class BetNew extends Component {
   static async getInitialProps(query) {
     const sportId = query.query.sportId;
     const eventId = query.query.eventId;
-    console.log("InitialProps: ", query.query.sportId);
     return { sportId, eventId };
   }
 
