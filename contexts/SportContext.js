@@ -21,7 +21,7 @@ export class SportProvider extends Component {
         { sport_id: 10, sport_name: "MLS", data: {} }
       ],
       blockchain: {},
-      fetchingSportData: true
+      fetchedSportData: false
     };
   }
 
@@ -76,7 +76,7 @@ export class SportProvider extends Component {
 
     sportsData = sportsData.diff(removeSportsData);
 
-    this.setState({ sportsData, blockchain, fetchingSportData: false });
+    this.setState({ sportsData, blockchain, fetchedSportData: true });
   }
 
   render() {

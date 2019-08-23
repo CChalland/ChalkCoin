@@ -8,35 +8,29 @@ import GameTabs from "../components/GameTabs";
 import { SportContext } from "../contexts/SportContext";
 
 class BetokenIndex extends Component {
+  static contextType = SportContext;
+
   constructor(props) {
     super(props);
     this.state = {
-      sportsData: [
-        { sport_id: 1, sport_name: "NCAA Football", data: {} },
-        { sport_id: 2, sport_name: "NFL", data: {} },
-        { sport_id: 3, sport_name: "MLB", data: {} },
-        { sport_id: 4, sport_name: "NBA", data: {} },
-        { sport_id: 5, sport_name: "NCAA Men's Basketball", data: {} },
-        { sport_id: 6, sport_name: "NHL", data: {} },
-        { sport_id: 7, sport_name: "UFC/MMA", data: {} },
-        { sport_id: 8, sport_name: "WNBA", data: {} },
-        { sport_id: 9, sport_name: "CFL", data: {} },
-        { sport_id: 10, sport_name: "MLS", data: {} }
-      ],
+      sportsData: [],
       blockchain: {},
-      fetchingSportData: false
+      loadingData: false,
+      fetchedSportData: false
     };
-  }
 
-  static contextType = SportContext;
+    this.renderCurrentBets = this.renderCurrentBets.bind(this);
+  }
 
   async componentDidMount() {
-    const { sportsData, blockchain, fetchingSportData } = this.context;
-    this.setState({ sportsData, blockchain, fetchingSportData });
+    let { sportsData, blockchain } = this.context;
+    this.setState({ sportsData, blockchain });
+    console.log("Did Mount", this.state);
   }
 
-  async componentDidUpdate() {
-    console.log("Did Update", this.context);
+  async componentWillUpdate() {
+    console.log("Will Update: doneLoadingData", this.state);
+    //console.log("Will Update", this.state);
   }
   /*
   static async getInitialProps() {
@@ -105,8 +99,7 @@ class BetokenIndex extends Component {
   }
   */
 
-  renderCurrentBets() {
-    const { blockchain } = this.state;
+  renderCurrentBets(blockchain) {
     const betItems = blockchain.pendingTransactions.map(bet => {
       return {
         header: bet.amount,
@@ -119,20 +112,33 @@ class BetokenIndex extends Component {
   }
 
   render() {
-    const { sportsData } = this.state;
-    //console.log(this.context);
+    let { loadingData } = this.state;
+    const { sportsData, blockchain, fetchedSportData } = this.context;
+    console.log("render: sportsData context ", sportsData);
+    console.log("render: blockchain context ", blockchain);
+    console.log("render: fetchedSportData ", fetchedSportData);
+    console.log("render: loadingData ", loadingData);
 
-    return (
-      <Layout>
+    let result;
+    if (fetchedSportData) {
+      result = (
         <div>
           <br />
-          {/*<GameTabs sportsData={sportsData} />*/}
+          {<GameTabs sportsData={sportsData} />}
           <h3>Open Bets</h3>
           <Button floated="right" content="Create Bet" icon="add circle" primary />
-          {/*this.renderCurrentBets()*/}
+          {this.renderCurrentBets(blockchain)}
         </div>
-      </Layout>
-    );
+      );
+    } else {
+      result = (
+        <div>
+          <h3>Loading...</h3>
+        </div>
+      );
+    }
+
+    return <Layout>{result}</Layout>;
   }
 }
 

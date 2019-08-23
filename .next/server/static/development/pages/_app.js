@@ -162,7 +162,7 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
         data: {}
       }],
       blockchain: {},
-      fetchingSportData: true
+      fetchedSportData: false
     };
   }
 
@@ -216,7 +216,7 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
     this.setState({
       sportsData,
       blockchain,
-      fetchingSportData: false
+      fetchedSportData: true
     });
   }
 

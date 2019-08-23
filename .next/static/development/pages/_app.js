@@ -92,7 +92,7 @@ function (_Component) {
         data: {}
       }],
       blockchain: {},
-      fetchingSportData: true
+      fetchedSportData: false
     };
     return _this;
   }
@@ -201,7 +201,7 @@ function (_Component) {
                 this.setState({
                   sportsData: sportsData,
                   blockchain: blockchain,
-                  fetchingSportData: false
+                  fetchedSportData: true
                 });
 
               case 24:
