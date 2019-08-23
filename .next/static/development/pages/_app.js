@@ -111,17 +111,16 @@ function (_Component) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log("HELLO");
                 removeSportsData = [];
                 sportsData = this.state.sportsData;
                 getNode1 = "http://localhost:3001/blockchain";
-                _context2.next = 6;
+                _context2.next = 5;
                 return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get(getNode1);
 
-              case 6:
+              case 5:
                 response = _context2.sent;
                 blockchain = response.data;
-                _context2.prev = 8;
+                _context2.prev = 7;
                 _loop =
                 /*#__PURE__*/
                 _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _loop(i) {
@@ -168,29 +167,29 @@ function (_Component) {
                 });
                 i = 0;
 
-              case 11:
+              case 10:
                 if (!(i < sportsData.length)) {
-                  _context2.next = 16;
+                  _context2.next = 15;
                   break;
                 }
 
-                return _context2.delegateYield(_loop(i), "t0", 13);
+                return _context2.delegateYield(_loop(i), "t0", 12);
 
-              case 13:
+              case 12:
                 i++;
-                _context2.next = 11;
+                _context2.next = 10;
                 break;
 
-              case 16:
-                _context2.next = 21;
+              case 15:
+                _context2.next = 20;
                 break;
 
-              case 18:
-                _context2.prev = 18;
-                _context2.t1 = _context2["catch"](8);
+              case 17:
+                _context2.prev = 17;
+                _context2.t1 = _context2["catch"](7);
                 console.log(_context2.t1.message);
 
-              case 21:
+              case 20:
                 Array.prototype.diff = function (a) {
                   return this.filter(function (i) {
                     return a.indexOf(i) < 0;
@@ -204,12 +203,12 @@ function (_Component) {
                   fetchedSportData: true
                 });
 
-              case 24:
+              case 23:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee, this, [[8, 18]]);
+        }, _callee, this, [[7, 17]]);
       }));
 
       function componentDidMount() {

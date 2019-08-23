@@ -26,7 +26,6 @@ export class SportProvider extends Component {
   }
 
   async componentDidMount() {
-    console.log("HELLO");
     let removeSportsData = [];
     let sportsData = this.state.sportsData;
 

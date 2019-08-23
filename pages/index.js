@@ -21,13 +21,14 @@ class BetokenIndex extends Component {
 
     this.renderCurrentBets = this.renderCurrentBets.bind(this);
   }
-
+  /*
   async componentDidMount() {
     let { sportsData, blockchain } = this.context;
     this.setState({ sportsData, blockchain });
     console.log("Did Mount", this.state);
   }
 
+  /*
   async componentWillUpdate() {
     console.log("Will Update: doneLoadingData", this.state);
     //console.log("Will Update", this.state);
@@ -112,12 +113,8 @@ class BetokenIndex extends Component {
   }
 
   render() {
-    let { loadingData } = this.state;
+    //let { loadingData } = this.state;
     const { sportsData, blockchain, fetchedSportData } = this.context;
-    console.log("render: sportsData context ", sportsData);
-    console.log("render: blockchain context ", blockchain);
-    console.log("render: fetchedSportData ", fetchedSportData);
-    console.log("render: loadingData ", loadingData);
 
     let result;
     if (fetchedSportData) {

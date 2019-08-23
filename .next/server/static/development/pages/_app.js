@@ -167,7 +167,6 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
   }
 
   async componentDidMount() {
-    console.log("HELLO");
     let removeSportsData = [];
     let sportsData = this.state.sportsData;
     const getNode1 = `http://localhost:3001/blockchain`;
