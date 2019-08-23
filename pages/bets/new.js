@@ -3,23 +3,34 @@ import { Form, Button, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import axios from "axios";
 import { Router } from "../../routes";
-import { withRouter } from "next/router";
+import { SportContext } from "../../contexts/SportContext";
 
 class BetNew extends Component {
-  state = {
-    betAmount: "",
-    betSender: "FQCQ4VQQRF43GFEGSDF",
-    betRecipient: "AEFQ4FW4DASQ436645EG3DFDF",
-    betSport: "NHL",
-    betEvent_id: "teastingSubmit",
-    betEvent_spread: 1234,
-    betDescription: "This is a static test",
-    errorMessage: "",
-    loading: false
-  };
+  static contextType = SportContext;
 
   static async getInitialProps(query) {
+    console.log("InitialProps: ", query.query);
     return query;
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      betAmount: "",
+      betSender: "",
+      betRecipient: "",
+      betSport: "",
+      betEvent_id: "",
+      betEvent_spread: 0,
+      betDescription: "",
+      errorMessage: "",
+      loading: false
+    };
+  }
+
+  componentDidMount() {
+    const { sportsData } = this.context;
+    console.log(sportsData);
   }
 
   onSubmit = async event => {
