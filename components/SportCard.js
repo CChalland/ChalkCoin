@@ -4,7 +4,7 @@ import { Link } from "../routes";
 
 class SportCard extends Component {
   renderGamesCards(sportId) {
-    let gameItems = this.props.sportsData[sportId].data.events.map(game => {
+    let gameItems = this.props.sportData[sportId].data.events.map(game => {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       let gameTime = new Date(game.event_date).toLocaleString("en-US", {
         timeZone: timeZone

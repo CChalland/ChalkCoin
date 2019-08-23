@@ -9,9 +9,9 @@ import EventCard from "../../components/EventCard";
 class BetNew extends Component {
   static contextType = SportContext;
 
-  static async getInitialProps(query) {
-    const sportId = query.query.sportId;
-    const eventId = query.query.eventId;
+  static async getInitialProps(props) {
+    const sportId = props.query.sportId;
+    const eventId = props.query.eventId;
     return { sportId, eventId };
   }
 
@@ -21,13 +21,11 @@ class BetNew extends Component {
       betAmount: "",
       betSender: "",
       betRecipient: "",
-      betSport: "",
-      betEvent_id: "",
-      betEvent_spread: 0,
       betDescription: "",
       errorMessage: "",
       loading: false,
-      eventsData: {}
+      eventsData: {},
+      eventSport: ""
     };
   }
 
@@ -36,7 +34,9 @@ class BetNew extends Component {
     let eventsData = sportsData[this.props.sportId - 1].data.events.filter(
       event => event.event_id === this.props.eventId
     );
-    this.setState({ eventsData });
+    let eventSport = sportsData[this.props.sportId - 1].sport_name;
+    this.setState({ eventsData, eventSport });
+    console.log("Did Mount: spread ", eventsData.line_periods);
   }
 
   onSubmit = async event => {
@@ -44,15 +44,18 @@ class BetNew extends Component {
 
     this.setState({ loading: true, errorMessage: "" });
 
+    const { eventsData } = this.state;
+
     try {
       await axios
-        .post("http://localhost:3001/transaction", {
+        .post("http://localhost:3001/transaction/open", {
           amount: this.state.betAmount,
           sender: this.state.betSender,
           recipient: this.state.betRecipient,
-          sport: this.state.betSport,
-          event_id: this.state.betEvent_id,
-          event_spread: this.state.betEvent_spread,
+          sport: this.state.eventSport,
+          event_id: eventsData[0].event_id,
+          event_spread:
+            eventsData[0].line_periods["1"].period_full_game.spread.point_spread_away,
           description: this.state.betDescription
         })
         .then(function(response) {
@@ -69,6 +72,7 @@ class BetNew extends Component {
 
   render() {
     let gameDetails = this.state.eventsData[0];
+    console.log("render state: ", this.state);
 
     return (
       <Layout>

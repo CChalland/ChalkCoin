@@ -19,7 +19,7 @@ class SportTabs extends Component {
   renderGamesTab() {
     const { activeIndex } = this.state;
 
-    let gamePanes = this.props.sportsData.map(game => {
+    let gamePanes = this.props.allSportsData.map(game => {
       let img = (
         <div>
           <img className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
@@ -32,7 +32,7 @@ class SportTabs extends Component {
         render: () => (
           <Tab.Pane attached={false}>
             <SportCard
-              sportsData={this.props.sportsData}
+              sportData={this.props.allSportsData}
               sportName={game.sport_name}
               sportIndex={activeIndex}
             />

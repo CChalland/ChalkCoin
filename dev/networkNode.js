@@ -26,12 +26,28 @@ app.get("/blockchain", function(req, res) {
   res.send(betoken);
 });
 
-// create a new transaction
-app.post("/transaction", function(req, res) {
+// create a completed transaction
+app.post("/transaction/completed", function(req, res) {
   const newTransaction = req.body;
-  const blockIndex = betoken.addTransactionToPendingTransactions(
-    newTransaction
-  );
+  const blockIndex = betoken.addTransactionToCompletedTransactions(newTransaction);
+  res.json({
+    note: `Transaction will be added in block ${blockIndex}.`
+  });
+});
+
+// create a pending transaction
+app.post("/transaction/pending", function(req, res) {
+  const newTransaction = req.body;
+  const blockIndex = betoken.addTransactionToPendingTransactions(newTransaction);
+  res.json({
+    note: `Transaction will be added in block ${blockIndex}.`
+  });
+});
+
+// create a new transaction
+app.post("/transaction/open", function(req, res) {
+  const newTransaction = req.body;
+  const blockIndex = betoken.addTransactionToOpenTransactions(newTransaction);
   res.json({
     note: `Transaction will be added in block ${blockIndex}.`
   });
@@ -78,11 +94,7 @@ app.get("/mine", function(req, res) {
     index: lastBlock["index"] + 1
   };
   const nonce = betoken.proofOfWork(previousBlockHash, currentBlockData);
-  const blockHash = betoken.hashBlock(
-    previousBlockHash,
-    currentBlockData,
-    nonce
-  );
+  const blockHash = betoken.hashBlock(previousBlockHash, currentBlockData, nonce);
   const newBlock = betoken.createNewBlock(nonce, previousBlockHash, blockHash);
 
   const requestPromises = [];
@@ -189,8 +201,7 @@ app.post("/register-node", function(req, res) {
   const newNodeUrl = req.body.newNodeUrl;
   const nodeNotAlreadyPresent = betoken.networkNodes.indexOf(newNodeUrl) == -1;
   const notCurrentNode = betoken.currentNodeUrl !== newNodeUrl;
-  if (nodeNotAlreadyPresent && notCurrentNode)
-    betoken.networkNodes.push(newNodeUrl);
+  if (nodeNotAlreadyPresent && notCurrentNode) betoken.networkNodes.push(newNodeUrl);
   res.json({
     note: "New node registered successfully."
   });
@@ -200,8 +211,7 @@ app.post("/register-node", function(req, res) {
 app.post("/register-nodes-bulk", function(req, res) {
   const allNetworkNodes = req.body.allNetworkNodes;
   allNetworkNodes.forEach(networkNodeUrl => {
-    const nodeNotAlreadyPresent =
-      betoken.networkNodes.indexOf(networkNodeUrl) == -1;
+    const nodeNotAlreadyPresent = betoken.networkNodes.indexOf(networkNodeUrl) == -1;
     const notCurrentNode = betoken.currentNodeUrl !== networkNodeUrl;
     if (nodeNotAlreadyPresent && notCurrentNode)
       betoken.networkNodes.push(networkNodeUrl);
@@ -239,10 +249,7 @@ app.get("/consensus", function(req, res) {
       }
     });
 
-    if (
-      !newLongestChain ||
-      (newLongestChain && !betoken.chainIsValid(newLongestChain))
-    ) {
+    if (!newLongestChain || (newLongestChain && !betoken.chainIsValid(newLongestChain))) {
       res.json({
         note: "Current chain has not been replaced.",
         chain: betoken.chain

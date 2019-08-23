@@ -21,7 +21,7 @@ class BetokenIndex extends Component {
   }
 
   renderCurrentBets(blockchain) {
-    const betItems = blockchain.pendingTransactions.map(bet => {
+    const betItems = blockchain.openTransactions.map(bet => {
       return {
         header: bet.amount,
         description: <a>View Bet</a>,
@@ -41,7 +41,7 @@ class BetokenIndex extends Component {
       result = (
         <div>
           <br />
-          {<SportTabs sportsData={sportsData} />}
+          <SportTabs allSportsData={sportsData} />
           <h3>Open Bets</h3>
           <Button floated="right" content="Create Bet" icon="add circle" primary />
           {this.renderCurrentBets(blockchain)}

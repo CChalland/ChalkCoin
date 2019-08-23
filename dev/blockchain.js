@@ -4,7 +4,9 @@ const uuid = require("uuid/v1");
 
 function Betoken() {
   this.chain = [];
+  this.completedTransactions = [];
   this.pendingTransactions = [];
+  this.openTransactions = [];
 
   this.currentNodeUrl = currentNodeUrl;
   this.networkNodes = [];
@@ -16,13 +18,13 @@ Betoken.prototype.createNewBlock = function(nonce, previousBlockHash, hash) {
   const newBlock = {
     index: this.chain.length + 1,
     timestamp: Date.now(),
-    transactions: this.pendingTransactions,
+    transactions: this.completedTransactions,
     nonce: nonce,
     hash: hash,
     previousBlockHash: previousBlockHash
   };
 
-  this.pendingTransactions = [];
+  this.completedTransactions = [];
   this.chain.push(newBlock);
 
   return newBlock;
@@ -57,18 +59,22 @@ Betoken.prototype.createNewTransaction = function(
   return newTransaction;
 };
 
-Betoken.prototype.addTransactionToPendingTransactions = function(
-  transactionObj
-) {
+Betoken.prototype.addTransactionToCompletedTransactions = function(transactionObj) {
+  this.completedTransactions.push(transactionObj);
+  return this.getLastBlock()["index"] + 1;
+};
+
+Betoken.prototype.addTransactionToPendingTransactions = function(transactionObj) {
   this.pendingTransactions.push(transactionObj);
   return this.getLastBlock()["index"] + 1;
 };
 
-Betoken.prototype.hashBlock = function(
-  previousBlockHash,
-  currentBlockData,
-  nonce
-) {
+Betoken.prototype.addTransactionToOpenTransactions = function(transactionObj) {
+  this.openTransactions.push(transactionObj);
+  return this.getLastBlock()["index"] + 1;
+};
+
+Betoken.prototype.hashBlock = function(previousBlockHash, currentBlockData, nonce) {
   const dataAsString =
     previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData);
   const hash = sha256(dataAsString);
@@ -106,8 +112,7 @@ Betoken.prototype.chainIsValid = function(blockchain) {
       currentBlock["nonce"]
     );
     if (blockHash.substring(0, 4) !== "0000") validChain = false;
-    if (currentBlock["previousBlockHash"] !== prevBlock["hash"])
-      validChain = false; // chain not valid
+    if (currentBlock["previousBlockHash"] !== prevBlock["hash"]) validChain = false; // chain not valid
 
     console.log("previousBlockHash =>", prevBlock["hash"]);
     console.log("currentBlockHash =>", currentBlock["hash"]);
@@ -119,12 +124,7 @@ Betoken.prototype.chainIsValid = function(blockchain) {
   const correctHash = genesisBlock["hash"] === "0";
   const correctTransactions = genesisBlock["transactions"].length === 0;
 
-  if (
-    !correctNonce ||
-    !correctPreviousBlockHash ||
-    !correctHash ||
-    !correctTransactions
-  )
+  if (!correctNonce || !correctPreviousBlockHash || !correctHash || !correctTransactions)
     validChain = false;
 
   return validChain;
