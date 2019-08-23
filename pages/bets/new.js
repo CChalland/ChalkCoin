@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import axios from "axios";
 import { Router } from "../../routes";
 import { SportContext } from "../../contexts/SportContext";
+import EventCard from "../../components/EventCard";
 
 class BetNew extends Component {
   static contextType = SportContext;
@@ -67,10 +68,13 @@ class BetNew extends Component {
   };
 
   render() {
-    console.log("render: state ", this.state);
+    let gameDetails = this.state.eventsData[0];
+
     return (
       <Layout>
         <h3>Create a Bet</h3>
+
+        <EventCard eventsData={gameDetails} />
 
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
