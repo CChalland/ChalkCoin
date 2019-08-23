@@ -9,8 +9,10 @@ class BetNew extends Component {
   static contextType = SportContext;
 
   static async getInitialProps(query) {
-    console.log("InitialProps: ", query.query);
-    return query;
+    const sportId = query.query.sportId;
+    const eventId = query.query.eventId;
+    console.log("InitialProps: ", query.query.sportId);
+    return { sportId, eventId };
   }
 
   constructor(props) {
@@ -24,13 +26,17 @@ class BetNew extends Component {
       betEvent_spread: 0,
       betDescription: "",
       errorMessage: "",
-      loading: false
+      loading: false,
+      eventsData: {}
     };
   }
 
   componentDidMount() {
     const { sportsData } = this.context;
-    console.log(sportsData);
+    let eventsData = sportsData[this.props.sportId - 1].data.events.filter(
+      event => event.event_id === this.props.eventId
+    );
+    this.setState({ eventsData });
   }
 
   onSubmit = async event => {
@@ -62,6 +68,7 @@ class BetNew extends Component {
   };
 
   render() {
+    console.log("render: state ", this.state);
     return (
       <Layout>
         <h3>Create a Bet</h3>
