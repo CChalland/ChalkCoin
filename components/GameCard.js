@@ -57,7 +57,7 @@ class GameCard extends Component {
                 <br />
                 {spread}
               </span>
-              <Link route="/bets/new">
+              <Link href={{ pathname: "/bets/new", query: { gameData: game } }}>
                 <a>
                   <Button
                     floated="right"

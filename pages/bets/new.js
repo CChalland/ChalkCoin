@@ -3,6 +3,7 @@ import { Form, Button, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import axios from "axios";
 import { Router } from "../../routes";
+import { withRouter } from "next/router";
 
 class BetNew extends Component {
   state = {
@@ -16,6 +17,10 @@ class BetNew extends Component {
     errorMessage: "",
     loading: false
   };
+
+  static async getInitialProps(query) {
+    return query;
+  }
 
   onSubmit = async event => {
     event.preventDefault();
@@ -57,9 +62,7 @@ class BetNew extends Component {
               labelPosition="right"
               label="$ USD"
               value={this.state.betAmount}
-              onChange={event =>
-                this.setState({ betAmount: event.target.value })
-              }
+              onChange={event => this.setState({ betAmount: event.target.value })}
             />
           </Form.Field>
 
