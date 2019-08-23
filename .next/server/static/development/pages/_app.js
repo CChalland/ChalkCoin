@@ -107,14 +107,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 
+
+
+
+const qs = __webpack_require__(/*! qs */ "qs");
 
 const SportContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])();
 class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
   constructor(props) {
     super(props);
     this.state = {
-      sportsdata: [{
+      sportsData: [{
         sport_id: 1,
         sport_name: "NCAA Football",
         data: {}
@@ -157,78 +163,67 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
       }],
       blockchain: {}
     };
-    this.fetchSportsData = this.fetchSportsData.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
 
-  fetchSportsData() {
-    console.log(this.state);
-  }
-  /*
-  static async getInitialProps() {
+  async fetchData() {
+    console.log("HELLO");
     let removeSportsData = [];
-    let sportsData = [
-      { sport_id: 1, sport_name: "NCAA Football", data: {} },
-      { sport_id: 2, sport_name: "NFL", data: {} },
-      { sport_id: 3, sport_name: "MLB", data: {} },
-      { sport_id: 4, sport_name: "NBA", data: {} },
-      { sport_id: 5, sport_name: "NCAA Men's Basketball", data: {} },
-      { sport_id: 6, sport_name: "NHL", data: {} },
-      { sport_id: 7, sport_name: "UFC/MMA", data: {} },
-      { sport_id: 8, sport_name: "WNBA", data: {} },
-      { sport_id: 9, sport_name: "CFL", data: {} },
-      { sport_id: 10, sport_name: "MLS", data: {} }
-    ];
-     const getNode1 = `http://localhost:3001/blockchain`;
-    let response = await axios.get(getNode1);
+    let sportsData = this.state.sportsData;
+    const getNode1 = `http://localhost:3001/blockchain`;
+    let response = await axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(getNode1);
     const blockchain = response.data;
-     try {
+
+    try {
       for (let i = 0; i < sportsData.length; i++) {
-        response = await axios({
+        response = await axios__WEBPACK_IMPORTED_MODULE_2___default()({
           method: "GET",
-          url: `https://therundown-therundown-v1.p.rapidapi.com/sports/${
-            sportsData[i].sport_id
-          }/events`,
+          url: `https://therundown-therundown-v1.p.rapidapi.com/sports/${sportsData[i].sport_id}/events`,
           headers: {
             "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-            "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
+            "x-rapidapi-key": "2f4bbaaf4amsha9d9471b6461e64p179399jsn42b7ce45efb6"
           },
           params: {
             include: ["all_periods", "scores"]
           },
-          paramsSerializer: function(params) {
-            return qs.stringify(params, { arrayFormat: "repeat" });
+          paramsSerializer: function (params) {
+            return qs.stringify(params, {
+              arrayFormat: "repeat"
+            });
           }
-        }).then(
-          function(response) {
-            if (response.data.events.length === 0) {
-              removeSportsData.push(sportsData[i]);
-            } else {
-              sportsData[i].data = response.data;
-              sportsData[i].data.events = response.data.events.sort(function(a, b) {
-                return new Date(a.event_date) - new Date(b.event_date);
-              });
-            }
-          }.bind(this)
-        );
+        }).then(function (response) {
+          if (response.data.events.length === 0) {
+            removeSportsData.push(sportsData[i]);
+          } else {
+            sportsData[i].data = response.data;
+            sportsData[i].data.events = response.data.events.sort(function (a, b) {
+              return new Date(a.event_date) - new Date(b.event_date);
+            });
+          }
+        }.bind(this));
       }
     } catch (err) {
       console.log(err.message);
     }
-     Array.prototype.diff = function(a) {
-      return this.filter(function(i) {
+
+    Array.prototype.diff = function (a) {
+      return this.filter(function (i) {
         return a.indexOf(i) < 0;
       });
     };
-     sportsData = sportsData.diff(removeSportsData);
-    console.log(sportsData);
-     this.setState({ sportsdata: sportsData });
-    this.setState({ blockchain: blockchain });
-     return { sportsData, blockchain };
-  }
-  */
 
+    sportsData = sportsData.diff(removeSportsData);
+    console.log(sportsData);
+    this.setState({
+      sportsData: sportsData
+    });
+    this.setState({
+      blockchain: blockchain
+    });
+  }
 
   render() {
+    this.fetchData();
     return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SportContext.Provider, {
       value: Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, this.state)
     }, this.props.children);
@@ -966,6 +961,17 @@ module.exports = __webpack_require__(/*! private-next-pages/_app.js */"./pages/_
 
 /***/ }),
 
+/***/ "axios":
+/*!************************!*\
+  !*** external "axios" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("axios");
+
+/***/ }),
+
 /***/ "core-js/library/fn/object/assign":
 /*!***************************************************!*\
   !*** external "core-js/library/fn/object/assign" ***!
@@ -1073,6 +1079,17 @@ module.exports = require("next-server/dist/lib/utils");
 /***/ (function(module, exports) {
 
 module.exports = require("prop-types");
+
+/***/ }),
+
+/***/ "qs":
+/*!*********************!*\
+  !*** external "qs" ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("qs");
 
 /***/ }),
 

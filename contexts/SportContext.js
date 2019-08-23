@@ -1,4 +1,6 @@
 import React, { Component, createContext } from "react";
+import axios from "axios";
+const qs = require("qs");
 
 export const SportContext = createContext();
 
@@ -6,7 +8,7 @@ export class SportProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sportsdata: [
+      sportsData: [
         { sport_id: 1, sport_name: "NCAA Football", data: {} },
         { sport_id: 2, sport_name: "NFL", data: {} },
         { sport_id: 3, sport_name: "MLB", data: {} },
@@ -21,28 +23,13 @@ export class SportProvider extends Component {
       blockchain: {}
     };
 
-    this.fetchSportsData = this.fetchSportsData.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
 
-  fetchSportsData() {
-    console.log(this.state);
-  }
-
-  /*
-  static async getInitialProps() {
+  async fetchData() {
+    console.log("HELLO");
     let removeSportsData = [];
-    let sportsData = [
-      { sport_id: 1, sport_name: "NCAA Football", data: {} },
-      { sport_id: 2, sport_name: "NFL", data: {} },
-      { sport_id: 3, sport_name: "MLB", data: {} },
-      { sport_id: 4, sport_name: "NBA", data: {} },
-      { sport_id: 5, sport_name: "NCAA Men's Basketball", data: {} },
-      { sport_id: 6, sport_name: "NHL", data: {} },
-      { sport_id: 7, sport_name: "UFC/MMA", data: {} },
-      { sport_id: 8, sport_name: "WNBA", data: {} },
-      { sport_id: 9, sport_name: "CFL", data: {} },
-      { sport_id: 10, sport_name: "MLS", data: {} }
-    ];
+    let sportsData = this.state.sportsData;
 
     const getNode1 = `http://localhost:3001/blockchain`;
     let response = await axios.get(getNode1);
@@ -91,14 +78,12 @@ export class SportProvider extends Component {
     sportsData = sportsData.diff(removeSportsData);
     console.log(sportsData);
 
-    this.setState({ sportsdata: sportsData });
+    this.setState({ sportsData: sportsData });
     this.setState({ blockchain: blockchain });
-
-    return { sportsData, blockchain };
   }
-  */
 
   render() {
+    this.fetchData();
     return (
       <SportContext.Provider value={{ ...this.state }}>
         {this.props.children}

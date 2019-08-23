@@ -13,7 +13,7 @@ class BetokenIndex extends Component {
   }
 
   static contextType = SportContext;
-
+  /*
   static async getInitialProps() {
     let removeSportsData = [];
     let sportsData = [
@@ -91,6 +91,7 @@ class BetokenIndex extends Component {
 
     return <Card.Group items={betItems} />;
   }
+  */
 
   render() {
     const { sportsData } = this.props;
@@ -100,10 +101,10 @@ class BetokenIndex extends Component {
       <Layout>
         <div>
           <br />
-          <GameTabs sportsData={sportsData} />
+          {/*<GameTabs sportsData={sportsData} />*/}
           <h3>Open Bets</h3>
           <Button floated="right" content="Create Bet" icon="add circle" primary />
-          {this.renderCurrentBets()}
+          {/*this.renderCurrentBets()*/}
         </div>
       </Layout>
     );
