@@ -45,11 +45,6 @@ class BetNew extends Component {
     const { eventsData } = this.state;
     const eventData = eventsData[0];
 
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    let gameTime = new Date(eventData.event_date).toLocaleString("en-US", {
-      timeZone: timeZone
-    });
-
     let defSpreadHelper =
       eventData.sport_id !== 10
         ? eventData.line_periods["1"].period_full_game.spread
@@ -65,30 +60,26 @@ class BetNew extends Component {
       spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
     }
 
-    let home = eventData.teams_normalized.filter(team => {return team.is_home}).map(team => {
-      return {
-        teamName: team.name,
-        teamMascot: team.mascot,
-        teamAbbreviation: team.abbreviation
-      };
-    })
-
-    let away = eventData.teams_normalized.filter(team => {return team.is_away}).map(team => {
-      return {
-        teamName: team.name,
-        teamMascot: team.mascot,
-        teamAbbreviation: team.abbreviation
-      };
-    })
-
     let gameDetails = {
       title: `${eventData.teams_normalized[0].abbreviation} - ${
         eventData.teams_normalized[1].abbreviation
       }`,
       venueLocation: eventData.score.venue_location,
       venueName: eventData.score.venue_name,
-      gameTime: gameTime,
-      teams: {home, away}
+      gameTime: eventData.score.event_status_detail,
+      teams: {home: eventData.teams_normalized.filter(team => {return team.is_home}).map(team => {
+      return {
+        teamName: team.name,
+        teamMascot: team.mascot,
+        teamAbbreviation: team.abbreviation
+      };
+    }), away: eventData.teams_normalized.filter(team => {return team.is_away}).map(team => {
+      return {
+        teamName: team.name,
+        teamMascot: team.mascot,
+        teamAbbreviation: team.abbreviation
+      };
+    })}
     };
 
     try {
