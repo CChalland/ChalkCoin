@@ -41,7 +41,7 @@ Betoken.prototype.createNewTransaction = function(
   sport,
   event_id,
   event_spread,
-  description
+  gameDetails
 ) {
   const newTransaction = {
     amount: amount,
@@ -50,7 +50,7 @@ Betoken.prototype.createNewTransaction = function(
     sport: sport,
     event_id: event_id,
     event_spread: event_spread,
-    description: description,
+    gameDetails: gameDetails,
     accepted: false,
     completed: false,
     transactionId: uuid()

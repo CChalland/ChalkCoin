@@ -41,10 +41,55 @@ class BetNew extends Component {
 
   onSubmit = async event => {
     event.preventDefault();
-
     this.setState({ loading: true, errorMessage: "" });
-
     const { eventsData } = this.state;
+    const eventData = eventsData[0];
+
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    let gameTime = new Date(eventData.event_date).toLocaleString("en-US", {
+      timeZone: timeZone
+    });
+
+    let defSpreadHelper =
+      eventData.sport_id !== 10
+        ? eventData.line_periods["1"].period_full_game.spread
+        : eventData.line_periods["2"].period_full_game.spread;
+    let spread;
+    let spreadTeam = (spread = eventData.teams_normalized[0].is_away
+      ? eventData.teams_normalized[0].abbreviation
+      : eventData.teams_normalized[1].abbreviation);
+
+    if (defSpreadHelper.point_spread_away < defSpreadHelper.point_spread_home) {
+      spread = spreadTeam + " " + defSpreadHelper.point_spread_away;
+    } else {
+      spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
+    }
+
+    let home = eventData.teams_normalized.filter(team => {return team.is_home}).map(team => {
+      return {
+        teamName: team.name,
+        teamMascot: team.mascot,
+        teamAbbreviation: team.abbreviation
+      };
+    })
+
+    let away = eventData.teams_normalized.filter(team => {return team.is_away}).map(team => {
+      return {
+        teamName: team.name,
+        teamMascot: team.mascot,
+        teamAbbreviation: team.abbreviation
+      };
+    })
+
+    let gameDetails = {
+      title: `${eventData.teams_normalized[0].abbreviation} - ${
+        eventData.teams_normalized[1].abbreviation
+      }`,
+      venueLocation: eventData.score.venue_location,
+      venueName: eventData.score.venue_name,
+      gameTime: gameTime,
+      teams: {home, away}
+    };
 
     try {
       await axios
@@ -53,10 +98,9 @@ class BetNew extends Component {
           sender: this.state.betSender,
           recipient: this.state.betRecipient,
           sport: this.state.eventSport,
-          event_id: eventsData[0].event_id,
-          event_spread:
-            eventsData[0].line_periods["1"].period_full_game.spread.point_spread_away,
-          description: this.state.betDescription
+          event_id: eventData.event_id,
+          event_spread: spread,
+          gameDetails: gameDetails
         })
         .then(function(response) {
           console.log(response);

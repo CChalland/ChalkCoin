@@ -62,7 +62,7 @@ app.post("/transaction/open/broadcast", function(req, res) {
     req.body.sport,
     req.body.event_id,
     req.body.event_spread,
-    req.body.description
+    req.body.gameDetails
   );
   betoken.addTransactionToOpenTransactions(newTransaction);
 
