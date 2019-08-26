@@ -19,7 +19,7 @@ class BetNew extends Component {
     super(props);
     this.state = {
       betAmount: "",
-      betSender: "",
+      betSender: "testing",
       betRecipient: "",
       errorMessage: "",
       loading: false,
