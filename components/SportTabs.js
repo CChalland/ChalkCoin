@@ -32,7 +32,6 @@ class SportTabs extends Component {
           gamesEventTime.push(game.data.events[i].event_date);
         }
       }
-      console.log(gamesEventTime);
 
       let img = (
         <div>
