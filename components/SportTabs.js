@@ -34,8 +34,6 @@ class SportTabs extends Component {
       }
       console.log(gamesEventTime);
 
-      //console.log(diffDaysIndex);
-
       let img = (
         <div>
           <img className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
