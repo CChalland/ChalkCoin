@@ -54,6 +54,8 @@ class SportTabs extends Component {
               sportData={this.props.allSportsData}
               sportName={game.sport_name}
               sportIndex={activeIndex}
+              gamesEventTime={gamesEventTime}
+              diffDaysIndex={diffDaysIndex}
             />
           </Tab.Pane>
         )
