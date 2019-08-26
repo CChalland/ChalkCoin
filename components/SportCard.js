@@ -7,7 +7,6 @@ class SportCard extends Component {
     let index = 0;
     let daysIndex = 0;
 
-
     let gameItems = this.props.sportData[sportId].data.events.map(game => {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       let gameTime = new Date(game.event_date).toLocaleString("en-US", {
@@ -29,10 +28,13 @@ class SportCard extends Component {
         spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
       }
 
-      let eventTime = this.props.gamesEventTime
-      let daysArray = this.props.diffDaysArray
+      let eventTime = this.props.gamesEventTime;
+      let daysArray = this.props.diffDaysArray;
 
-      if (index === daysOffArray[])
+      if (index === daysArray[daysIndex]) {
+        console.log(eventTime[daysIndex]);
+        daysArray++;
+      }
 
       return {
         description: (
@@ -110,7 +112,6 @@ class SportCard extends Component {
 
     return (
       <div>
-
         <Card.Group items={gameItems} />;
       </div>
     );

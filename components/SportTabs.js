@@ -26,7 +26,7 @@ class SportTabs extends Component {
       for (let i = 0; i < game.data.events.length - 1; i++) {
         let day = game.data.events[i].event_date.slice(8, 10);
         let nextDay = game.data.events[i + 1].event_date.slice(8, 10);
-        console.log(game.data.events[i].event_date, day, nextDay);
+
         if (day < nextDay) {
           diffDaysArray.push(i);
           gamesEventTime.push(game.data.events[i].event_date);
