@@ -36,7 +36,7 @@ class SportTabs extends Component {
           gamesEventTime.push(game.data.events[i].event_date.slice(0, 10));
           splitArray[`${game.data.events[i].event_date.slice(0, 10)}`] = [];
         } else if (day === nextDay) {
-          splitArray[`${game.data.events[i].event_date.slice(0, 10)}`].add(
+          splitArray[`${game.data.events[i].event_date.slice(0, 10)}`].push(
             game.data.events[i]
           );
         }

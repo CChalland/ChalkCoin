@@ -9,13 +9,12 @@ class SportCard extends Component {
   }
 
   renderGamesCards(sportId) {
-    let { index, daysIndex, timeTitle } = this.state;
-
     let gameItems = this.props.sportData[sportId].data.events.map(game => {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       let gameTime = new Date(game.event_date).toLocaleString("en-US", {
         timeZone: timeZone
       });
+      let eventDate = gameTime.split(",")[0];
 
       let defSpreadHelper =
         game.sport_id !== 10
@@ -32,19 +31,8 @@ class SportCard extends Component {
         spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
       }
 
-      let eventTime = this.props.gamesEventTime;
-
-      if (game.event_date === eventTime[daysIndex]) {
-        timeTitle = (
-          <div>
-            <h3>{game.event_date}</h3>
-          </div>
-        );
-
-        daysIndex++;
-      }
-
       return {
+        date: eventDate,
         description: (
           <div>
             <h4>
@@ -112,42 +100,32 @@ class SportCard extends Component {
       };
     });
 
-    if (index === this.props.sportData[sportId].data.events.length - 1) {
-      index = 0;
-    } else if (daysIndex === this.props.gamesEventTime - 1) {
-      daysIndex = 0;
-    } else {
-      index++;
-    }
-
     let splitArray = this.props.splitArray;
-    console.log(this.props.diffDaysArray);
+    //console.log(this.props.gamesEventTime);
 
-    for (
-      let splitIndex = 0;
-      splitIndex < this.props.sportData[sportId].data.events.length;
-      splitIndex++
-    ) {
-      if (splitIndex <= this.props.diffDaysArray[0]) {
-        splitArray[`${this.props.gamesEventTime[0]}`].push(
-          this.props.sportData[sportId].data.events[splitIndex]
-        );
-      } else if (splitIndex <= this.props.diffDaysArray[1]) {
-        splitArray[`${this.props.gamesEventTime[1]}`].push(
-          this.props.sportData[sportId].data.events[splitIndex]
-        );
-      } else if (splitIndex <= this.props.diffDaysArray[2]) {
-        splitArray[`${this.props.gamesEventTime[2]}`].push(
-          this.props.sportData[sportId].data.events[splitIndex]
-        );
-      } else if (splitIndex <= this.props.diffDaysArray[3]) {
-        splitArray[`${this.props.gamesEventTime[3]}`].push(
-          this.props.sportData[sportId].data.events[splitIndex]
-        );
+    for (let splitIndex = 0; splitIndex < gameItems.length; splitIndex++) {
+      if (splitIndex < this.props.diffDaysArray[1]) {
+        splitArray[`${this.props.gamesEventTime[0]}`].push(gameItems[splitIndex]);
+      } else if (splitIndex < this.props.diffDaysArray[2]) {
+        splitArray[`${this.props.gamesEventTime[1]}`].push(gameItems[splitIndex]);
+      } else if (splitIndex < this.props.diffDaysArray[3]) {
+        splitArray[`${this.props.gamesEventTime[2]}`].push(gameItems[splitIndex]);
+      } else if (splitIndex > this.props.diffDaysArray[3]) {
+        splitArray[`${this.props.gamesEventTime[3]}`].push(gameItems[splitIndex]);
       }
     }
 
-    console.log(splitArray);
+    let returnResult = this.props.gamesEventTime.map(time => {
+      return (
+        <div>
+          <h3>{time}</h3>
+          <Card.Group items={splitArray[`${time}`]} />
+        </div>
+      );
+    });
+
+    console.log(gameItems);
+    //console.log(splitArray);
 
     return (
       <div>
