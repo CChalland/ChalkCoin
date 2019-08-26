@@ -14,7 +14,7 @@ class SportCard extends Component {
       let gameTime = new Date(game.event_date).toLocaleString("en-US", {
         timeZone: timeZone
       });
-      let eventDate = gameTime.split(",")[0];
+      let eventDate = gameTime.split(",");
 
       let defSpreadHelper =
         game.sport_id !== 10
@@ -31,8 +31,11 @@ class SportCard extends Component {
         spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
       }
 
+      let fullClock = eventDate[1].split(":00 ");
+      let displayDate = `${fullClock[0]} ${fullClock[1]}`;
+
       return {
-        date: eventDate,
+        date: eventDate[0],
         description: (
           <div>
             <h4>
@@ -58,7 +61,7 @@ class SportCard extends Component {
                 }}
               />
               <span style={{ position: "absolute", right: "200px" }}>
-                {gameTime.split(",")[1]}
+                {displayDate}
                 <br />
                 {this.props.sportName}
                 <br />
