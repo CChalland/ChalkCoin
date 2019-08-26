@@ -5,13 +5,13 @@ import { Link } from "../routes";
 class SportCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { index: 0, daysIndex: 0 };
+    this.state = { index: 0, daysIndex: 0, timeTitle: "" };
   }
 
   renderGamesCards(sportId) {
     let index = 0;
     let daysIndex = 0;
-    let daysTimeTitle = (
+    let timeTitle = (
       <div>
         <h3>{null}</h3>
       </div>
@@ -41,7 +41,7 @@ class SportCard extends Component {
       let eventTime = this.props.gamesEventTime;
 
       if (game.event_date === eventTime[daysIndex]) {
-        daysTimeTitle = (
+        timeTitle = (
           <div>
             <h3>game.event_date</h3>
           </div>
@@ -51,7 +51,7 @@ class SportCard extends Component {
 
         daysIndex++;
       } else {
-        daysTimeTitle = null;
+        timeTitle = null;
       }
 
       return {
@@ -132,7 +132,7 @@ class SportCard extends Component {
 
     return (
       <div>
-        {daysTimeTitle}
+        {timeTitle}
         <Card.Group items={gameItems} />;
       </div>
     );
