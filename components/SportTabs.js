@@ -13,26 +13,6 @@ class SportTabs extends Component {
     this.renderGamesTab = this.renderGamesTab.bind(this);
   }
 
-  componentDidMount() {
-    let gameSperated = this.props.allSportsData.map(game => {
-      let indexMount = 0;
-      let diffDaysIndex = [];
-      let gamesData = {};
-
-      for (let i = 0; i < game.data.events.length - 1; i++) {
-        let day = game.data.events[i].event_date.slice(8, 10);
-        let nextDay = game.data.events[i + 1].event_date.slice(8, 10);
-        console.log(game.data.events[i].event_date, day, nextDay);
-        if (day < nextDay) {
-          diffDaysIndex.push(i);
-          gamesData[i] = game.data.events[i];
-        } else if (day === nextDay) {
-          console.log(gamesData[i]);
-        }
-      }
-    });
-  }
-
   handleRangeChange = e => this.setState({ activeIndex: e.target.value });
   handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
 
@@ -40,8 +20,8 @@ class SportTabs extends Component {
     const { activeIndex } = this.state;
 
     let gamePanes = this.props.allSportsData.map(game => {
-      let index = 0;
       let diffDaysIndex = [];
+      let gamesEventTime = [];
 
       for (let i = 0; i < game.data.events.length - 1; i++) {
         let day = game.data.events[i].event_date.slice(8, 10);
@@ -49,8 +29,10 @@ class SportTabs extends Component {
         console.log(game.data.events[i].event_date, day, nextDay);
         if (day < nextDay) {
           diffDaysIndex.push(i);
+          gamesEventTime.push(game.data.events[i].event_date);
         }
       }
+      console.log(gamesEventTime);
 
       //console.log(diffDaysIndex);
 
@@ -60,8 +42,6 @@ class SportTabs extends Component {
           {game.sport_name}
         </div>
       );
-
-      index++;
 
       return {
         menuItem: <Menu.Item key={game.sport_id}>{img}</Menu.Item>,
