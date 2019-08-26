@@ -117,7 +117,6 @@ class SportCard extends Component {
     });
 
     let cardsResult = eventsResult.map(obj => {
-      eventsResult.indexOf(obj);
       return {
         menuItem: obj[0].date,
         render: () => (
