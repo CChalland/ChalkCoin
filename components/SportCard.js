@@ -100,30 +100,6 @@ class SportCard extends Component {
       };
     });
 
-    let splitArray = this.props.splitArray;
-    //console.log(this.props.gamesEventTime);
-
-    for (let splitIndex = 0; splitIndex < gameItems.length; splitIndex++) {
-      if (splitIndex < this.props.diffDaysArray[1]) {
-        splitArray[`${this.props.gamesEventTime[0]}`].push(gameItems[splitIndex]);
-      } else if (splitIndex < this.props.diffDaysArray[2]) {
-        splitArray[`${this.props.gamesEventTime[1]}`].push(gameItems[splitIndex]);
-      } else if (splitIndex < this.props.diffDaysArray[3]) {
-        splitArray[`${this.props.gamesEventTime[2]}`].push(gameItems[splitIndex]);
-      } else if (splitIndex > this.props.diffDaysArray[3]) {
-        splitArray[`${this.props.gamesEventTime[3]}`].push(gameItems[splitIndex]);
-      }
-    }
-
-    let returnResult = this.props.gamesEventTime.map(time => {
-      return (
-        <div>
-          <h3>{time}</h3>
-          <Card.Group items={splitArray[`${time}`]} />
-        </div>
-      );
-    });
-
     let datesArray = gameItems.map(obj => {
       return obj.date;
     });
@@ -134,22 +110,25 @@ class SportCard extends Component {
 
     console.log("dates, ", dates);
 
-    let firstResult = dates.map(date => {
+    let eventsResult = dates.map(date => {
       return gameItems.filter(obj => {
         return obj.date === date;
       });
     });
 
-    console.log("firstResult, ", firstResult);
+    let cardsResult = eventsResult.map(obj => {
+      eventsResult.indexOf(obj);
+      return (
+        <div>
+          <h3>{obj[0].date}</h3>
+          <Card.Group items={obj} />
+        </div>
+      );
+    });
 
-    console.log("gameItems, ", gameItems);
-    //console.log(splitArray);
+    //console.log("cardsResult, ", cardsResult);
 
-    return (
-      <div>
-        <Card.Group items={gameItems} />
-      </div>
-    );
+    return cardsResult;
   }
 
   render() {
