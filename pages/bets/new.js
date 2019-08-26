@@ -35,7 +35,6 @@ class BetNew extends Component {
     );
     let eventSport = sportsData[this.props.sportId - 1].sport_name;
     this.setState({ eventsData, eventSport });
-    console.log("Did Mount: spread ", eventsData.line_periods);
   }
 
   onSubmit = async event => {
@@ -102,12 +101,10 @@ class BetNew extends Component {
     }
 
     this.setState({ loading: false });
-    console.log(gameDetails)
   };
 
   render() {
     let gameDetails = this.state.eventsData[0];
-    console.log("render state: ", this.state);
 
     return (
       <Layout>
