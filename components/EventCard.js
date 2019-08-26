@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class EventCard extends Component {
   render() {
-    console.log("EventCard render: eventsData ", this.props.eventData);
+    console.log("EventCard render: eventData ", this.props.eventData);
     console.log("EventCard render: gameDetails ", this.props.gameDetails);
     return (
       <div>
