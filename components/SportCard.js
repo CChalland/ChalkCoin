@@ -9,13 +9,7 @@ class SportCard extends Component {
   }
 
   renderGamesCards(sportId) {
-    let index = 0;
-    let daysIndex = 0;
-    let timeTitle = (
-      <div>
-        <h3>{null}</h3>
-      </div>
-    );
+    let { index, daysIndex, timeTitle } = this.state;
 
     let gameItems = this.props.sportData[sportId].data.events.map(game => {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -43,15 +37,13 @@ class SportCard extends Component {
       if (game.event_date === eventTime[daysIndex]) {
         timeTitle = (
           <div>
-            <h3>game.event_date</h3>
+            <h3>{game.event_date}</h3>
           </div>
         );
 
         console.log(game.event_date);
 
         daysIndex++;
-      } else {
-        timeTitle = null;
       }
 
       return {
@@ -129,11 +121,12 @@ class SportCard extends Component {
     } else {
       index++;
     }
+    console.log(timeTitle);
 
     return (
       <div>
         {timeTitle}
-        <Card.Group items={gameItems} />;
+        <Card.Group items={gameItems} />
       </div>
     );
   }
