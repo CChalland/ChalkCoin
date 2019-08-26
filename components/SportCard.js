@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Button } from "semantic-ui-react";
+import { Card, Button, Tab } from "semantic-ui-react";
 import { Link } from "../routes";
 
 class SportCard extends Component {
@@ -118,17 +118,19 @@ class SportCard extends Component {
 
     let cardsResult = eventsResult.map(obj => {
       eventsResult.indexOf(obj);
-      return (
-        <div>
-          <h2 style={{ position: "center" }}>{obj[0].date}</h2>
-          <Card.Group items={obj} />
-        </div>
-      );
+      return {
+        menuItem: obj[0].date,
+        render: () => (
+          <Tab.Pane attached={false}>
+            <Card.Group items={obj} />
+          </Tab.Pane>
+        )
+      };
     });
 
     //console.log("cardsResult, ", cardsResult);
 
-    return cardsResult;
+    return <Tab menu={{ attached: false }} panes={cardsResult} />;
   }
 
   render() {
