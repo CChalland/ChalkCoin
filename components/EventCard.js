@@ -13,13 +13,14 @@ class EventCard extends Component {
   googleImageRender() {
     const { gameDetails } = this.props;
     let searchValue = gameDetails.venueName + " " + gameDetails.venueLocation;
-    //console.log(searchValue);
+    console.log("game details, ", gameDetails);
+    console.log("search value, ", searchValue);
     const client = new GoogleImages(
-      "014368647084617525560:qvb0ktdobd7",
-      "AIzaSyB6uD0lnTzznNjOFlg-Tbt4ZYeA3jY1tXs"
+      process.env.CSE_ID,
+      process.env.GOOGLE_CUSTOM_SEARCH_API
     );
 
-    console.log(client.search(searchValue, { size: "large" }));
+    console.log(client.search(searchValue, { size: "xxlarge" }));
   }
 
   render() {
