@@ -117,11 +117,14 @@ class SportCard extends Component {
     });
 
     let paneResult = eventsResult.map(obj => {
+      let tempDate = new Date(obj[0].date);
+      let tempsDate = tempDate.toString().slice(0, 10);
+
       return {
         menuItem: obj[0].date,
         render: () => (
           <Tab.Pane attached={false} style={{ overflow: "auto", maxHeight: "75em" }}>
-            <h2>{obj[0].date}</h2>
+            <h2>{tempsDate}</h2>
             <Card.Group items={obj} />
           </Tab.Pane>
         )
