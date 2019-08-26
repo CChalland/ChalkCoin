@@ -89,15 +89,12 @@ class BetNew extends Component {
           })
       }
     };
-
     this.setState({gameDetails})
   }
 
   onSubmit = async event => {
     event.preventDefault();
     this.setState({ loading: true, errorMessage: "" });
-    
-    
 
     try {
       await axios
@@ -118,8 +115,6 @@ class BetNew extends Component {
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
-
-    
     this.setState({ loading: false });
   };
 
