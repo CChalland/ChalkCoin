@@ -13,6 +13,26 @@ class SportTabs extends Component {
     this.renderGamesTab = this.renderGamesTab.bind(this);
   }
 
+  componentDidMount() {
+    let gameSperated = this.props.allSportsData.map(game => {
+      let indexMount = 0;
+      let diffDaysIndex = [];
+      let gamesData = {};
+
+      for (let i = 0; i < game.data.events.length - 1; i++) {
+        let day = game.data.events[i].event_date.slice(8, 10);
+        let nextDay = game.data.events[i + 1].event_date.slice(8, 10);
+        console.log(game.data.events[i].event_date, day, nextDay);
+        if (day < nextDay) {
+          diffDaysIndex.push(i);
+          gamesData[i] = game.data.events[i];
+        } else if (day === nextDay) {
+          console.log(gamesData[i]);
+        }
+      }
+    });
+  }
+
   handleRangeChange = e => this.setState({ activeIndex: e.target.value });
   handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
 
@@ -26,21 +46,13 @@ class SportTabs extends Component {
       for (let i = 0; i < game.data.events.length - 1; i++) {
         let day = game.data.events[i].event_date.slice(8, 10);
         let nextDay = game.data.events[i + 1].event_date.slice(8, 10);
-        //console.log(game.data.events[i].event_date, day, nextDay);
+        console.log(game.data.events[i].event_date, day, nextDay);
         if (day < nextDay) {
           diffDaysIndex.push(i);
         }
       }
 
       //console.log(diffDaysIndex);
-
-      let timeTitle = () => {
-        let title = "";
-        if (diffDaysIndex.includes(index)) {
-          title = game.data.events[index].event_date;
-          console.log(title);
-        }
-      };
 
       let img = (
         <div>
@@ -60,7 +72,6 @@ class SportTabs extends Component {
             raised
             style={{ overflow: "auto", maxHeight: "75em" }}
           >
-            <h3>{timeTitle()}Time...</h3>
             <SportCard
               sportData={this.props.allSportsData}
               sportName={game.sport_name}
