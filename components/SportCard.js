@@ -120,8 +120,7 @@ class SportCard extends Component {
       index++;
     }
 
-    console.log(this.props.gamesEventTime);
-    console.log(gameItems);
+    let cardGroup = null;
 
     return (
       <div>

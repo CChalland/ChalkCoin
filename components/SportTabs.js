@@ -32,12 +32,12 @@ class SportTabs extends Component {
 
         if (day < nextDay) {
           diffDaysArray.push(i);
-          gamesEventTime.push(game.data.events[i].event_date);
-          console.log("new Day func, ", new Date(game.data.events[i].event_date));
+          gamesEventTime.push(game.data.events[i].event_date.slice(0, 10));
         }
       }
 
       console.log("diffDaysArray, ", diffDaysArray);
+      console.log("gamesEventTime, ", gamesEventTime);
 
       let img = (
         <div>
