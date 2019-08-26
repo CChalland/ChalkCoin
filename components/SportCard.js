@@ -124,7 +124,25 @@ class SportCard extends Component {
       );
     });
 
-    console.log(gameItems);
+    let datesArray = gameItems.map(obj => {
+      return obj.date;
+    });
+
+    let dates = datesArray
+      .filter((item, index) => datesArray.indexOf(item) === index)
+      .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
+
+    console.log("dates, ", dates);
+
+    let firstResult = dates.map(date => {
+      return gameItems.filter(obj => {
+        return obj.date === date;
+      });
+    });
+
+    console.log("firstResult, ", firstResult);
+
+    console.log("gameItems, ", gameItems);
     //console.log(splitArray);
 
     return (
