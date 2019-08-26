@@ -130,7 +130,7 @@ class BetNew extends Component {
         <h3>Create a Bet</h3>
 
         <EventCard
-          eventsData={this.state.eventsData}
+          eventData={this.state.eventsData}
           gameDetails={this.state.gameDetails}
         />
 
