@@ -116,9 +116,11 @@ class SportCard extends Component {
       });
     });
 
+    /*
     let cardsResult = eventsResult.map(obj => {
       return <Card.Group items={obj} />;
     });
+    */
 
     let paneResult = eventsResult.map(obj => {
       return {
