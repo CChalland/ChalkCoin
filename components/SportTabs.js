@@ -22,6 +22,7 @@ class SportTabs extends Component {
     let gamePanes = this.props.allSportsData.map(game => {
       let diffDaysArray = [];
       let gamesEventTime = [];
+      let splitArray = {};
 
       for (let i = 0; i < game.data.events.length - 1; i++) {
         let day = new Date(game.data.events[i].event_date.slice(0, 10));
@@ -33,11 +34,17 @@ class SportTabs extends Component {
         if (day < nextDay) {
           diffDaysArray.push(i);
           gamesEventTime.push(game.data.events[i].event_date.slice(0, 10));
+          splitArray[`${game.data.events[i].event_date.slice(0, 10)}`] = [];
+        } else if (day === nextDay) {
+          splitArray[`${game.data.events[i].event_date.slice(0, 10)}`].add(
+            game.data.events[i]
+          );
         }
       }
 
-      console.log("diffDaysArray, ", diffDaysArray);
-      console.log("gamesEventTime, ", gamesEventTime);
+      //console.log("splitArray, ", splitArray);
+      //console.log("diffDaysArray, ", diffDaysArray);
+      //console.log("gamesEventTime, ", gamesEventTime);
 
       let img = (
         <div>
@@ -62,6 +69,7 @@ class SportTabs extends Component {
               sportIndex={activeIndex}
               gamesEventTime={gamesEventTime}
               diffDaysArray={diffDaysArray}
+              splitArray={splitArray}
             />
           </Tab.Pane>
         )

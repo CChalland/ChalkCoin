@@ -120,7 +120,34 @@ class SportCard extends Component {
       index++;
     }
 
-    let cardGroup = null;
+    let splitArray = this.props.splitArray;
+    console.log(this.props.diffDaysArray);
+
+    for (
+      let splitIndex = 0;
+      splitIndex < this.props.sportData[sportId].data.events.length;
+      splitIndex++
+    ) {
+      if (splitIndex <= this.props.diffDaysArray[0]) {
+        splitArray[`${this.props.gamesEventTime[0]}`].push(
+          this.props.sportData[sportId].data.events[splitIndex]
+        );
+      } else if (splitIndex <= this.props.diffDaysArray[1]) {
+        splitArray[`${this.props.gamesEventTime[1]}`].push(
+          this.props.sportData[sportId].data.events[splitIndex]
+        );
+      } else if (splitIndex <= this.props.diffDaysArray[2]) {
+        splitArray[`${this.props.gamesEventTime[2]}`].push(
+          this.props.sportData[sportId].data.events[splitIndex]
+        );
+      } else if (splitIndex <= this.props.diffDaysArray[3]) {
+        splitArray[`${this.props.gamesEventTime[3]}`].push(
+          this.props.sportData[sportId].data.events[splitIndex]
+        );
+      }
+    }
+
+    console.log(splitArray);
 
     return (
       <div>
