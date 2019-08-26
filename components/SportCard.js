@@ -41,8 +41,6 @@ class SportCard extends Component {
           </div>
         );
 
-        console.log(game.event_date);
-
         daysIndex++;
       }
 
@@ -121,11 +119,12 @@ class SportCard extends Component {
     } else {
       index++;
     }
-    console.log(timeTitle);
+
+    console.log(this.props.gamesEventTime);
+    console.log(gameItems);
 
     return (
       <div>
-        {timeTitle}
         <Card.Group items={gameItems} />
       </div>
     );

@@ -24,14 +24,20 @@ class SportTabs extends Component {
       let gamesEventTime = [];
 
       for (let i = 0; i < game.data.events.length - 1; i++) {
-        let day = game.data.events[i].event_date.slice(8, 10);
-        let nextDay = game.data.events[i + 1].event_date.slice(8, 10);
+        let day = new Date(game.data.events[i].event_date.slice(0, 10));
+        let nextDay = new Date(game.data.events[i + 1].event_date.slice(0, 10));
+
+        //console.log("day: ", day);
+        //console.log("nextDay: ", nextDay);
 
         if (day < nextDay) {
           diffDaysArray.push(i);
           gamesEventTime.push(game.data.events[i].event_date);
+          console.log("new Day func, ", new Date(game.data.events[i].event_date));
         }
       }
+
+      console.log("diffDaysArray, ", diffDaysArray);
 
       let img = (
         <div>
