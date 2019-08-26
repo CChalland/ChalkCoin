@@ -108,8 +108,6 @@ class SportCard extends Component {
       .filter((item, index) => datesArray.indexOf(item) === index)
       .reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
 
-    console.log("dates, ", dates);
-
     let eventsResult = dates.map(date => {
       return gameItems.filter(obj => {
         return obj.date === date;
