@@ -6,6 +6,11 @@ class SportCard extends Component {
   renderGamesCards(sportId) {
     let index = 0;
     let daysIndex = 0;
+    let daysTimeTitle = (
+      <div>
+        <h3>{null}</h3>
+      </div>
+    );
 
     let gameItems = this.props.sportData[sportId].data.events.map(game => {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -29,11 +34,19 @@ class SportCard extends Component {
       }
 
       let eventTime = this.props.gamesEventTime;
-      let daysArray = this.props.diffDaysArray;
 
-      if (index === daysArray[daysIndex]) {
-        console.log(eventTime[daysIndex]);
-        daysArray++;
+      if (game.event_date === eventTime[daysIndex]) {
+        daysTimeTitle = (
+          <div>
+            <h3>game.event_date</h3>
+          </div>
+        );
+
+        console.log(game.event_date);
+
+        daysIndex++;
+      } else {
+        daysTimeTitle = null;
       }
 
       return {
@@ -106,12 +119,15 @@ class SportCard extends Component {
 
     if (index === this.props.sportData[sportId].data.events.length - 1) {
       index = 0;
+    } else if (daysIndex === this.props.gamesEventTime - 1) {
+      daysIndex = 0;
     } else {
       index++;
     }
 
     return (
       <div>
+        {daysTimeTitle}
         <Card.Group items={gameItems} />;
       </div>
     );

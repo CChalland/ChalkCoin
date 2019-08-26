@@ -50,6 +50,7 @@ class SportTabs extends Component {
             style={{ overflow: "auto", maxHeight: "75em" }}
           >
             <SportCard
+              key={game.sport_id}
               sportData={this.props.allSportsData}
               sportName={game.sport_name}
               sportIndex={activeIndex}
