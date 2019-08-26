@@ -30,12 +30,7 @@ class SportTabs extends Component {
       return {
         menuItem: <Menu.Item key={game.sport_id}>{img}</Menu.Item>,
         render: () => (
-          <Tab.Pane
-            attached={false}
-            color="black"
-            raised
-            style={{ overflow: "auto", maxHeight: "75em" }}
-          >
+          <Tab.Pane attached={false} color="black" raised>
             <SportCard
               key={game.sport_id}
               sportData={this.props.allSportsData}
