@@ -3,6 +3,11 @@ import { Card, Button } from "semantic-ui-react";
 import { Link } from "../routes";
 
 class SportCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { index: 0, daysIndex: 0 };
+  }
+
   renderGamesCards(sportId) {
     let index = 0;
     let daysIndex = 0;
