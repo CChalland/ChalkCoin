@@ -20,6 +20,28 @@ class SportTabs extends Component {
     const { activeIndex } = this.state;
 
     let gamePanes = this.props.allSportsData.map(game => {
+      let index = 0;
+      let diffDaysIndex = [];
+
+      for (let i = 0; i < game.data.events.length - 1; i++) {
+        let day = game.data.events[i].event_date.slice(8, 10);
+        let nextDay = game.data.events[i + 1].event_date.slice(8, 10);
+        //console.log(game.data.events[i].event_date, day, nextDay);
+        if (day < nextDay) {
+          diffDaysIndex.push(i);
+        }
+      }
+
+      //console.log(diffDaysIndex);
+
+      let timeTitle = () => {
+        let title = "";
+        if (diffDaysIndex.includes(index)) {
+          title = game.data.events[index].event_date;
+          console.log(title);
+        }
+      };
+
       let img = (
         <div>
           <img className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
@@ -27,10 +49,18 @@ class SportTabs extends Component {
         </div>
       );
 
+      index++;
+
       return {
         menuItem: <Menu.Item key={game.sport_id}>{img}</Menu.Item>,
         render: () => (
-          <Tab.Pane attached={false}>
+          <Tab.Pane
+            attached={false}
+            color="black"
+            raised
+            style={{ overflow: "auto", maxHeight: "75em" }}
+          >
+            <h3>{timeTitle()}Time...</h3>
             <SportCard
               sportData={this.props.allSportsData}
               sportName={game.sport_name}

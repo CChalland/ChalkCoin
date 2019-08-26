@@ -21,7 +21,6 @@ class BetNew extends Component {
       betAmount: "",
       betSender: "",
       betRecipient: "",
-      betDescription: "",
       errorMessage: "",
       loading: false,
       eventsData: {},
@@ -103,6 +102,7 @@ class BetNew extends Component {
     }
 
     this.setState({ loading: false });
+    console.log(gameDetails)
   };
 
   render() {
