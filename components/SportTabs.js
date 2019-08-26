@@ -20,7 +20,7 @@ class SportTabs extends Component {
     const { activeIndex } = this.state;
 
     let gamePanes = this.props.allSportsData.map(game => {
-      let diffDaysIndex = [];
+      let diffDaysArray = [];
       let gamesEventTime = [];
 
       for (let i = 0; i < game.data.events.length - 1; i++) {
@@ -28,7 +28,7 @@ class SportTabs extends Component {
         let nextDay = game.data.events[i + 1].event_date.slice(8, 10);
         console.log(game.data.events[i].event_date, day, nextDay);
         if (day < nextDay) {
-          diffDaysIndex.push(i);
+          diffDaysArray.push(i);
           gamesEventTime.push(game.data.events[i].event_date);
         }
       }
@@ -54,7 +54,7 @@ class SportTabs extends Component {
               sportName={game.sport_name}
               sportIndex={activeIndex}
               gamesEventTime={gamesEventTime}
-              diffDaysIndex={diffDaysIndex}
+              diffDaysArray={diffDaysArray}
             />
           </Tab.Pane>
         )

@@ -4,6 +4,10 @@ import { Link } from "../routes";
 
 class SportCard extends Component {
   renderGamesCards(sportId) {
+    let index = 0;
+    let daysIndex = 0;
+
+
     let gameItems = this.props.sportData[sportId].data.events.map(game => {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       let gameTime = new Date(game.event_date).toLocaleString("en-US", {
@@ -24,6 +28,11 @@ class SportCard extends Component {
       } else {
         spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
       }
+
+      let eventTime = this.props.gamesEventTime
+      let daysArray = this.props.diffDaysArray
+
+      if (index === daysOffArray[])
 
       return {
         description: (
@@ -93,7 +102,18 @@ class SportCard extends Component {
       };
     });
 
-    return <Card.Group items={gameItems} />;
+    if (index === this.props.sportData[sportId].data.events.length - 1) {
+      index = 0;
+    } else {
+      index++;
+    }
+
+    return (
+      <div>
+
+        <Card.Group items={gameItems} />;
+      </div>
+    );
   }
 
   render() {
