@@ -57,8 +57,8 @@ class SportCard extends Component {
                   right: "350px"
                 }}
               />
-              <span style={{ position: "absolute", right: "150px" }}>
-                {gameTime}
+              <span style={{ position: "absolute", right: "200px" }}>
+                {gameTime.split(",")[1]}
                 <br />
                 {this.props.sportName}
                 <br />
@@ -120,7 +120,7 @@ class SportCard extends Component {
       eventsResult.indexOf(obj);
       return (
         <div>
-          <h3>{obj[0].date}</h3>
+          <h2 style={{ position: "center" }}>{obj[0].date}</h2>
           <Card.Group items={obj} />
         </div>
       );
