@@ -42,7 +42,7 @@ export class SportProvider extends Component {
           }/events`,
           headers: {
             "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-            "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_1
+            "x-rapidapi-key": process.env.THERUNDOWN_API_KEY_2
           },
           params: {
             include: ["all_periods", "scores"]

@@ -11,10 +11,14 @@ class EventCard extends Component {
   componentDidMount() {}
 
   googleImageRender() {
-    const { gameDetails } = this.props;
-    let searchValue = gameDetails.venueName + " " + gameDetails.venueLocation;
-    console.log("game details, ", gameDetails);
+    const { gameDetails, homeData } = this.props;
+    let stadium = gameDetails.venueName + " " + gameDetails.venueLocation;
+    let searchValue = stadium
+      ? stadium
+      : homeData.teamName + " " + homeData.teamMascot + " Stadium";
+
     console.log("search value, ", searchValue);
+
     const client = new GoogleImages(
       process.env.CSE_ID,
       process.env.GOOGLE_CUSTOM_SEARCH_API

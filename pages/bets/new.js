@@ -26,10 +26,13 @@ class BetNew extends Component {
       eventsData: {},
       eventSport: "",
       gameDetails: {},
-      eventSpread: 0
+      eventSpread: 0,
+      homeData: {},
+      awayData:{}
+      
     };
 
-    this.onSubmit = this.onSubmit.bind(this)
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -39,7 +42,6 @@ class BetNew extends Component {
     );
     let eventSport = sportsData[this.props.sportId - 1].sport_name;
     this.setState({ eventsData: eventsData[0], eventSport });
-
 
     let defSpreadHelper =
       eventsData[0].sport_id !== 10
@@ -55,8 +57,30 @@ class BetNew extends Component {
     } else {
       spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
     }
-    this.setState({eventSpread: spread})
+    this.setState({ eventSpread: spread });
 
+    let homeData = eventsData[0].teams_normalized
+      .filter(team => {
+        return team.is_home;
+      })
+      .map(team => {
+        return {
+          teamName: team.name,
+          teamMascot: team.mascot,
+          teamAbbreviation: team.abbreviation
+        };
+      });
+    let awayData = eventsData[0].teams_normalized
+      .filter(team => {
+        return team.is_away;
+      })
+      .map(team => {
+        return {
+          teamName: team.name,
+          teamMascot: team.mascot,
+          teamAbbreviation: team.abbreviation
+        };
+      });
     let gameDetails = {
       title: `${eventsData[0].teams_normalized[0].abbreviation} - ${
         eventsData[0].teams_normalized[1].abbreviation
@@ -65,31 +89,12 @@ class BetNew extends Component {
       venueName: eventsData[0].score.venue_name,
       gameTime: eventsData[0].score.event_status_detail,
       teams: {
-        home: eventsData[0].teams_normalized
-          .filter(team => {
-            return team.is_home;
-          })
-          .map(team => {
-            return {
-              teamName: team.name,
-              teamMascot: team.mascot,
-              teamAbbreviation: team.abbreviation
-            };
-          }),
-        away: eventsData[0].teams_normalized
-          .filter(team => {
-            return team.is_away;
-          })
-          .map(team => {
-            return {
-              teamName: team.name,
-              teamMascot: team.mascot,
-              teamAbbreviation: team.abbreviation
-            };
-          })
+        home: homeData[0],
+        away: awayData[0]
       }
     };
-    this.setState({gameDetails})
+
+    this.setState({ gameDetails, homeData: homeData[0], awayData: awayData[0] });
   }
 
   onSubmit = async event => {
@@ -115,11 +120,11 @@ class BetNew extends Component {
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
+
     this.setState({ loading: false });
   };
 
   render() {
-
     return (
       <Layout>
         <h3>Create a Bet</h3>
@@ -127,6 +132,8 @@ class BetNew extends Component {
         <EventCard
           eventData={this.state.eventsData}
           gameDetails={this.state.gameDetails}
+          homeData={this.state.homeData}
+          awayData={this.state.awayData}
         />
 
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
