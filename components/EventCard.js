@@ -4,13 +4,14 @@ const GoogleImages = require("google-images");
 class EventCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { gameDetails: {} };
+    this.state = {
+      gameDetails: {},
+      stadiumImages: []
+    };
     this.googleImageRender = this.googleImageRender.bind(this);
   }
 
-  componentDidMount() {}
-
-  googleImageRender() {
+  componentDidMount() {
     const { gameDetails, homeData } = this.props;
     let stadium = gameDetails.venueName + " " + gameDetails.venueLocation;
     let searchValue = stadium
@@ -24,16 +25,21 @@ class EventCard extends Component {
       process.env.GOOGLE_CUSTOM_SEARCH_API
     );
 
-    console.log(client.search(searchValue, { size: "xxlarge" }));
+    let searchResult = client.search(searchValue, { size: "xxlarge" }).then(result => {
+      this.setState({ stadiumImages: result });
+    });
+
+    console.log(searchResult);
   }
 
+  googleImageRender() {}
+
   render() {
-    //console.log("EventCard render: eventData ", this.props.eventData);
-    //console.log("EventCard render: gameDetails ", this.props.gameDetails);
+    console.log("EventCard render: searchResult ", this.state.stadiumImages);
     return (
       <div>
         <h3>Event Details...</h3>
-        {this.googleImageRender()}
+        {/*this.googleImageRender()*/}
       </div>
     );
   }
