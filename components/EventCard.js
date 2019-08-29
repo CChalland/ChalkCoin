@@ -11,7 +11,9 @@ class EventCard extends Component {
     this.googleImageRender = this.googleImageRender.bind(this);
   }
 
-  async componentDidMount() {
+  async componentDidMount() {}
+
+  googleImageRender() {
     const { gameDetails, homeData } = this.props;
     let result;
     let stadium = gameDetails.venueName + " " + gameDetails.venueLocation;
@@ -23,7 +25,7 @@ class EventCard extends Component {
 
     const client = new GoogleImages(
       process.env.CSE_ID,
-      process.env.GOOGLE_CUSTOM_SEARCH_API2
+      process.env.GOOGLE_CUSTOM_SEARCH_API
     );
 
     try {
@@ -38,14 +40,12 @@ class EventCard extends Component {
     }
   }
 
-  googleImageRender() {}
-
   render() {
     console.log("EventCard render: searchResult ", this.state.stadiumImages);
     return (
       <div>
         <h3>Event Details...</h3>
-        {/*this.googleImageRender()*/}
+        {this.googleImageRender()}
       </div>
     );
   }
