@@ -48,8 +48,11 @@ class EventCard extends Component {
 
 		let items = [
 			{
-				header: `${awayData.teamAbbreviation} @ ${homeData.teamAbbreviation}`,
-				description: "testing",
+				description: (
+					<div>
+						<h3>{`${awayData.teamAbbreviation} @ ${homeData.teamAbbreviation}`}</h3>
+					</div>
+				),
 				fluid: true
 			}
 		];
