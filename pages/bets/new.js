@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Icon, Image, Form, Button, Input, Message } from "semantic-ui-react";
+import { Container, Card, Icon, Image, Form, Button, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import axios from "axios";
 import { Router } from "../../routes";
@@ -41,6 +41,7 @@ class BetNew extends Component {
 		this.onSubmit = this.onSubmit.bind(this);
 		this.renderEventCard = this.renderEventCard.bind(this);
 		this.eventCardTitle = this.eventCardTitle.bind(this);
+		this.renderEventChart = this.renderEventChart.bind(this);
 		this.chartCanvasRef = React.createRef();
 	}
 
@@ -107,8 +108,7 @@ class BetNew extends Component {
 			awayData: awayData[0]
 		});
 
-		let spreadMoneylineFullGame =
-			eventsData[0].line_periods["1"].period_full_game.moneyline;
+		let spreadMoneylineFullGame = eventsData[0].line_periods["1"].period_full_game.moneyline;
 		//console.log(spreadMoneylineFullGame);
 
 		this.setState({ spread: spreadMoneylineFullGame });
@@ -160,7 +160,7 @@ class BetNew extends Component {
 		return <Card.Group items={items} />;
 	}
 
-	renderEventCard() {
+	renderEventChart() {
 		const { eventsData, homeData, awayData, spread } = this.state;
 		// some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 		let originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
@@ -189,21 +189,35 @@ class BetNew extends Component {
 			datasets: [
 				{
 					data: [spread.moneyline_home, spread.moneyline_away],
-					backgroundColor: ["#a8e0ff", "#b08ea2"],
-					hoverBackgroundColor: ["#a8e0ff", "#b08ea2"]
+					backgroundColor: ["#0B162A", "#203731"],
+					hoverBackgroundColor: ["#C83803", "#FFB612"]
 				}
 			],
 			text: `${awayData.teamAbbreviation} | ${homeData.teamAbbreviation}`
 		};
 
-		let homePecentage =
+		let homePecentage = (
 			(Math.abs(spread.moneyline_home) /
 				(Math.abs(spread.moneyline_home) + Math.abs(spread.moneyline_away))) *
-			100;
-		let awayPecentage =
+			100
+		).toFixed(1);
+		let awayPecentage = (
 			(Math.abs(spread.moneyline_away) /
 				(Math.abs(spread.moneyline_home) + Math.abs(spread.moneyline_away))) *
-			100;
+			100
+		).toFixed(1);
+
+		return (
+			<div>
+				<h3>{awayPecentage}%</h3>
+				<Doughnut data={doughnutData} />
+				<h3>{homePecentage}%</h3>
+			</div>
+		);
+	}
+
+	renderEventCard() {
+		const { eventsData, homeData, awayData, spread } = this.state;
 
 		return (
 			<Card fluid>
@@ -222,21 +236,22 @@ class BetNew extends Component {
 
 				<Card.Content>
 					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
-						<Form.Field>
-							<div>
-								<h3>Bet Amount</h3>
+						<Form.Field className="inline fields">
+							<div className="field">
+								<label>Bet Amount: </label>
 								<Input
+									className="field"
 									labelPosition="right"
 									label="$ USD"
 									value={this.state.betAmount}
 									onChange={event => this.setState({ betAmount: event.target.value })}
 								/>
-								<Button loading={this.state.loading} primary>
+
+								<Button className="ui blue button" loading={this.state.loading} primary>
 									Create
 								</Button>
 							</div>
 						</Form.Field>
-
 						<Message error header="Oops!" content={this.state.errorMessage} />
 					</Form>
 				</Card.Content>
@@ -245,11 +260,7 @@ class BetNew extends Component {
 					<Card.Meta>
 						<span>Betting Stats</span>
 					</Card.Meta>
-					<Card.Description>
-						<h3>{awayPecentage}%</h3>
-						<Doughnut data={doughnutData} />
-						<h3>{homePecentage}%</h3>
-					</Card.Description>
+					<Card.Description>{this.renderEventChart()}</Card.Description>
 				</Card.Content>
 			</Card>
 		);
