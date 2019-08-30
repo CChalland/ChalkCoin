@@ -7,154 +7,151 @@ import { SportContext } from "../../contexts/SportContext";
 import EventCard from "../../components/EventCard";
 
 class BetNew extends Component {
-  static contextType = SportContext;
+	static contextType = SportContext;
 
-  static async getInitialProps(props) {
-    const sportId = props.query.sportId;
-    const eventId = props.query.eventId;
-    return { sportId, eventId };
-  }
+	static async getInitialProps(props) {
+		const sportId = props.query.sportId;
+		const eventId = props.query.eventId;
+		return { sportId, eventId };
+	}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      betAmount: "",
-      betSender: "testing",
-      betRecipient: "",
-      errorMessage: "",
-      loading: false,
-      eventsData: {},
-      eventSport: "",
-      gameDetails: {},
-      eventSpread: 0,
-      homeData: {},
-      awayData:{}
-      
-    };
+	constructor(props) {
+		super(props);
+		this.state = {
+			betAmount: "",
+			betSender: "testing",
+			betRecipient: "",
+			errorMessage: "",
+			loading: false,
+			eventsData: {},
+			eventSport: "",
+			gameDetails: {},
+			eventSpread: 0,
+			homeData: {},
+			awayData: {}
+		};
 
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+		this.onSubmit = this.onSubmit.bind(this);
+	}
 
-  componentDidMount() {
-    const { sportsData } = this.context;
-    let eventsData = sportsData[this.props.sportId - 1].data.events.filter(
-      event => event.event_id === this.props.eventId
-    );
-    let eventSport = sportsData[this.props.sportId - 1].sport_name;
-    this.setState({ eventsData: eventsData[0], eventSport });
+	componentDidMount() {
+		const { sportsData } = this.context;
+		let eventsData = sportsData[this.props.sportId - 1].data.events.filter(
+			event => event.event_id === this.props.eventId
+		);
+		let eventSport = sportsData[this.props.sportId - 1].sport_name;
+		this.setState({ eventsData: eventsData[0], eventSport });
 
-    let defSpreadHelper =
-      eventsData[0].sport_id !== 10
-        ? eventsData[0].line_periods["1"].period_full_game.spread
-        : eventsData[0].line_periods["2"].period_full_game.spread;
-    let spread;
-    let spreadTeam = (spread = eventsData[0].teams_normalized[0].is_away
-      ? eventsData[0].teams_normalized[0].abbreviation
-      : eventsData[0].teams_normalized[1].abbreviation);
+		let defSpreadHelper =
+			eventsData[0].sport_id !== 10
+				? eventsData[0].line_periods["1"].period_full_game.spread
+				: eventsData[0].line_periods["2"].period_full_game.spread;
+		let spread;
+		let spreadTeam = (spread = eventsData[0].teams_normalized[0].is_away
+			? eventsData[0].teams_normalized[0].abbreviation
+			: eventsData[0].teams_normalized[1].abbreviation);
 
-    if (defSpreadHelper.point_spread_away < defSpreadHelper.point_spread_home) {
-      spread = spreadTeam + " " + defSpreadHelper.point_spread_away;
-    } else {
-      spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
-    }
-    this.setState({ eventSpread: spread });
+		if (defSpreadHelper.point_spread_away < defSpreadHelper.point_spread_home) {
+			spread = spreadTeam + " " + defSpreadHelper.point_spread_away;
+		} else {
+			spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
+		}
+		this.setState({ eventSpread: spread });
 
-    let homeData = eventsData[0].teams_normalized
-      .filter(team => {
-        return team.is_home;
-      })
-      .map(team => {
-        return {
-          teamName: team.name,
-          teamMascot: team.mascot,
-          teamAbbreviation: team.abbreviation
-        };
-      });
-    let awayData = eventsData[0].teams_normalized
-      .filter(team => {
-        return team.is_away;
-      })
-      .map(team => {
-        return {
-          teamName: team.name,
-          teamMascot: team.mascot,
-          teamAbbreviation: team.abbreviation
-        };
-      });
-    let gameDetails = {
-      title: `${eventsData[0].teams_normalized[0].abbreviation} - ${
-        eventsData[0].teams_normalized[1].abbreviation
-      }`,
-      venueLocation: eventsData[0].score.venue_location,
-      venueName: eventsData[0].score.venue_name,
-      gameTime: eventsData[0].score.event_status_detail,
-      teams: {
-        home: homeData[0],
-        away: awayData[0]
-      }
-    };
+		let homeData = eventsData[0].teams_normalized
+			.filter(team => {
+				return team.is_home;
+			})
+			.map(team => {
+				return {
+					teamName: team.name,
+					teamMascot: team.mascot,
+					teamAbbreviation: team.abbreviation
+				};
+			});
+		let awayData = eventsData[0].teams_normalized
+			.filter(team => {
+				return team.is_away;
+			})
+			.map(team => {
+				return {
+					teamName: team.name,
+					teamMascot: team.mascot,
+					teamAbbreviation: team.abbreviation
+				};
+			});
+		let gameDetails = {
+			title: `${eventsData[0].teams_normalized[0].abbreviation} - ${eventsData[0].teams_normalized[1].abbreviation}`,
+			venueLocation: eventsData[0].score.venue_location,
+			venueName: eventsData[0].score.venue_name,
+			gameTime: eventsData[0].score.event_status_detail,
+			teams: {
+				home: homeData[0],
+				away: awayData[0]
+			}
+		};
 
-    this.setState({ gameDetails, homeData: homeData[0], awayData: awayData[0] });
-  }
+		this.setState({ gameDetails, homeData: homeData[0], awayData: awayData[0] });
+	}
 
-  onSubmit = async event => {
-    event.preventDefault();
-    this.setState({ loading: true, errorMessage: "" });
+	onSubmit = async event => {
+		event.preventDefault();
+		this.setState({ loading: true, errorMessage: "" });
 
-    try {
-      await axios
-        .post("http://localhost:3001/transaction/open/broadcast", {
-          amount: this.state.betAmount,
-          sender: this.state.betSender,
-          recipient: this.state.betRecipient,
-          sport: this.state.eventSport,
-          event_id: this.state.eventsData.event_id,
-          event_spread: this.state.eventSpread,
-          gameDetails: this.state.gameDetails
-        })
-        .then(function(response) {
-          console.log(response);
-        });
+		try {
+			await axios
+				.post("http://localhost:3001/transaction/open/broadcast", {
+					amount: this.state.betAmount,
+					sender: this.state.betSender,
+					recipient: this.state.betRecipient,
+					sport: this.state.eventSport,
+					event_id: this.state.eventsData.event_id,
+					event_spread: this.state.eventSpread,
+					gameDetails: this.state.gameDetails
+				})
+				.then(function(response) {
+					console.log(response);
+				});
 
-      Router.push("/");
-    } catch (err) {
-      this.setState({ errorMessage: err.message });
-    }
+			Router.push("/");
+		} catch (err) {
+			this.setState({ errorMessage: err.message });
+		}
 
-    this.setState({ loading: false });
-  };
+		this.setState({ loading: false });
+	};
 
-  render() {
-    return (
-      <Layout>
-        <h3>Create a Bet</h3>
+	render() {
+		return (
+			<Layout>
+				<h3>Create a Bet</h3>
 
-        <EventCard
-          eventData={this.state.eventsData}
-          gameDetails={this.state.gameDetails}
-          homeData={this.state.homeData}
-          awayData={this.state.awayData}
-        />
+				<EventCard
+					eventData={this.state.eventsData}
+					gameDetails={this.state.gameDetails}
+					homeData={this.state.homeData}
+					awayData={this.state.awayData}
+				/>
 
-        <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
-          <Form.Field>
-            <label>Bet Amount</label>
-            <Input
-              labelPosition="right"
-              label="$ USD"
-              value={this.state.betAmount}
-              onChange={event => this.setState({ betAmount: event.target.value })}
-            />
-          </Form.Field>
+				<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
+					<Form.Field>
+						<label>Bet Amount</label>
+						<Input
+							labelPosition="right"
+							label="$ USD"
+							value={this.state.betAmount}
+							onChange={event => this.setState({ betAmount: event.target.value })}
+						/>
+					</Form.Field>
 
-          <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button loading={this.state.loading} primary>
-            Create!
-          </Button>
-        </Form>
-      </Layout>
-    );
-  }
+					<Message error header="Oops!" content={this.state.errorMessage} />
+					<Button loading={this.state.loading} primary>
+						Create!
+					</Button>
+				</Form>
+			</Layout>
+		);
+	}
 }
 
 export default BetNew;

@@ -3,76 +3,79 @@ import { Card, Icon, Image } from "semantic-ui-react";
 const GoogleImages = require("google-images");
 
 class EventCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gameDetails: {},
-      stadiumImages: []
-    };
-    this.googleImageData = this.googleImageData.bind(this);
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			gameDetails: {},
+			stadiumImages: []
+		};
+		this.googleImageData = this.googleImageData.bind(this);
+		this.cardExampleImageCard = this.cardExampleImageCard.bind(this);
+	}
 
-  async componentDidMount() {}
+	async componentDidMount() {}
 
-  googleImageData() {
-    const { gameDetails, homeData } = this.props;
-    let response;
-    let stadium = gameDetails.venueName + " " + gameDetails.venueLocation;
-    let searchValue = stadium
-      ? stadium
-      : homeData.teamName + " " + homeData.teamMascot + " Stadium";
+	async googleImageData() {
+		const { gameDetails, homeData } = this.props;
+		let stadium = gameDetails.venueName + " " + gameDetails.venueLocation;
+		let searchValue = stadium
+			? stadium
+			: homeData.teamName + " " + homeData.teamMascot + " Stadium";
 
-    console.log("search value, ", searchValue);
+		console.log("search value, ", searchValue);
 
-    const client = new GoogleImages(
-      process.env.CSE_ID,
-      process.env.GOOGLE_CUSTOM_SEARCH_API
-    );
+		const client = new GoogleImages(
+			process.env.CSE_ID,
+			process.env.GOOGLE_CUSTOM_SEARCH_API
+		);
 
-    try {
-      response = client.search(searchValue, { size: "xxlarge" }).then(result => {
-        console.log(result[0]);
-        return result;
-      });
-    } catch (e) {
-      console.log(e);
-    }
+		let response = await client.search(searchValue, { size: "xxlarge" }).then(result => {
+			//console.log(result[0]);
+			return result;
+		});
 
-    return response;
-  }
+		return response;
+	}
 
-  CardExampleImageCard() {
-    return (
-      <Card>
-        <Image
-          src="https://react.semantic-ui.com/images/avatar/large/daniel.jpg"
-          wrapped
-          ui={false}
-        />
-        <Card.Content>
-          <Card.Header>Daniel</Card.Header>
-          <Card.Meta>Joined in 2016</Card.Meta>
-          <Card.Description>Daniel is a comedian living in Nashville.</Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <a>
-            <Icon name="user" />
-            10 Friends
-          </a>
-        </Card.Content>
-      </Card>
-    );
-  }
+	cardExampleImageCard() {
+		let img;
+		const { gameDetails, homeData, eventData } = this.props;
+		console.log("game, ", gameDetails);
+		console.log("home, ", eventData);
 
-  render() {
-    //console.log("EventCard render: searchResult ", this.googleImageData());
-    return (
-      <div>
-        <h3>Event Details...</h3>
-        {this.CardExampleImageCard()}
-      </div>
-    );
-  }
+		return (
+			<Card fluid>
+				<Image
+					src={`../static/media/${eventData.sport_id}-${homeData.teamAbbreviation}-stadium.png`}
+					wrapped
+					ui={true}
+				/>
+				<Card.Content>
+					<Card.Header>Matthew</Card.Header>
+					<Card.Meta>
+						<span className="date">Joined in 2015</span>
+					</Card.Meta>
+					<Card.Description>Matthew is a musician living in Nashville.</Card.Description>
+				</Card.Content>
+				<Card.Content extra>
+					<a>
+						<Icon name="user" />
+						22 Friends
+					</a>
+				</Card.Content>
+			</Card>
+		);
+	}
+
+	render() {
+		//console.log("EventCard render: searchResult ", this.googleImageData());
+		return (
+			<div>
+				<h3>Event Details...</h3>
+				{this.cardExampleImageCard()}
+			</div>
+		);
+	}
 }
 
 export default EventCard;
