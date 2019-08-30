@@ -171,19 +171,21 @@ class BetNew extends Component {
 				<Card.Content extra>
 					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
 						<Form.Field>
-							<label>Bet Amount</label>
-							<Input
-								labelPosition="right"
-								label="$ USD"
-								value={this.state.betAmount}
-								onChange={event => this.setState({ betAmount: event.target.value })}
-							/>
+							<div>
+								<h3>Bet Amount</h3>
+								<Input
+									labelPosition="right"
+									label="$ USD"
+									value={this.state.betAmount}
+									onChange={event => this.setState({ betAmount: event.target.value })}
+								/>
+								<Button loading={this.state.loading} primary>
+									Create
+								</Button>
+							</div>
 						</Form.Field>
 
 						<Message error header="Oops!" content={this.state.errorMessage} />
-						<Button loading={this.state.loading} primary>
-							Create!
-						</Button>
 					</Form>
 				</Card.Content>
 			</Card>
