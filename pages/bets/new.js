@@ -328,6 +328,8 @@ class BetNew extends Component {
 				</Card.Content>
 
 				<Card.Content>
+					<br />
+					<Card.Description>{this.renderEventChart(providerItem)}</Card.Description>
 					<Card.Meta>
 						<span>Betting Provider</span>
 						<Dropdown
@@ -339,8 +341,6 @@ class BetNew extends Component {
 							onChange={this.handleChartChange}
 						/>
 					</Card.Meta>
-					<br />
-					<Card.Description>{this.renderEventChart(providerItem)}</Card.Description>
 				</Card.Content>
 			</Card>
 		);
