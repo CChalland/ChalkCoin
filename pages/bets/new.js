@@ -164,9 +164,9 @@ class BetNew extends Component {
 
 				<Card.Content>
 					<Card.Meta>
-						<span className="date">Joined in 2015</span>
+						<span className="date">Betting Stats</span>
 					</Card.Meta>
-					<Card.Description>Matthew is a musician living in Nashville.</Card.Description>
+					<Card.Description>The betting data component</Card.Description>
 				</Card.Content>
 				<Card.Content extra>
 					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
