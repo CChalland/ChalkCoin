@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Input, Message } from "semantic-ui-react";
+import { Card, Icon, Image, Form, Button, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import axios from "axios";
 import { Router } from "../../routes";
@@ -32,6 +32,8 @@ class BetNew extends Component {
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
+		this.renderEventCard = this.renderEventCard.bind(this);
+		this.eventCardTitle = this.eventCardTitle.bind(this);
 	}
 
 	componentDidMount() {
@@ -121,34 +123,75 @@ class BetNew extends Component {
 		this.setState({ loading: false });
 	};
 
-	render() {
+	eventCardTitle() {
+		const { eventsData, homeData, awayData } = this.state;
+
+		console.log(eventsData);
+
+		let items = [
+			{
+				description: (
+					<div>
+						<h3>{`${awayData.teamAbbreviation} @ ${homeData.teamAbbreviation}`}</h3>
+					</div>
+				),
+				fluid: true
+			}
+		];
+
+		return <Card.Group items={items} />;
+	}
+
+	renderEventCard() {
+		const { eventsData, gameDetails, homeData, awayData } = this.state;
+
+		console.log(eventsData);
+
 		return (
-			<Layout>
-				<EventCard
-					eventData={this.state.eventsData}
-					gameDetails={this.state.gameDetails}
-					homeData={this.state.homeData}
-					awayData={this.state.awayData}
+			<Card fluid>
+				<div>
+					<h3>{`${awayData.teamAbbreviation} @ ${homeData.teamAbbreviation}`}</h3>
+				</div>
+
+				<Image
+					style={{ padding: "0em" }}
+					src={`../../static/media/${eventsData.sport_id}-${homeData.teamAbbreviation}-stadium.png`}
+					wrapped
+					ui={true}
 				/>
 
-				<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
-					<Form.Field>
-						<label>Bet Amount</label>
-						<Input
-							labelPosition="right"
-							label="$ USD"
-							value={this.state.betAmount}
-							onChange={event => this.setState({ betAmount: event.target.value })}
-						/>
-					</Form.Field>
+				{this.eventCardTitle()}
 
-					<Message error header="Oops!" content={this.state.errorMessage} />
-					<Button loading={this.state.loading} primary>
-						Create!
-					</Button>
-				</Form>
-			</Layout>
+				<Card.Content>
+					<Card.Meta>
+						<span className="date">Joined in 2015</span>
+					</Card.Meta>
+					<Card.Description>Matthew is a musician living in Nashville.</Card.Description>
+				</Card.Content>
+				<Card.Content extra>
+					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
+						<Form.Field>
+							<label>Bet Amount</label>
+							<Input
+								labelPosition="right"
+								label="$ USD"
+								value={this.state.betAmount}
+								onChange={event => this.setState({ betAmount: event.target.value })}
+							/>
+						</Form.Field>
+
+						<Message error header="Oops!" content={this.state.errorMessage} />
+						<Button loading={this.state.loading} primary>
+							Create!
+						</Button>
+					</Form>
+				</Card.Content>
+			</Card>
 		);
+	}
+
+	render() {
+		return <Layout>{this.renderEventCard()}</Layout>;
 	}
 }
 
