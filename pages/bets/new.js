@@ -124,8 +124,6 @@ class BetNew extends Component {
 	render() {
 		return (
 			<Layout>
-				<h3>Create a Bet</h3>
-
 				<EventCard
 					eventData={this.state.eventsData}
 					gameDetails={this.state.gameDetails}

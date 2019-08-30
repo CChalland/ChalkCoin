@@ -69,12 +69,7 @@ class EventCard extends Component {
 
 	render() {
 		//console.log("EventCard render: searchResult ", this.googleImageData());
-		return (
-			<div>
-				<h3>Event Details...</h3>
-				{this.cardExampleImageCard()}
-			</div>
-		);
+		return <div>{this.cardExampleImageCard()}</div>;
 	}
 }
 
