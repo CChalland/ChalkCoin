@@ -35,7 +35,10 @@ class BetNew extends Component {
 			awayData: {},
 			spread: {},
 			spreadProviders: {},
-			providerDropdownOptions: []
+			providerDropdownOptions: [],
+			providerIndex: 0,
+			providerName: "",
+			spreadType: ""
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -44,6 +47,13 @@ class BetNew extends Component {
 		this.renderEventChart = this.renderEventChart.bind(this);
 		this.chartCanvasRef = React.createRef();
 	}
+
+	handleChartChange = (e, data) => {
+		this.setState({ providerIndex: data.value });
+	};
+	handleSpreadChange = (e, data) => {
+		this.setState({ spreadType: data.value });
+	};
 
 	componentDidMount() {
 		const { sportsData } = this.context;
@@ -110,23 +120,23 @@ class BetNew extends Component {
 
 		let spreadMoneylineFullGame = eventsData[0].line_periods["1"].period_full_game.moneyline;
 		let spreadProviders = Object.keys(eventsData[0].line_periods).map(index => {
-			return {
-				key: index,
-				value: eventsData[0].line_periods[index].period_first_half.affiliate.affiliate_name,
-				text: eventsData[0].line_periods[index].period_first_half.affiliate.affiliate_name,
-				data: eventsData[0].line_periods[index]
-			};
+			return eventsData[0].line_periods[index];
 		});
 
 		let providerDropdownOptions = Object.keys(eventsData[0].line_periods).map(index => {
 			return {
 				key: index,
-				value: eventsData[0].line_periods[index].period_first_half.affiliate.affiliate_name,
+				value: index,
 				text: eventsData[0].line_periods[index].period_first_half.affiliate.affiliate_name
 			};
 		});
 
-		this.setState({ spread: spreadMoneylineFullGame, spreadProviders, providerDropdownOptions });
+		this.setState({
+			spread: spreadMoneylineFullGame,
+			spreadProviders,
+			providerDropdownOptions,
+			providerName: providerDropdownOptions[0].text
+		});
 	}
 
 	onSubmit = async event => {
@@ -175,8 +185,12 @@ class BetNew extends Component {
 		return <Card.Group items={items} />;
 	}
 
-	renderEventChart() {
-		const { eventsData, homeData, awayData, spread } = this.state;
+	renderEventChart(providerItem) {
+		const { eventsData, homeData, awayData, spread, spreadProviders, spreadType } = this.state;
+
+		//console.log("spreadProviders, ", providerItem);
+		//console.log("spreadType, ", spreadType);
+
 		// some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 		let originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
 		Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
@@ -232,9 +246,31 @@ class BetNew extends Component {
 	}
 
 	renderEventCard() {
-		const { eventsData, homeData, awayData, spread, spreadProviders, providerDropdownOptions } = this.state;
+		const {
+			eventsData,
+			homeData,
+			awayData,
+			spreadType,
+			spreadProviders,
+			providerDropdownOptions,
+			providerIndex,
+			providerName
+		} = this.state;
 
-		console.log(providerDropdownOptions);
+		const selectSpreadType = [
+			{ key: "period_first_half", value: "period_first_half", text: "First Half" },
+			{ key: "period_first_period", value: "period_first_period", text: "First Period" },
+			{ key: "period_fourth_period", value: "period_fourth_period", text: "Fourth Period" },
+			{ key: "period_full_game", value: "period_full_game", text: "Full Game" },
+			{ key: "period_second_half", value: "period_second_half", text: "Second Half" },
+			{ key: "period_second_period", value: "period_second_period", text: "Second Period" },
+			{ key: "period_third_period", value: "period_third_period", text: "Third Period" }
+		];
+
+		let providerItem = spreadProviders[providerIndex];
+
+		console.log(providerName);
+		console.log(spreadType);
 
 		return (
 			<Card fluid>
@@ -252,19 +288,22 @@ class BetNew extends Component {
 				{this.eventCardTitle()}
 
 				<Card.Content>
-					<Card.Meta>
-						<span>Betting Provider</span>
-						<Dropdown
-							placeholder="Select Spread Provider"
-							fluid
-							search
-							selection
-							options={providerDropdownOptions}
-						/>
-					</Card.Meta>
 					<br />
 					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
 						<Form.Field className="inline fields">
+							<div className="field">
+								<label>Spread Type: </label>
+							</div>
+							<div className="field">
+								<Dropdown
+									placeholder="Select Spread Type"
+									fluid
+									search
+									selection
+									options={selectSpreadType}
+									onChange={this.handleSpreadChange}
+								/>
+							</div>
 							<div className="field">
 								<label>Bet Amount: </label>
 								<Input
@@ -286,9 +325,18 @@ class BetNew extends Component {
 
 				<Card.Content>
 					<Card.Meta>
-						<span>Betting Stats</span>
+						<span>Betting Provider</span>
+						<Dropdown
+							placeholder={providerName}
+							fluid
+							search
+							selection
+							options={providerDropdownOptions}
+							onChange={this.handleChartChange}
+						/>
 					</Card.Meta>
-					<Card.Description>{this.renderEventChart()}</Card.Description>
+					<br />
+					<Card.Description>{this.renderEventChart(providerItem)}</Card.Description>
 				</Card.Content>
 			</Card>
 		);
