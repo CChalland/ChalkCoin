@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import { Container, Card, Icon, Image, Form, Button, Input, Message } from "semantic-ui-react";
+import { Dropdown, Card, Image, Form, Button, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import axios from "axios";
 import { Router } from "../../routes";
 import { SportContext } from "../../contexts/SportContext";
-import BetDoughnutChart from "../../components/BetDoughnutChart";
 import { Doughnut } from "react-chartjs-2";
 import Chart from "chart.js";
-
-import EventCard from "../../components/EventCard";
+import "../../style/TeamColors.css";
 
 class BetNew extends Component {
 	static contextType = SportContext;
@@ -35,7 +33,9 @@ class BetNew extends Component {
 			eventSpread: 0,
 			homeData: {},
 			awayData: {},
-			spread: {}
+			spread: {},
+			spreadProviders: {},
+			providerDropdownOptions: []
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -109,9 +109,24 @@ class BetNew extends Component {
 		});
 
 		let spreadMoneylineFullGame = eventsData[0].line_periods["1"].period_full_game.moneyline;
-		//console.log(spreadMoneylineFullGame);
+		let spreadProviders = Object.keys(eventsData[0].line_periods).map(index => {
+			return {
+				key: index,
+				value: eventsData[0].line_periods[index].period_first_half.affiliate.affiliate_name,
+				text: eventsData[0].line_periods[index].period_first_half.affiliate.affiliate_name,
+				data: eventsData[0].line_periods[index]
+			};
+		});
 
-		this.setState({ spread: spreadMoneylineFullGame });
+		let providerDropdownOptions = Object.keys(eventsData[0].line_periods).map(index => {
+			return {
+				key: index,
+				value: eventsData[0].line_periods[index].period_first_half.affiliate.affiliate_name,
+				text: eventsData[0].line_periods[index].period_first_half.affiliate.affiliate_name
+			};
+		});
+
+		this.setState({ spread: spreadMoneylineFullGame, spreadProviders, providerDropdownOptions });
 	}
 
 	onSubmit = async event => {
@@ -217,7 +232,9 @@ class BetNew extends Component {
 	}
 
 	renderEventCard() {
-		const { eventsData, homeData, awayData, spread } = this.state;
+		const { eventsData, homeData, awayData, spread, spreadProviders, providerDropdownOptions } = this.state;
+
+		console.log(providerDropdownOptions);
 
 		return (
 			<Card fluid>
@@ -235,6 +252,17 @@ class BetNew extends Component {
 				{this.eventCardTitle()}
 
 				<Card.Content>
+					<Card.Meta>
+						<span>Betting Provider</span>
+						<Dropdown
+							placeholder="Select Spread Provider"
+							fluid
+							search
+							selection
+							options={providerDropdownOptions}
+						/>
+					</Card.Meta>
+					<br />
 					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
 						<Form.Field className="inline fields">
 							<div className="field">
