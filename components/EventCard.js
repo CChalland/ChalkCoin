@@ -10,7 +10,7 @@ class EventCard extends Component {
 			stadiumImages: []
 		};
 		this.googleImageData = this.googleImageData.bind(this);
-		this.cardExampleImageCard = this.cardExampleImageCard.bind(this);
+		this.renderEventCard = this.renderEventCard.bind(this);
 	}
 
 	async componentDidMount() {}
@@ -37,21 +37,25 @@ class EventCard extends Component {
 		return response;
 	}
 
-	cardExampleImageCard() {
-		let img;
-		const { gameDetails, homeData, eventData } = this.props;
+	renderEventCard() {
+		const { gameDetails, homeData, awayData, eventData } = this.props;
+
 		console.log("game, ", gameDetails);
 		console.log("home, ", eventData);
 
 		return (
 			<Card fluid>
+				<Card
+					fluid
+					header={`${awayData.teamAbbreviation} @ ${homeData.teamAbbreviation}`}
+				/>
 				<Image
+					style={{ padding: "-10em" }}
 					src={`../static/media/${eventData.sport_id}-${homeData.teamAbbreviation}-stadium.png`}
 					wrapped
 					ui={true}
 				/>
 				<Card.Content>
-					<Card.Header>Matthew</Card.Header>
 					<Card.Meta>
 						<span className="date">Joined in 2015</span>
 					</Card.Meta>
@@ -69,7 +73,7 @@ class EventCard extends Component {
 
 	render() {
 		//console.log("EventCard render: searchResult ", this.googleImageData());
-		return <div>{this.cardExampleImageCard()}</div>;
+		return <div>{this.renderEventCard()}</div>;
 	}
 }
 
