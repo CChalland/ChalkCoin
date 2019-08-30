@@ -241,7 +241,10 @@ class BetNew extends Component {
 			<div>
 				<h3>{awayPecentage}%</h3>
 				<Doughnut data={doughnutData} />
-				<h3>{homePecentage}%</h3>
+				<div style={{ position: "absolute", right: "50px" }}>
+					<h3>{homePecentage}%</h3>
+				</div>
+				<br />
 			</div>
 		);
 	}
