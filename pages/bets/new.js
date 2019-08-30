@@ -5,6 +5,7 @@ import axios from "axios";
 import { Router } from "../../routes";
 import { SportContext } from "../../contexts/SportContext";
 import BetDoughnutChart from "../../components/BetDoughnutChart";
+import { Doughnut } from "react-chartjs-2";
 
 import EventCard from "../../components/EventCard";
 
@@ -165,6 +166,11 @@ class BetNew extends Component {
 			{ label: awayData.teamAbbreviation, value: spread.moneyline_away }
 		];
 
+		let doughnutData = {
+			datasets: [{ data: [spread.moneyline_home, spread.moneyline_away] }],
+			labels: [homeData.teamAbbreviation, awayData.teamAbbreviation]
+		};
+
 		return (
 			<Card fluid>
 				<div>
@@ -185,10 +191,12 @@ class BetNew extends Component {
 						<span>Betting Stats</span>
 					</Card.Meta>
 					<Card.Description>
-						<BetDoughnutChart
-							data={chartData}
-							title={"Moneyline Full Game Spread"}
-							colors={["#a8e0ff", "#8ee3f5"]}
+						<Doughnut
+							data={doughnutData}
+							options={{
+								responsive: true,
+								maintainAspectRatio: true
+							}}
 						/>
 					</Card.Description>
 				</Card.Content>
