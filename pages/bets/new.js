@@ -50,6 +50,7 @@ class BetNew extends Component {
 
 	handleChartChange = (e, data) => {
 		this.setState({ providerIndex: data.value });
+		console.log(data.value);
 	};
 	handleSpreadChange = (e, data) => {
 		this.setState({ spreadType: data.value });
@@ -269,7 +270,7 @@ class BetNew extends Component {
 
 		let providerItem = spreadProviders[providerIndex];
 
-		console.log(providerName);
+		//console.log(providerDropdownOptions);
 		console.log(spreadType);
 
 		return (
@@ -296,7 +297,7 @@ class BetNew extends Component {
 							</div>
 							<div className="field">
 								<Dropdown
-									placeholder="Select Spread Type"
+									defaultValue={selectSpreadType[3].value}
 									fluid
 									search
 									selection
@@ -327,7 +328,7 @@ class BetNew extends Component {
 					<Card.Meta>
 						<span>Betting Provider</span>
 						<Dropdown
-							placeholder={providerName}
+							defaultValue="1"
 							fluid
 							search
 							selection
