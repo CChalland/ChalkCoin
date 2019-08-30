@@ -6,6 +6,7 @@ import { Router } from "../../routes";
 import { SportContext } from "../../contexts/SportContext";
 import BetDoughnutChart from "../../components/BetDoughnutChart";
 import { Doughnut } from "react-chartjs-2";
+import Chart from "chart.js";
 
 import EventCard from "../../components/EventCard";
 
@@ -161,12 +162,30 @@ class BetNew extends Component {
 
 	renderEventCard() {
 		const { eventsData, homeData, awayData, spread } = this.state;
-		let chartData = [
-			{ label: homeData.teamAbbreviation, value: spread.moneyline_home },
-			{ label: awayData.teamAbbreviation, value: spread.moneyline_away }
-		];
+		// some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
+		let originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
+		Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
+			draw: function() {
+				originalDoughnutDraw.apply(this, arguments);
 
+				let chart = this.chart;
+				let width = chart.chart.width,
+					height = chart.chart.height,
+					ctx = chart.chart.ctx;
+
+				let fontSize = (height / 150).toFixed(2);
+				ctx.font = fontSize + "em sans-serif";
+				ctx.textBaseline = "middle";
+
+				let text = chart.config.data.text,
+					textX = Math.round((width - ctx.measureText(text).width) / 2),
+					textY = height / 2;
+
+				ctx.fillText(text, textX, textY);
+			}
+		});
 		let doughnutData = {
+			labels: [homeData.teamAbbreviation, awayData.teamAbbreviation],
 			datasets: [
 				{
 					data: [spread.moneyline_home, spread.moneyline_away],
@@ -174,8 +193,17 @@ class BetNew extends Component {
 					hoverBackgroundColor: ["#a8e0ff", "#b08ea2"]
 				}
 			],
-			labels: [homeData.teamAbbreviation, awayData.teamAbbreviation]
+			text: `${awayData.teamAbbreviation} | ${homeData.teamAbbreviation}`
 		};
+
+		let homePecentage =
+			(Math.abs(spread.moneyline_home) /
+				(Math.abs(spread.moneyline_home) + Math.abs(spread.moneyline_away))) *
+			100;
+		let awayPecentage =
+			(Math.abs(spread.moneyline_away) /
+				(Math.abs(spread.moneyline_home) + Math.abs(spread.moneyline_away))) *
+			100;
 
 		return (
 			<Card fluid>
@@ -197,15 +225,9 @@ class BetNew extends Component {
 						<span>Betting Stats</span>
 					</Card.Meta>
 					<Card.Description>
-						<Doughnut
-							data={doughnutData}
-							title={"Moneyline Full Game Spread"}
-							colors={["#a8e0ff", "#b08ea2"]}
-							options={{
-								responsive: true,
-								maintainAspectRatio: true
-							}}
-						/>
+						{awayPecentage}%
+						<Doughnut data={doughnutData} />
+						{homePecentage}%
 					</Card.Description>
 				</Card.Content>
 				<Card.Content extra>
