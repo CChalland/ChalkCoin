@@ -4,6 +4,8 @@ import Layout from "../../components/Layout";
 import axios from "axios";
 import { Router } from "../../routes";
 import { SportContext } from "../../contexts/SportContext";
+import BetDoughnutChart from "../../components/BetDoughnutChart";
+
 import EventCard from "../../components/EventCard";
 
 class BetNew extends Component {
@@ -21,6 +23,8 @@ class BetNew extends Component {
 			betAmount: "",
 			betSender: "testing",
 			betRecipient: "",
+			bettingTeam: "",
+			bettingTeamDelta: "",
 			errorMessage: "",
 			loading: false,
 			eventsData: {},
@@ -28,12 +32,14 @@ class BetNew extends Component {
 			gameDetails: {},
 			eventSpread: 0,
 			homeData: {},
-			awayData: {}
+			awayData: {},
+			spread: {}
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
 		this.renderEventCard = this.renderEventCard.bind(this);
 		this.eventCardTitle = this.eventCardTitle.bind(this);
+		this.chartCanvasRef = React.createRef();
 	}
 
 	componentDidMount() {
@@ -42,8 +48,6 @@ class BetNew extends Component {
 			event => event.event_id === this.props.eventId
 		);
 		let eventSport = sportsData[this.props.sportId - 1].sport_name;
-		this.setState({ eventsData: eventsData[0], eventSport });
-
 		let defSpreadHelper =
 			eventsData[0].sport_id !== 10
 				? eventsData[0].line_periods["1"].period_full_game.spread
@@ -58,7 +62,6 @@ class BetNew extends Component {
 		} else {
 			spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
 		}
-		this.setState({ eventSpread: spread });
 
 		let homeData = eventsData[0].teams_normalized
 			.filter(team => {
@@ -93,7 +96,20 @@ class BetNew extends Component {
 			}
 		};
 
-		this.setState({ gameDetails, homeData: homeData[0], awayData: awayData[0] });
+		this.setState({
+			eventsData: eventsData[0],
+			eventSport,
+			eventSpread: spread,
+			gameDetails,
+			homeData: homeData[0],
+			awayData: awayData[0]
+		});
+
+		let spreadMoneylineFullGame =
+			eventsData[0].line_periods["1"].period_full_game.moneyline;
+		//console.log(spreadMoneylineFullGame);
+
+		this.setState({ spread: spreadMoneylineFullGame });
 	}
 
 	onSubmit = async event => {
@@ -126,7 +142,7 @@ class BetNew extends Component {
 	eventCardTitle() {
 		const { eventsData, homeData, awayData } = this.state;
 
-		console.log(eventsData);
+		//console.log(eventsData);
 
 		let items = [
 			{
@@ -143,9 +159,15 @@ class BetNew extends Component {
 	}
 
 	renderEventCard() {
-		const { eventsData, gameDetails, homeData, awayData } = this.state;
+		const { eventsData, gameDetails, homeData, awayData, spread } = this.state;
+		let chartData = [
+			{ label: homeData.teamAbbreviation, value: spread.moneyline_home },
+			{ label: awayData.teamAbbreviation, value: spread.moneyline_away }
+		];
 
-		console.log(eventsData);
+		console.log(chartData);
+
+		//console.log(eventsData);
 
 		return (
 			<Card fluid>
@@ -164,9 +186,15 @@ class BetNew extends Component {
 
 				<Card.Content>
 					<Card.Meta>
-						<span className="date">Betting Stats</span>
+						<span>Betting Stats</span>
 					</Card.Meta>
-					<Card.Description>The betting data component</Card.Description>
+					<Card.Description>
+						<BetDoughnutChart
+							data={chartData}
+							title={"Moneyline Full Game Spread"}
+							colors={["#a8e0ff", "#8ee3f5"]}
+						/>
+					</Card.Description>
 				</Card.Content>
 				<Card.Content extra>
 					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
