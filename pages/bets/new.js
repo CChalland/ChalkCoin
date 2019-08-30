@@ -167,7 +167,13 @@ class BetNew extends Component {
 		];
 
 		let doughnutData = {
-			datasets: [{ data: [spread.moneyline_home, spread.moneyline_away] }],
+			datasets: [
+				{
+					data: [spread.moneyline_home, spread.moneyline_away],
+					backgroundColor: ["#a8e0ff", "#b08ea2"],
+					hoverBackgroundColor: ["#a8e0ff", "#b08ea2"]
+				}
+			],
 			labels: [homeData.teamAbbreviation, awayData.teamAbbreviation]
 		};
 
@@ -193,6 +199,8 @@ class BetNew extends Component {
 					<Card.Description>
 						<Doughnut
 							data={doughnutData}
+							title={"Moneyline Full Game Spread"}
+							colors={["#a8e0ff", "#b08ea2"]}
 							options={{
 								responsive: true,
 								maintainAspectRatio: true
