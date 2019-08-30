@@ -221,16 +221,6 @@ class BetNew extends Component {
 				{this.eventCardTitle()}
 
 				<Card.Content>
-					<Card.Meta>
-						<span>Betting Stats</span>
-					</Card.Meta>
-					<Card.Description>
-						<h3>{awayPecentage}%</h3>
-						<Doughnut data={doughnutData} />
-						<h3>{homePecentage}%</h3>
-					</Card.Description>
-				</Card.Content>
-				<Card.Content extra>
 					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
 						<Form.Field>
 							<div>
@@ -249,6 +239,17 @@ class BetNew extends Component {
 
 						<Message error header="Oops!" content={this.state.errorMessage} />
 					</Form>
+				</Card.Content>
+
+				<Card.Content>
+					<Card.Meta>
+						<span>Betting Stats</span>
+					</Card.Meta>
+					<Card.Description>
+						<h3>{awayPecentage}%</h3>
+						<Doughnut data={doughnutData} />
+						<h3>{homePecentage}%</h3>
+					</Card.Description>
 				</Card.Content>
 			</Card>
 		);
