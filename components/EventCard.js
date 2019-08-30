@@ -11,6 +11,7 @@ class EventCard extends Component {
 		};
 		this.googleImageData = this.googleImageData.bind(this);
 		this.renderEventCard = this.renderEventCard.bind(this);
+		this.eventCardTitle = this.eventCardTitle.bind(this);
 	}
 
 	async componentDidMount() {}
@@ -37,24 +38,40 @@ class EventCard extends Component {
 		return response;
 	}
 
+	eventCardTitle() {
+		const { eventData, homeData, awayData } = this.props;
+		console.log(eventData);
+		const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+		let gameTime = new Date(eventData.event_date).toLocaleString("en-US", {
+			timeZone: timeZone
+		});
+
+		let items = [
+			{
+				header: `${awayData.teamAbbreviation} @ ${homeData.teamAbbreviation}`,
+				description: "testing",
+				fluid: true
+			}
+		];
+
+		return <Card.Group items={items} />;
+	}
+
 	renderEventCard() {
 		const { gameDetails, homeData, awayData, eventData } = this.props;
 
-		console.log("game, ", gameDetails);
-		console.log("home, ", eventData);
-
 		return (
 			<Card fluid>
-				<Card
-					fluid
-					header={`${awayData.teamAbbreviation} @ ${homeData.teamAbbreviation}`}
-				/>
+				<div>
+					<h3>{`${awayData.teamAbbreviation} @ ${homeData.teamAbbreviation}`}</h3>
+				</div>
 				<Image
-					style={{ padding: "-10em" }}
+					style={{ padding: "0em" }}
 					src={`../static/media/${eventData.sport_id}-${homeData.teamAbbreviation}-stadium.png`}
 					wrapped
 					ui={true}
 				/>
+				{this.eventCardTitle()}
 				<Card.Content>
 					<Card.Meta>
 						<span className="date">Joined in 2015</span>
