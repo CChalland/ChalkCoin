@@ -159,15 +159,11 @@ class BetNew extends Component {
 	}
 
 	renderEventCard() {
-		const { eventsData, gameDetails, homeData, awayData, spread } = this.state;
+		const { eventsData, homeData, awayData, spread } = this.state;
 		let chartData = [
 			{ label: homeData.teamAbbreviation, value: spread.moneyline_home },
 			{ label: awayData.teamAbbreviation, value: spread.moneyline_away }
 		];
-
-		console.log(chartData);
-
-		//console.log(eventsData);
 
 		return (
 			<Card fluid>
