@@ -173,7 +173,7 @@ class BetNew extends Component {
 					height = chart.chart.height,
 					ctx = chart.chart.ctx;
 
-				let fontSize = (height / 150).toFixed(2);
+				let fontSize = (height / 175).toFixed(2);
 				ctx.font = fontSize + "em sans-serif";
 				ctx.textBaseline = "middle";
 
@@ -225,9 +225,9 @@ class BetNew extends Component {
 						<span>Betting Stats</span>
 					</Card.Meta>
 					<Card.Description>
-						{awayPecentage}%
+						<h3>{awayPecentage}%</h3>
 						<Doughnut data={doughnutData} />
-						{homePecentage}%
+						<h3>{homePecentage}%</h3>
 					</Card.Description>
 				</Card.Content>
 				<Card.Content extra>
