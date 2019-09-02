@@ -44,5 +44,6 @@
     "semantic-ui-react": "^0.87.3",
     "sha256": "^0.2.0",
     "uuid": "^3.3.2"
-  }
+  },
+  "devDependencies": {}
 }

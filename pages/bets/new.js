@@ -6,7 +6,7 @@ import { Router } from "../../routes";
 import { SportContext } from "../../contexts/SportContext";
 import { Doughnut } from "react-chartjs-2";
 import Chart from "chart.js";
-import "../../style/TeamColors.css";
+//import "../../style/TeamColors.css";
 
 class BetNew extends Component {
 	static contextType = SportContext;
@@ -36,9 +36,17 @@ class BetNew extends Component {
 			spread: {},
 			spreadProviders: {},
 			providerDropdownOptions: [],
-			providerIndex: 0,
-			providerName: "",
-			spreadType: ""
+			providerIndex: 1,
+			spreadType: "period_full_game",
+			selectSpreadType: [
+				{ key: "period_full_game", value: "period_full_game", text: "Full Game" },
+				{ key: "period_first_half", value: "period_first_half", text: "First Half" },
+				{ key: "period_second_half", value: "period_second_half", text: "Second Half" },
+				{ key: "period_first_period", value: "period_first_period", text: "First Period" },
+				{ key: "period_second_period", value: "period_second_period", text: "Second Period" },
+				{ key: "period_third_period", value: "period_third_period", text: "Third Period" },
+				{ key: "period_fourth_period", value: "period_fourth_period", text: "Fourth Period" }
+			]
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -49,11 +57,13 @@ class BetNew extends Component {
 	}
 
 	handleChartChange = (e, data) => {
-		this.setState({ providerIndex: data.value });
-		console.log(data.value);
+		this.setState({
+			spreadProviders: this.state.eventsData.line_periods[data.value],
+			spread: this.state.eventsData.line_periods[data.value][this.state.spreadType].moneyline
+		});
 	};
 	handleSpreadChange = (e, data) => {
-		this.setState({ spreadType: data.value });
+		this.setState({ spread: this.state.spreadProviders[data.value].moneyline, spreadType: data.value });
 	};
 
 	componentDidMount() {
@@ -120,10 +130,6 @@ class BetNew extends Component {
 		});
 
 		let spreadMoneylineFullGame = eventsData[0].line_periods["1"].period_full_game.moneyline;
-		let spreadProviders = Object.keys(eventsData[0].line_periods).map(index => {
-			return eventsData[0].line_periods[index];
-		});
-
 		let providerDropdownOptions = Object.keys(eventsData[0].line_periods).map(index => {
 			return {
 				key: index,
@@ -134,9 +140,8 @@ class BetNew extends Component {
 
 		this.setState({
 			spread: spreadMoneylineFullGame,
-			spreadProviders,
-			providerDropdownOptions,
-			providerName: providerDropdownOptions[0].text
+			spreadProviders: eventsData[0].line_periods["1"],
+			providerDropdownOptions
 		});
 	}
 
@@ -186,11 +191,8 @@ class BetNew extends Component {
 		return <Card.Group items={items} />;
 	}
 
-	renderEventChart(providerItem) {
-		const { eventsData, homeData, awayData, spread, spreadProviders, spreadType } = this.state;
-
-		//console.log("spreadProviders, ", providerItem);
-		//console.log("spreadType, ", spreadType);
+	renderEventChart() {
+		const { homeData, awayData, spread } = this.state;
 
 		// some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 		let originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
@@ -250,31 +252,7 @@ class BetNew extends Component {
 	}
 
 	renderEventCard() {
-		const {
-			eventsData,
-			homeData,
-			awayData,
-			spreadType,
-			spreadProviders,
-			providerDropdownOptions,
-			providerIndex,
-			providerName
-		} = this.state;
-
-		const selectSpreadType = [
-			{ key: "period_full_game", value: "period_full_game", text: "Full Game" },
-			{ key: "period_first_half", value: "period_first_half", text: "First Half" },
-			{ key: "period_second_half", value: "period_second_half", text: "Second Half" },
-			{ key: "period_first_period", value: "period_first_period", text: "First Period" },
-			{ key: "period_second_period", value: "period_second_period", text: "Second Period" },
-			{ key: "period_third_period", value: "period_third_period", text: "Third Period" },
-			{ key: "period_fourth_period", value: "period_fourth_period", text: "Fourth Period" }
-		];
-
-		let providerItem = spreadProviders[providerIndex];
-
-		//console.log(providerDropdownOptions);
-		console.log(spreadType);
+		const { eventsData, homeData, awayData, providerDropdownOptions, selectSpreadType } = this.state;
 
 		return (
 			<Card fluid>
@@ -328,10 +306,9 @@ class BetNew extends Component {
 				</Card.Content>
 
 				<Card.Content>
-					<Card.Description>{this.renderEventChart(providerItem)}</Card.Description>
-					<br />
 					<Card.Meta>
 						<span>Betting Provider</span>
+
 						<Dropdown
 							defaultValue="1"
 							fluid
@@ -340,6 +317,7 @@ class BetNew extends Component {
 							onChange={this.handleChartChange}
 						/>
 					</Card.Meta>
+					<Card.Description>{this.renderEventChart()}</Card.Description>
 				</Card.Content>
 			</Card>
 		);
