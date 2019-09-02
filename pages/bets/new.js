@@ -280,7 +280,6 @@ class BetNew extends Component {
 								<Dropdown
 									defaultValue={selectSpreadType[0].value}
 									fluid
-									search
 									selection
 									options={selectSpreadType}
 									onChange={this.handleSpreadChange}
