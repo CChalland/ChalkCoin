@@ -262,13 +262,13 @@ class BetNew extends Component {
 		} = this.state;
 
 		const selectSpreadType = [
-			{ key: "period_first_half", value: "period_first_half", text: "First Half" },
-			{ key: "period_first_period", value: "period_first_period", text: "First Period" },
-			{ key: "period_fourth_period", value: "period_fourth_period", text: "Fourth Period" },
 			{ key: "period_full_game", value: "period_full_game", text: "Full Game" },
+			{ key: "period_first_half", value: "period_first_half", text: "First Half" },
 			{ key: "period_second_half", value: "period_second_half", text: "Second Half" },
+			{ key: "period_first_period", value: "period_first_period", text: "First Period" },
 			{ key: "period_second_period", value: "period_second_period", text: "Second Period" },
-			{ key: "period_third_period", value: "period_third_period", text: "Third Period" }
+			{ key: "period_third_period", value: "period_third_period", text: "Third Period" },
+			{ key: "period_fourth_period", value: "period_fourth_period", text: "Fourth Period" }
 		];
 
 		let providerItem = spreadProviders[providerIndex];
@@ -300,7 +300,7 @@ class BetNew extends Component {
 							</div>
 							<div className="field">
 								<Dropdown
-									defaultValue={selectSpreadType[3].value}
+									defaultValue={selectSpreadType[0].value}
 									fluid
 									search
 									selection
