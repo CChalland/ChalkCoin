@@ -335,7 +335,6 @@ class BetNew extends Component {
 						<Dropdown
 							defaultValue="1"
 							fluid
-							search
 							selection
 							options={providerDropdownOptions}
 							onChange={this.handleChartChange}

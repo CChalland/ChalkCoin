@@ -18,7 +18,7 @@ class SportCard extends Component {
 
 			//console.log(game.line_periods["1"]);
 
-			/*let defSpreadHelper =
+			let defSpreadHelper =
 				game.sport_id !== 10
 					? game.line_periods["1"].period_full_game.spread
 					: game.line_periods["2"].period_full_game.spread;
@@ -31,8 +31,7 @@ class SportCard extends Component {
 				spread = spreadTeam + " " + defSpreadHelper.point_spread_away;
 			} else {
 				spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
-      }
-      */
+			}
 
 			let fullClock = eventDate[1].split(":00 ");
 			let displayDate = `${fullClock[0]} ${fullClock[1]}`;
@@ -64,7 +63,7 @@ class SportCard extends Component {
 								<br />
 								{this.props.sportName}
 								<br />
-								{/*spread*/}
+								{spread}
 							</span>
 							<Link
 								href={{
