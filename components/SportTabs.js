@@ -32,7 +32,7 @@ class SportTabs extends Component {
 				render: () => (
 					<Tab.Pane attached={false} raised>
 						<SportCard
-							key={game.sport_id}
+							key={game.sport_name}
 							sportData={this.props.allSportsData}
 							sportName={game.sport_name}
 							sportIndex={activeIndex}
