@@ -130,7 +130,7 @@ class BetNew extends Component {
 			awayData: awayData[0]
 		});
 
-		let spreadMoneylineFullGame = eventsData[0].line_periods["1"].period_full_game.moneyline;
+		let spreadMoneylineFullGame = eventsData[0].line_periods[firstBettingIndex].period_full_game.moneyline;
 		let providerDropdownOptions = Object.keys(eventsData[0].line_periods).map(index => {
 			return {
 				key: index,
@@ -141,7 +141,7 @@ class BetNew extends Component {
 
 		this.setState({
 			spread: spreadMoneylineFullGame,
-			spreadProviders: eventsData[0].line_periods["1"],
+			spreadProviders: eventsData[0].line_periods[firstBettingIndex],
 			providerDropdownOptions
 		});
 	}
@@ -254,6 +254,8 @@ class BetNew extends Component {
 
 	renderEventCard() {
 		const { eventsData, homeData, awayData, providerDropdownOptions, selectSpreadType } = this.state;
+
+		console.log(eventsData);
 
 		return (
 			<Card fluid>
