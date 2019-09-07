@@ -16,12 +16,10 @@ class SportCard extends Component {
 			});
 			let eventDate = gameTime.split(",");
 
-			//console.log(game.line_periods["1"]);
+			let bettingIndexes = Object.keys(game.line_periods);
+			let firstBettingIndex = bettingIndexes[0];
 
-			let defSpreadHelper =
-				game.sport_id !== 10
-					? game.line_periods["1"].period_full_game.spread
-					: game.line_periods["2"].period_full_game.spread;
+			let defSpreadHelper = game.line_periods[firstBettingIndex].period_full_game.spread;
 			let spread;
 			let spreadTeam = (spread = game.teams_normalized[0].is_away
 				? game.teams_normalized[0].abbreviation

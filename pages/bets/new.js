@@ -72,10 +72,11 @@ class BetNew extends Component {
 			event => event.event_id === this.props.eventId
 		);
 		let eventSport = sportsData[this.props.sportId - 1].sport_name;
-		let defSpreadHelper =
-			eventsData[0].sport_id !== 10
-				? eventsData[0].line_periods["1"].period_full_game.spread
-				: eventsData[0].line_periods["2"].period_full_game.spread;
+
+		let bettingIndexes = Object.keys(eventsData[0].line_periods);
+		let firstBettingIndex = bettingIndexes[0];
+
+		let defSpreadHelper = eventsData[0].line_periods[firstBettingIndex].period_full_game.spread;
 		let spread;
 		let spreadTeam = (spread = eventsData[0].teams_normalized[0].is_away
 			? eventsData[0].teams_normalized[0].abbreviation
