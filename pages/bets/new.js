@@ -68,10 +68,11 @@ class BetNew extends Component {
 
 	componentDidMount() {
 		const { sportsData } = this.context;
-		let eventsData = sportsData[this.props.sportId - 1].data.events.filter(
-			event => event.event_id === this.props.eventId
-		);
-		let eventSport = sportsData[this.props.sportId - 1].sport_name;
+
+		let filterSports = sportsData.filter(data => data.sport_id === parseInt(this.props.sportId));
+
+		let eventsData = filterSports[0].data.events.filter(event => event.event_id === this.props.eventId);
+		let eventSport = filterSports[0].sport_name;
 
 		let bettingIndexes = Object.keys(eventsData[0].line_periods);
 		let firstBettingIndex = bettingIndexes[0];
@@ -254,8 +255,6 @@ class BetNew extends Component {
 
 	renderEventCard() {
 		const { eventsData, homeData, awayData, providerDropdownOptions, selectSpreadType } = this.state;
-
-		console.log(eventsData);
 
 		return (
 			<Card fluid>
