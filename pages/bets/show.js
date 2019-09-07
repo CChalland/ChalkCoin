@@ -1,6 +1,8 @@
-import react, { Component } from "react";
+import React, { Component } from "react";
 
 class BetShow extends Component {
+  //static async getInitialProps(props) {}
+
   render() {
     return <h3>Bet Show</h3>;
   }
