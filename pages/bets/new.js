@@ -309,7 +309,7 @@ class BetNew extends Component {
 								<label>Your Team: </label>
 							</div>
 							<div className="field">
-								<Dropdown fluid selection options={selectBettingTeam} onChange={this.handleTeamChange} />
+								<Dropdown placeholder="Team you're betting to win" fluid selection options={selectBettingTeam} onChange={this.handleTeamChange} />
 							</div>
 							<div className="field">
 								<label>Spread Type: </label>
