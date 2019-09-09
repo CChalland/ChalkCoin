@@ -6,7 +6,7 @@ import { Router } from "../../routes";
 import { SportContext } from "../../contexts/SportContext";
 import { Doughnut } from "react-chartjs-2";
 import Chart from "chart.js";
-//import "../../style/TeamColors.css";
+import { TeamColors } from "../../helpers/TeamColors";
 
 class BetNew extends Component {
 	static contextType = SportContext;
@@ -33,6 +33,7 @@ class BetNew extends Component {
 			eventSpread: 0,
 			homeData: {},
 			awayData: {},
+			teamColors: {},
 			spread: {},
 			spreadProviders: {},
 			providerDropdownOptions: [],
@@ -111,6 +112,7 @@ class BetNew extends Component {
 					teamAbbreviation: team.abbreviation
 				};
 			});
+
 		let gameDetails = {
 			title: `${eventsData[0].teams_normalized[0].abbreviation} - ${eventsData[0].teams_normalized[1].abbreviation}`,
 			venueLocation: eventsData[0].score.venue_location,
@@ -122,13 +124,24 @@ class BetNew extends Component {
 			}
 		};
 
+		let teamColors;
+
+		if (eventSport === "MLS") {
+			let homeTeamName = `${homeData[0].teamName}${homeData[0].teamMascot}`.split(" ").join("");
+			let awayTeamName = `${awayData[0].teamName}${awayData[0].teamMascot}`.split(" ").join("");
+			teamColors = TeamColors(eventSport, homeTeamName, awayTeamName);
+		} else {
+			teamColors = TeamColors(eventSport, homeData[0].teamMascot, awayData[0].teamMascot);
+		}
+
 		this.setState({
 			eventsData: eventsData[0],
 			eventSport,
 			eventSpread: spread,
 			gameDetails,
 			homeData: homeData[0],
-			awayData: awayData[0]
+			awayData: awayData[0],
+			teamColors
 		});
 
 		let spreadMoneylineFullGame = eventsData[0].line_periods[firstBettingIndex].period_full_game.moneyline;
@@ -194,7 +207,9 @@ class BetNew extends Component {
 	}
 
 	renderEventChart() {
-		const { homeData, awayData, spread } = this.state;
+		const { homeData, awayData, spread, teamColors } = this.state;
+
+		console.log(teamColors);
 
 		// some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 		let originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
@@ -223,8 +238,8 @@ class BetNew extends Component {
 			datasets: [
 				{
 					data: [spread.moneyline_home, spread.moneyline_away],
-					backgroundColor: ["#0B162A", "#203731"],
-					hoverBackgroundColor: ["#C83803", "#FFB612"]
+					backgroundColor: teamColors.backgroundColor,
+					hoverBackgroundColor: teamColors.hoverBackgroundColor
 				}
 			],
 			text: `${awayData.teamAbbreviation} | ${homeData.teamAbbreviation}`
