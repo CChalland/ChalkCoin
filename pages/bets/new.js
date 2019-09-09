@@ -47,7 +47,8 @@ class BetNew extends Component {
 				{ key: "period_second_period", value: "period_second_period", text: "Second Period" },
 				{ key: "period_third_period", value: "period_third_period", text: "Third Period" },
 				{ key: "period_fourth_period", value: "period_fourth_period", text: "Fourth Period" }
-			]
+			],
+			selectBettingTeam: []
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -56,6 +57,10 @@ class BetNew extends Component {
 		this.renderEventChart = this.renderEventChart.bind(this);
 		this.chartCanvasRef = React.createRef();
 	}
+
+	handleTeamChange = (e, data) => {
+		this.setState({ bettingTeam: data });
+	};
 
 	handleChartChange = (e, data) => {
 		this.setState({
@@ -124,15 +129,19 @@ class BetNew extends Component {
 			}
 		};
 
+		let homeTeamName = `${homeData[0].teamName} ${homeData[0].teamMascot}`;
+		let awayTeamName = `${awayData[0].teamName} ${awayData[0].teamMascot}`;
 		let teamColors;
-
 		if (eventSport === "MLS") {
-			let homeTeamName = `${homeData[0].teamName}${homeData[0].teamMascot}`.split(" ").join("");
-			let awayTeamName = `${awayData[0].teamName}${awayData[0].teamMascot}`.split(" ").join("");
-			teamColors = TeamColors(eventSport, homeTeamName, awayTeamName);
+			teamColors = TeamColors(eventSport, homeTeamName.split(" ").join(""), awayTeamName.split(" ").join(""));
 		} else {
 			teamColors = TeamColors(eventSport, homeData[0].teamMascot, awayData[0].teamMascot);
 		}
+
+		let selectBettingTeam = [
+			{ key: homeTeamName, value: homeTeamName, text: homeTeamName },
+			{ key: awayTeamName, value: awayTeamName, text: awayTeamName }
+		];
 
 		this.setState({
 			eventsData: eventsData[0],
@@ -141,7 +150,8 @@ class BetNew extends Component {
 			gameDetails,
 			homeData: homeData[0],
 			awayData: awayData[0],
-			teamColors
+			teamColors,
+			selectBettingTeam
 		});
 
 		let spreadMoneylineFullGame = eventsData[0].line_periods[firstBettingIndex].period_full_game.moneyline;
@@ -209,8 +219,6 @@ class BetNew extends Component {
 	renderEventChart() {
 		const { homeData, awayData, spread, teamColors } = this.state;
 
-		console.log(teamColors);
-
 		// some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 		let originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
 		Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
@@ -269,7 +277,14 @@ class BetNew extends Component {
 	}
 
 	renderEventCard() {
-		const { eventsData, homeData, awayData, providerDropdownOptions, selectSpreadType } = this.state;
+		const {
+			eventsData,
+			homeData,
+			awayData,
+			providerDropdownOptions,
+			selectSpreadType,
+			selectBettingTeam
+		} = this.state;
 
 		return (
 			<Card fluid>
@@ -290,6 +305,12 @@ class BetNew extends Component {
 					<br />
 					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
 						<Form.Field className="inline fields">
+							<div className="field">
+								<label>Your Team: </label>
+							</div>
+							<div className="field">
+								<Dropdown fluid selection options={selectBettingTeam} onChange={this.handleTeamChange} />
+							</div>
 							<div className="field">
 								<label>Spread Type: </label>
 							</div>
