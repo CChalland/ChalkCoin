@@ -34,6 +34,16 @@ class SportCard extends Component {
 			let fullClock = eventDate[1].split(":00 ");
 			let displayDate = `${fullClock[0]} ${fullClock[1]}`;
 
+			let team0Name;
+			let team1Name;
+			if (this.props.sportName === "MLS") {
+				team0Name = `${game.teams_normalized[0].name} ${game.teams_normalized[0].mascot}`;
+				team1Name = `${game.teams_normalized[1].name} ${game.teams_normalized[1].mascot}`;
+			} else {
+				team0Name = game.teams_normalized[0].mascot;
+				team1Name = game.teams_normalized[1].mascot;
+			}
+
 			return {
 				date: eventDate[0],
 				description: (
@@ -43,7 +53,7 @@ class SportCard extends Component {
 								className="ui avatar image"
 								src={`../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`}
 							/>
-							{game.teams_normalized[0].mascot}
+							{team0Name}
 							<span style={{ position: "absolute", right: "400px" }}>{game.teams_normalized[0].record}</span>
 							<br />
 							<span
@@ -78,7 +88,7 @@ class SportCard extends Component {
 								className="ui avatar image"
 								src={`../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`}
 							/>
-							{game.teams_normalized[1].mascot}
+							{team1Name}
 							<span style={{ position: "absolute", right: "400px" }}>{game.teams_normalized[1].record}</span>
 						</h4>
 						<Link route={`/games/${game.event_id}`}>
