@@ -156,6 +156,7 @@ class BetNew extends Component {
 				.then(function(response) {
 					stadiumImage = response.data.items[0].link;
 					loadingImage = true;
+					console.log("Sending a request");
 				});
 		} catch (err) {
 			this.setState({ errorMessage: err.message });
