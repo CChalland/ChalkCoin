@@ -49,7 +49,8 @@ class BetNew extends Component {
 				{ key: "period_fourth_period", value: "period_fourth_period", text: "Fourth Period" }
 			],
 			selectBettingTeam: [],
-			stadiumImage: ""
+			stadiumImage: "",
+			loadingPage: false
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -172,7 +173,7 @@ class BetNew extends Component {
 			teamColors,
 			selectBettingTeam,
 			stadiumImage,
-			loading: loadingImage
+			loadingPage: loadingImage
 		});
 
 		let spreadMoneylineFullGame = eventsData[0].line_periods[firstBettingIndex].period_full_game.moneyline;
@@ -299,6 +300,9 @@ class BetNew extends Component {
 
 	renderEventCard() {
 		const {
+			loading,
+			errorMessage,
+			betAmount,
 			eventsData,
 			homeData,
 			awayData,
@@ -320,7 +324,7 @@ class BetNew extends Component {
 
 				<Card.Content>
 					<br />
-					<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
+					<Form onSubmit={this.onSubmit} error={!!errorMessage}>
 						<Form.Field className="inline fields">
 							<div className="field">
 								<label>Your Team: </label>
@@ -352,16 +356,16 @@ class BetNew extends Component {
 									className="field"
 									labelPosition="right"
 									label="$ USD"
-									value={this.state.betAmount}
+									value={betAmount}
 									onChange={event => this.setState({ betAmount: event.target.value })}
 								/>
 
-								<Button className="ui blue button" loading={this.state.loading} primary>
+								<Button className="ui blue button" loading={loading} primary>
 									Create
 								</Button>
 							</div>
 						</Form.Field>
-						<Message error header="Oops!" content={this.state.errorMessage} />
+						<Message error header="Oops!" content={errorMessage} />
 					</Form>
 				</Card.Content>
 
@@ -384,10 +388,10 @@ class BetNew extends Component {
 	}
 
 	render() {
-		const { loading } = this.state;
+		const { loadingPage } = this.state;
 		let result;
 
-		if (loading) {
+		if (loadingPage) {
 			result = <div>{this.renderEventCard()}</div>;
 		} else {
 			result = (
