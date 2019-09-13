@@ -48,7 +48,8 @@ class BetNew extends Component {
 				{ key: "period_third_period", value: "period_third_period", text: "Third Period" },
 				{ key: "period_fourth_period", value: "period_fourth_period", text: "Fourth Period" }
 			],
-			selectBettingTeam: []
+			selectBettingTeam: [],
+			stadiumImage: ""
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -72,7 +73,7 @@ class BetNew extends Component {
 		this.setState({ spread: this.state.spreadProviders[data.value].moneyline, spreadType: data.value });
 	};
 
-	componentDidMount() {
+	async componentDidMount() {
 		const { sportsData } = this.context;
 
 		let filterSports = sportsData.filter(data => data.sport_id === parseInt(this.props.sportId));
@@ -143,6 +144,23 @@ class BetNew extends Component {
 			{ key: awayTeamName, value: awayTeamName, text: awayTeamName }
 		];
 
+		let homeStadium = `${homeData[0].teamName} ${homeData[0].teamMascot} Stadium`;
+		let stadiumImage;
+		let loadingImage;
+
+		try {
+			await axios
+				.get(
+					`https://www.googleapis.com/customsearch/v1?key=${process.env.GOOGLE_CUSTOM_SEARCH_API}&cx=${process.env.CSE_ID}&q=${homeStadium}&searchType=image&fileType=jpg&imgSize=xlarge&alt=json`
+				)
+				.then(function(response) {
+					stadiumImage = response.data.items[0].link;
+					loadingImage = true;
+				});
+		} catch (err) {
+			this.setState({ errorMessage: err.message });
+		}
+
 		this.setState({
 			eventsData: eventsData[0],
 			eventSport,
@@ -151,7 +169,9 @@ class BetNew extends Component {
 			homeData: homeData[0],
 			awayData: awayData[0],
 			teamColors,
-			selectBettingTeam
+			selectBettingTeam,
+			stadiumImage,
+			loading: loadingImage
 		});
 
 		let spreadMoneylineFullGame = eventsData[0].line_periods[firstBettingIndex].period_full_game.moneyline;
@@ -283,7 +303,8 @@ class BetNew extends Component {
 			awayData,
 			providerDropdownOptions,
 			selectSpreadType,
-			selectBettingTeam
+			selectBettingTeam,
+			stadiumImage
 		} = this.state;
 
 		return (
@@ -292,12 +313,7 @@ class BetNew extends Component {
 					<h3>{`${awayData.teamAbbreviation} @ ${homeData.teamAbbreviation}`}</h3>
 				</div>
 
-				<Image
-					style={{ padding: "0em" }}
-					src={`../../static/media/${eventsData.sport_id}-${homeData.teamAbbreviation}-stadium.png`}
-					wrapped
-					ui={true}
-				/>
+				<Image style={{ padding: "0em" }} src={stadiumImage} wrapped ui={true} />
 
 				{this.eventCardTitle()}
 
@@ -309,7 +325,13 @@ class BetNew extends Component {
 								<label>Your Team: </label>
 							</div>
 							<div className="field">
-								<Dropdown placeholder="Team you're betting to win" fluid selection options={selectBettingTeam} onChange={this.handleTeamChange} />
+								<Dropdown
+									placeholder="Team you're betting to win"
+									fluid
+									selection
+									options={selectBettingTeam}
+									onChange={this.handleTeamChange}
+								/>
 							</div>
 							<div className="field">
 								<label>Spread Type: </label>
@@ -361,7 +383,20 @@ class BetNew extends Component {
 	}
 
 	render() {
-		return <Layout>{this.renderEventCard()}</Layout>;
+		const { loading } = this.state;
+		let result;
+
+		if (loading) {
+			result = <div>{this.renderEventCard()}</div>;
+		} else {
+			result = (
+				<div>
+					<h3>Loading...</h3>
+				</div>
+			);
+		}
+
+		return <Layout>{result}</Layout>;
 	}
 }
 
