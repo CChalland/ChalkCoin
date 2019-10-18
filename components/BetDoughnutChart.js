@@ -19,7 +19,7 @@ class BetDoughnutChart extends Component {
 	}
 
 	componentDidMount() {
-		const { eventsData, eventSport, firstBettingIndex } = this.props;
+		const { eventsData, firstBettingIndex } = this.props;
 
 		console.log(eventsData);
 		console.log(eventSport);
@@ -49,7 +49,7 @@ class BetDoughnutChart extends Component {
 
 		let homeTeamName = `${homeData[0].teamName} ${homeData[0].teamMascot}`;
 		let awayTeamName = `${awayData[0].teamName} ${awayData[0].teamMascot}`;
-
+		let eventSport;
 		let teamColors;
 		if (eventSport === "MLS") {
 			teamColors = TeamColors(eventSport, homeTeamName.split(" ").join(""), awayTeamName.split(" ").join(""));
@@ -68,9 +68,8 @@ class BetDoughnutChart extends Component {
 	}
 
 	renderEventChart() {
+		const { eventSport } = this.props;
 		const { homeData, awayData, spread, teamColors } = this.state;
-
-		//console.log(teamColors);
 
 		// some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
 		let originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
