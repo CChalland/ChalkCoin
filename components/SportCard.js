@@ -57,6 +57,8 @@ class SportCard extends Component {
 				team1Name = game.teams_normalized[1].mascot;
 			}
 
+			let eventSport = this.props.sportData[sportId].sport_name;
+
 			return {
 				date: eventDate[0],
 				description: (
@@ -114,7 +116,11 @@ class SportCard extends Component {
 								Matchup Predictor
 							</Accordion.Title>
 							<Accordion.Content active={activeIndex === game.event_id}>
-								<BetDoughnutChart eventsData={game} />
+								<BetDoughnutChart
+									eventsData={game}
+									eventSport={eventSport}
+									firstBettingIndex={firstBettingIndex}
+								/>
 							</Accordion.Content>
 						</Accordion>
 					</div>
