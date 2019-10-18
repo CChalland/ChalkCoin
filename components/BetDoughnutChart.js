@@ -1,38 +1,77 @@
 import React, { Component } from "react";
 import { Doughnut } from "react-chartjs-2";
 import Chart from "chart.js";
-import { TeamColors } from "../../helpers/TeamColors";
+import { TeamColors } from "../helpers/TeamColors";
 
 class BetDoughnutChart extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			teamColors: {},
+			spread: {},
+			homeData: {},
+			awayData: {}
+		};
 
 		this.canvasRef = React.createRef();
 
 		this.renderEventChart = this.renderEventChart.bind(this);
 	}
 
-	componentDidUpdate() {
-		this.myChart.data.labels = this.props.data.map(d => d.label);
-		this.myChart.data.datasets[0].data = this.props.data.map(d => d.value);
-		this.myChart.update();
-	}
-
 	componentDidMount() {
-		this.myChart = new Chart(this.canvasRef.current, {
-			type: "doughnut",
-			options: {
-				maintainAspectRatio: false
-			},
-			data: {
-				labels: this.props.data.map(d => d.label),
-				datasets: [
-					{
-						data: this.props.data.map(d => d.value),
-						backgroundColor: this.props.colors
-					}
-				]
-			}
+		const { eventsData } = this.props;
+
+		console.log(eventsData);
+
+		let eventSport = eventsData.sport_name;
+		let bettingIndexes = Object.keys(eventsData.line_periods);
+		let firstBettingIndex = bettingIndexes[0];
+
+		let homeData = eventsData.teams_normalized
+			.filter(team => {
+				return team.is_home;
+			})
+			.map(team => {
+				return {
+					teamName: team.name,
+					teamMascot: team.mascot,
+					teamAbbreviation: team.abbreviation
+				};
+			});
+		let awayData = eventsData.teams_normalized
+			.filter(team => {
+				return team.is_away;
+			})
+			.map(team => {
+				return {
+					teamName: team.name,
+					teamMascot: team.mascot,
+					teamAbbreviation: team.abbreviation
+				};
+			});
+
+		let homeTeamName = `${homeData[0].teamName} ${homeData[0].teamMascot}`;
+		let awayTeamName = `${awayData[0].teamName} ${awayData[0].teamMascot}`;
+
+		console.log("home: ", homeTeamName);
+		console.log("away: ", awayTeamName);
+
+		let teamColors;
+		if (eventSport === "MLS") {
+			teamColors = TeamColors(eventSport, homeTeamName.split(" ").join(""), awayTeamName.split(" ").join(""));
+		} else {
+			teamColors = TeamColors(eventSport, homeData[0].teamMascot, awayData[0].teamMascot);
+		}
+
+		console.log(teamColors);
+
+		let spreadMoneylineFullGame = eventsData.line_periods[firstBettingIndex].period_full_game.moneyline;
+
+		this.setState({
+			spread: spreadMoneylineFullGame,
+			homeData: homeData[0],
+			awayData: awayData[0],
+			teamColors
 		});
 	}
 
@@ -97,7 +136,7 @@ class BetDoughnutChart extends Component {
 	}
 
 	render() {
-		return <div>{this.renderEventCard()}</div>;
+		return <div>{this.renderEventChart()}</div>;
 	}
 }
 

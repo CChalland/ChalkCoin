@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button, Tab, Accordion, Icon } from "semantic-ui-react";
 import { Link } from "../routes";
+import BetDoughnutChart from "./BetDoughnutChart";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -113,10 +114,7 @@ class SportCard extends Component {
 								Matchup Predictor
 							</Accordion.Title>
 							<Accordion.Content active={activeIndex === game.event_id}>
-								<p>
-									A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be
-									found as a welcome guest in many households across the world.
-								</p>
+								<BetDoughnutChart eventsData={game} />
 							</Accordion.Content>
 						</Accordion>
 					</div>
