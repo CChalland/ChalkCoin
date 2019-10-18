@@ -14,15 +14,11 @@ class BetDoughnutChart extends Component {
 		};
 
 		this.canvasRef = React.createRef();
-
 		this.renderEventChart = this.renderEventChart.bind(this);
 	}
 
 	componentDidMount() {
 		const { eventsData, firstBettingIndex } = this.props;
-
-		console.log(eventsData);
-		console.log(eventSport);
 
 		let homeData = eventsData.teams_normalized
 			.filter(team => {
@@ -68,7 +64,6 @@ class BetDoughnutChart extends Component {
 	}
 
 	renderEventChart() {
-		const { eventSport } = this.props;
 		const { homeData, awayData, spread, teamColors } = this.state;
 
 		// some of this code is a variation on https://jsfiddle.net/cmyker/u6rr5moq/
