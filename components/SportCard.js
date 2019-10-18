@@ -1,14 +1,26 @@
 import React, { Component } from "react";
-import { Card, Button, Tab } from "semantic-ui-react";
+import { Card, Button, Tab, Accordion, Icon } from "semantic-ui-react";
 import { Link } from "../routes";
 
 class SportCard extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { index: 0, daysIndex: 0, timeTitle: "" };
+		this.state = { index: 0, daysIndex: 0, timeTitle: "", activeIndex: 0 };
+
+		this.handleClick = this.handleClick.bind(this);
 	}
 
+	handleClick = (e, titleProps) => {
+		const { index } = titleProps;
+		const { activeIndex } = this.state;
+		const newIndex = activeIndex === index ? -1 : index;
+
+		this.setState({ activeIndex: newIndex });
+	};
+
 	renderGamesCards(sportId) {
+		const { activeIndex } = this.state;
+
 		let gameItems = this.props.sportData[sportId].data.events.map(game => {
 			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 			let gameTime = new Date(game.event_date).toLocaleString("en-US", {
@@ -91,9 +103,22 @@ class SportCard extends Component {
 							{team1Name}
 							<span style={{ position: "absolute", right: "400px" }}>{game.teams_normalized[1].record}</span>
 						</h4>
-						<Link route={`/games/${game.event_id}`}>
-							<a>View Game Details</a>
-						</Link>
+						<Accordion>
+							<Accordion.Title
+								active={activeIndex === game.event_id}
+								index={game.event_id}
+								onClick={this.handleClick}
+							>
+								<Icon name="dropdown" />
+								Matchup Predictor
+							</Accordion.Title>
+							<Accordion.Content active={activeIndex === game.event_id}>
+								<p>
+									A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be
+									found as a welcome guest in many households across the world.
+								</p>
+							</Accordion.Content>
+						</Accordion>
 					</div>
 				),
 				fluid: true

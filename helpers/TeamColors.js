@@ -100,7 +100,7 @@ export function TeamColors(sportName, homeTeam, awayTeam) {
 			Wizards: { primary: "#002B5C", secondary: "#E31837" }
 		},
 		NCAAB: {},
-		nhl: {
+		NHL: {
 			Ducks: { primary: "#F47A38", secondary: "#000000" },
 			Coyotes: { primary: "#8C2633", secondary: "#E2D6B5" },
 			Bruins: { primary: "#FFB81C", secondary: "#000000" },
