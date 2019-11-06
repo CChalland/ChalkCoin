@@ -134,7 +134,7 @@ function (_Component) {
                             url: "https://therundown-therundown-v1.p.rapidapi.com/sports/".concat(sportsData[i].sport_id, "/events"),
                             headers: {
                               "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                              "x-rapidapi-key": "584a57d59bmsh85756f4b7596603p134702jsn2d661c3a7080"
+                              "x-rapidapi-key": "014ea78c31msh786f27cb1ef51fap1d28b9jsnc83418249c43"
                             },
                             params: {
                               include: ["all_periods", "scores"]
