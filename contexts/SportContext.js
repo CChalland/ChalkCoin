@@ -18,10 +18,10 @@ export class SportProvider extends Component {
 				{ sport_id: 7, sport_name: "UFC/MMA", data: {} },
 				{ sport_id: 8, sport_name: "WNBA", data: {} },
 				{ sport_id: 9, sport_name: "CFL", data: {} },
-				{ sport_id: 10, sport_name: "MLS", data: {} }
+				{ sport_id: 10, sport_name: "MLS", data: {} },
 			],
 			blockchain: {},
-			fetchedSportData: false
+			fetchedSportData: false,
 		};
 	}
 
@@ -40,21 +40,21 @@ export class SportProvider extends Component {
 					url: `https://therundown-therundown-v1.p.rapidapi.com/sports/${sportsData[i].sport_id}/events`,
 					headers: {
 						"x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-						"x-rapidapi-key": process.env.THERUNDOWN_API_KEY_3
+						"x-rapidapi-key": process.env.THERUNDOWN_API_KEY_3,
 					},
 					params: {
-						include: ["all_periods", "scores"]
+						include: ["all_periods", "scores"],
 					},
-					paramsSerializer: function(params) {
+					paramsSerializer: function (params) {
 						return qs.stringify(params, { arrayFormat: "repeat" });
-					}
+					},
 				}).then(
-					function(response) {
+					function (response) {
 						if (response.data.events.length === 0) {
 							removeSportsData.push(sportsData[i]);
 						} else {
 							sportsData[i].data = response.data;
-							sportsData[i].data.events = response.data.events.sort(function(a, b) {
+							sportsData[i].data.events = response.data.events.sort(function (a, b) {
 								return new Date(a.event_date) - new Date(b.event_date);
 							});
 						}
@@ -65,8 +65,8 @@ export class SportProvider extends Component {
 			console.log(err.message);
 		}
 
-		Array.prototype.diff = function(a) {
-			return this.filter(function(i) {
+		Array.prototype.diff = function (a) {
+			return this.filter(function (i) {
 				return a.indexOf(i) < 0;
 			});
 		};
