@@ -5,7 +5,7 @@ import { Link } from "../routes";
 class SportCard extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { index: 0, daysIndex: 0, timeTitle: "", activeIndex: 0 };
+		this.state = { index: 0, activeIndex: 0 };
 
 		this.handleClick = this.handleClick.bind(this);
 	}
@@ -18,8 +18,15 @@ class SportCard extends Component {
 		this.setState({ activeIndex: newIndex });
 	};
 
+	renderGamesCards(sportId) {
+		const { activeIndex } = this.state;
+
+		let gameItems;
+		console.log(this.props.sportData[sportId].data.events);
+	}
+
 	render() {
-		return <div>Test</div>;
+		return <div>{this.renderGamesCards(this.props.sportIndex)}</div>;
 	}
 }
 
