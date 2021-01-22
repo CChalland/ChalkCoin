@@ -51,44 +51,12 @@ function (_Component) {
     _this = Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__["default"])(this, Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(SportProvider).call(this, props));
     _this.state = {
       sportsData: [{
-        sport_id: 1,
-        sport_name: "NCAA Football",
-        data: {}
-      }, {
         sport_id: 2,
         sport_name: "NFL",
         data: {}
       }, {
-        sport_id: 3,
-        sport_name: "MLB",
-        data: {}
-      }, {
-        sport_id: 4,
-        sport_name: "NBA",
-        data: {}
-      }, {
-        sport_id: 5,
-        sport_name: "NCAA Men's Basketball",
-        data: {}
-      }, {
         sport_id: 6,
         sport_name: "NHL",
-        data: {}
-      }, {
-        sport_id: 7,
-        sport_name: "UFC/MMA",
-        data: {}
-      }, {
-        sport_id: 8,
-        sport_name: "WNBA",
-        data: {}
-      }, {
-        sport_id: 9,
-        sport_name: "CFL",
-        data: {}
-      }, {
-        sport_id: 10,
-        sport_name: "MLS",
         data: {}
       }],
       blockchain: {},
@@ -103,93 +71,49 @@ function (_Component) {
       var _componentDidMount = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(
       /*#__PURE__*/
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee() {
-        var _this2 = this;
+        var removeSportsData, sportsData, getNode1, response, blockchain, _i;
 
-        var removeSportsData, sportsData, getNode1, response, blockchain, _loop, i;
-
-        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee$(_context2) {
+        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee$(_context) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context.prev = _context.next) {
               case 0:
                 removeSportsData = [];
                 sportsData = this.state.sportsData;
                 getNode1 = "http://localhost:3001/blockchain";
-                _context2.next = 5;
+                _context.next = 5;
                 return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get(getNode1);
 
               case 5:
-                response = _context2.sent;
+                response = _context.sent;
                 blockchain = response.data;
-                _context2.prev = 7;
-                _loop =
-                /*#__PURE__*/
-                _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _loop(i) {
-                  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _loop$(_context) {
-                    while (1) {
-                      switch (_context.prev = _context.next) {
-                        case 0:
-                          _context.next = 2;
-                          return axios__WEBPACK_IMPORTED_MODULE_9___default()({
-                            method: "GET",
-                            url: "https://therundown-therundown-v1.p.rapidapi.com/sports/".concat(sportsData[i].sport_id, "/events"),
-                            headers: {
-                              "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-                              "x-rapidapi-key": "37d12786b7msh9791159ec6b7d6dp174037jsn94031ea312fe"
-                            },
-                            params: {
-                              include: ["all_periods", "scores"]
-                            },
-                            paramsSerializer: function paramsSerializer(params) {
-                              return qs.stringify(params, {
-                                arrayFormat: "repeat"
-                              });
-                            }
-                          }).then(function (response) {
-                            if (response.data.events.length === 0) {
-                              removeSportsData.push(sportsData[i]);
-                            } else {
-                              sportsData[i].data = response.data;
-                              sportsData[i].data.events = response.data.events.sort(function (a, b) {
-                                return new Date(a.event_date) - new Date(b.event_date);
-                              });
-                            }
-                          }.bind(_this2));
-
-                        case 2:
-                          response = _context.sent;
-
-                        case 3:
-                        case "end":
-                          return _context.stop();
-                      }
-                    }
-                  }, _loop);
-                });
-                i = 0;
+                _context.prev = 7;
+                _context.next = 10;
+                return axios__WEBPACK_IMPORTED_MODULE_9___default()({
+                  method: "GET",
+                  url: "http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+                }).then(function (response) {
+                  if (response.data.events.length === 0) {
+                    removeSportsData.push(sportsData[0]);
+                  } else {
+                    sportsData[i].data = response.data;
+                    console.log(response.data);
+                  }
+                }.bind(this));
 
               case 10:
-                if (!(i < sportsData.length)) {
-                  _context2.next = 15;
-                  break;
-                }
+                response = _context.sent;
 
-                return _context2.delegateYield(_loop(i), "t0", 12);
+                for (_i = 0; _i < sportsData.length; _i++) {}
 
-              case 12:
-                i++;
-                _context2.next = 10;
+                _context.next = 17;
                 break;
 
-              case 15:
-                _context2.next = 20;
-                break;
+              case 14:
+                _context.prev = 14;
+                _context.t0 = _context["catch"](7);
+                console.log(_context.t0.message);
 
               case 17:
-                _context2.prev = 17;
-                _context2.t1 = _context2["catch"](7);
-                console.log(_context2.t1.message);
-
-              case 20:
                 Array.prototype.diff = function (a) {
                   return this.filter(function (i) {
                     return a.indexOf(i) < 0;
@@ -203,12 +127,12 @@ function (_Component) {
                   fetchedSportData: true
                 });
 
-              case 23:
+              case 20:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee, this, [[7, 17]]);
+        }, _callee, this, [[7, 14]]);
       }));
 
       function componentDidMount() {

@@ -121,44 +121,12 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
     super(props);
     this.state = {
       sportsData: [{
-        sport_id: 1,
-        sport_name: "NCAA Football",
-        data: {}
-      }, {
         sport_id: 2,
         sport_name: "NFL",
         data: {}
       }, {
-        sport_id: 3,
-        sport_name: "MLB",
-        data: {}
-      }, {
-        sport_id: 4,
-        sport_name: "NBA",
-        data: {}
-      }, {
-        sport_id: 5,
-        sport_name: "NCAA Men's Basketball",
-        data: {}
-      }, {
         sport_id: 6,
         sport_name: "NHL",
-        data: {}
-      }, {
-        sport_id: 7,
-        sport_name: "UFC/MMA",
-        data: {}
-      }, {
-        sport_id: 8,
-        sport_name: "WNBA",
-        data: {}
-      }, {
-        sport_id: 9,
-        sport_name: "CFL",
-        data: {}
-      }, {
-        sport_id: 10,
-        sport_name: "MLS",
         data: {}
       }],
       blockchain: {},
@@ -174,33 +142,19 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
     const blockchain = response.data;
 
     try {
-      for (let i = 0; i < sportsData.length; i++) {
-        response = await axios__WEBPACK_IMPORTED_MODULE_2___default()({
-          method: "GET",
-          url: `https://therundown-therundown-v1.p.rapidapi.com/sports/${sportsData[i].sport_id}/events`,
-          headers: {
-            "x-rapidapi-host": "therundown-therundown-v1.p.rapidapi.com",
-            "x-rapidapi-key": "37d12786b7msh9791159ec6b7d6dp174037jsn94031ea312fe"
-          },
-          params: {
-            include: ["all_periods", "scores"]
-          },
-          paramsSerializer: function (params) {
-            return qs.stringify(params, {
-              arrayFormat: "repeat"
-            });
-          }
-        }).then(function (response) {
-          if (response.data.events.length === 0) {
-            removeSportsData.push(sportsData[i]);
-          } else {
-            sportsData[i].data = response.data;
-            sportsData[i].data.events = response.data.events.sort(function (a, b) {
-              return new Date(a.event_date) - new Date(b.event_date);
-            });
-          }
-        }.bind(this));
-      }
+      response = await axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: "GET",
+        url: `http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard`
+      }).then(function (response) {
+        if (response.data.events.length === 0) {
+          removeSportsData.push(sportsData[0]);
+        } else {
+          sportsData[i].data = response.data;
+          console.log(response.data);
+        }
+      }.bind(this));
+
+      for (let i = 0; i < sportsData.length; i++) {}
     } catch (err) {
       console.log(err.message);
     }
