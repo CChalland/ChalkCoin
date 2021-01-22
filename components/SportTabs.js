@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Tab, Menu } from "semantic-ui-react";
+import SportCard from "./SportCard";
 
 class SportTabs extends Component {
 	constructor(props) {
@@ -28,7 +29,16 @@ class SportTabs extends Component {
 
 			return {
 				menuItem: <Menu.Item key={game.sport_id}>{img}</Menu.Item>,
-				render: () => <Tab.Pane attached={false} raised></Tab.Pane>,
+				render: () => (
+					<Tab.Pane attached={false} raised>
+						<SportCard
+							key={game.sport_name}
+							sportData={this.props.allSportsData}
+							sportName={game.sport_name}
+							sportIndex={activeIndex}
+						/>
+					</Tab.Pane>
+				),
 			};
 		});
 

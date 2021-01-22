@@ -71,8 +71,7 @@ function (_Component) {
       var _componentDidMount = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(
       /*#__PURE__*/
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee() {
-        var removeSportsData, sportsData, getNode1, response, blockchain, _i;
-
+        var removeSportsData, sportsData, getNode1, response, blockchain, i;
         return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -95,7 +94,7 @@ function (_Component) {
                   if (response.data.events.length === 0) {
                     removeSportsData.push(sportsData[0]);
                   } else {
-                    sportsData[i].data = response.data;
+                    sportsData[0].data = response.data;
                     console.log(response.data);
                   }
                 }.bind(this));
@@ -103,7 +102,7 @@ function (_Component) {
               case 10:
                 response = _context.sent;
 
-                for (_i = 0; _i < sportsData.length; _i++) {}
+                for (i = 0; i < sportsData.length; i++) {}
 
                 _context.next = 17;
                 break;

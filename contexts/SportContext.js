@@ -34,7 +34,7 @@ export class SportProvider extends Component {
 					if (response.data.events.length === 0) {
 						removeSportsData.push(sportsData[0]);
 					} else {
-						sportsData[i].data = response.data;
+						sportsData[0].data = response.data;
 						console.log(response.data);
 					}
 				}.bind(this)
