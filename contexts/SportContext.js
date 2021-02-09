@@ -10,8 +10,8 @@ export class SportProvider extends Component {
 		this.state = {
 			sportsData: [
 				// { sport_id: 1, sport: "football", sport_name: "NCAA Football", league_name: "college-football", data: {} },
-				// { sport_id: 2, sport: "football", sport_name: "NFL", league_name: "nfl", data: {} },
-				// { sport_id: 3, sport: "baseball", sport_name: "MLB", league_name: "mlb", data: {} },
+				{ sport_id: 2, sport: "football", sport_name: "NFL", league_name: "nfl", data: {} },
+				{ sport_id: 3, sport: "baseball", sport_name: "MLB", league_name: "mlb", data: {} },
 				{ sport_id: 4, sport: "basketball", sport_name: "NBA", league_name: "nba", data: {} },
 				{
 					sport_id: 5,
@@ -20,8 +20,8 @@ export class SportProvider extends Component {
 					league_name: "mens-college-basketball",
 					data: {},
 				},
-				// { sport_id: 6, sport: "hockey", sport_name: "NHL", league_name: "nhl", data: {} },
-				// { sport_id: 8, sport: "basketball", sport_name: "WNBA", league_name: "wnba", data: {} },
+				{ sport_id: 6, sport: "hockey", sport_name: "NHL", league_name: "nhl", data: {} },
+				{ sport_id: 8, sport: "basketball", sport_name: "WNBA", league_name: "wnba", data: {} },
 				// { sport_id: 10, sport: "soccer", sport_name: "MLS", league_name: "MLS", data: {} },
 			],
 			blockchain: {},
