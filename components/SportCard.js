@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Button, Tab, Accordion, Icon } from "semantic-ui-react";
+import { Card, Button, Tab, Accordion, Icon, Grid } from "semantic-ui-react";
 import { Link } from "../routes";
 
 class SportCard extends Component {
@@ -34,41 +34,40 @@ class SportCard extends Component {
 				date: eventDate[0],
 				description: (
 					<div>
-						<h4>
-							<img className="ui avatar image" src={game.competitions[0].competitors[0].team.logo} />
-							{game.competitions[0].competitors[0].team.displayName}
-							<span style={{ position: "absolute", right: "400px" }}>
-								{game.competitions[0].competitors[0].records[0].summary}
-							</span>
-							<br />
-							<span
-								style={{
-									width: "1px",
-									background: "rgba(34,36,38,.15)",
-									position: "absolute",
-									top: "0",
-									bottom: "0",
-									right: "350px",
-								}}
-							/>
+						<Grid columns={3} divided>
+							<Grid.Row>
+								<Grid.Column>
+									<img className="ui avatar image" src={game.competitions[0].competitors[0].team.logo} />
+									{game.competitions[0].competitors[0].team.displayName}
+									<span style={{ position: "absolute", right: "400px" }}>
+										{game.competitions[0].competitors[0].records[0].summary}
+									</span>
+								</Grid.Column>
+								<Grid.Column>
+									<div></div>
+								</Grid.Column>
+								<Grid.Column>
+									<div></div>
+								</Grid.Column>
+							</Grid.Row>
 
-							<Link
-								href={{
-									pathname: "/bets/new",
-									query: { sportId: game.sport_id, eventId: game.event_id },
-								}}
-							>
-								<a>
-									<Button floated="right" content="Create Bet" icon="add circle" primary />
-								</a>
-							</Link>
-							<br />
-							<img className="ui avatar image" src={game.competitions[0].competitors[1].team.logo} />
-							{game.competitions[0].competitors[1].team.displayName}
-							<span style={{ position: "absolute", right: "400px" }}>
-								{game.competitions[0].competitors[1].records[0].summary}
-							</span>
-						</h4>
+							<Grid.Row>
+								<Grid.Column>
+									<img className="ui avatar image" src={game.competitions[0].competitors[1].team.logo} />
+									{game.competitions[0].competitors[1].team.displayName}
+									<span style={{ position: "absolute", right: "400px" }}>
+										{game.competitions[0].competitors[1].records[0].summary}
+									</span>
+								</Grid.Column>
+								<Grid.Column>
+									<div></div>
+								</Grid.Column>
+								<Grid.Column>
+									<div></div>
+								</Grid.Column>
+							</Grid.Row>
+						</Grid>
+
 						<Accordion>
 							<Accordion.Title
 								active={activeIndex === game.event_id}
