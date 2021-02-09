@@ -9,8 +9,14 @@ export class SportProvider extends Component {
 		super(props);
 		this.state = {
 			sportsData: [
-				{ sport_id: 2, sport_name: "NFL", data: {} },
-				{ sport_id: 6, sport_name: "NHL", data: {} },
+				// { sport_id: 1, sport_name: "football", league_name: "college-football", data: {} },
+				{ sport_id: 2, sport_name: "football", league_name: "nfl", data: {} },
+				{ sport_id: 3, sport_name: "baseball", league_name: "mlb", data: {} },
+				{ sport_id: 4, sport_name: "basketball", league_name: "nba", data: {} },
+				{ sport_id: 5, sport_name: "basketball", league_name: "mens-college-basketball", data: {} },
+				{ sport_id: 6, sport_name: "hockey", league_name: "nhl", data: {} },
+				{ sport_id: 8, sport_name: "basketball", league_name: "wnba", data: {} },
+				// { sport_id: 10, sport_name: "soccer", league_name: "MLS", data: {} },
 			],
 			blockchain: {},
 			fetchedSportData: false,
@@ -26,21 +32,28 @@ export class SportProvider extends Component {
 		const blockchain = response.data;
 
 		try {
-			response = await axios({
-				method: "GET",
-				url: `http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard`,
-			}).then(
-				function (response) {
-					if (response.data.events.length === 0) {
-						removeSportsData.push(sportsData[0]);
-					} else {
-						sportsData[0].data = response.data;
-						console.log(response.data);
-					}
-				}.bind(this)
-			);
+			await sportsData.map((league) => {
+				let leagueData;
 
-			for (let i = 0; i < sportsData.length; i++) {}
+				response = axios({
+					method: "GET",
+					url: `http://site.api.espn.com/apis/site/v2/sports/${league.league_name}/${league.sport_name}/scoreboard`,
+				}).then(
+					function (response) {
+						if (response.data.events.length === 0) {
+							removeSportsData.push(sportsData[i]);
+						} else {
+							leagueData = response.data;
+						}
+					}.bind(this)
+				);
+
+				return {
+					sport_id: league.sport_id,
+					sport_name: league.sport_name,
+					data: leagueData,
+				};
+			});
 		} catch (err) {
 			console.log(err.message);
 		}
