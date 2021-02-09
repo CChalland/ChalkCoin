@@ -124,19 +124,9 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_2__["Component"] {
     super(props);
     this.state = {
       sportsData: [// { sport_id: 1, sport: "football", sport_name: "NCAA Football", league_name: "college-football", data: {} },
+      // { sport_id: 2, sport: "football", sport_name: "NFL", league_name: "nfl", data: {} },
+      // { sport_id: 3, sport: "baseball", sport_name: "MLB", league_name: "mlb", data: {} },
       {
-        sport_id: 2,
-        sport: "football",
-        sport_name: "NFL",
-        league_name: "nfl",
-        data: {}
-      }, {
-        sport_id: 3,
-        sport: "baseball",
-        sport_name: "MLB",
-        league_name: "mlb",
-        data: {}
-      }, {
         sport_id: 4,
         sport: "basketball",
         sport_name: "NBA",
@@ -147,18 +137,6 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_2__["Component"] {
         sport: "basketball",
         sport_name: "NCAA Men's Basketball",
         league_name: "mens-college-basketball",
-        data: {}
-      }, {
-        sport_id: 6,
-        sport: "hockey",
-        sport_name: "NHL",
-        league_name: "nhl",
-        data: {}
-      }, {
-        sport_id: 8,
-        sport: "basketball",
-        sport_name: "WNBA",
-        league_name: "wnba",
         data: {}
       }],
       blockchain: {},
