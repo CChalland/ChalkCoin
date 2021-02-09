@@ -35,20 +35,20 @@ class SportCard extends Component {
 				description: (
 					<div>
 						<Grid celled="internally">
-							<Grid.Column width={10}>
+							<Grid.Column width={9}>
 								<Grid.Row>
 									<div>{"FINAL"}</div>
 								</Grid.Row>
 								<Grid.Row>
 									<img className="ui avatar image" src={game.competitions[0].competitors[0].team.logo} />
-									{game.competitions[0].competitors[0].team.displayName}
+									{game.competitions[0].competitors[0].team.shortDisplayName}
 									<span style={{ position: "absolute", right: "400px" }}>
 										{game.competitions[0].competitors[0].records[0].summary}
 									</span>
 								</Grid.Row>
 								<Grid.Row>
 									<img className="ui avatar image" src={game.competitions[0].competitors[1].team.logo} />
-									{game.competitions[0].competitors[1].team.displayName}
+									{game.competitions[0].competitors[1].team.shortDisplayName}
 									<span style={{ position: "absolute", right: "400px" }}>
 										{game.competitions[0].competitors[1].records[0].summary}
 									</span>
