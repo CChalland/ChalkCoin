@@ -105,50 +105,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SportContext", function() { return SportContext; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SportProvider", function() { return SportProvider; });
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "axios");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/promise */ "./node_modules/@babel/runtime-corejs2/core-js/promise.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 const qs = __webpack_require__(/*! qs */ "qs");
 
 
 
-const SportContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])();
-class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
+const SportContext = Object(react__WEBPACK_IMPORTED_MODULE_2__["createContext"])();
+class SportProvider extends react__WEBPACK_IMPORTED_MODULE_2__["Component"] {
   constructor(props) {
     super(props);
     this.state = {
-      sportsData: [// { sport_id: 1, sport_name: "football", league_name: "college-football", data: {} },
+      sportsData: [// { sport_id: 1, sport: "football", sport_name: "NCAA Football", league_name: "college-football", data: {} },
       {
         sport_id: 2,
-        sport_name: "football",
+        sport: "football",
+        sport_name: "NFL",
         league_name: "nfl",
         data: {}
       }, {
         sport_id: 3,
-        sport_name: "baseball",
+        sport: "baseball",
+        sport_name: "MLB",
         league_name: "mlb",
         data: {}
       }, {
         sport_id: 4,
-        sport_name: "basketball",
+        sport: "basketball",
+        sport_name: "NBA",
         league_name: "nba",
         data: {}
       }, {
         sport_id: 5,
-        sport_name: "basketball",
+        sport: "basketball",
+        sport_name: "NCAA Men's Basketball",
         league_name: "mens-college-basketball",
         data: {}
       }, {
         sport_id: 6,
-        sport_name: "hockey",
+        sport: "hockey",
+        sport_name: "NHL",
         league_name: "nhl",
         data: {}
       }, {
         sport_id: 8,
-        sport_name: "basketball",
+        sport: "basketball",
+        sport_name: "WNBA",
         league_name: "wnba",
         data: {}
       }],
@@ -161,39 +170,35 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
     let removeSportsData = [];
     let sportsData = this.state.sportsData;
     const getNode1 = `http://localhost:3001/blockchain`;
-    let response = await axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(getNode1);
+    let response = await axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(getNode1);
     const blockchain = response.data;
 
     try {
-      await sportsData.map(league => {
+      sportsData = await _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_1___default.a.all(sportsData.map(async league => {
         let leagueData;
-        response = axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        response = await axios__WEBPACK_IMPORTED_MODULE_3___default()({
           method: "GET",
-          url: `http://site.api.espn.com/apis/site/v2/sports/${league.league_name}/${league.sport_name}/scoreboard`
+          url: `http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard`
         }).then(function (response) {
           if (response.data.events.length === 0) {
-            removeSportsData.push(sportsData[i]);
+            removeSportsData.push(league);
           } else {
             leagueData = response.data;
           }
         }.bind(this));
+        console.log(leagueData);
         return {
           sport_id: league.sport_id,
+          sport: league.sport,
           sport_name: league.sport_name,
+          league_name: league.league_name,
           data: leagueData
         };
-      });
+      }));
     } catch (err) {
       console.log(err.message);
     }
 
-    Array.prototype.diff = function (a) {
-      return this.filter(function (i) {
-        return a.indexOf(i) < 0;
-      });
-    };
-
-    sportsData = sportsData.diff(removeSportsData);
     this.setState({
       sportsData,
       blockchain,
@@ -202,7 +207,7 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
   }
 
   render() {
-    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SportContext.Provider, {
+    return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(SportContext.Provider, {
       value: Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, this.state)
     }, this.props.children);
   }

@@ -9,14 +9,20 @@ export class SportProvider extends Component {
 		super(props);
 		this.state = {
 			sportsData: [
-				// { sport_id: 1, sport_name: "football", league_name: "college-football", data: {} },
-				{ sport_id: 2, sport_name: "football", league_name: "nfl", data: {} },
-				{ sport_id: 3, sport_name: "baseball", league_name: "mlb", data: {} },
-				{ sport_id: 4, sport_name: "basketball", league_name: "nba", data: {} },
-				{ sport_id: 5, sport_name: "basketball", league_name: "mens-college-basketball", data: {} },
-				{ sport_id: 6, sport_name: "hockey", league_name: "nhl", data: {} },
-				{ sport_id: 8, sport_name: "basketball", league_name: "wnba", data: {} },
-				// { sport_id: 10, sport_name: "soccer", league_name: "MLS", data: {} },
+				// { sport_id: 1, sport: "football", sport_name: "NCAA Football", league_name: "college-football", data: {} },
+				{ sport_id: 2, sport: "football", sport_name: "NFL", league_name: "nfl", data: {} },
+				{ sport_id: 3, sport: "baseball", sport_name: "MLB", league_name: "mlb", data: {} },
+				{ sport_id: 4, sport: "basketball", sport_name: "NBA", league_name: "nba", data: {} },
+				{
+					sport_id: 5,
+					sport: "basketball",
+					sport_name: "NCAA Men's Basketball",
+					league_name: "mens-college-basketball",
+					data: {},
+				},
+				{ sport_id: 6, sport: "hockey", sport_name: "NHL", league_name: "nhl", data: {} },
+				{ sport_id: 8, sport: "basketball", sport_name: "WNBA", league_name: "wnba", data: {} },
+				// { sport_id: 10, sport: "soccer", sport_name: "MLS", league_name: "MLS", data: {} },
 			],
 			blockchain: {},
 			fetchedSportData: false,
@@ -32,39 +38,37 @@ export class SportProvider extends Component {
 		const blockchain = response.data;
 
 		try {
-			await sportsData.map((league) => {
-				let leagueData;
+			sportsData = await Promise.all(
+				sportsData.map(async (league) => {
+					let leagueData;
 
-				response = axios({
-					method: "GET",
-					url: `http://site.api.espn.com/apis/site/v2/sports/${league.league_name}/${league.sport_name}/scoreboard`,
-				}).then(
-					function (response) {
-						if (response.data.events.length === 0) {
-							removeSportsData.push(sportsData[i]);
-						} else {
-							leagueData = response.data;
-						}
-					}.bind(this)
-				);
+					response = await axios({
+						method: "GET",
+						url: `http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard`,
+					}).then(
+						function (response) {
+							if (response.data.events.length === 0) {
+								removeSportsData.push(league);
+							} else {
+								leagueData = response.data;
+							}
+						}.bind(this)
+					);
 
-				return {
-					sport_id: league.sport_id,
-					sport_name: league.sport_name,
-					data: leagueData,
-				};
-			});
+					console.log(leagueData);
+
+					return {
+						sport_id: league.sport_id,
+						sport: league.sport,
+						sport_name: league.sport_name,
+						league_name: league.league_name,
+						data: leagueData,
+					};
+				})
+			);
 		} catch (err) {
 			console.log(err.message);
 		}
-
-		Array.prototype.diff = function (a) {
-			return this.filter(function (i) {
-				return a.indexOf(i) < 0;
-			});
-		};
-
-		sportsData = sportsData.diff(removeSportsData);
 
 		this.setState({ sportsData, blockchain, fetchedSportData: true });
 	}
