@@ -30,11 +30,6 @@ class SportCard extends Component {
 			});
 			let eventDate = gameTime.split(",");
 
-			let fullClock = eventDate[1].split(":00 ");
-			let displayDate = `${fullClock[0]} ${fullClock[1]}`;
-
-			let eventSport = this.props.sportData[sportId].sport_id;
-
 			return {
 				date: eventDate[0],
 				description: (
