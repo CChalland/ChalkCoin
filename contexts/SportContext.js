@@ -54,9 +54,6 @@ export class SportProvider extends Component {
 							}
 						}.bind(this)
 					);
-
-					console.log(leagueData);
-
 					return {
 						sport_id: league.sport_id,
 						sport: league.sport,

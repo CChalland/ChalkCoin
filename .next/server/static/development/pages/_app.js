@@ -186,7 +186,6 @@ class SportProvider extends react__WEBPACK_IMPORTED_MODULE_2__["Component"] {
             leagueData = response.data;
           }
         }.bind(this));
-        console.log(leagueData);
         return {
           sport_id: league.sport_id,
           sport: league.sport,

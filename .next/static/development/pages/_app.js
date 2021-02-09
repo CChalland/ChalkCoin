@@ -146,7 +146,6 @@ function (_Component) {
 
                           case 2:
                             response = _context.sent;
-                            console.log(leagueData);
                             return _context.abrupt("return", {
                               sport_id: league.sport_id,
                               sport: league.sport,
@@ -155,7 +154,7 @@ function (_Component) {
                               data: leagueData
                             });
 
-                          case 5:
+                          case 4:
                           case "end":
                             return _context.stop();
                         }
