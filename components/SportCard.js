@@ -5,7 +5,11 @@ import { Link } from "../routes";
 class SportCard extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { index: 0, activeIndex: 0 };
+		this.state = {
+			index: 0,
+			activeIndex: 0,
+			gameScoreCard: {},
+		};
 
 		this.handleClick = this.handleClick.bind(this);
 	}
@@ -18,10 +22,37 @@ class SportCard extends Component {
 		this.setState({ activeIndex: newIndex });
 	};
 
+	gameScoreCardHelper(game) {
+		let gameData = {
+			shortDetail: game.competitions[0].status.type.shortDetail,
+			away: {
+				teamLogo: game.competitions[0].competitors[0].team.logo,
+				teamName: game.competitions[0].competitors[0].team.name,
+				teamTotalRecord: game.competitions[0].competitors[0].records[0].summary,
+				teamAwayRecord: game.competitions[0].competitors[0].records[2].summary,
+				team1Linescore: game.competitions[0].competitors[0].linescores[0].value,
+				team2Linescore: game.competitions[0].competitors[0].linescores[1].value,
+				team3Linescore: game.competitions[0].competitors[0].linescores[2].value,
+				team4Linescore: game.competitions[0].competitors[0].linescores[3].value,
+				score: game.competitions[0].competitors[0].score,
+			},
+			home: {
+				teamLogo: game.competitions[0].competitors[1].team.logo,
+				teamName: game.competitions[0].competitors[1].team.name,
+				teamTotalRecord: game.competitions[0].competitors[1].records[0].summary,
+				teamHomeRecord: game.competitions[0].competitors[1].records[2].summary,
+				team1Linescore: game.competitions[0].competitors[1].linescores[0].value,
+				team2Linescore: game.competitions[0].competitors[1].linescores[1].value,
+				team3Linescore: game.competitions[0].competitors[1].linescores[2].value,
+				team4Linescore: game.competitions[0].competitors[1].linescores[3].value,
+				score: game.competitions[0].competitors[1].score,
+			},
+		};
+		return gameData;
+	}
+
 	renderGamesCards(sportId) {
 		const { activeIndex } = this.state;
-
-		console.log(this.props.sportData[sportId].data.events);
 
 		let gameItems = this.props.sportData[sportId].data.events.map((game) => {
 			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -30,6 +61,8 @@ class SportCard extends Component {
 			});
 			let eventDate = gameTime.split(",");
 
+			console.log(this.gameScoreCardHelper(game));
+
 			return {
 				date: eventDate[0],
 				description: (
@@ -37,30 +70,59 @@ class SportCard extends Component {
 						<Grid celled="internally">
 							<Grid.Column width={9}>
 								<Grid.Row>
-									<div>{"FINAL"}</div>
+									<div>
+										{game.competitions[0].status.type.shortDetail}
+										{"1 "}
+										{"2 "}
+										{"3 "}
+										{"4 "}
+										{"OT "}
+										{"T"}
+									</div>
 								</Grid.Row>
 								<Grid.Row>
 									<img className="ui avatar image" src={game.competitions[0].competitors[0].team.logo} />
-									{game.competitions[0].competitors[0].team.shortDisplayName}
-									<span style={{ position: "absolute", right: "400px" }}>
-										{game.competitions[0].competitors[0].records[0].summary}
-									</span>
+									{game.competitions[0].competitors[0].team.name}
+									{"( "}
+									{game.competitions[0].competitors[0].records[0].summary}
+									{", "}
+									{game.competitions[0].competitors[0].records[2].summary}{" "}
+									{game.competitions[0].competitors[0].homeAway}
+									{" )"}
+									{game.competitions[0].competitors[0].linescores[0].value}
+									{game.competitions[0].competitors[0].linescores[1].value}
+									{game.competitions[0].competitors[0].linescores[2].value}
+									{game.competitions[0].competitors[0].linescores[3].value}
+									{game.competitions[0].competitors[0].score}
 								</Grid.Row>
 								<Grid.Row>
 									<img className="ui avatar image" src={game.competitions[0].competitors[1].team.logo} />
-									{game.competitions[0].competitors[1].team.shortDisplayName}
-									<span style={{ position: "absolute", right: "400px" }}>
-										{game.competitions[0].competitors[1].records[0].summary}
-									</span>
+									{game.competitions[0].competitors[1].team.name}
+									{"( "}
+									{game.competitions[0].competitors[1].records[0].summary}
+									{", "}
+									{game.competitions[0].competitors[1].records[2].summary}{" "}
+									{game.competitions[0].competitors[1].homeAway}
+									{" )"}
+									{game.competitions[0].competitors[1].linescores[0].value}
+									{game.competitions[0].competitors[1].linescores[1].value}
+									{game.competitions[0].competitors[1].linescores[2].value}
+									{game.competitions[0].competitors[1].linescores[3].value}
+									{game.competitions[0].competitors[1].score}
 								</Grid.Row>
 							</Grid.Column>
 
-							<Grid.Column width={3}>
+							<Grid.Column width={2}>
 								<div>{"Last Play"}</div>
 							</Grid.Column>
 
-							<Grid.Column width={3}>
-								<div>{"TOP PERFORMERS"}</div>
+							<Grid.Column width={5}>
+								<Grid.Row>
+									<div>{"TOP PERFORMERS"}</div>
+								</Grid.Row>
+								<Grid.Row>
+									<img className="ui avatar image" src={""} />
+								</Grid.Row>
 							</Grid.Column>
 						</Grid>
 
