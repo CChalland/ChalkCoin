@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button, Tab, Accordion, Icon, Grid } from "semantic-ui-react";
 import { Link } from "../routes";
+import GameScoreTable from "./GameScoreTable";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -69,7 +70,7 @@ class SportCard extends Component {
 					<div>
 						<Grid celled="internally">
 							<Grid.Column width={9}>
-								<Grid.Row>
+								{/* <Grid.Row>
 									<div>
 										{game.competitions[0].status.type.shortDetail}
 										{"1 "}
@@ -109,7 +110,9 @@ class SportCard extends Component {
 									{game.competitions[0].competitors[1].linescores[2].value}
 									{game.competitions[0].competitors[1].linescores[3].value}
 									{game.competitions[0].competitors[1].score}
-								</Grid.Row>
+								</Grid.Row> */}
+
+								<GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} />
 							</Grid.Column>
 
 							<Grid.Column width={2}>

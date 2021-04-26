@@ -1,7 +1,7 @@
 import React from "react";
 import { Header, Table, Rating } from "semantic-ui-react";
 
-const TableExamplePadded = () => (
+const GameScoreTable = () => (
 	<Table celled padded>
 		<Table.Header>
 			<Table.Row>
@@ -77,4 +77,4 @@ const TableExamplePadded = () => (
 	</Table>
 );
 
-export default TableExamplePadded;
+export default GameScoreTable;
