@@ -70,48 +70,6 @@ class SportCard extends Component {
 					<div>
 						<Grid celled="internally">
 							<Grid.Column width={9}>
-								{/* <Grid.Row>
-									<div>
-										{game.competitions[0].status.type.shortDetail}
-										{"1 "}
-										{"2 "}
-										{"3 "}
-										{"4 "}
-										{"OT "}
-										{"T"}
-									</div>
-								</Grid.Row>
-								<Grid.Row>
-									<img className="ui avatar image" src={game.competitions[0].competitors[0].team.logo} />
-									{game.competitions[0].competitors[0].team.name}
-									{"( "}
-									{game.competitions[0].competitors[0].records[0].summary}
-									{", "}
-									{game.competitions[0].competitors[0].records[2].summary}{" "}
-									{game.competitions[0].competitors[0].homeAway}
-									{" )"}
-									{game.competitions[0].competitors[0].linescores[0].value}
-									{game.competitions[0].competitors[0].linescores[1].value}
-									{game.competitions[0].competitors[0].linescores[2].value}
-									{game.competitions[0].competitors[0].linescores[3].value}
-									{game.competitions[0].competitors[0].score}
-								</Grid.Row>
-								<Grid.Row>
-									<img className="ui avatar image" src={game.competitions[0].competitors[1].team.logo} />
-									{game.competitions[0].competitors[1].team.name}
-									{"( "}
-									{game.competitions[0].competitors[1].records[0].summary}
-									{", "}
-									{game.competitions[0].competitors[1].records[2].summary}{" "}
-									{game.competitions[0].competitors[1].homeAway}
-									{" )"}
-									{game.competitions[0].competitors[1].linescores[0].value}
-									{game.competitions[0].competitors[1].linescores[1].value}
-									{game.competitions[0].competitors[1].linescores[2].value}
-									{game.competitions[0].competitors[1].linescores[3].value}
-									{game.competitions[0].competitors[1].score}
-								</Grid.Row> */}
-
 								<GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} />
 							</Grid.Column>
 
