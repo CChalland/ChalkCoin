@@ -14,12 +14,12 @@ class GameScoreTable extends Component {
 			<Table celled padded>
 				<Table.Header>
 					<Table.Row>
-						<Table.HeaderCell singleLine>shortDetail</Table.HeaderCell>
-						<Table.HeaderCell>linescore1</Table.HeaderCell>
-						<Table.HeaderCell>linescore2</Table.HeaderCell>
-						<Table.HeaderCell>linescore3</Table.HeaderCell>
-						<Table.HeaderCell>linescore4</Table.HeaderCell>
-						<Table.HeaderCell>OT</Table.HeaderCell>
+						<Table.HeaderCell singleLine>{gameScoreCardData.shortDetail}</Table.HeaderCell>
+						<Table.HeaderCell>1</Table.HeaderCell>
+						<Table.HeaderCell>2</Table.HeaderCell>
+						<Table.HeaderCell>3</Table.HeaderCell>
+						<Table.HeaderCell>4</Table.HeaderCell>
+						{/* <Table.HeaderCell>OT</Table.HeaderCell> */}
 						<Table.HeaderCell>T</Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
