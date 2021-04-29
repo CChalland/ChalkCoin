@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header, Table, Rating } from "semantic-ui-react";
+import { Table, Grid } from "semantic-ui-react";
 
 class GameScoreTable extends Component {
 	constructor(props) {
@@ -32,8 +32,8 @@ class GameScoreTable extends Component {
 							{"( "}
 							{gameScoreCardData.away.totalRecord}
 							{", "}
-							{gameScoreCardData.away.awayRecord}
-							{" Away)"}
+							{gameScoreCardData.away.record}
+							{" Home)"}
 						</Table.Cell>
 						<Table.Cell singleLine>{gameScoreCardData.away.linescore1}</Table.Cell>
 						<Table.Cell singleLine>{gameScoreCardData.away.linescore2}</Table.Cell>
@@ -49,7 +49,7 @@ class GameScoreTable extends Component {
 							{"( "}
 							{gameScoreCardData.home.totalRecord}
 							{", "}
-							{gameScoreCardData.home.homeRecord}
+							{gameScoreCardData.home.record}
 							{" Home)"}
 						</Table.Cell>
 						<Table.Cell singleLine>{gameScoreCardData.home.linescore1}</Table.Cell>
