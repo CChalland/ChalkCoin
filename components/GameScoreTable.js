@@ -8,6 +8,8 @@ class GameScoreTable extends Component {
 	}
 
 	renderScoreTable() {
+		const { gameScoreCardData } = this.props;
+
 		return (
 			<Table celled padded>
 				<Table.Header>
@@ -25,60 +27,36 @@ class GameScoreTable extends Component {
 				<Table.Body>
 					<Table.Row>
 						<Table.Cell>
-							<Header as="h2" textAlign="center">
-								<img
-									className="ui avatar image"
-									src={"https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/det.png"}
-								/>
-								{"team.name"}
-								{"( "}
-								{"records[0].summary"}
-								{", "}
-								{"records[2].summary"} {"homeAway"}
-								{" )"}
-							</Header>
+							<img className="ui avatar image" src={gameScoreCardData.away.logo} />
+							{gameScoreCardData.away.name}
+							{"( "}
+							{gameScoreCardData.away.totalRecord}
+							{", "}
+							{gameScoreCardData.away.awayRecord}
+							{" Away)"}
 						</Table.Cell>
-						<Table.Cell singleLine>Power Output</Table.Cell>
-						<Table.Cell>
-							<Rating icon="star" defaultRating={3} maxRating={3} />
-						</Table.Cell>
-						<Table.Cell textAlign="right">
-							80% <br />
-							<a href="#">18 studies</a>
-						</Table.Cell>
-						<Table.Cell>
-							Creatine supplementation is the reference compound for increasing muscular creatine levels;
-							there is variability in this increase, however, with some nonresponders.
-						</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.away.linescore1}</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.away.linescore2}</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.away.linescore3}</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.away.linescore4}</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.away.score}</Table.Cell>
 					</Table.Row>
 
 					<Table.Row>
 						<Table.Cell>
-							<Header as="h2" textAlign="center">
-								<img
-									className="ui avatar image"
-									src={"https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/cle.png"}
-								/>
-								{"team.name"}
-								{"( "}
-								{"records[0].summary"}
-								{", "}
-								{"records[2].summary"} {"homeAway"}
-								{" )"}
-							</Header>
+							<img className="ui avatar image" src={gameScoreCardData.home.logo} />
+							{gameScoreCardData.home.name}
+							{"( "}
+							{gameScoreCardData.home.totalRecord}
+							{", "}
+							{gameScoreCardData.home.homeRecord}
+							{" Home)"}
 						</Table.Cell>
-						<Table.Cell singleLine>Weight</Table.Cell>
-						<Table.Cell>
-							<Rating icon="star" defaultRating={3} maxRating={3} />
-						</Table.Cell>
-						<Table.Cell textAlign="right">
-							100% <br />
-							<a href="#">65 studies</a>
-						</Table.Cell>
-						<Table.Cell>
-							Creatine is the reference compound for power improvement, with numbers from one meta-analysis to
-							assess potency
-						</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.home.linescore1}</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.home.linescore2}</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.home.linescore3}</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.home.linescore4}</Table.Cell>
+						<Table.Cell singleLine>{gameScoreCardData.home.score}</Table.Cell>
 					</Table.Row>
 				</Table.Body>
 			</Table>
