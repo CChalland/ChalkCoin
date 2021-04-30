@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import { Card, Button, Tab, Accordion, Icon } from "semantic-ui-react";
+import { Card, Button, Tab, Accordion, Icon, Grid } from "semantic-ui-react";
 import { Link } from "../routes";
-import BetDoughnutChart from "./BetDoughnutChart";
+import GameScoreTable from "./GameScoreTable";
 
 class SportCard extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { index: 0, daysIndex: 0, timeTitle: "", activeIndex: 0 };
+		this.state = {
+			index: 0,
+			activeIndex: 0,
+			gameScoreCard: {},
+		};
 
 		this.handleClick = this.handleClick.bind(this);
 	}
@@ -19,93 +23,70 @@ class SportCard extends Component {
 		this.setState({ activeIndex: newIndex });
 	};
 
+	gameScoreCardHelper(game) {
+		let gameData = {
+			shortDetail: game.competitions[0].status.type.shortDetail,
+			away: {
+				logo: game.competitions[0].competitors[0].team.logo,
+				name: game.competitions[0].competitors[0].team.name,
+				totalRecord: game.competitions[0].competitors[0].records[0].summary,
+				record: game.competitions[0].competitors[0].records[2].summary,
+				linescore1: game.competitions[0].competitors[0].linescores[0].value,
+				linescore2: game.competitions[0].competitors[0].linescores[1].value,
+				linescore3: game.competitions[0].competitors[0].linescores[2].value,
+				linescore4: game.competitions[0].competitors[0].linescores[3].value,
+				score: game.competitions[0].competitors[0].score,
+			},
+			home: {
+				logo: game.competitions[0].competitors[1].team.logo,
+				name: game.competitions[0].competitors[1].team.name,
+				totalRecord: game.competitions[0].competitors[1].records[0].summary,
+				record: game.competitions[0].competitors[1].records[2].summary,
+				linescore1: game.competitions[0].competitors[1].linescores[0].value,
+				linescore2: game.competitions[0].competitors[1].linescores[1].value,
+				linescore3: game.competitions[0].competitors[1].linescores[2].value,
+				linescore4: game.competitions[0].competitors[1].linescores[3].value,
+				score: game.competitions[0].competitors[1].score,
+			},
+		};
+		return gameData;
+	}
+
 	renderGamesCards(sportId) {
 		const { activeIndex } = this.state;
 
-		let gameItems = this.props.sportData[sportId].data.events.map(game => {
+		let gameItems = this.props.sportData[sportId].data.events.map((game) => {
 			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-			let gameTime = new Date(game.event_date).toLocaleString("en-US", {
-				timeZone: timeZone
+			let gameTime = new Date(game.date).toLocaleString("en-US", {
+				timeZone: timeZone,
 			});
 			let eventDate = gameTime.split(",");
 
-			let bettingIndexes = Object.keys(game.line_periods);
-			let firstBettingIndex = bettingIndexes[0];
-
-			let defSpreadHelper = game.line_periods[firstBettingIndex].period_full_game.spread;
-			let spread;
-			let spreadTeam = (spread = game.teams_normalized[0].is_away
-				? game.teams_normalized[0].abbreviation
-				: game.teams_normalized[1].abbreviation);
-
-			if (defSpreadHelper.point_spread_away < defSpreadHelper.point_spread_home) {
-				spread = spreadTeam + " " + defSpreadHelper.point_spread_away;
-			} else {
-				spread = spreadTeam + " " + defSpreadHelper.point_spread_home;
-			}
-
-			let fullClock = eventDate[1].split(":00 ");
-			let displayDate = `${fullClock[0]} ${fullClock[1]}`;
-
-			let team0Name;
-			let team1Name;
-			if (this.props.sportName === "MLS") {
-				team0Name = `${game.teams_normalized[0].name} ${game.teams_normalized[0].mascot}`;
-				team1Name = `${game.teams_normalized[1].name} ${game.teams_normalized[1].mascot}`;
-			} else {
-				team0Name = game.teams_normalized[0].mascot;
-				team1Name = game.teams_normalized[1].mascot;
-			}
-
-			let eventSport = this.props.sportData[sportId].sport_name;
+			console.log(this.gameScoreCardHelper(game));
 
 			return {
 				date: eventDate[0],
 				description: (
 					<div>
-						<h4>
-							<img
-								className="ui avatar image"
-								src={`../static/media/${game.sport_id}-${game.teams_normalized[0].abbreviation}.png`}
-							/>
-							{team0Name}
-							<span style={{ position: "absolute", right: "400px" }}>{game.teams_normalized[0].record}</span>
-							<br />
-							<span
-								style={{
-									width: "1px",
-									background: "rgba(34,36,38,.15)",
-									position: "absolute",
-									top: "0",
-									bottom: "0",
-									right: "350px"
-								}}
-							/>
-							<span style={{ position: "absolute", right: "200px" }}>
-								{displayDate}
-								<br />
-								{this.props.sportName}
-								<br />
-								{spread}
-							</span>
-							<Link
-								href={{
-									pathname: "/bets/new",
-									query: { sportId: game.sport_id, eventId: game.event_id }
-								}}
-							>
-								<a>
-									<Button floated="right" content="Create Bet" icon="add circle" primary />
-								</a>
-							</Link>
-							<br />
-							<img
-								className="ui avatar image"
-								src={`../static/media/${game.sport_id}-${game.teams_normalized[1].abbreviation}.png`}
-							/>
-							{team1Name}
-							<span style={{ position: "absolute", right: "400px" }}>{game.teams_normalized[1].record}</span>
-						</h4>
+						<Grid celled="internally">
+							<Grid.Column width={9}>
+								<GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} />
+							</Grid.Column>
+
+							<Grid.Column width={2}>
+								<div>{"Last Play"}</div>
+							</Grid.Column>
+
+							<Grid.Column width={5}>
+								<Grid.Row>
+									<div>{"TOP PERFORMERS"}</div>
+								</Grid.Row>
+								<Grid.Row>
+									<img className="ui avatar image" src={""} />
+								</Grid.Row>
+							</Grid.Column>
+						</Grid>
+
 						<Accordion>
 							<Accordion.Title
 								active={activeIndex === game.event_id}
@@ -115,21 +96,15 @@ class SportCard extends Component {
 								<Icon name="dropdown" />
 								Matchup Predictor
 							</Accordion.Title>
-							<Accordion.Content active={activeIndex === game.event_id}>
-								<BetDoughnutChart
-									eventsData={game}
-									eventSport={eventSport}
-									firstBettingIndex={firstBettingIndex}
-								/>
-							</Accordion.Content>
+							<Accordion.Content active={activeIndex === game.event_id}></Accordion.Content>
 						</Accordion>
 					</div>
 				),
-				fluid: true
+				fluid: true,
 			};
 		});
 
-		let datesArray = gameItems.map(obj => {
+		let datesArray = gameItems.map((obj) => {
 			return obj.date;
 		});
 
@@ -137,13 +112,13 @@ class SportCard extends Component {
 			.filter((item, index) => datesArray.indexOf(item) === index)
 			.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
 
-		let eventsResult = dates.map(date => {
-			return gameItems.filter(obj => {
+		let eventsResult = dates.map((date) => {
+			return gameItems.filter((obj) => {
 				return obj.date === date;
 			});
 		});
 
-		let paneResult = eventsResult.map(obj => {
+		let paneResult = eventsResult.map((obj) => {
 			let tempDate = new Date(obj[0].date);
 			let tempsDate = tempDate.toString().slice(0, 10);
 
@@ -154,7 +129,7 @@ class SportCard extends Component {
 						<h2>{tempsDate}</h2>
 						<Card.Group items={obj} />
 					</Tab.Pane>
-				)
+				),
 			};
 		});
 
