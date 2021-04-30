@@ -7,19 +7,19 @@ class SportTabs extends Component {
 		super(props);
 
 		this.state = {
-			activeIndex: 0,
+			activeIndex: 0
 		};
 
 		this.renderGamesTab = this.renderGamesTab.bind(this);
 	}
 
-	handleRangeChange = (e) => this.setState({ activeIndex: e.target.value });
+	handleRangeChange = e => this.setState({ activeIndex: e.target.value });
 	handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
 
 	renderGamesTab() {
 		const { activeIndex } = this.state;
 
-		let gamePanes = this.props.allSportsData.map((game) => {
+		let gamePanes = this.props.allSportsData.map(game => {
 			let img = (
 				<div>
 					<img className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
@@ -38,7 +38,7 @@ class SportTabs extends Component {
 							sportIndex={activeIndex}
 						/>
 					</Tab.Pane>
-				),
+				)
 			};
 		});
 

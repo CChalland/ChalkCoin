@@ -14,18 +14,18 @@ class BetokenIndex extends Component {
 			sportsData: [],
 			blockchain: {},
 			loadingData: false,
-			fetchedSportData: false,
+			fetchedSportData: false
 		};
 
 		this.renderCurrentBets = this.renderCurrentBets.bind(this);
 	}
 
 	renderCurrentBets(blockchain) {
-		const betItems = blockchain.openTransactions.map((bet) => {
+		const betItems = blockchain.openTransactions.map(bet => {
 			return {
 				header: bet.amount,
 				description: <a>View Bet</a>,
-				fluid: true,
+				fluid: true
 			};
 		});
 
