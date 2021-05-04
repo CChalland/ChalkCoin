@@ -63,6 +63,7 @@ class SportCard extends Component {
 			let eventDate = gameTime.split(",");
 
 			console.log(this.gameScoreCardHelper(game));
+			console.log(game);
 
 			return {
 				date: eventDate[0],
