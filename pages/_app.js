@@ -1,28 +1,29 @@
 import React from "react";
 import App from "next/app";
 import { SportProvider } from "../contexts/SportContext";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class MyApp extends App {
-  // Only uncomment this method if you have blocking data requirements for
-  // every single page in your application. This disables the ability to
-  // perform automatic static optimization, causing every page in your app to
-  // be server-side rendered.
-  //
-  // static async getInitialProps(appContext) {
-  //   // calls page's `getInitialProps` and fills `appProps.pageProps`
-  //   const appProps = await App.getInitialProps(appContext);
-  //
-  //   return { ...appProps }
-  // }
+	// Only uncomment this method if you have blocking data requirements for
+	// every single page in your application. This disables the ability to
+	// perform automatic static optimization, causing every page in your app to
+	// be server-side rendered.
+	//
+	// static async getInitialProps(appContext) {
+	//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+	//   const appProps = await App.getInitialProps(appContext);
+	//
+	//   return { ...appProps }
+	// }
 
-  render() {
-    const { Component, pageProps } = this.props;
-    return (
-      <SportProvider>
-        <Component {...pageProps} />
-      </SportProvider>
-    );
-  }
+	render() {
+		const { Component, pageProps } = this.props;
+		return (
+			<SportProvider>
+				<Component {...pageProps} />
+			</SportProvider>
+		);
+	}
 }
 
 export default MyApp;
