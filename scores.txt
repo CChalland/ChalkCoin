@@ -1,0 +1,289 @@
+[<div class="sub-module pick-center" data-behavior="gamepackage_pickcenter">
+<div class="pick-center">
+<div class="pick-center-content">
+<h1>PickCenter</h1>
+<table class="mediumTable">
+<thead>
+<tr>
+<th class="team"></th>
+<th class="teamrankingsWrap">
+<span class="teamrankings">TeamRankings</span>
+</th>
+<th><span class="numberfire">numberFire</span></th>
+<th class="consensusWrap">Spread Consensus Pick</th>
+<th>Spread</th>
+<th>Money Line</th>
+<th>O/U</th>
+</tr>
+</thead>
+<tbody>
+<tr class="awayteam">
+<td class="team">
+<div class="img-container">
+<img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/no.png&amp;h=100&amp;w=100"/>
+</div>
+<div class="sb-meta">
+<h2>
+<a href="http://www.espn.com/nfl/team/_/name/no/new-orleans-saints">
+									Saints
+									</a>
+</h2>
+<p class="record">9-2, 6-5-0 ATS</p>
+</div>
+</td>
+<td class="score" data-type="teamrankings">--</td>
+<td class="score" data-type="numberfire">--</td>
+<td class="score" data-type="consensus" rowspan="2">--</td>
+<td class="score">-3</td>
+<td class="score">
+							-150
+						</td>
+<td class="score" rowspan="2">45</td>
+</tr>
+<tr class="hometeam">
+<td class="team">
+<div class="img-container">
+<img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/atl.png&amp;h=100&amp;w=100"/>
+</div>
+<div class="sb-meta">
+<h2>
+<a href="http://www.espn.com/nfl/team/_/name/atl/atlanta-falcons">
+									Falcons
+									</a>
+</h2>
+<p class="record">4-7, 5-6-0 ATS</p>
+</div>
+</td>
+<td class="score" data-type="teamrankings">--</td>
+<td class="score" data-type="numberfire">--</td>
+<td class="score">+3</td>
+<td class="score">
+							+130
+						</td>
+</tr>
+</tbody>
+</table>
+<table class="smallTable">
+<thead>
+<tr>
+<th class="team" colspan="3">
+<div class="img-container">
+<img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/no.png&amp;h=100&amp;w=100"/>
+</div>
+<div class="sb-meta">
+<p class="record">9-2, 6-5-0 ATS</p>
+</div>
+</th>
+<th class="team" colspan="3">
+<div class="img-container">
+<img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/atl.png&amp;h=100&amp;w=100"/>
+</div>
+<div class="sb-meta">
+<p class="record">4-7, 5-6-0 ATS</p>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr data-type="teamrankings">
+<td class="score awayteam" colspan="2">--</td>
+<td class="label" colspan="2">
+<a href="https://www.teamrankings.com/?trk=rs_espn_pc_preview" target="_blank"><span class="teamrankings">TeamRankings</span></a>
+</td>
+<td class="score hometeam" colspan="2">--</td>
+</tr>
+<tr data-type="numberfire">
+<td class="score awayteam" colspan="2">--</td>
+<td class="label" colspan="2">
+<span class="numberfire">numberFire</span>
+</td>
+<td class="score hometeam" colspan="2">--</td>
+</tr>
+<tr data-type="consensus">
+<td class="score" colspan="6">
+<span class="label">Spread Consensus Pick</span>
+<span class="value">--</span>
+</td>
+</tr>
+<tr>
+<td class="score" colspan="2">-3</td>
+<td class="label" colspan="2">
+						Spread
+						</td>
+<td class="score" colspan="2">+3</td>
+</tr>
+<tr>
+<td class="score" colspan="2">
+							-150
+						</td>
+<td class="label" colspan="2">
+							Money Line
+						</td>
+<td class="score" colspan="2">
+							+130
+						</td>
+</tr>
+<tr>
+<td class="score" colspan="6">
+<span class="label">Over/Under</span>
+<span>45</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pick-center-data">
+<p class="pickCenterText">To get exclusive PickCenter analysis, you must be an ESPN+ Subscriber</p>
+<a class="btn btn-subscribe espn-plus-paywall-article button--eplus" href="https://secure.web.plus.espn.com/billing/purchase/ESPN_PURCHASE_CMPGN/ESPN_PURCHASE_VOCHR/YESPN?start=login&amp;locale=en_US&amp;om-navmethod=PickCenter">
+<div>Subscribe</div>
+</a>
+<a class="btn btn-sign-in webview-internal espn-app-sign-in" data-affiliatename="espn_insider" data-behavior="overlay" data-language="en" data-options='{"css":"insider_overlay","width":"770","height":"342"}' data-regformid="espn_insider" data-route="false" href="#" tref="/members/v3_1/login">
+<div>Log In</div>
+</a>
+</div>
+<footer><a href="http://insider.espn.com/insider/pickcenter/nfl/game?gameid=401220307" name="&amp;lpos=nfl:game:game:pre:pickcenter:fullanalysis">Full PickCenter Analysis</a></footer>
+</div>
+</div>, <div class="pick-center">
+<div class="pick-center-content">
+<h1>PickCenter</h1>
+<table class="mediumTable">
+<thead>
+<tr>
+<th class="team"></th>
+<th class="teamrankingsWrap">
+<span class="teamrankings">TeamRankings</span>
+</th>
+<th><span class="numberfire">numberFire</span></th>
+<th class="consensusWrap">Spread Consensus Pick</th>
+<th>Spread</th>
+<th>Money Line</th>
+<th>O/U</th>
+</tr>
+</thead>
+<tbody>
+<tr class="awayteam">
+<td class="team">
+<div class="img-container">
+<img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/no.png&amp;h=100&amp;w=100"/>
+</div>
+<div class="sb-meta">
+<h2>
+<a href="http://www.espn.com/nfl/team/_/name/no/new-orleans-saints">
+									Saints
+									</a>
+</h2>
+<p class="record">9-2, 6-5-0 ATS</p>
+</div>
+</td>
+<td class="score" data-type="teamrankings">--</td>
+<td class="score" data-type="numberfire">--</td>
+<td class="score" data-type="consensus" rowspan="2">--</td>
+<td class="score">-3</td>
+<td class="score">
+							-150
+						</td>
+<td class="score" rowspan="2">45</td>
+</tr>
+<tr class="hometeam">
+<td class="team">
+<div class="img-container">
+<img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/atl.png&amp;h=100&amp;w=100"/>
+</div>
+<div class="sb-meta">
+<h2>
+<a href="http://www.espn.com/nfl/team/_/name/atl/atlanta-falcons">
+									Falcons
+									</a>
+</h2>
+<p class="record">4-7, 5-6-0 ATS</p>
+</div>
+</td>
+<td class="score" data-type="teamrankings">--</td>
+<td class="score" data-type="numberfire">--</td>
+<td class="score">+3</td>
+<td class="score">
+							+130
+						</td>
+</tr>
+</tbody>
+</table>
+<table class="smallTable">
+<thead>
+<tr>
+<th class="team" colspan="3">
+<div class="img-container">
+<img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/no.png&amp;h=100&amp;w=100"/>
+</div>
+<div class="sb-meta">
+<p class="record">9-2, 6-5-0 ATS</p>
+</div>
+</th>
+<th class="team" colspan="3">
+<div class="img-container">
+<img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/atl.png&amp;h=100&amp;w=100"/>
+</div>
+<div class="sb-meta">
+<p class="record">4-7, 5-6-0 ATS</p>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr data-type="teamrankings">
+<td class="score awayteam" colspan="2">--</td>
+<td class="label" colspan="2">
+<a href="https://www.teamrankings.com/?trk=rs_espn_pc_preview" target="_blank"><span class="teamrankings">TeamRankings</span></a>
+</td>
+<td class="score hometeam" colspan="2">--</td>
+</tr>
+<tr data-type="numberfire">
+<td class="score awayteam" colspan="2">--</td>
+<td class="label" colspan="2">
+<span class="numberfire">numberFire</span>
+</td>
+<td class="score hometeam" colspan="2">--</td>
+</tr>
+<tr data-type="consensus">
+<td class="score" colspan="6">
+<span class="label">Spread Consensus Pick</span>
+<span class="value">--</span>
+</td>
+</tr>
+<tr>
+<td class="score" colspan="2">-3</td>
+<td class="label" colspan="2">
+						Spread
+						</td>
+<td class="score" colspan="2">+3</td>
+</tr>
+<tr>
+<td class="score" colspan="2">
+							-150
+						</td>
+<td class="label" colspan="2">
+							Money Line
+						</td>
+<td class="score" colspan="2">
+							+130
+						</td>
+</tr>
+<tr>
+<td class="score" colspan="6">
+<span class="label">Over/Under</span>
+<span>45</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pick-center-data">
+<p class="pickCenterText">To get exclusive PickCenter analysis, you must be an ESPN+ Subscriber</p>
+<a class="btn btn-subscribe espn-plus-paywall-article button--eplus" href="https://secure.web.plus.espn.com/billing/purchase/ESPN_PURCHASE_CMPGN/ESPN_PURCHASE_VOCHR/YESPN?start=login&amp;locale=en_US&amp;om-navmethod=PickCenter">
+<div>Subscribe</div>
+</a>
+<a class="btn btn-sign-in webview-internal espn-app-sign-in" data-affiliatename="espn_insider" data-behavior="overlay" data-language="en" data-options='{"css":"insider_overlay","width":"770","height":"342"}' data-regformid="espn_insider" data-route="false" href="#" tref="/members/v3_1/login">
+<div>Log In</div>
+</a>
+</div>
+<footer><a href="http://insider.espn.com/insider/pickcenter/nfl/game?gameid=401220307" name="&amp;lpos=nfl:game:game:pre:pickcenter:fullanalysis">Full PickCenter Analysis</a></footer>
+</div>]

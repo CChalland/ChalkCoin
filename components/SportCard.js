@@ -1,0 +1,145 @@
+import React, { Component } from "react";
+import { Card, Button, Tab, Accordion, Icon, Grid } from "semantic-ui-react";
+import { Link } from "../routes";
+import GameScoreTable from "./GameScoreTable";
+
+class SportCard extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			index: 0,
+			activeIndex: 0,
+			gameScoreCard: {},
+		};
+
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick = (e, titleProps) => {
+		const { index } = titleProps;
+		const { activeIndex } = this.state;
+		const newIndex = activeIndex === index ? -1 : index;
+
+		this.setState({ activeIndex: newIndex });
+	};
+
+	gameScoreCardHelper(game) {
+		let gameData = {
+			shortDetail: game.competitions[0].status.type.shortDetail,
+			away: {
+				logo: game.competitions[0].competitors[0].team.logo,
+				name: game.competitions[0].competitors[0].team.name,
+				totalRecord: game.competitions[0].competitors[0].records[0].summary,
+				record: game.competitions[0].competitors[0].records[2].summary,
+				linescore1: game.competitions[0].competitors[0].linescores[0].value,
+				linescore2: game.competitions[0].competitors[0].linescores[1].value,
+				linescore3: game.competitions[0].competitors[0].linescores[2].value,
+				linescore4: game.competitions[0].competitors[0].linescores[3].value,
+				score: game.competitions[0].competitors[0].score,
+			},
+			home: {
+				logo: game.competitions[0].competitors[1].team.logo,
+				name: game.competitions[0].competitors[1].team.name,
+				totalRecord: game.competitions[0].competitors[1].records[0].summary,
+				record: game.competitions[0].competitors[1].records[2].summary,
+				linescore1: game.competitions[0].competitors[1].linescores[0].value,
+				linescore2: game.competitions[0].competitors[1].linescores[1].value,
+				linescore3: game.competitions[0].competitors[1].linescores[2].value,
+				linescore4: game.competitions[0].competitors[1].linescores[3].value,
+				score: game.competitions[0].competitors[1].score,
+			},
+		};
+		return gameData;
+	}
+
+	renderGamesCards(sportId) {
+		const { activeIndex } = this.state;
+
+		let gameItems = this.props.sportData[sportId].data.events.map((game) => {
+			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			let gameTime = new Date(game.date).toLocaleString("en-US", {
+				timeZone: timeZone,
+			});
+			let eventDate = gameTime.split(",");
+
+			console.log(this.gameScoreCardHelper(game));
+			console.log(game);
+
+			return {
+				date: eventDate[0],
+				description: (
+					<div>
+						<Grid celled="internally">
+							<Grid.Column width={9}>
+								<GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} />
+							</Grid.Column>
+
+							<Grid.Column width={2}>
+								<div>{"Last Play"}</div>
+							</Grid.Column>
+
+							<Grid.Column width={5}>
+								<Grid.Row>
+									<div>{"TOP PERFORMERS"}</div>
+								</Grid.Row>
+								<Grid.Row>
+									<img className="ui avatar image" src={""} />
+								</Grid.Row>
+							</Grid.Column>
+						</Grid>
+
+						<Accordion>
+							<Accordion.Title
+								active={activeIndex === game.event_id}
+								index={game.event_id}
+								onClick={this.handleClick}
+							>
+								<Icon name="dropdown" />
+								Matchup Predictor
+							</Accordion.Title>
+							<Accordion.Content active={activeIndex === game.event_id}></Accordion.Content>
+						</Accordion>
+					</div>
+				),
+				fluid: true,
+			};
+		});
+
+		let datesArray = gameItems.map((obj) => {
+			return obj.date;
+		});
+
+		let dates = datesArray
+			.filter((item, index) => datesArray.indexOf(item) === index)
+			.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
+
+		let eventsResult = dates.map((date) => {
+			return gameItems.filter((obj) => {
+				return obj.date === date;
+			});
+		});
+
+		let paneResult = eventsResult.map((obj) => {
+			let tempDate = new Date(obj[0].date);
+			let tempsDate = tempDate.toString().slice(0, 10);
+
+			return {
+				menuItem: obj[0].date,
+				render: () => (
+					<Tab.Pane attached={false} style={{ overflow: "auto", maxHeight: "75em" }}>
+						<h2>{tempsDate}</h2>
+						<Card.Group items={obj} />
+					</Tab.Pane>
+				),
+			};
+		});
+
+		return <Tab menu={{ attached: false }} panes={paneResult} />;
+	}
+
+	render() {
+		return <div>{this.renderGamesCards(this.props.sportIndex)}</div>;
+	}
+}
+
+export default SportCard;
