@@ -4,3 +4,4 @@
 # Ignoring all '.next' files
 .next/
 .mockup/
+.DS_Store
