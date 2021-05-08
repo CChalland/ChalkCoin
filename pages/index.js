@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 // import { Link } from "../routes";
 import Layout from "../components/Layout";
-// import SportTabs from "../components/SportTabs";
+import SportTabs from "../components/SportTabs";
 import { SportContext } from "../contexts/SportContext";
-import { Container, Row, Col } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 class BetokenIndex extends Component {
 	static contextType = SportContext;
@@ -17,20 +17,21 @@ class BetokenIndex extends Component {
 			fetchedSportData: false,
 		};
 
-		// this.renderCurrentBets = this.renderCurrentBets.bind(this);
+		this.renderCurrentBets = this.renderCurrentBets.bind(this);
 	}
 
-	// renderCurrentBets(blockchain) {
-	// 	const betItems = blockchain.openTransactions.map((bet) => {
-	// 		return {
-	// 			header: bet.amount,
-	// 			description: <a>View Bet</a>,
-	// 			fluid: true,
-	// 		};
-	// 	});
+	renderCurrentBets(blockchain) {
+		const betItems = blockchain.openTransactions.map((bet) => {
+			return {
+				header: bet.amount,
+				description: <a>View Bet</a>,
+				fluid: true,
+			};
+		});
 
-	// 	return <Card.Group items={betItems} />;
-	// }
+		// return <Card.Group items={betItems} />;
+		return <a>View Bet</a>;
+	}
 
 	render() {
 		let { loadingData } = this.state;
@@ -41,9 +42,9 @@ class BetokenIndex extends Component {
 			result = (
 				<div>
 					<br />
-					{/* <SportTabs allSportsData={sportsData} /> */}
+					<SportTabs allSportsData={sportsData} />
 					<h3>Open Bets</h3>
-					{/* {this.renderCurrentBets(blockchain)} */}
+					{this.renderCurrentBets(blockchain)}
 				</div>
 			);
 		} else {
