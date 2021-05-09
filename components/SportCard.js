@@ -68,7 +68,7 @@ class SportCard extends Component {
 
 			return (
 				<div>
-					<Container celled="internally">
+					<Container>
 						<Col width={9}>{/* <GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} /> */}</Col>
 
 						<Col width={2}>

@@ -34,7 +34,6 @@ class SportTabs extends Component {
 						sportName={game.sport_name}
 						sportIndex={activeIndex}
 					/>
-					<h1>{game.sport_name}</h1>
 				</Tab>
 			);
 		});
