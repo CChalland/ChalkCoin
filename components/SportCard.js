@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Card, Button, Tab, Accordion, Icon, Grid } from "semantic-ui-react";
+import { Card, Button, Tab, Container, Row, Col } from "react-bootstrap";
 import { Link } from "../routes";
-import GameScoreTable from "./GameScoreTable";
+// import GameScoreTable from "./GameScoreTable";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -23,118 +23,100 @@ class SportCard extends Component {
 		this.setState({ activeIndex: newIndex });
 	};
 
-	gameScoreCardHelper(game) {
-		let gameData = {
-			shortDetail: game.competitions[0].status.type.shortDetail,
-			away: {
-				logo: game.competitions[0].competitors[0].team.logo,
-				name: game.competitions[0].competitors[0].team.name,
-				totalRecord: game.competitions[0].competitors[0].records[0].summary,
-				record: game.competitions[0].competitors[0].records[2].summary,
-				linescore1: game.competitions[0].competitors[0].linescores[0].value,
-				linescore2: game.competitions[0].competitors[0].linescores[1].value,
-				linescore3: game.competitions[0].competitors[0].linescores[2].value,
-				linescore4: game.competitions[0].competitors[0].linescores[3].value,
-				score: game.competitions[0].competitors[0].score,
-			},
-			home: {
-				logo: game.competitions[0].competitors[1].team.logo,
-				name: game.competitions[0].competitors[1].team.name,
-				totalRecord: game.competitions[0].competitors[1].records[0].summary,
-				record: game.competitions[0].competitors[1].records[2].summary,
-				linescore1: game.competitions[0].competitors[1].linescores[0].value,
-				linescore2: game.competitions[0].competitors[1].linescores[1].value,
-				linescore3: game.competitions[0].competitors[1].linescores[2].value,
-				linescore4: game.competitions[0].competitors[1].linescores[3].value,
-				score: game.competitions[0].competitors[1].score,
-			},
-		};
-		return gameData;
-	}
+	// gameScoreCardHelper(game) {
+	// 	let gameData = {
+	// 		shortDetail: game.competitions[0].status.type.shortDetail,
+	// 		away: {
+	// 			logo: game.competitions[0].competitors[0].team.logo,
+	// 			name: game.competitions[0].competitors[0].team.name,
+	// 			totalRecord: game.competitions[0].competitors[0].records[0].summary,
+	// 			record: game.competitions[0].competitors[0].records[2].summary,
+	// 			linescore1: game.competitions[0].competitors[0].linescores[0].value,
+	// 			linescore2: game.competitions[0].competitors[0].linescores[1].value,
+	// 			linescore3: game.competitions[0].competitors[0].linescores[2].value,
+	// 			linescore4: game.competitions[0].competitors[0].linescores[3].value,
+	// 			score: game.competitions[0].competitors[0].score,
+	// 		},
+	// 		home: {
+	// 			logo: game.competitions[0].competitors[1].team.logo,
+	// 			name: game.competitions[0].competitors[1].team.name,
+	// 			totalRecord: game.competitions[0].competitors[1].records[0].summary,
+	// 			record: game.competitions[0].competitors[1].records[2].summary,
+	// 			linescore1: game.competitions[0].competitors[1].linescores[0].value,
+	// 			linescore2: game.competitions[0].competitors[1].linescores[1].value,
+	// 			linescore3: game.competitions[0].competitors[1].linescores[2].value,
+	// 			linescore4: game.competitions[0].competitors[1].linescores[3].value,
+	// 			score: game.competitions[0].competitors[1].score,
+	// 		},
+	// 	};
+	// 	return gameData;
+	// }
 
 	renderGamesCards(sportId) {
 		const { activeIndex } = this.state;
 
-		let gameItems = this.props.sportData[sportId].data.events.map((game) => {
+		let gameItems = this.props.sportData.data.events.map((game) => {
 			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 			let gameTime = new Date(game.date).toLocaleString("en-US", {
 				timeZone: timeZone,
 			});
 			let eventDate = gameTime.split(",");
 
-			console.log(this.gameScoreCardHelper(game));
+			// console.log(this.gameScoreCardHelper(game));
 			console.log(game);
 
-			return {
-				date: eventDate[0],
-				description: (
-					<div>
-						<Grid celled="internally">
-							<Grid.Column width={9}>
-								<GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} />
-							</Grid.Column>
+			return (
+				<div>
+					<Container celled="internally">
+						<Col width={9}>{/* <GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} /> */}</Col>
 
-							<Grid.Column width={2}>
-								<div>{"Last Play"}</div>
-							</Grid.Column>
+						<Col width={2}>
+							<div>{"Last Play"}</div>
+						</Col>
 
-							<Grid.Column width={5}>
-								<Grid.Row>
-									<div>{"TOP PERFORMERS"}</div>
-								</Grid.Row>
-								<Grid.Row>
-									<img className="ui avatar image" src={""} />
-								</Grid.Row>
-							</Grid.Column>
-						</Grid>
-
-						<Accordion>
-							<Accordion.Title
-								active={activeIndex === game.event_id}
-								index={game.event_id}
-								onClick={this.handleClick}
-							>
-								<Icon name="dropdown" />
-								Matchup Predictor
-							</Accordion.Title>
-							<Accordion.Content active={activeIndex === game.event_id}></Accordion.Content>
-						</Accordion>
-					</div>
-				),
-				fluid: true,
-			};
+						<Col width={5}>
+							<Row>
+								<div>{"TOP PERFORMERS"}</div>
+							</Row>
+							<Row>
+								<img className="ui avatar image" src={""} />
+							</Row>
+						</Col>
+					</Container>
+				</div>
+			);
 		});
 
-		let datesArray = gameItems.map((obj) => {
-			return obj.date;
-		});
+		// let datesArray = gameItems.map((obj) => {
+		// 	return obj.date;
+		// });
 
-		let dates = datesArray
-			.filter((item, index) => datesArray.indexOf(item) === index)
-			.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
+		// let dates = datesArray
+		// 	.filter((item, index) => datesArray.indexOf(item) === index)
+		// 	.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
 
-		let eventsResult = dates.map((date) => {
-			return gameItems.filter((obj) => {
-				return obj.date === date;
-			});
-		});
+		// let eventsResult = dates.map((date) => {
+		// 	return gameItems.filter((obj) => {
+		// 		return obj.date === date;
+		// 	});
+		// });
 
-		let paneResult = eventsResult.map((obj) => {
-			let tempDate = new Date(obj[0].date);
-			let tempsDate = tempDate.toString().slice(0, 10);
+		// let paneResult = eventsResult.map((obj) => {
+		// 	let tempDate = new Date(obj[0].date);
+		// 	let tempsDate = tempDate.toString().slice(0, 10);
 
-			return {
-				menuItem: obj[0].date,
-				render: () => (
-					<Tab.Pane attached={false} style={{ overflow: "auto", maxHeight: "75em" }}>
-						<h2>{tempsDate}</h2>
-						<Card.Group items={obj} />
-					</Tab.Pane>
-				),
-			};
-		});
+		// 	return {
+		// 		menuItem: obj[0].date,
+		// 		render: () => (
+		// 			<Tab.Pane attached={false} style={{ overflow: "auto", maxHeight: "75em" }}>
+		// 				<h2>{tempsDate}</h2>
+		// 				<Card.Group items={obj} />
+		// 			</Tab.Pane>
+		// 		),
+		// 	};
+		// });
 
-		return <Tab menu={{ attached: false }} panes={paneResult} />;
+		return gameItems;
 	}
 
 	render() {

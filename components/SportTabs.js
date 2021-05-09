@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Tabs, Tab } from "react-bootstrap";
-// import SportCard from "./SportCard";
+import SportCard from "./SportCard";
 
 class SportTabs extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			activeIndex: "1",
+			activeIndex: 0,
 		};
 
 		this.renderGamesTab = this.renderGamesTab.bind(this);
@@ -28,12 +28,12 @@ class SportTabs extends Component {
 
 			return (
 				<Tab eventKey={game.sport_name} title={img}>
-					{/* <SportCard
+					<SportCard
 						key={game.sport_name}
-						sportData={this.props.allSportsData}
+						sportData={game}
 						sportName={game.sport_name}
 						sportIndex={activeIndex}
-					/> */}
+					/>
 					<h1>{game.sport_name}</h1>
 				</Tab>
 			);

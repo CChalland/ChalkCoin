@@ -22,15 +22,10 @@ class BetokenIndex extends Component {
 
 	renderCurrentBets(blockchain) {
 		const betItems = blockchain.openTransactions.map((bet) => {
-			return {
-				header: bet.amount,
-				description: <a>View Bet</a>,
-				fluid: true,
-			};
+			return <a>View Bet</a>;
 		});
 
-		// return <Card.Group items={betItems} />;
-		return <a>View Bet</a>;
+		return betItems;
 	}
 
 	render() {
