@@ -11,7 +11,7 @@ class GameScoreTable extends Component {
 		const { gameScoreCardData } = this.props;
 
 		return (
-			<Table basic="very">
+			<Table>
 				<thead>
 					<tr>
 						<th>{gameScoreCardData.shortDetail}</th>
