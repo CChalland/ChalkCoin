@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Card, Button, Tab, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "../routes";
-// import GameScoreTable from "./GameScoreTable";
+import GameScoreTable from "./GameScoreTable";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -57,11 +57,11 @@ class SportCard extends Component {
 		const { activeIndex } = this.state;
 
 		let gameItems = this.props.sportData.data.events.map((game) => {
-			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-			let gameTime = new Date(game.date).toLocaleString("en-US", {
-				timeZone: timeZone,
-			});
-			let eventDate = gameTime.split(",");
+			// const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			// let gameTime = new Date(game.date).toLocaleString("en-US", {
+			// 	timeZone: timeZone,
+			// });
+			// let eventDate = gameTime.split(",");
 
 			console.log(this.gameScoreCardHelper(game));
 			// console.log(game);
@@ -69,7 +69,9 @@ class SportCard extends Component {
 			return (
 				<div>
 					<Container>
-						<Col width={9}>{/* <GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} /> */}</Col>
+						<Col width={9}>
+							<GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} />
+						</Col>
 
 						<Col width={2}>
 							<div>{"Last Play"}</div>

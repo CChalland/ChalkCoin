@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Grid } from "semantic-ui-react";
+import { Table } from "react-bootstrap";
 
 class GameScoreTable extends Component {
 	constructor(props) {
@@ -12,21 +12,18 @@ class GameScoreTable extends Component {
 
 		return (
 			<Table basic="very">
-				<Table.Header>
-					<Table.Row>
-						<Table.HeaderCell singleLine>{gameScoreCardData.shortDetail}</Table.HeaderCell>
-						<Table.HeaderCell>1</Table.HeaderCell>
-						<Table.HeaderCell>2</Table.HeaderCell>
-						<Table.HeaderCell>3</Table.HeaderCell>
-						<Table.HeaderCell>4</Table.HeaderCell>
-						{/* <Table.HeaderCell>OT</Table.HeaderCell> */}
-						<Table.HeaderCell>T</Table.HeaderCell>
-					</Table.Row>
-				</Table.Header>
+				<thead>
+					<tr>
+						<th>{gameScoreCardData.shortDetail}</th>
+						<th>1</th>
+						{/* <th>OT</th> */}
+						<th>T</th>
+					</tr>
+				</thead>
 
-				<Table.Body>
-					<Table.Row>
-						<Table.Cell>
+				<tbody>
+					<tr>
+						<td>
 							<img className="ui avatar image" src={gameScoreCardData.away.logo} />
 							{gameScoreCardData.away.name}
 							{"( "}
@@ -34,16 +31,13 @@ class GameScoreTable extends Component {
 							{", "}
 							{gameScoreCardData.away.record}
 							{" Home)"}
-						</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.away.linescore1}</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.away.linescore2}</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.away.linescore3}</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.away.linescore4}</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.away.score}</Table.Cell>
-					</Table.Row>
+						</td>
+						<td>{"gameScoreCardData.away.periods"}</td>
+						<td>{gameScoreCardData.away.score}</td>
+					</tr>
 
-					<Table.Row>
-						<Table.Cell>
+					<tr>
+						<td>
 							<img className="ui avatar image" src={gameScoreCardData.home.logo} />
 							{gameScoreCardData.home.name}
 							{"( "}
@@ -51,14 +45,11 @@ class GameScoreTable extends Component {
 							{", "}
 							{gameScoreCardData.home.record}
 							{" Home)"}
-						</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.home.linescore1}</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.home.linescore2}</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.home.linescore3}</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.home.linescore4}</Table.Cell>
-						<Table.Cell singleLine>{gameScoreCardData.home.score}</Table.Cell>
-					</Table.Row>
-				</Table.Body>
+						</td>
+						<td>{"gameScoreCardData.home.periods"}</td>
+						<td>{gameScoreCardData.home.score}</td>
+					</tr>
+				</tbody>
 			</Table>
 		);
 	}
