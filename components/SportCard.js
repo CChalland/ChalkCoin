@@ -23,34 +23,35 @@ class SportCard extends Component {
 		this.setState({ activeIndex: newIndex });
 	};
 
-	// gameScoreCardHelper(game) {
-	// 	let gameData = {
-	// 		shortDetail: game.competitions[0].status.type.shortDetail,
-	// 		away: {
-	// 			logo: game.competitions[0].competitors[0].team.logo,
-	// 			name: game.competitions[0].competitors[0].team.name,
-	// 			totalRecord: game.competitions[0].competitors[0].records[0].summary,
-	// 			record: game.competitions[0].competitors[0].records[2].summary,
-	// 			linescore1: game.competitions[0].competitors[0].linescores[0].value,
-	// 			linescore2: game.competitions[0].competitors[0].linescores[1].value,
-	// 			linescore3: game.competitions[0].competitors[0].linescores[2].value,
-	// 			linescore4: game.competitions[0].competitors[0].linescores[3].value,
-	// 			score: game.competitions[0].competitors[0].score,
-	// 		},
-	// 		home: {
-	// 			logo: game.competitions[0].competitors[1].team.logo,
-	// 			name: game.competitions[0].competitors[1].team.name,
-	// 			totalRecord: game.competitions[0].competitors[1].records[0].summary,
-	// 			record: game.competitions[0].competitors[1].records[2].summary,
-	// 			linescore1: game.competitions[0].competitors[1].linescores[0].value,
-	// 			linescore2: game.competitions[0].competitors[1].linescores[1].value,
-	// 			linescore3: game.competitions[0].competitors[1].linescores[2].value,
-	// 			linescore4: game.competitions[0].competitors[1].linescores[3].value,
-	// 			score: game.competitions[0].competitors[1].score,
-	// 		},
-	// 	};
-	// 	return gameData;
-	// }
+	gameScoreCardHelper(game) {
+		let periods;
+		if (game.status.type.description === "In Progress" || game.status.type.completed) {
+			periods = game.competitions[0].competitors[0].linescores;
+		} else {
+			periods = [];
+		}
+
+		let gameData = {
+			shortDetail: game.competitions[0].status.type.shortDetail,
+			away: {
+				logo: game.competitions[0].competitors[0].team.logo,
+				name: game.competitions[0].competitors[0].team.name,
+				totalRecord: game.competitions[0].competitors[0].records[0].summary,
+				record: game.competitions[0].competitors[0].records[2].summary,
+				score: game.competitions[0].competitors[0].score,
+				periods: periods,
+			},
+			home: {
+				logo: game.competitions[0].competitors[1].team.logo,
+				name: game.competitions[0].competitors[1].team.name,
+				totalRecord: game.competitions[0].competitors[1].records[0].summary,
+				record: game.competitions[0].competitors[1].records[2].summary,
+				score: game.competitions[0].competitors[1].score,
+				periods: periods,
+			},
+		};
+		return gameData;
+	}
 
 	renderGamesCards(sportId) {
 		const { activeIndex } = this.state;
@@ -62,8 +63,8 @@ class SportCard extends Component {
 			});
 			let eventDate = gameTime.split(",");
 
-			// console.log(this.gameScoreCardHelper(game));
-			console.log(game);
+			console.log(this.gameScoreCardHelper(game));
+			// console.log(game);
 
 			return (
 				<div>

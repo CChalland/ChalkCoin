@@ -29,7 +29,7 @@ class SportTabs extends Component {
 			return (
 				<Tab eventKey={game.sport_name} title={img}>
 					<SportCard
-						key={game.sport_name}
+						key={game.sport_id}
 						sportData={game}
 						sportName={game.sport_name}
 						sportIndex={activeIndex}
