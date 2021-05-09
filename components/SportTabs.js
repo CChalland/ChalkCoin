@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tab, Menu } from "semantic-ui-react";
+import { Tabs, Tab } from "react-bootstrap";
 import SportCard from "./SportCard";
 
 class SportTabs extends Component {
@@ -13,7 +13,6 @@ class SportTabs extends Component {
 		this.renderGamesTab = this.renderGamesTab.bind(this);
 	}
 
-	handleRangeChange = (e) => this.setState({ activeIndex: e.target.value });
 	handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
 
 	renderGamesTab() {
@@ -27,28 +26,22 @@ class SportTabs extends Component {
 				</div>
 			);
 
-			return {
-				menuItem: <Menu.Item key={game.sport_id}>{img}</Menu.Item>,
-				render: () => (
-					<Tab.Pane attached={false} raised>
-						<SportCard
-							key={game.sport_name}
-							sportData={this.props.allSportsData}
-							sportName={game.sport_name}
-							sportIndex={activeIndex}
-						/>
-					</Tab.Pane>
-				),
-			};
+			return (
+				<Tab eventKey={game.sport_name} title={img}>
+					<SportCard
+						key={game.sport_id}
+						sportData={game}
+						sportName={game.sport_name}
+						sportIndex={activeIndex}
+					/>
+				</Tab>
+			);
 		});
 
 		return (
-			<Tab
-				menu={{ secondary: true, pointing: true }}
-				panes={gamePanes}
-				activeIndex={activeIndex}
-				onTabChange={this.handleTabChange}
-			/>
+			<Tabs defaultActiveKey="NFL" id="uncontrolled-tab-example">
+				{gamePanes}
+			</Tabs>
 		);
 	}
 

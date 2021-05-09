@@ -1,62 +1,33 @@
 import React from "react";
-import { Dropdown, Icon, Menu, Segment } from "semantic-ui-react";
-import { Link } from "../routes";
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
+// import { Link } from "../routes";
 
 export default () => {
-  return (
-    <div>
-      <Menu
-        borderless
-        fitted="true"
-        inverted
-        attached="top"
-        color="black"
-        style={{ marginTop: "10px" }}
-      >
-        <Link route="/">
-          <a className="item">Betoken</a>
-        </Link>
-        <Link route="/">
-          <a className="item">Today's Games</a>
-        </Link>
-        <Link route="/">
-          <a className="item">Open Bets</a>
-        </Link>
-
-        <Menu.Menu position="right">
-          <div className="ui right aligned category search item">
-            <div className="ui transparent icon input">
-              <input
-                className="prompt"
-                type="text"
-                placeholder="Search sport games..."
-              />
-              <i className="search link icon" />
-            </div>
-            <div className="results" />
-          </div>
-        </Menu.Menu>
-
-        <Dropdown item icon="wrench" simple>
-          <Dropdown.Menu style={{ left: "auto", right: 0 }}>
-            <Dropdown.Header>"Current Username"</Dropdown.Header>
-            <Dropdown.Divider />
-            <Dropdown.Header>Balance</Dropdown.Header>
-            <Link route="/">
-              <a className="item">Current Bets</a>
-            </Link>
-
-            <Link route="/">
-              <a className="item">Past Bets</a>
-            </Link>
-
-            <Dropdown.Divider />
-            <Link route="/">
-              <a className="item">Settings</a>
-            </Link>
-          </Dropdown.Menu>
-        </Dropdown>
-      </Menu>
-    </div>
-  );
+	return (
+		<div>
+			<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+				<Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+				<Navbar.Collapse id="responsive-navbar-nav">
+					<Nav className="mr-auto">
+						<Nav.Link href="#features">Features</Nav.Link>
+						<Nav.Link href="#pricing">Pricing</Nav.Link>
+						<NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+							<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+							<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+							<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+							<NavDropdown.Divider />
+							<NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+						</NavDropdown>
+					</Nav>
+					<Nav>
+						<Nav.Link href="#deets">More deets</Nav.Link>
+						<Nav.Link eventKey={2} href="#memes">
+							Dank memes
+						</Nav.Link>
+					</Nav>
+				</Navbar.Collapse>
+			</Navbar>
+		</div>
+	);
 };
