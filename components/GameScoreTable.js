@@ -13,21 +13,30 @@ class GameScoreTable extends Component {
 
 	renderScoreTable() {
 		const { gameScoreCardData } = this.props;
+		let index = 0;
 
 		let linescoresHeader = gameScoreCardData.away.periods.map((game) => {
-			return <th>1</th>;
+			index++;
+			return <th>{index}</th>;
 		});
 
-		console.log(gameScoreCardData);
-		console.log(gameScoreCardData.away.records);
+		let homeLinscoresBody = gameScoreCardData.home.periods.map((period) => {
+			return <td>{period.value}</td>;
+		});
+		let awayLinscoresBody = gameScoreCardData.away.periods.map((period) => {
+			return <td>{period.value}</td>;
+		});
+
+		// console.log(linscoresBody);
+		// console.log(gameScoreCardData);
+		// console.log(gameScoreCardData.away.records);
 
 		return (
 			<Table>
 				<thead>
 					<tr>
 						<th>{gameScoreCardData.shortDetail}</th>
-						<th>1</th>
-						{/* <th>OT</th> */}
+						{linescoresHeader}
 						<th>T</th>
 					</tr>
 				</thead>
@@ -43,7 +52,7 @@ class GameScoreTable extends Component {
 							{gameScoreCardData.away.records[2].summary}
 							{" Away)"}
 						</td>
-						<td>{"gameScoreCardData.away.periods"}</td>
+						{awayLinscoresBody}
 						<td>{gameScoreCardData.away.score}</td>
 					</tr>
 
@@ -57,7 +66,7 @@ class GameScoreTable extends Component {
 							{gameScoreCardData.home.records[1].summary}
 							{" Home)"}
 						</td>
-						<td>{"gameScoreCardData.home.periods"}</td>
+						{homeLinscoresBody}
 						<td>{gameScoreCardData.home.score}</td>
 					</tr>
 				</tbody>
