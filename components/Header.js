@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
 // import { Link } from "../routes";
 
-export default () => {
+const Header = () => {
 	return (
 		<div>
 			<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -31,3 +31,5 @@ export default () => {
 		</div>
 	);
 };
+
+export default Header;
