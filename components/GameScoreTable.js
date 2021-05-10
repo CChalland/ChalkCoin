@@ -7,12 +7,15 @@ class GameScoreTable extends Component {
 		this.state = {};
 	}
 
-	scoreTableHelper() {
-		let record;
+	scoreTableRecordHelper() {
+		const { gameScoreCardData } = this.props;
 	}
 
 	renderScoreTable() {
 		const { gameScoreCardData } = this.props;
+
+		console.log(gameScoreCardData);
+		console.log(gameScoreCardData.away.records);
 
 		return (
 			<Table>
@@ -33,7 +36,7 @@ class GameScoreTable extends Component {
 							{"( "}
 							{gameScoreCardData.away.records[0].summary}
 							{", "}
-							{gameScoreCardData.away.records[0].summary}
+							{gameScoreCardData.away.records[2].summary}
 							{" Away)"}
 						</td>
 						<td>{"gameScoreCardData.away.periods"}</td>
@@ -47,7 +50,7 @@ class GameScoreTable extends Component {
 							{"( "}
 							{gameScoreCardData.home.records[0].summary}
 							{", "}
-							{gameScoreCardData.home.records[0].summary}
+							{gameScoreCardData.home.records[1].summary}
 							{" Home)"}
 						</td>
 						<td>{"gameScoreCardData.home.periods"}</td>

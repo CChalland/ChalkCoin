@@ -24,11 +24,24 @@ class SportCard extends Component {
 	};
 
 	gameScoreCardHelper(game) {
-		let periods;
+		let periods, homeRecords, awayRecords;
+		let temp = [
+			{ name: "Home", type: "home", summary: 0 },
+			{ name: "Away", type: "away", summary: 0 },
+		];
+
 		if (game.status.type.description === "In Progress" || game.status.type.completed) {
 			periods = game.competitions[0].competitors[0].linescores;
 		} else {
 			periods = [];
+		}
+
+		if (game.competitions[0].competitors[0].records.length > 1) {
+			homeRecords = game.competitions[0].competitors[0].records;
+			awayRecords = game.competitions[0].competitors[1].records;
+		} else {
+			homeRecords = [...game.competitions[0].competitors[0].records, ...temp];
+			awayRecords = [...game.competitions[0].competitors[1].records, ...temp];
 		}
 
 		let gameData = {
@@ -36,16 +49,14 @@ class SportCard extends Component {
 			away: {
 				logo: game.competitions[0].competitors[0].team.logo,
 				name: game.competitions[0].competitors[0].team.name,
-				// totalRecord: game.competitions[0].competitors[0].records[0].summary,
-				records: game.competitions[0].competitors[0].records,
+				records: awayRecords,
 				score: game.competitions[0].competitors[0].score,
 				periods: periods,
 			},
 			home: {
 				logo: game.competitions[0].competitors[1].team.logo,
 				name: game.competitions[0].competitors[1].team.name,
-				// totalRecord: game.competitions[0].competitors[1].records[0].summary,
-				records: game.competitions[0].competitors[1].records,
+				records: homeRecords,
 				score: game.competitions[0].competitors[1].score,
 				periods: periods,
 			},
@@ -63,8 +74,8 @@ class SportCard extends Component {
 			// });
 			// let eventDate = gameTime.split(",");
 
-			console.log(this.gameScoreCardHelper(game));
-			console.log(game);
+			// console.log(this.gameScoreCardHelper(game));
+			// console.log(game);
 
 			return (
 				<div>
