@@ -24,24 +24,26 @@ class SportCard extends Component {
 	};
 
 	gameScoreCardHelper(game) {
-		let periods, homeRecords, awayRecords;
+		let homePeriods, awayPeriods, homeRecords, awayRecords;
 		let temp = [
 			{ name: "Home", type: "home", summary: 0 },
 			{ name: "Away", type: "away", summary: 0 },
 		];
 
 		if (game.status.type.description === "In Progress" || game.status.type.completed) {
-			periods = game.competitions[0].competitors[0].linescores;
+			awayPeriods = game.competitions[0].competitors[0].linescores;
+			homePeriods = game.competitions[0].competitors[1].linescores;
 		} else {
-			periods = [];
+			awayPeriods = [];
+			homePeriods = [];
 		}
 
 		if (game.competitions[0].competitors[0].records.length > 1) {
-			homeRecords = game.competitions[0].competitors[0].records;
-			awayRecords = game.competitions[0].competitors[1].records;
+			homeRecords = game.competitions[0].competitors[1].records;
+			awayRecords = game.competitions[0].competitors[0].records;
 		} else {
-			homeRecords = [...game.competitions[0].competitors[0].records, ...temp];
-			awayRecords = [...game.competitions[0].competitors[1].records, ...temp];
+			homeRecords = [...game.competitions[0].competitors[1].records, ...temp];
+			awayRecords = [...game.competitions[0].competitors[0].records, ...temp];
 		}
 
 		let gameData = {
@@ -51,14 +53,14 @@ class SportCard extends Component {
 				name: game.competitions[0].competitors[0].team.name,
 				records: awayRecords,
 				score: game.competitions[0].competitors[0].score,
-				periods: periods,
+				periods: awayPeriods,
 			},
 			home: {
 				logo: game.competitions[0].competitors[1].team.logo,
 				name: game.competitions[0].competitors[1].team.name,
 				records: homeRecords,
 				score: game.competitions[0].competitors[1].score,
-				periods: periods,
+				periods: homePeriods,
 			},
 		};
 		return gameData;

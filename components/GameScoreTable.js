@@ -14,6 +14,10 @@ class GameScoreTable extends Component {
 	renderScoreTable() {
 		const { gameScoreCardData } = this.props;
 
+		let linescoresHeader = gameScoreCardData.away.periods.map((game) => {
+			return <th>1</th>;
+		});
+
 		console.log(gameScoreCardData);
 		console.log(gameScoreCardData.away.records);
 
