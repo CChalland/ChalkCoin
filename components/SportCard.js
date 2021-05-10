@@ -36,16 +36,16 @@ class SportCard extends Component {
 			away: {
 				logo: game.competitions[0].competitors[0].team.logo,
 				name: game.competitions[0].competitors[0].team.name,
-				totalRecord: game.competitions[0].competitors[0].records[0].summary,
-				record: game.competitions[0].competitors[0].records[2].summary,
+				// totalRecord: game.competitions[0].competitors[0].records[0].summary,
+				records: game.competitions[0].competitors[0].records,
 				score: game.competitions[0].competitors[0].score,
 				periods: periods,
 			},
 			home: {
 				logo: game.competitions[0].competitors[1].team.logo,
 				name: game.competitions[0].competitors[1].team.name,
-				totalRecord: game.competitions[0].competitors[1].records[0].summary,
-				record: game.competitions[0].competitors[1].records[2].summary,
+				// totalRecord: game.competitions[0].competitors[1].records[0].summary,
+				records: game.competitions[0].competitors[1].records,
 				score: game.competitions[0].competitors[1].score,
 				periods: periods,
 			},
@@ -64,7 +64,7 @@ class SportCard extends Component {
 			// let eventDate = gameTime.split(",");
 
 			console.log(this.gameScoreCardHelper(game));
-			// console.log(game);
+			console.log(game);
 
 			return (
 				<div>

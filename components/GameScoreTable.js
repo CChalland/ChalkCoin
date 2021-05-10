@@ -7,6 +7,10 @@ class GameScoreTable extends Component {
 		this.state = {};
 	}
 
+	scoreTableHelper() {
+		let record;
+	}
+
 	renderScoreTable() {
 		const { gameScoreCardData } = this.props;
 
@@ -27,10 +31,10 @@ class GameScoreTable extends Component {
 							<img className="ui avatar image" src={gameScoreCardData.away.logo} />
 							{gameScoreCardData.away.name}
 							{"( "}
-							{gameScoreCardData.away.totalRecord}
+							{gameScoreCardData.away.records[0].summary}
 							{", "}
-							{gameScoreCardData.away.record}
-							{" Home)"}
+							{gameScoreCardData.away.records[0].summary}
+							{" Away)"}
 						</td>
 						<td>{"gameScoreCardData.away.periods"}</td>
 						<td>{gameScoreCardData.away.score}</td>
@@ -41,9 +45,9 @@ class GameScoreTable extends Component {
 							<img className="ui avatar image" src={gameScoreCardData.home.logo} />
 							{gameScoreCardData.home.name}
 							{"( "}
-							{gameScoreCardData.home.totalRecord}
+							{gameScoreCardData.home.records[0].summary}
 							{", "}
-							{gameScoreCardData.home.record}
+							{gameScoreCardData.home.records[0].summary}
 							{" Home)"}
 						</td>
 						<td>{"gameScoreCardData.home.periods"}</td>
