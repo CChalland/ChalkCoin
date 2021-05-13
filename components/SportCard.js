@@ -23,7 +23,18 @@ class SportCard extends Component {
 		this.setState({ activeIndex: newIndex });
 	};
 
+	homeAwayHelper(game) {
+		let homeTeam = game.competitions[0].competitors.filter((team) => {
+			return team.homeAway === "home";
+		});
+		let awayTeam = game.competitions[0].competitors.filter((team) => {
+			return team.homeAway === "away";
+		});
+		return { homeTeam, awayTeam };
+	}
+
 	gameScoreCardHelper(game) {
+		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
 		let homePeriods, awayPeriods, homeRecords, awayRecords;
 		let temp = [
 			{ name: "Home", type: "home", summary: 0 },
@@ -31,35 +42,38 @@ class SportCard extends Component {
 		];
 
 		if (game.status.type.description === "In Progress" || game.status.type.completed) {
-			awayPeriods = game.competitions[0].competitors[0].linescores;
-			homePeriods = game.competitions[0].competitors[1].linescores;
+			awayPeriods = awayTeam[0].linescores;
+			homePeriods = homeTeam[0].linescores;
 		} else {
 			awayPeriods = [];
 			homePeriods = [];
 		}
 
-		if (game.competitions[0].competitors[0].records.length > 1) {
-			homeRecords = game.competitions[0].competitors[1].records;
-			awayRecords = game.competitions[0].competitors[0].records;
+		if (!game.competitions[0].competitors[0].records) {
+			homeRecords = [{ name: "Total", type: "total", summary: 0 }, ...temp];
+			awayRecords = [{ name: "Total", type: "total", summary: 0 }, ...temp];
+		} else if (game.competitions[0].competitors[0].records.length > 1) {
+			homeRecords = homeTeam[0].records;
+			awayRecords = awayTeam[0].records;
 		} else {
-			homeRecords = [...game.competitions[0].competitors[1].records, ...temp];
-			awayRecords = [...game.competitions[0].competitors[0].records, ...temp];
+			homeRecords = [...homeTeam[0].records, ...temp];
+			awayRecords = [...awayTeam[0].records, ...temp];
 		}
 
 		let gameData = {
 			shortDetail: game.competitions[0].status.type.shortDetail,
 			away: {
-				logo: game.competitions[0].competitors[0].team.logo,
-				name: game.competitions[0].competitors[0].team.name,
+				logo: awayTeam[0].team.logo,
+				name: awayTeam[0].team.name,
 				records: awayRecords,
-				score: game.competitions[0].competitors[0].score,
+				score: awayTeam[0].score,
 				periods: awayPeriods,
 			},
 			home: {
-				logo: game.competitions[0].competitors[1].team.logo,
-				name: game.competitions[0].competitors[1].team.name,
+				logo: homeTeam[0].team.logo,
+				name: homeTeam[0].team.name,
 				records: homeRecords,
-				score: game.competitions[0].competitors[1].score,
+				score: homeTeam[0].score,
 				periods: homePeriods,
 			},
 		};
@@ -83,7 +97,7 @@ class SportCard extends Component {
 				<div>
 					<Container>
 						<Col width={9}>
-							<GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} />
+							<GameScoreTable key={game.uid} gameScoreCardData={this.gameScoreCardHelper(game)} />
 						</Col>
 
 						<Col width={2}>
