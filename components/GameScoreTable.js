@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table } from "react-bootstrap";
+import { Table, Container, Row } from "react-bootstrap";
 
 class GameScoreTable extends Component {
 	constructor(props) {
@@ -44,13 +44,17 @@ class GameScoreTable extends Component {
 				<tbody>
 					<tr>
 						<td>
-							<img className="ui avatar image" src={gameScoreCardData.away.logo} />
-							{gameScoreCardData.away.name}
-							{"( "}
-							{gameScoreCardData.away.records[0].summary}
-							{", "}
-							{gameScoreCardData.away.records[2].summary}
-							{" Away)"}
+							<Container>
+								<img className="ui avatar image" src={gameScoreCardData.away.logo} />
+								<Row>{gameScoreCardData.away.name}</Row>
+								<Row>
+									{"( "}
+									{gameScoreCardData.away.records[0].summary}
+									{", "}
+									{gameScoreCardData.away.records[2].summary}
+									{" Away)"}
+								</Row>
+							</Container>
 						</td>
 						{awayLinscoresBody}
 						<td>{gameScoreCardData.away.score}</td>
@@ -58,13 +62,17 @@ class GameScoreTable extends Component {
 
 					<tr>
 						<td>
-							<img className="ui avatar image" src={gameScoreCardData.home.logo} />
-							{gameScoreCardData.home.name}
-							{"( "}
-							{gameScoreCardData.home.records[0].summary}
-							{", "}
-							{gameScoreCardData.home.records[1].summary}
-							{" Home)"}
+							<Container>
+								<img className="ui avatar image" src={gameScoreCardData.home.logo} />
+								<Row>{gameScoreCardData.home.name}</Row>
+								<Row>
+									{"( "}
+									{gameScoreCardData.home.records[0].summary}
+									{", "}
+									{gameScoreCardData.home.records[1].summary}
+									{" Home)"}
+								</Row>
+							</Container>
 						</td>
 						{homeLinscoresBody}
 						<td>{gameScoreCardData.home.score}</td>
