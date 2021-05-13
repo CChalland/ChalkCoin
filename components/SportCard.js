@@ -96,22 +96,20 @@ class SportCard extends Component {
 			return (
 				<div>
 					<Container>
-						<Col width={9}>
-							<GameScoreTable key={game.uid} gameScoreCardData={this.gameScoreCardHelper(game)} />
-						</Col>
+						<Row>
+							<Col>
+								<GameScoreTable key={game.uid} gameScoreCardData={this.gameScoreCardHelper(game)} />
+							</Col>
 
-						<Col width={2}>
-							<div>{"Last Play"}</div>
-						</Col>
+							<Col>
+								<div>{"Last Play"}</div>
+							</Col>
 
-						<Col width={5}>
-							<Row>
+							<Col>
 								<div>{"TOP PERFORMERS"}</div>
-							</Row>
-							<Row>
 								<img className="ui avatar image" src={""} />
-							</Row>
-						</Col>
+							</Col>
+						</Row>
 					</Container>
 				</div>
 			);
