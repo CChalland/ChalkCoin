@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Container, Row, Col, Media } from "react-bootstrap";
+import { Table, Container, Row, Col, Image } from "react-bootstrap";
 
 class GameScoreTable extends Component {
 	constructor(props) {
@@ -32,7 +32,7 @@ class GameScoreTable extends Component {
 		// console.log(gameScoreCardData.away.records);
 
 		return (
-			<Table>
+			<Table borderless>
 				<thead>
 					<tr>
 						<th>{gameScoreCardData.shortDetail}</th>
@@ -44,12 +44,12 @@ class GameScoreTable extends Component {
 				<tbody>
 					<tr>
 						<td>
-							<Container>
+							<Container fluid>
 								<Row>
-									<Col>
-										<img className="ui avatar image" src={gameScoreCardData.away.logo} />
+									<Col md={{ span: 3 }}>
+										<Image width={50} height={50} src={gameScoreCardData.away.logo} />
 									</Col>
-									<Col>
+									<Col md={{ span: 3 }}>
 										<Row>{gameScoreCardData.away.name}</Row>
 										<Row>
 											{"( "}
@@ -70,10 +70,10 @@ class GameScoreTable extends Component {
 						<td>
 							<Container>
 								<Row>
-									<Col>
-										<img className="ui avatar image" src={gameScoreCardData.home.logo} />
+									<Col md={{ span: 3 }}>
+										<Image width={50} height={50} src={gameScoreCardData.home.logo} />
 									</Col>
-									<Col>
+									<Col md={{ span: 3 }}>
 										<Row>{gameScoreCardData.home.name}</Row>
 										<Row>
 											{"( "}
