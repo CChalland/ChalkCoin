@@ -56,7 +56,7 @@ class GameScoreTable extends Component {
 												gameScoreCardData.away.records[0].summary +
 												", " +
 												gameScoreCardData.away.records[1].summary +
-												" Home)"}
+												" Away)"}
 										</Row>
 									</Col>
 								</Row>
