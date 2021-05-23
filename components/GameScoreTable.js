@@ -46,10 +46,10 @@ class GameScoreTable extends Component {
 						<td>
 							<Container fluid>
 								<Row>
-									<Col md={{ span: 3 }}>
+									<Col>
 										<Image width={50} height={50} src={gameScoreCardData.away.logo} />
 									</Col>
-									<Col md={{ span: 3 }}>
+									<Col>
 										<Row>{gameScoreCardData.away.name}</Row>
 										<Row>
 											{"( "}
@@ -70,17 +70,17 @@ class GameScoreTable extends Component {
 						<td>
 							<Container>
 								<Row>
-									<Col md={{ span: 3 }}>
+									<Col>
 										<Image width={50} height={50} src={gameScoreCardData.home.logo} />
 									</Col>
-									<Col md={{ span: 3 }}>
+									<Col>
 										<Row>{gameScoreCardData.home.name}</Row>
 										<Row>
-											{"( "}
-											{gameScoreCardData.home.records[0].summary}
-											{", "}
-											{gameScoreCardData.home.records[1].summary}
-											{" Home)"}
+											{"( " +
+												gameScoreCardData.home.records[0].summary +
+												", " +
+												gameScoreCardData.home.records[1].summary +
+												" Home)"}
 										</Row>
 									</Col>
 								</Row>
