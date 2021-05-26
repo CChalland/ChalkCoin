@@ -51,8 +51,8 @@ class GameScoreTable extends Component {
 									</Col>
 									<Col>
 										<Row>{gameScoreCardData.away.name}</Row>
-										<Row>
-											{"( " +
+										<Row className="text-secondary">
+											{"(" +
 												gameScoreCardData.away.records[0].summary +
 												", " +
 												gameScoreCardData.away.records[1].summary +
@@ -75,8 +75,8 @@ class GameScoreTable extends Component {
 									</Col>
 									<Col>
 										<Row>{gameScoreCardData.home.name}</Row>
-										<Row>
-											{"( " +
+										<Row className="text-secondary">
+											{"(" +
 												gameScoreCardData.home.records[0].summary +
 												", " +
 												gameScoreCardData.home.records[1].summary +
