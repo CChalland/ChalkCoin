@@ -11,13 +11,13 @@ class GameScoreTable extends Component {
 		const { gameScoreCardData } = this.props;
 
 		return (
-			<Container>
+			<Container fluid>
 				<Row>{gameScoreCardData.shortDetail}</Row>
 				<Row>
-					<Col>
+					<Col md="auto" lg="auto" xl="auto">
 						<Image width={50} height={50} src={gameScoreCardData.away.logo} />
 					</Col>
-					<Col>
+					<Col md="auto" lg="auto" xl="auto">
 						<Row>{gameScoreCardData.away.name}</Row>
 						<Row className="text-secondary">
 							{"(" +
@@ -30,10 +30,10 @@ class GameScoreTable extends Component {
 				</Row>
 				<Row>
 					<Row>
-						<Col>
+						<Col md="auto" lg="auto" xl="auto">
 							<Image width={50} height={50} src={gameScoreCardData.home.logo} />
 						</Col>
-						<Col>
+						<Col md="auto" lg="auto" xl="auto">
 							<Row>{gameScoreCardData.home.name}</Row>
 							<Row className="text-secondary">
 								{"(" +
@@ -53,13 +53,13 @@ class GameScoreTable extends Component {
 		const { gameScoreCardData } = this.props;
 
 		return (
-			<Container>
+			<Container fluid>
 				<Row>{gameScoreCardData.shortDetail}</Row>
 				<Row>
-					<Col>
+					<Col md="auto" lg="auto" xl="auto">
 						<Image width={50} height={50} src={gameScoreCardData.away.logo} />
 					</Col>
-					<Col>
+					<Col md="auto" lg="auto" xl="auto">
 						<Row>{gameScoreCardData.away.name}</Row>
 						<Row className="text-secondary">
 							{"(" +
@@ -72,10 +72,10 @@ class GameScoreTable extends Component {
 				</Row>
 				<Row>
 					<Row>
-						<Col>
+						<Col md="auto" lg="auto" xl="auto">
 							<Image width={50} height={50} src={gameScoreCardData.home.logo} />
 						</Col>
-						<Col>
+						<Col md="auto" lg="auto" xl="auto">
 							<Row>{gameScoreCardData.home.name}</Row>
 							<Row className="text-secondary">
 								{"(" +
