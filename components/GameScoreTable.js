@@ -49,8 +49,46 @@ class GameScoreTable extends Component {
 		);
 	}
 
-	scoreTableRecordHelper() {
+	finalGameHelper() {
 		const { gameScoreCardData } = this.props;
+
+		return (
+			<Container>
+				<Row>{gameScoreCardData.shortDetail}</Row>
+				<Row>
+					<Col>
+						<Image width={50} height={50} src={gameScoreCardData.away.logo} />
+					</Col>
+					<Col>
+						<Row>{gameScoreCardData.away.name}</Row>
+						<Row className="text-secondary">
+							{"(" +
+								gameScoreCardData.away.records[0].summary +
+								", " +
+								gameScoreCardData.away.records[1].summary +
+								" Away)"}
+						</Row>
+					</Col>
+				</Row>
+				<Row>
+					<Row>
+						<Col>
+							<Image width={50} height={50} src={gameScoreCardData.home.logo} />
+						</Col>
+						<Col>
+							<Row>{gameScoreCardData.home.name}</Row>
+							<Row className="text-secondary">
+								{"(" +
+									gameScoreCardData.home.records[0].summary +
+									", " +
+									gameScoreCardData.home.records[1].summary +
+									" Home)"}
+							</Row>
+						</Col>
+					</Row>
+				</Row>
+			</Container>
+		);
 	}
 
 	renderScoreTable() {
