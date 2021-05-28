@@ -7,91 +7,124 @@ class GameScoreTable extends Component {
 		this.state = {};
 	}
 
+	pregameHelper() {
+		const { gameScoreCardData } = this.props;
+
+		return (
+			<Container>
+				<Row>{gameScoreCardData.shortDetail}</Row>
+				<Row>
+					<Col>
+						<Image width={50} height={50} src={gameScoreCardData.away.logo} />
+					</Col>
+					<Col>
+						<Row>{gameScoreCardData.away.name}</Row>
+						<Row className="text-secondary">
+							{"(" +
+								gameScoreCardData.away.records[0].summary +
+								", " +
+								gameScoreCardData.away.records[1].summary +
+								" Away)"}
+						</Row>
+					</Col>
+				</Row>
+				<Row>
+					<Row>
+						<Col>
+							<Image width={50} height={50} src={gameScoreCardData.home.logo} />
+						</Col>
+						<Col>
+							<Row>{gameScoreCardData.home.name}</Row>
+							<Row className="text-secondary">
+								{"(" +
+									gameScoreCardData.home.records[0].summary +
+									", " +
+									gameScoreCardData.home.records[1].summary +
+									" Home)"}
+							</Row>
+						</Col>
+					</Row>
+				</Row>
+			</Container>
+		);
+	}
+
 	scoreTableRecordHelper() {
 		const { gameScoreCardData } = this.props;
 	}
 
 	renderScoreTable() {
 		const { gameScoreCardData } = this.props;
-		let index = 0;
+		let scoreTableState;
 
-		let linescoresHeader = gameScoreCardData.away.periods.map((game) => {
-			index++;
-			return <th>{index}</th>;
-		});
-
-		let homeLinscoresBody = gameScoreCardData.home.periods.map((period) => {
-			return <td>{period.value}</td>;
-		});
-		let awayLinscoresBody = gameScoreCardData.away.periods.map((period) => {
-			return <td>{period.value}</td>;
-		});
-
+		scoreTableState = this.pregameHelper();
 		// console.log(linscoresBody);
 		// console.log(gameScoreCardData);
 		// console.log(gameScoreCardData.away.records);
 
-		return (
-			<Table borderless>
-				<thead>
-					<tr>
-						<th>{gameScoreCardData.shortDetail}</th>
-						{linescoresHeader}
-						<th>T</th>
-					</tr>
-				</thead>
+		return scoreTableState;
 
-				<tbody>
-					<tr>
-						<td>
-							<Container fluid>
-								<Row>
-									<Col>
-										<Image width={50} height={50} src={gameScoreCardData.away.logo} />
-									</Col>
-									<Col>
-										<Row>{gameScoreCardData.away.name}</Row>
-										<Row className="text-secondary">
-											{"(" +
-												gameScoreCardData.away.records[0].summary +
-												", " +
-												gameScoreCardData.away.records[1].summary +
-												" Away)"}
-										</Row>
-									</Col>
-								</Row>
-							</Container>
-						</td>
-						{awayLinscoresBody}
-						<td>{gameScoreCardData.away.score}</td>
-					</tr>
+		// return (
+		// 	<Table borderless>
+		// 		<thead>
+		// 			<tr>
+		// 				<th>{gameScoreCardData.shortDetail}</th>
+		// 				{linescoresHeader}
+		// 				<th>T</th>
+		// 			</tr>
+		// 		</thead>
 
-					<tr>
-						<td>
-							<Container fluid>
-								<Row>
-									<Col>
-										<Image width={50} height={50} src={gameScoreCardData.home.logo} />
-									</Col>
-									<Col>
-										<Row>{gameScoreCardData.home.name}</Row>
-										<Row className="text-secondary">
-											{"(" +
-												gameScoreCardData.home.records[0].summary +
-												", " +
-												gameScoreCardData.home.records[1].summary +
-												" Home)"}
-										</Row>
-									</Col>
-								</Row>
-							</Container>
-						</td>
-						{homeLinscoresBody}
-						<td>{gameScoreCardData.home.score}</td>
-					</tr>
-				</tbody>
-			</Table>
-		);
+		// 		<tbody>
+		// 			<tr>
+		// 				<td>
+		// 					<Container fluid>
+		// 						<Row>
+		// 							<Col>
+		// 								<Image width={50} height={50} src={gameScoreCardData.away.logo} />
+		// 							</Col>
+		// 							<Col>
+		// 								<Row>{gameScoreCardData.away.name}</Row>
+		// 								<Row className="text-secondary">
+		// 									{"(" +
+		// 										gameScoreCardData.away.records[0].summary +
+		// 										", " +
+		// 										gameScoreCardData.away.records[1].summary +
+		// 										" Away)"}
+		// 								</Row>
+		// 							</Col>
+		// 						</Row>
+		// 					</Container>
+		// 				</td>
+		// 				{awayLinscoresBody}
+		// 				<td>{gameScoreCardData.away.score}</td>
+		// 			</tr>
+
+		// 			<tr>
+		// 				<td>
+		// 					<Container fluid>
+		// 						<Row>
+		// 							<Col>
+		// 								<Image width={50} height={50} src={gameScoreCardData.home.logo} />
+		// 							</Col>
+		// 							<Col>
+		// 								<Row>{gameScoreCardData.home.name}</Row>
+		// 								<Row className="text-secondary">
+		// 									{"(" +
+		// 										gameScoreCardData.home.records[0].summary +
+		// 										", " +
+		// 										gameScoreCardData.home.records[1].summary +
+		// 										" Home)"}
+		// 								</Row>
+		// 							</Col>
+		// 						</Row>
+		// 					</Container>
+		// 				</td>
+		// 				{homeLinscoresBody}
+		// 				<td>{gameScoreCardData.home.score}</td>
+		// 			</tr>
+		// 		</tbody>
+		// 	</Table>
+		// );
 	}
 
 	render() {
