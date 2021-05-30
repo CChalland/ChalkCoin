@@ -11,36 +11,46 @@ class GameScoreTable extends Component {
 		const { gameScoreCardData } = this.props;
 
 		return (
-			<Container fluid>
-				<Row>{gameScoreCardData.shortDetail}</Row>
+			<Container>
+				<Row>
+					<h6>{gameScoreCardData.shortDetail}</h6>
+				</Row>
 				<Row>
 					<Col md="auto" lg="auto" xl="auto">
-						<Image width={50} height={50} src={gameScoreCardData.away.logo} />
+						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
 					<Col md="auto" lg="auto" xl="auto">
-						<Row>{gameScoreCardData.away.name}</Row>
+						<Row>
+							<h5>{gameScoreCardData.away.name}</h5>
+						</Row>
 						<Row className="text-secondary">
-							{"(" +
-								gameScoreCardData.away.records[0].summary +
-								", " +
-								gameScoreCardData.away.records[1].summary +
-								" Away)"}
+							<h6>
+								{"(" +
+									gameScoreCardData.away.records[0].summary +
+									", " +
+									gameScoreCardData.away.records[1].summary +
+									" Away)"}
+							</h6>
 						</Row>
 					</Col>
 				</Row>
 				<Row>
 					<Row>
 						<Col md="auto" lg="auto" xl="auto">
-							<Image width={50} height={50} src={gameScoreCardData.home.logo} />
+							<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 						</Col>
 						<Col md="auto" lg="auto" xl="auto">
-							<Row>{gameScoreCardData.home.name}</Row>
+							<Row>
+								<h5>{gameScoreCardData.home.name}</h5>
+							</Row>
 							<Row className="text-secondary">
-								{"(" +
-									gameScoreCardData.home.records[0].summary +
-									", " +
-									gameScoreCardData.home.records[1].summary +
-									" Home)"}
+								<h6>
+									{"(" +
+										gameScoreCardData.home.records[0].summary +
+										", " +
+										gameScoreCardData.home.records[1].summary +
+										" Home)"}
+								</h6>
 							</Row>
 						</Col>
 					</Row>
@@ -53,36 +63,46 @@ class GameScoreTable extends Component {
 		const { gameScoreCardData } = this.props;
 
 		return (
-			<Container fluid>
-				<Row>{gameScoreCardData.shortDetail}</Row>
+			<Container>
+				<Row>
+					<h6>{gameScoreCardData.shortDetail}</h6>
+				</Row>
 				<Row>
 					<Col md="auto" lg="auto" xl="auto">
-						<Image width={50} height={50} src={gameScoreCardData.away.logo} />
+						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
 					<Col md="auto" lg="auto" xl="auto">
-						<Row>{gameScoreCardData.away.name}</Row>
+						<Row>
+							<h5>{gameScoreCardData.away.name}</h5>
+						</Row>
 						<Row className="text-secondary">
-							{"(" +
-								gameScoreCardData.away.records[0].summary +
-								", " +
-								gameScoreCardData.away.records[1].summary +
-								" Away)"}
+							<h6>
+								{"(" +
+									gameScoreCardData.away.records[0].summary +
+									", " +
+									gameScoreCardData.away.records[1].summary +
+									" Away)"}
+							</h6>
 						</Row>
 					</Col>
 				</Row>
 				<Row>
 					<Row>
 						<Col md="auto" lg="auto" xl="auto">
-							<Image width={50} height={50} src={gameScoreCardData.home.logo} />
+							<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 						</Col>
 						<Col md="auto" lg="auto" xl="auto">
-							<Row>{gameScoreCardData.home.name}</Row>
+							<Row>
+								<h5>{gameScoreCardData.home.name}</h5>
+							</Row>
 							<Row className="text-secondary">
-								{"(" +
-									gameScoreCardData.home.records[0].summary +
-									", " +
-									gameScoreCardData.home.records[1].summary +
-									" Home)"}
+								<h6>
+									{"(" +
+										gameScoreCardData.home.records[0].summary +
+										", " +
+										gameScoreCardData.home.records[1].summary +
+										" Home)"}
+								</h6>
 							</Row>
 						</Col>
 					</Row>
