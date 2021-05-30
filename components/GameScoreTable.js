@@ -12,25 +12,19 @@ class GameScoreTable extends Component {
 
 		return (
 			<Container>
-				<Row>
-					<h6>{gameScoreCardData.shortDetail}</h6>
-				</Row>
+				<Row className="h6">{gameScoreCardData.shortDetail}</Row>
 				<Row>
 					<Col md="auto" lg="auto" xl="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
 					<Col md="auto" lg="auto" xl="auto">
-						<Row>
-							<h5>{gameScoreCardData.away.name}</h5>
-						</Row>
-						<Row className="text-secondary">
-							<h6>
-								{"(" +
-									gameScoreCardData.away.records[0].summary +
-									", " +
-									gameScoreCardData.away.records[1].summary +
-									" Away)"}
-							</h6>
+						<Row className="h5">{gameScoreCardData.away.name}</Row>
+						<Row className="h6 text-secondary">
+							{"(" +
+								gameScoreCardData.away.records[0].summary +
+								", " +
+								gameScoreCardData.away.records[1].summary +
+								" Away)"}
 						</Row>
 					</Col>
 				</Row>
@@ -40,17 +34,13 @@ class GameScoreTable extends Component {
 							<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 						</Col>
 						<Col md="auto" lg="auto" xl="auto">
-							<Row>
-								<h5>{gameScoreCardData.home.name}</h5>
-							</Row>
-							<Row className="text-secondary">
-								<h6>
-									{"(" +
-										gameScoreCardData.home.records[0].summary +
-										", " +
-										gameScoreCardData.home.records[1].summary +
-										" Home)"}
-								</h6>
+							<Row className="h5">{gameScoreCardData.home.name}</Row>
+							<Row className="h6 text-secondary">
+								{"(" +
+									gameScoreCardData.home.records[0].summary +
+									", " +
+									gameScoreCardData.home.records[1].summary +
+									" Home)"}
 							</Row>
 						</Col>
 					</Row>
@@ -64,25 +54,19 @@ class GameScoreTable extends Component {
 
 		return (
 			<Container>
-				<Row>
-					<h6>{gameScoreCardData.shortDetail}</h6>
-				</Row>
+				<Row className="h6">{gameScoreCardData.shortDetail}</Row>
 				<Row>
 					<Col md="auto" lg="auto" xl="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
 					<Col md="auto" lg="auto" xl="auto">
-						<Row>
-							<h5>{gameScoreCardData.away.name}</h5>
-						</Row>
-						<Row className="text-secondary">
-							<h6>
-								{"(" +
-									gameScoreCardData.away.records[0].summary +
-									", " +
-									gameScoreCardData.away.records[1].summary +
-									" Away)"}
-							</h6>
+						<Row className="h5">{gameScoreCardData.away.name}</Row>
+						<Row className="h6 text-secondary">
+							{"(" +
+								gameScoreCardData.away.records[0].summary +
+								", " +
+								gameScoreCardData.away.records[1].summary +
+								" Away)"}
 						</Row>
 					</Col>
 				</Row>
@@ -92,17 +76,13 @@ class GameScoreTable extends Component {
 							<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 						</Col>
 						<Col md="auto" lg="auto" xl="auto">
-							<Row>
-								<h5>{gameScoreCardData.home.name}</h5>
-							</Row>
-							<Row className="text-secondary">
-								<h6>
-									{"(" +
-										gameScoreCardData.home.records[0].summary +
-										", " +
-										gameScoreCardData.home.records[1].summary +
-										" Home)"}
-								</h6>
+							<Row className="h5">{gameScoreCardData.home.name}</Row>
+							<Row className="h6 text-secondary">
+								{"(" +
+									gameScoreCardData.home.records[0].summary +
+									", " +
+									gameScoreCardData.home.records[1].summary +
+									" Home)"}
 							</Row>
 						</Col>
 					</Row>
