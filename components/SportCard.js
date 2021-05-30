@@ -94,24 +94,22 @@ class SportCard extends Component {
 			// console.log(game);
 
 			return (
-				<div>
-					<Container>
-						<Row>
-							<Col>
-								<GameScoreTable key={game.uid} gameScoreCardData={this.gameScoreCardHelper(game)} />
-							</Col>
+				<Container>
+					<Row>
+						<Col>
+							<GameScoreTable key={game.uid} gameScoreCardData={this.gameScoreCardHelper(game)} />
+						</Col>
 
-							<Col>
-								<div>{"Last Play"}</div>
-							</Col>
+						<Col>
+							<div>{"Last Play"}</div>
+						</Col>
 
-							<Col>
-								<div>{"TOP PERFORMERS"}</div>
-								<img className="ui avatar image" src={""} />
-							</Col>
-						</Row>
-					</Container>
-				</div>
+						<Col>
+							<div>{"TOP PERFORMERS"}</div>
+							<img className="ui avatar image" src={""} />
+						</Col>
+					</Row>
+				</Container>
 			);
 		});
 
@@ -148,7 +146,7 @@ class SportCard extends Component {
 	}
 
 	render() {
-		return <div>{this.renderGamesCards(this.props.sportIndex)}</div>;
+		return this.renderGamesCards(this.props.sportIndex);
 	}
 }
 

@@ -27,7 +27,7 @@ class SportTabs extends Component {
 			);
 
 			return (
-				<Tab key={game.sport_id.toString()} eventKey={game.sport_name} title={img}>
+				<Tab key={game.sport_id} eventKey={game.sport_name} title={img}>
 					<SportCard
 						key={game.sport_id}
 						sportData={game}
@@ -46,7 +46,7 @@ class SportTabs extends Component {
 	}
 
 	render() {
-		return <div>{this.renderGamesTab()}</div>;
+		return this.renderGamesTab();
 	}
 }
 
