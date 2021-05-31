@@ -8,20 +8,45 @@ class GameScoreTable extends Component {
 	}
 
 	tableTitleHelper(gameScoreCardData) {
-		return (
-			<Row className="h6">
-				<Col>{gameScoreCardData.shortDetail}</Col>
-				<Col>{"T"}</Col>
-			</Row>
-		);
+		if (
+			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
+			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
+		) {
+			return (
+				<Row className="h6">
+					<Col>{gameScoreCardData.shortDetail}</Col>
+				</Row>
+			);
+		} else {
+			return (
+				<Row className="h6">
+					<Col>{gameScoreCardData.shortDetail}</Col>
+					<Col>{"T"}</Col>
+				</Row>
+			);
+		}
 	}
 
 	awayScoreBoardHelper(gameScoreCardData) {
-		return <Col>{gameScoreCardData.away.score}</Col>;
+		if (
+			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
+			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
+		) {
+			return null;
+		} else {
+			return <Col>{gameScoreCardData.away.score}</Col>;
+		}
 	}
 
 	homeScoreBoardHelper(gameScoreCardData) {
-		return <Col>{gameScoreCardData.home.score}</Col>;
+		if (
+			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
+			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
+		) {
+			return null;
+		} else {
+			return <Col>{gameScoreCardData.home.score}</Col>;
+		}
 	}
 
 	scoreTableHelper() {
