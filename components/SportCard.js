@@ -11,17 +11,7 @@ class SportCard extends Component {
 			activeIndex: 0,
 			gameScoreCard: {},
 		};
-
-		this.handleClick = this.handleClick.bind(this);
 	}
-
-	handleClick = (e, titleProps) => {
-		const { index } = titleProps;
-		const { activeIndex } = this.state;
-		const newIndex = activeIndex === index ? -1 : index;
-
-		this.setState({ activeIndex: newIndex });
-	};
 
 	homeAwayHelper(game) {
 		let homeTeam = game.competitions[0].competitors.filter((team) => {
@@ -86,23 +76,18 @@ class SportCard extends Component {
 	}
 
 	renderGamesCards(sportId) {
-		const { activeIndex } = this.state;
+		const { sportData, sportName } = this.props;
 
-		let gameItems = this.props.sportData.data.events.map((game) => {
-			// const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-			// let gameTime = new Date(game.date).toLocaleString("en-US", {
-			// 	timeZone: timeZone,
-			// });
-			// let eventDate = gameTime.split(",");
-
-			// console.log(this.gameScoreCardHelper(game));
-			// console.log(game);
-
+		let gameItems = sportData.data.events.map((game) => {
 			return (
 				<Container>
 					<Row>
 						<Col>
-							<GameScoreTable key={game.uid.toString()} gameScoreCardData={this.gameScoreCardHelper(game)} />
+							<GameScoreTable
+								key={game.uid.toString()}
+								gameScoreCardData={this.gameScoreCardHelper(game)}
+								sport={sportName}
+							/>
 						</Col>
 
 						<Col>{"Last Play"}</Col>
@@ -112,35 +97,6 @@ class SportCard extends Component {
 				</Container>
 			);
 		});
-
-		// let datesArray = gameItems.map((obj) => {
-		// 	return obj.date;
-		// });
-
-		// let dates = datesArray
-		// 	.filter((item, index) => datesArray.indexOf(item) === index)
-		// 	.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
-
-		// let eventsResult = dates.map((date) => {
-		// 	return gameItems.filter((obj) => {
-		// 		return obj.date === date;
-		// 	});
-		// });
-
-		// let paneResult = eventsResult.map((obj) => {
-		// 	let tempDate = new Date(obj[0].date);
-		// 	let tempsDate = tempDate.toString().slice(0, 10);
-
-		// 	return {
-		// 		menuItem: obj[0].date,
-		// 		render: () => (
-		// 			<Tab.Pane attached={false} style={{ overflow: "auto", maxHeight: "75em" }}>
-		// 				<h2>{tempsDate}</h2>
-		// 				<Card.Group items={obj} />
-		// 			</Tab.Pane>
-		// 		),
-		// 	};
-		// });
 
 		return gameItems;
 	}

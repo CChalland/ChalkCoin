@@ -51,6 +51,22 @@ class GameScoreTable extends Component {
 
 	scoreTableHelper() {
 		const { gameScoreCardData } = this.props;
+	}
+
+	renderScoreTable() {
+		const { gameScoreCardData } = this.props;
+		// let index = 0;
+		// let linescoresHeader = gameScoreCardData.away.periods.map((game) => {
+		// 	index++;
+		// 	return <th>{index}</th>;
+		// });
+		// let homeLinscoresBody = gameScoreCardData.home.periods.map((period) => {
+		// 	return <td>{period.value}</td>;
+		// });
+		// let awayLinscoresBody = gameScoreCardData.away.periods.map((period) => {
+		// 	return <td>{period.value}</td>;
+		// });
+		console.log(gameScoreCardData);
 
 		return (
 			<Container>
@@ -91,32 +107,6 @@ class GameScoreTable extends Component {
 				</Row>
 			</Container>
 		);
-	}
-
-	renderScoreTable() {
-		const { gameScoreCardData } = this.props;
-		let scoreTableState;
-
-		scoreTableState = this.scoreTableHelper();
-
-		// let index = 0;
-		// let linescoresHeader = gameScoreCardData.away.periods.map((game) => {
-		// 	index++;
-		// 	return <th>{index}</th>;
-		// });
-		// let homeLinscoresBody = gameScoreCardData.home.periods.map((period) => {
-		// 	return <td>{period.value}</td>;
-		// });
-		// let awayLinscoresBody = gameScoreCardData.away.periods.map((period) => {
-		// 	return <td>{period.value}</td>;
-		// });
-
-		// console.log(linscoresBody);
-		// console.log(gameScoreCardData);
-		// console.log(gameScoreCardData.away.records);
-		console.log(gameScoreCardData);
-
-		return scoreTableState;
 
 		// return (
 		// 	<Table borderless>
