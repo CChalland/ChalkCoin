@@ -7,54 +7,35 @@ class GameScoreTable extends Component {
 		this.state = {};
 	}
 
-	tableTitleHelper(gameScoreCardData) {
+	scoreTableHelper(gameScoreCardData) {
+		let title, awayBoard, homeBoard;
+
 		if (
 			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
 			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
 		) {
-			return (
+			title = (
 				<Row className="h6">
 					<Col>{gameScoreCardData.shortDetail}</Col>
 				</Row>
 			);
 		} else {
-			return (
+			title = (
 				<Row className="h6">
 					<Col>{gameScoreCardData.shortDetail}</Col>
 					<Col>{"T"}</Col>
 				</Row>
 			);
+			awayBoard = <Col>{gameScoreCardData.away.score}</Col>;
+			homeBoard = <Col>{gameScoreCardData.home.score}</Col>;
 		}
-	}
 
-	awayScoreBoardHelper(gameScoreCardData) {
-		if (
-			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
-			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
-		) {
-			return null;
-		} else {
-			return <Col>{gameScoreCardData.away.score}</Col>;
-		}
-	}
-
-	homeScoreBoardHelper(gameScoreCardData) {
-		if (
-			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
-			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
-		) {
-			return null;
-		} else {
-			return <Col>{gameScoreCardData.home.score}</Col>;
-		}
-	}
-
-	scoreTableHelper() {
-		const { gameScoreCardData } = this.props;
+		return { title, awayBoard, homeBoard };
 	}
 
 	renderScoreTable() {
 		const { gameScoreCardData } = this.props;
+		const { title, awayBoard, homeBoard } = this.scoreTableHelper(gameScoreCardData);
 		// let index = 0;
 		// let linescoresHeader = gameScoreCardData.away.periods.map((game) => {
 		// 	index++;
@@ -66,11 +47,12 @@ class GameScoreTable extends Component {
 		// let awayLinscoresBody = gameScoreCardData.away.periods.map((period) => {
 		// 	return <td>{period.value}</td>;
 		// });
+
 		console.log(gameScoreCardData);
 
 		return (
 			<Container>
-				{this.tableTitleHelper(gameScoreCardData)}
+				{title}
 				<Row>
 					<Col md="auto" lg="auto" xl="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
@@ -85,7 +67,7 @@ class GameScoreTable extends Component {
 								" Away)"}
 						</Row>
 					</Col>
-					{this.awayScoreBoardHelper(gameScoreCardData)}
+					{awayBoard}
 				</Row>
 				<Row>
 					<Row>
@@ -102,7 +84,7 @@ class GameScoreTable extends Component {
 									" Home)"}
 							</Row>
 						</Col>
-						{this.homeScoreBoardHelper(gameScoreCardData)}
+						{homeBoard}
 					</Row>
 				</Row>
 			</Container>
