@@ -54,7 +54,7 @@ class SportCard extends Component {
 			awayRecords = [...awayTeam[0].records, ...temp];
 		}
 
-		let gameData = {
+		return {
 			status: game.status,
 			shortDetail: game.competitions[0].status.type.shortDetail,
 			away: {
@@ -72,7 +72,6 @@ class SportCard extends Component {
 				periods: homePeriods,
 			},
 		};
-		return gameData;
 	}
 
 	renderGamesCards(sportId) {
