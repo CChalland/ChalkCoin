@@ -34,6 +34,7 @@ class SportCard extends Component {
 	}
 
 	gameScoreCardHelper(game) {
+		const { sportName } = this.props;
 		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
 		let homePeriods, awayPeriods, homeRecords, awayRecords;
 		let temp = [
@@ -41,7 +42,10 @@ class SportCard extends Component {
 			{ name: "Away", type: "away", summary: 0 },
 		];
 
-		if (game.status.type.description === "In Progress" || game.status.type.completed) {
+		if (sportName === "MLB") {
+			awayPeriods = awayTeam[0].statistics;
+			homePeriods = homeTeam[0].statistics;
+		} else if (game.status.type.description === "In Progress" || game.status.type.completed) {
 			awayPeriods = awayTeam[0].linescores;
 			homePeriods = homeTeam[0].linescores;
 		} else {
