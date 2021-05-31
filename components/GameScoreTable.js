@@ -7,54 +7,29 @@ class GameScoreTable extends Component {
 		this.state = {};
 	}
 
-	pregameHelper() {
-		const { gameScoreCardData } = this.props;
-
+	tableTitleHelper(gameScoreCardData) {
 		return (
-			<Container>
-				<Row className="h6">{gameScoreCardData.shortDetail}</Row>
-				<Row>
-					<Col md="auto" lg="auto" xl="auto">
-						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
-					</Col>
-					<Col md="auto" lg="auto" xl="auto">
-						<Row className="h5">{gameScoreCardData.away.name}</Row>
-						<Row className="h6 text-secondary">
-							{"(" +
-								gameScoreCardData.away.records[0].summary +
-								", " +
-								gameScoreCardData.away.records[1].summary +
-								" Away)"}
-						</Row>
-					</Col>
-				</Row>
-				<Row>
-					<Row>
-						<Col md="auto" lg="auto" xl="auto">
-							<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
-						</Col>
-						<Col md="auto" lg="auto" xl="auto">
-							<Row className="h5">{gameScoreCardData.home.name}</Row>
-							<Row className="h6 text-secondary">
-								{"(" +
-									gameScoreCardData.home.records[0].summary +
-									", " +
-									gameScoreCardData.home.records[1].summary +
-									" Home)"}
-							</Row>
-						</Col>
-					</Row>
-				</Row>
-			</Container>
+			<Row className="h6">
+				<Col>{gameScoreCardData.shortDetail}</Col>
+				<Col>{"T"}</Col>
+			</Row>
 		);
 	}
 
-	finalGameHelper() {
+	awayScoreBoardHelper(gameScoreCardData) {
+		return <Col>{gameScoreCardData.away.score}</Col>;
+	}
+
+	homeScoreBoardHelper(gameScoreCardData) {
+		return <Col>{gameScoreCardData.home.score}</Col>;
+	}
+
+	scoreTableHelper() {
 		const { gameScoreCardData } = this.props;
 
 		return (
 			<Container>
-				<Row className="h6">{gameScoreCardData.shortDetail}</Row>
+				{this.tableTitleHelper(gameScoreCardData)}
 				<Row>
 					<Col md="auto" lg="auto" xl="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
@@ -69,6 +44,7 @@ class GameScoreTable extends Component {
 								" Away)"}
 						</Row>
 					</Col>
+					{this.awayScoreBoardHelper(gameScoreCardData)}
 				</Row>
 				<Row>
 					<Row>
@@ -85,6 +61,7 @@ class GameScoreTable extends Component {
 									" Home)"}
 							</Row>
 						</Col>
+						{this.homeScoreBoardHelper(gameScoreCardData)}
 					</Row>
 				</Row>
 			</Container>
@@ -95,7 +72,7 @@ class GameScoreTable extends Component {
 		const { gameScoreCardData } = this.props;
 		let scoreTableState;
 
-		scoreTableState = this.pregameHelper();
+		scoreTableState = this.scoreTableHelper();
 
 		// let index = 0;
 		// let linescoresHeader = gameScoreCardData.away.periods.map((game) => {
@@ -112,6 +89,7 @@ class GameScoreTable extends Component {
 		// console.log(linscoresBody);
 		// console.log(gameScoreCardData);
 		// console.log(gameScoreCardData.away.records);
+		console.log(gameScoreCardData);
 
 		return scoreTableState;
 

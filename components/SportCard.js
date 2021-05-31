@@ -61,6 +61,7 @@ class SportCard extends Component {
 		}
 
 		let gameData = {
+			status: game.status,
 			shortDetail: game.competitions[0].status.type.shortDetail,
 			away: {
 				logo: awayTeam[0].team.logo,
@@ -97,17 +98,12 @@ class SportCard extends Component {
 				<Container>
 					<Row>
 						<Col>
-							<GameScoreTable key={game.uid} gameScoreCardData={this.gameScoreCardHelper(game)} />
+							<GameScoreTable key={game.uid.toString()} gameScoreCardData={this.gameScoreCardHelper(game)} />
 						</Col>
 
-						<Col>
-							<div>{"Last Play"}</div>
-						</Col>
+						<Col>{"Last Play"}</Col>
 
-						<Col>
-							<div>{"TOP PERFORMERS"}</div>
-							<img className="ui avatar image" src={""} />
-						</Col>
+						<Col>{"TOP PERFORMERS"}</Col>
 					</Row>
 				</Container>
 			);
