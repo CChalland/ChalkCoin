@@ -7,8 +7,13 @@ class GameScoreTable extends Component {
 		this.state = {};
 	}
 
-	scoreTableHelper(gameScoreCardData) {
+	scoreTableHelper(gameScoreCardData, sportName) {
 		let title, awayBoard, homeBoard;
+		let index = 0;
+		let linescoresHeader = gameScoreCardData.away.periods.map((period) => {
+			index++;
+			return <Col>{index}</Col>;
+		});
 
 		if (
 			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
@@ -23,30 +28,24 @@ class GameScoreTable extends Component {
 			title = (
 				<Row className="h6">
 					<Col>{gameScoreCardData.shortDetail}</Col>
+					{linescoresHeader}
 					<Col>{"T"}</Col>
 				</Row>
 			);
-			awayBoard = <Col>{gameScoreCardData.away.score}</Col>;
-			homeBoard = <Col>{gameScoreCardData.home.score}</Col>;
+			awayBoard = gameScoreCardData.away.periods.map((period) => {
+				return <Col>{period.value}</Col>;
+			});
+			homeBoard = gameScoreCardData.home.periods.map((period) => {
+				return <Col>{period.value}</Col>;
+			});
 		}
 
 		return { title, awayBoard, homeBoard };
 	}
 
 	renderScoreTable() {
-		const { gameScoreCardData } = this.props;
-		const { title, awayBoard, homeBoard } = this.scoreTableHelper(gameScoreCardData);
-		// let index = 0;
-		// let linescoresHeader = gameScoreCardData.away.periods.map((game) => {
-		// 	index++;
-		// 	return <th>{index}</th>;
-		// });
-		// let homeLinscoresBody = gameScoreCardData.home.periods.map((period) => {
-		// 	return <td>{period.value}</td>;
-		// });
-		// let awayLinscoresBody = gameScoreCardData.away.periods.map((period) => {
-		// 	return <td>{period.value}</td>;
-		// });
+		const { gameScoreCardData, sportName } = this.props;
+		const { title, awayBoard, homeBoard } = this.scoreTableHelper(gameScoreCardData, sportName);
 
 		console.log(gameScoreCardData);
 
@@ -68,6 +67,7 @@ class GameScoreTable extends Component {
 						</Row>
 					</Col>
 					{awayBoard}
+					<Col>{gameScoreCardData.away.score}</Col>
 				</Row>
 				<Row>
 					<Row>
@@ -85,72 +85,11 @@ class GameScoreTable extends Component {
 							</Row>
 						</Col>
 						{homeBoard}
+						<Col>{gameScoreCardData.home.score}</Col>
 					</Row>
 				</Row>
 			</Container>
 		);
-
-		// return (
-		// 	<Table borderless>
-		// 		<thead>
-		// 			<tr>
-		// 				<th>{gameScoreCardData.shortDetail}</th>
-		// 				{linescoresHeader}
-		// 				<th>T</th>
-		// 			</tr>
-		// 		</thead>
-
-		// 		<tbody>
-		// 			<tr>
-		// 				<td>
-		// 					<Container fluid>
-		// 						<Row>
-		// 							<Col>
-		// 								<Image width={50} height={50} src={gameScoreCardData.away.logo} />
-		// 							</Col>
-		// 							<Col>
-		// 								<Row>{gameScoreCardData.away.name}</Row>
-		// 								<Row className="text-secondary">
-		// 									{"(" +
-		// 										gameScoreCardData.away.records[0].summary +
-		// 										", " +
-		// 										gameScoreCardData.away.records[1].summary +
-		// 										" Away)"}
-		// 								</Row>
-		// 							</Col>
-		// 						</Row>
-		// 					</Container>
-		// 				</td>
-		// 				{awayLinscoresBody}
-		// 				<td>{gameScoreCardData.away.score}</td>
-		// 			</tr>
-
-		// 			<tr>
-		// 				<td>
-		// 					<Container fluid>
-		// 						<Row>
-		// 							<Col>
-		// 								<Image width={50} height={50} src={gameScoreCardData.home.logo} />
-		// 							</Col>
-		// 							<Col>
-		// 								<Row>{gameScoreCardData.home.name}</Row>
-		// 								<Row className="text-secondary">
-		// 									{"(" +
-		// 										gameScoreCardData.home.records[0].summary +
-		// 										", " +
-		// 										gameScoreCardData.home.records[1].summary +
-		// 										" Home)"}
-		// 								</Row>
-		// 							</Col>
-		// 						</Row>
-		// 					</Container>
-		// 				</td>
-		// 				{homeLinscoresBody}
-		// 				<td>{gameScoreCardData.home.score}</td>
-		// 			</tr>
-		// 		</tbody>
-		// 	</Table>
-		// );
 	}
 
 	render() {

@@ -85,7 +85,7 @@ class SportCard extends Component {
 							<GameScoreTable
 								key={game.uid.toString()}
 								gameScoreCardData={this.gameScoreCardHelper(game)}
-								sport={sportName}
+								sportName={sportName}
 							/>
 						</Col>
 
