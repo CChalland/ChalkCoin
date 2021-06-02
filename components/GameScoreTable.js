@@ -37,12 +37,44 @@ class GameScoreTable extends Component {
 					</Col>
 				</Row>
 			);
-			awayPeriods = gameScoreCardData.away.periods.filter((period) => {
-				return;
-			});
-			homePeriods = gameScoreCardData.home.periods.map((period) => {
-				return;
-			});
+			awayPeriods = (
+				<ul className="list-inline">
+					{gameScoreCardData.away.periods.map((period) => {
+						if (period.abbreviation === "R") {
+							return <li className="list-inline-item">{period.displayValue}</li>;
+						}
+					})}
+					{gameScoreCardData.away.periods.map((period) => {
+						if (period.abbreviation === "H") {
+							return <li className="list-inline-item">{period.displayValue}</li>;
+						}
+					})}
+					{gameScoreCardData.away.periods.map((period) => {
+						if (period.abbreviation === "E") {
+							return <li className="list-inline-item">{period.displayValue}</li>;
+						}
+					})}
+				</ul>
+			);
+			homePeriods = (
+				<ul className="list-inline">
+					{gameScoreCardData.home.periods.map((period) => {
+						if (period.abbreviation === "R") {
+							return <li className="list-inline-item">{period.displayValue}</li>;
+						}
+					})}
+					{gameScoreCardData.home.periods.map((period) => {
+						if (period.abbreviation === "H") {
+							return <li className="list-inline-item">{period.displayValue}</li>;
+						}
+					})}
+					{gameScoreCardData.home.periods.map((period) => {
+						if (period.abbreviation === "E") {
+							return <li className="list-inline-item">{period.displayValue}</li>;
+						}
+					})}
+				</ul>
+			);
 		} else {
 			title = (
 				<Row className="h6">
