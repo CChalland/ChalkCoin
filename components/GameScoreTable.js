@@ -8,11 +8,11 @@ class GameScoreTable extends Component {
 	}
 
 	scoreTableHelper(gameScoreCardData, sportName) {
-		let title, awayBoard, homeBoard;
+		let title, awayPeriods, awayScore, homePeriods, homeScore;
 		let index = 0;
 		let linescoresHeader = gameScoreCardData.away.periods.map((period) => {
 			index++;
-			return <Col>{index}</Col>;
+			return <li className="list-inline-item">{index}</li>;
 		});
 
 		if (
@@ -24,28 +24,54 @@ class GameScoreTable extends Component {
 					<Col>{gameScoreCardData.shortDetail}</Col>
 				</Row>
 			);
+		} else if (sportName === "MLB") {
+			title = (
+				<Row className="h6">
+					<Col>{gameScoreCardData.shortDetail}</Col>
+					<Col>
+						<ul className="list-inline">
+							<li className="list-inline-item">{"R"}</li>
+							<li className="list-inline-item">{"H"}</li>
+							<li className="list-inline-item">{"E"}</li>
+						</ul>
+					</Col>
+				</Row>
+			);
+			awayPeriods = gameScoreCardData.away.periods.filter((period) => {
+				return;
+			});
+			homePeriods = gameScoreCardData.home.periods.map((period) => {
+				return;
+			});
 		} else {
 			title = (
 				<Row className="h6">
 					<Col>{gameScoreCardData.shortDetail}</Col>
-					{linescoresHeader}
+					<Col>
+						<ul className="list-inline">{linescoresHeader}</ul>
+					</Col>
 					<Col>{"T"}</Col>
 				</Row>
 			);
-			awayBoard = gameScoreCardData.away.periods.map((period) => {
-				return <Col>{period.value}</Col>;
+			awayPeriods = gameScoreCardData.away.periods.map((period) => {
+				return <li className="list-inline-item">{period.value}</li>;
 			});
-			homeBoard = gameScoreCardData.home.periods.map((period) => {
-				return <Col>{period.value}</Col>;
+			homePeriods = gameScoreCardData.home.periods.map((period) => {
+				return <li className="list-inline-item">{period.value}</li>;
 			});
+			awayScore = gameScoreCardData.away.score;
+			homeScore = gameScoreCardData.home.score;
 		}
 
-		return { title, awayBoard, homeBoard };
+		return { title, awayPeriods, homePeriods, awayScore, homeScore };
 	}
 
 	renderScoreTable() {
 		const { gameScoreCardData, sportName } = this.props;
-		const { title, awayBoard, homeBoard } = this.scoreTableHelper(gameScoreCardData, sportName);
+		const { title, awayPeriods, awayScore, homePeriods, homeScore } = this.scoreTableHelper(
+			gameScoreCardData,
+			sportName
+		);
 
 		console.log(gameScoreCardData);
 
@@ -53,12 +79,12 @@ class GameScoreTable extends Component {
 			<Container>
 				{title}
 				<Row>
-					<Col md="auto" lg="auto" xl="auto">
+					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
-					<Col md="auto" lg="auto" xl="auto">
+					<Col md="auto">
 						<Row className="h5">{gameScoreCardData.away.name}</Row>
-						<Row className="h6 text-secondary">
+						<Row className="text-secondary" style={{ fontSize: 12 }}>
 							{"(" +
 								gameScoreCardData.away.records[0].summary +
 								", " +
@@ -66,34 +92,36 @@ class GameScoreTable extends Component {
 								" Away)"}
 						</Row>
 					</Col>
-					{awayBoard}
-					<Col>{gameScoreCardData.away.score}</Col>
+					<Col>
+						<ul className="list-inline">{awayPeriods}</ul>
+					</Col>
+					<Col>{awayScore}</Col>
 				</Row>
 				<Row>
-					<Row>
-						<Col md="auto" lg="auto" xl="auto">
-							<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
-						</Col>
-						<Col md="auto" lg="auto" xl="auto">
-							<Row className="h5">{gameScoreCardData.home.name}</Row>
-							<Row className="h6 text-secondary">
-								{"(" +
-									gameScoreCardData.home.records[0].summary +
-									", " +
-									gameScoreCardData.home.records[1].summary +
-									" Home)"}
-							</Row>
-						</Col>
-						{homeBoard}
-						<Col>{gameScoreCardData.home.score}</Col>
-					</Row>
+					<Col md="auto">
+						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
+					</Col>
+					<Col md="auto">
+						<Row className="h5">{gameScoreCardData.home.name}</Row>
+						<Row className="text-secondary" style={{ fontSize: 12 }}>
+							{"(" +
+								gameScoreCardData.home.records[0].summary +
+								", " +
+								gameScoreCardData.home.records[1].summary +
+								" Away)"}
+						</Row>
+					</Col>
+					<Col>
+						<ul className="list-inline">{homePeriods}</ul>
+					</Col>
+					<Col>{homeScore}</Col>
 				</Row>
 			</Container>
 		);
 	}
 
 	render() {
-		return <div>{this.renderScoreTable()}</div>;
+		return this.renderScoreTable();
 	}
 }
 
