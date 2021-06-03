@@ -110,7 +110,7 @@ class GameScoreTable extends Component {
 		return (
 			<Container>
 				{title}
-				<Row>
+				<Row className="align-items-center">
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
@@ -129,7 +129,7 @@ class GameScoreTable extends Component {
 					</Col>
 					<Col>{awayScore}</Col>
 				</Row>
-				<Row>
+				<Row className="align-items-center">
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 					</Col>
