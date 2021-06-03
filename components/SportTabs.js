@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab, Image } from "react-bootstrap";
 import SportCard from "./SportCard";
 
 class SportTabs extends Component {
@@ -20,14 +20,14 @@ class SportTabs extends Component {
 
 		let gamePanes = this.props.allSportsData.map((game) => {
 			let img = (
-				<div>
-					<img className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
+				<div key={game.sport_name.toString()}>
+					<Image className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
 					{game.sport_name}
 				</div>
 			);
 
 			return (
-				<Tab eventKey={game.sport_name} title={img}>
+				<Tab key={game.sport_id} eventKey={game.sport_name} title={img}>
 					<SportCard
 						key={game.sport_id}
 						sportData={game}
@@ -46,7 +46,7 @@ class SportTabs extends Component {
 	}
 
 	render() {
-		return <div>{this.renderGamesTab()}</div>;
+		return this.renderGamesTab();
 	}
 }
 

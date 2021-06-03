@@ -11,119 +11,102 @@ class SportCard extends Component {
 			activeIndex: 0,
 			gameScoreCard: {},
 		};
-
-		this.handleClick = this.handleClick.bind(this);
 	}
 
-	handleClick = (e, titleProps) => {
-		const { index } = titleProps;
-		const { activeIndex } = this.state;
-		const newIndex = activeIndex === index ? -1 : index;
-
-		this.setState({ activeIndex: newIndex });
-	};
+	homeAwayHelper(game) {
+		let homeTeam = game.competitions[0].competitors.filter((team) => {
+			return team.homeAway === "home";
+		});
+		let awayTeam = game.competitions[0].competitors.filter((team) => {
+			return team.homeAway === "away";
+		});
+		return { homeTeam, awayTeam };
+	}
 
 	gameScoreCardHelper(game) {
-		let periods;
-		if (game.status.type.description === "In Progress" || game.status.type.completed) {
-			periods = game.competitions[0].competitors[0].linescores;
+		const { sportName } = this.props;
+		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
+		let homePeriods, awayPeriods, homeRecords, awayRecords;
+		let temp = [
+			{ name: "Home", type: "home", summary: 0 },
+			{ name: "Away", type: "away", summary: 0 },
+		];
+
+		if (sportName === "MLB") {
+			awayPeriods = awayTeam[0].statistics;
+			homePeriods = homeTeam[0].statistics;
+		} else if (
+			game.status.type.description === "In Progress" ||
+			game.status.type.description === "End of Period" ||
+			game.status.type.completed
+		) {
+			awayPeriods = awayTeam[0].linescores;
+			homePeriods = homeTeam[0].linescores;
 		} else {
-			periods = [];
+			awayPeriods = [];
+			homePeriods = [];
 		}
 
-		let gameData = {
+		if (!game.competitions[0].competitors[0].records) {
+			homeRecords = [{ name: "Total", type: "total", summary: 0 }, ...temp];
+			awayRecords = [{ name: "Total", type: "total", summary: 0 }, ...temp];
+		} else if (game.competitions[0].competitors[0].records.length > 1) {
+			homeRecords = homeTeam[0].records;
+			awayRecords = awayTeam[0].records;
+		} else {
+			homeRecords = [...homeTeam[0].records, ...temp];
+			awayRecords = [...awayTeam[0].records, ...temp];
+		}
+
+		return {
+			status: game.status,
 			shortDetail: game.competitions[0].status.type.shortDetail,
 			away: {
-				logo: game.competitions[0].competitors[0].team.logo,
-				name: game.competitions[0].competitors[0].team.name,
-				totalRecord: game.competitions[0].competitors[0].records[0].summary,
-				record: game.competitions[0].competitors[0].records[2].summary,
-				score: game.competitions[0].competitors[0].score,
-				periods: periods,
+				logo: awayTeam[0].team.logo,
+				name: awayTeam[0].team.name,
+				records: awayRecords,
+				score: awayTeam[0].score,
+				periods: awayPeriods,
 			},
 			home: {
-				logo: game.competitions[0].competitors[1].team.logo,
-				name: game.competitions[0].competitors[1].team.name,
-				totalRecord: game.competitions[0].competitors[1].records[0].summary,
-				record: game.competitions[0].competitors[1].records[2].summary,
-				score: game.competitions[0].competitors[1].score,
-				periods: periods,
+				logo: homeTeam[0].team.logo,
+				name: homeTeam[0].team.name,
+				records: homeRecords,
+				score: homeTeam[0].score,
+				periods: homePeriods,
 			},
 		};
-		return gameData;
 	}
 
 	renderGamesCards(sportId) {
-		const { activeIndex } = this.state;
+		const { sportData, sportName } = this.props;
 
-		let gameItems = this.props.sportData.data.events.map((game) => {
-			// const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-			// let gameTime = new Date(game.date).toLocaleString("en-US", {
-			// 	timeZone: timeZone,
-			// });
-			// let eventDate = gameTime.split(",");
-
-			console.log(this.gameScoreCardHelper(game));
-			// console.log(game);
-
+		let gameItems = sportData.data.events.map((game) => {
+			console.log(game);
 			return (
-				<div>
-					<Container>
-						<Col width={9}>
-							<GameScoreTable gameScoreCardData={this.gameScoreCardHelper(game)} />
+				<Container>
+					<Row>
+						<Col>
+							<GameScoreTable
+								key={game.uid.toString()}
+								gameScoreCardData={this.gameScoreCardHelper(game)}
+								sportName={sportName}
+							/>
 						</Col>
 
-						<Col width={2}>
-							<div>{"Last Play"}</div>
-						</Col>
+						<Col>{"Last Play"}</Col>
 
-						<Col width={5}>
-							<Row>
-								<div>{"TOP PERFORMERS"}</div>
-							</Row>
-							<Row>
-								<img className="ui avatar image" src={""} />
-							</Row>
-						</Col>
-					</Container>
-				</div>
+						<Col>{"TOP PERFORMERS"}</Col>
+					</Row>
+				</Container>
 			);
 		});
-
-		// let datesArray = gameItems.map((obj) => {
-		// 	return obj.date;
-		// });
-
-		// let dates = datesArray
-		// 	.filter((item, index) => datesArray.indexOf(item) === index)
-		// 	.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
-
-		// let eventsResult = dates.map((date) => {
-		// 	return gameItems.filter((obj) => {
-		// 		return obj.date === date;
-		// 	});
-		// });
-
-		// let paneResult = eventsResult.map((obj) => {
-		// 	let tempDate = new Date(obj[0].date);
-		// 	let tempsDate = tempDate.toString().slice(0, 10);
-
-		// 	return {
-		// 		menuItem: obj[0].date,
-		// 		render: () => (
-		// 			<Tab.Pane attached={false} style={{ overflow: "auto", maxHeight: "75em" }}>
-		// 				<h2>{tempsDate}</h2>
-		// 				<Card.Group items={obj} />
-		// 			</Tab.Pane>
-		// 		),
-		// 	};
-		// });
 
 		return gameItems;
 	}
 
 	render() {
-		return <div>{this.renderGamesCards(this.props.sportIndex)}</div>;
+		return this.renderGamesCards(this.props.sportIndex);
 	}
 }
 

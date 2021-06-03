@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Layout from "../components/Layout";
 import SportTabs from "../components/SportTabs";
 import { SportContext } from "../contexts/SportContext";
-import { Card } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 
 class BetokenIndex extends Component {
 	static contextType = SportContext;
@@ -35,18 +35,18 @@ class BetokenIndex extends Component {
 		let result;
 		if (fetchedSportData) {
 			result = (
-				<div>
+				<Container fluid>
 					<br />
 					<SportTabs allSportsData={sportsData} />
 					<h3>Open Bets</h3>
 					{this.renderCurrentBets(blockchain)}
-				</div>
+				</Container>
 			);
 		} else {
 			result = (
-				<div>
+				<Container fluid>
 					<h3>Loading...</h3>
-				</div>
+				</Container>
 			);
 		}
 
