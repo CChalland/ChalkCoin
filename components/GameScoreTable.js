@@ -140,7 +140,7 @@ class GameScoreTable extends Component {
 								gameScoreCardData.home.records[0].summary +
 								", " +
 								gameScoreCardData.home.records[1].summary +
-								" Away)"}
+								" Home)"}
 						</Row>
 					</Col>
 					<Col>

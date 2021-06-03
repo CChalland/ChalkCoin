@@ -35,7 +35,11 @@ class SportCard extends Component {
 		if (sportName === "MLB") {
 			awayPeriods = awayTeam[0].statistics;
 			homePeriods = homeTeam[0].statistics;
-		} else if (game.status.type.description === "In Progress" || game.status.type.completed) {
+		} else if (
+			game.status.type.description === "In Progress" ||
+			game.status.type.description === "End of Period" ||
+			game.status.type.completed
+		) {
 			awayPeriods = awayTeam[0].linescores;
 			homePeriods = homeTeam[0].linescores;
 		} else {
@@ -78,6 +82,7 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
+			console.log(game);
 			return (
 				<Container>
 					<Row>
