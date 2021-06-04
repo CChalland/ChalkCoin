@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "../routes";
-import GameScoreTable from "./GameScoreTable";
+import GameScore from "./GameScore";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -86,7 +86,7 @@ class SportCard extends Component {
 				<Container>
 					<Row>
 						<Col>
-							<GameScoreTable
+							<GameScore
 								key={game.uid.toString()}
 								gameScoreCardData={this.gameScoreCardHelper(game)}
 								sportName={sportName}
