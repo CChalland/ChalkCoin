@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 
 class GameScore extends Component {
 	constructor(props) {
