@@ -12,7 +12,14 @@ class GameScoreTable extends Component {
 		let index = 0;
 		let linescoresHeader = gameScoreCardData.away.periods.map((period) => {
 			index++;
-			return <li className="list-inline-item">{index}</li>;
+			if ((sportName == "NHL" && index == 4) || index == 5) {
+				return <li className="list-inline-item">{"OT"}</li>;
+			} else if ((sportName == "NHL" && index > 4) || index > 5) {
+				let numberOT = sportName == "NHL" ? (index - 4).toString() : (index - 5).toString();
+				return <li className="list-inline-item">{numberOT + "OT"}</li>;
+			} else {
+				return <li className="list-inline-item">{index}</li>;
+			}
 		});
 
 		if (
