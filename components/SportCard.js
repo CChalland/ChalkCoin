@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "../routes";
 import GameScore from "./GameScore";
+import GamePlay from "./GamePlay";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -93,7 +94,9 @@ class SportCard extends Component {
 							/>
 						</Col>
 
-						<Col>{"Last Play"}</Col>
+						<Col>
+							<GamePlay />
+						</Col>
 
 						<Col>{"TOP PERFORMERS"}</Col>
 					</Row>

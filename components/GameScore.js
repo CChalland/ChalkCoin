@@ -92,8 +92,6 @@ class GameScore extends Component {
 			sportName
 		);
 
-		console.log(gameScoreCardData);
-
 		return (
 			<Container>
 				{title}
