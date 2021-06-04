@@ -20,13 +20,13 @@ class GameScoreTable extends Component {
 			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
 		) {
 			title = (
-				<Row className="h6">
+				<Row className="h6 align-items-center">
 					<Col>{gameScoreCardData.shortDetail}</Col>
 				</Row>
 			);
 		} else if (sportName === "MLB") {
 			title = (
-				<Row className="h6">
+				<Row className="h6 align-items-center">
 					<Col>{gameScoreCardData.shortDetail}</Col>
 					<Col>
 						<ul className="list-inline">
@@ -37,47 +37,27 @@ class GameScoreTable extends Component {
 					</Col>
 				</Row>
 			);
-			awayPeriods = (
-				<ul className="list-inline">
-					{gameScoreCardData.away.periods.map((period) => {
-						if (period.abbreviation === "R") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-					{gameScoreCardData.away.periods.map((period) => {
-						if (period.abbreviation === "H") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-					{gameScoreCardData.away.periods.map((period) => {
-						if (period.abbreviation === "E") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-				</ul>
-			);
-			homePeriods = (
-				<ul className="list-inline">
-					{gameScoreCardData.home.periods.map((period) => {
-						if (period.abbreviation === "R") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-					{gameScoreCardData.home.periods.map((period) => {
-						if (period.abbreviation === "H") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-					{gameScoreCardData.home.periods.map((period) => {
-						if (period.abbreviation === "E") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-				</ul>
-			);
+			awayPeriods = gameScoreCardData.away.periods.map((period) => {
+				if (period.abbreviation === "R") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				} else if (period.abbreviation === "H") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				} else if (period.abbreviation === "E") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				}
+			});
+			homePeriods = gameScoreCardData.home.periods.map((period) => {
+				if (period.abbreviation === "R") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				} else if (period.abbreviation === "H") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				} else if (period.abbreviation === "E") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				}
+			});
 		} else {
 			title = (
-				<Row className="h6">
+				<Row className="h6 align-items-center">
 					<Col md={7}>{gameScoreCardData.shortDetail}</Col>
 					<Col md={4}>
 						<ul className="list-inline">{linescoresHeader}</ul>
