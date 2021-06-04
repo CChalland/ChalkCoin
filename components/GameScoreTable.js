@@ -12,7 +12,14 @@ class GameScoreTable extends Component {
 		let index = 0;
 		let linescoresHeader = gameScoreCardData.away.periods.map((period) => {
 			index++;
-			return <li className="list-inline-item">{index}</li>;
+			if ((sportName == "NHL" && index == 4) || index == 5) {
+				return <li className="list-inline-item">{"OT"}</li>;
+			} else if ((sportName == "NHL" && index > 4) || index > 5) {
+				let numberOT = sportName == "NHL" ? (index - 4).toString() : (index - 5).toString();
+				return <li className="list-inline-item">{numberOT + "OT"}</li>;
+			} else {
+				return <li className="list-inline-item">{index}</li>;
+			}
 		});
 
 		if (
@@ -20,13 +27,13 @@ class GameScoreTable extends Component {
 			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
 		) {
 			title = (
-				<Row className="h6">
+				<Row className="h6 align-items-center">
 					<Col>{gameScoreCardData.shortDetail}</Col>
 				</Row>
 			);
 		} else if (sportName === "MLB") {
 			title = (
-				<Row className="h6">
+				<Row className="h6 align-items-center">
 					<Col>{gameScoreCardData.shortDetail}</Col>
 					<Col>
 						<ul className="list-inline">
@@ -37,52 +44,32 @@ class GameScoreTable extends Component {
 					</Col>
 				</Row>
 			);
-			awayPeriods = (
-				<ul className="list-inline">
-					{gameScoreCardData.away.periods.map((period) => {
-						if (period.abbreviation === "R") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-					{gameScoreCardData.away.periods.map((period) => {
-						if (period.abbreviation === "H") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-					{gameScoreCardData.away.periods.map((period) => {
-						if (period.abbreviation === "E") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-				</ul>
-			);
-			homePeriods = (
-				<ul className="list-inline">
-					{gameScoreCardData.home.periods.map((period) => {
-						if (period.abbreviation === "R") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-					{gameScoreCardData.home.periods.map((period) => {
-						if (period.abbreviation === "H") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-					{gameScoreCardData.home.periods.map((period) => {
-						if (period.abbreviation === "E") {
-							return <li className="list-inline-item">{period.displayValue}</li>;
-						}
-					})}
-				</ul>
-			);
+			awayPeriods = gameScoreCardData.away.periods.map((period) => {
+				if (period.abbreviation === "R") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				} else if (period.abbreviation === "H") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				} else if (period.abbreviation === "E") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				}
+			});
+			homePeriods = gameScoreCardData.home.periods.map((period) => {
+				if (period.abbreviation === "R") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				} else if (period.abbreviation === "H") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				} else if (period.abbreviation === "E") {
+					return <li className="list-inline-item">{period.displayValue}</li>;
+				}
+			});
 		} else {
 			title = (
-				<Row className="h6">
-					<Col>{gameScoreCardData.shortDetail}</Col>
-					<Col>
+				<Row className="h6 align-items-center">
+					<Col md={7}>{gameScoreCardData.shortDetail}</Col>
+					<Col md={4}>
 						<ul className="list-inline">{linescoresHeader}</ul>
 					</Col>
-					<Col>{"T"}</Col>
+					<Col md={1}>{"T"}</Col>
 				</Row>
 			);
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
@@ -110,11 +97,11 @@ class GameScoreTable extends Component {
 		return (
 			<Container>
 				{title}
-				<Row>
+				<Row className="align-items-center">
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
-					<Col md="auto">
+					<Col md={5}>
 						<Row className="h5">{gameScoreCardData.away.name}</Row>
 						<Row className="text-secondary" style={{ fontSize: 12 }}>
 							{"(" +
@@ -124,16 +111,16 @@ class GameScoreTable extends Component {
 								" Away)"}
 						</Row>
 					</Col>
-					<Col>
+					<Col md={4}>
 						<ul className="list-inline">{awayPeriods}</ul>
 					</Col>
-					<Col>{awayScore}</Col>
+					<Col md={1}>{awayScore}</Col>
 				</Row>
-				<Row>
+				<Row className="align-items-center">
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 					</Col>
-					<Col md="auto">
+					<Col md={5}>
 						<Row className="h5">{gameScoreCardData.home.name}</Row>
 						<Row className="text-secondary" style={{ fontSize: 12 }}>
 							{"(" +
@@ -143,10 +130,10 @@ class GameScoreTable extends Component {
 								" Home)"}
 						</Row>
 					</Col>
-					<Col>
+					<Col md={4}>
 						<ul className="list-inline">{homePeriods}</ul>
 					</Col>
-					<Col>{homeScore}</Col>
+					<Col md={1}>{homeScore}</Col>
 				</Row>
 			</Container>
 		);
