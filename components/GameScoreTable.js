@@ -78,11 +78,11 @@ class GameScoreTable extends Component {
 		} else {
 			title = (
 				<Row className="h6">
-					<Col>{gameScoreCardData.shortDetail}</Col>
-					<Col>
+					<Col md={7}>{gameScoreCardData.shortDetail}</Col>
+					<Col md={4}>
 						<ul className="list-inline">{linescoresHeader}</ul>
 					</Col>
-					<Col>{"T"}</Col>
+					<Col md={1}>{"T"}</Col>
 				</Row>
 			);
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
@@ -114,7 +114,7 @@ class GameScoreTable extends Component {
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
-					<Col md="auto">
+					<Col md={5}>
 						<Row className="h5">{gameScoreCardData.away.name}</Row>
 						<Row className="text-secondary" style={{ fontSize: 12 }}>
 							{"(" +
@@ -124,16 +124,16 @@ class GameScoreTable extends Component {
 								" Away)"}
 						</Row>
 					</Col>
-					<Col>
+					<Col md={4}>
 						<ul className="list-inline">{awayPeriods}</ul>
 					</Col>
-					<Col>{awayScore}</Col>
+					<Col md={1}>{awayScore}</Col>
 				</Row>
 				<Row className="align-items-center">
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 					</Col>
-					<Col md="auto">
+					<Col md={5}>
 						<Row className="h5">{gameScoreCardData.home.name}</Row>
 						<Row className="text-secondary" style={{ fontSize: 12 }}>
 							{"(" +
@@ -143,10 +143,10 @@ class GameScoreTable extends Component {
 								" Home)"}
 						</Row>
 					</Col>
-					<Col>
+					<Col md={4}>
 						<ul className="list-inline">{homePeriods}</ul>
 					</Col>
-					<Col>{homeScore}</Col>
+					<Col md={1}>{homeScore}</Col>
 				</Row>
 			</Container>
 		);
