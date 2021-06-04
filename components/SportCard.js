@@ -24,7 +24,7 @@ class SportCard extends Component {
 		return { homeTeam, awayTeam };
 	}
 
-	gameScoreCardHelper(game) {
+	gameScoreHelper(game) {
 		const { sportName } = this.props;
 		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
 		let homePeriods, awayPeriods, homeRecords, awayRecords;
@@ -83,13 +83,15 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
+			console.log(game);
+
 			return (
 				<Container>
 					<Row>
 						<Col>
 							<GameScore
 								key={game.uid.toString()}
-								gameScoreCardData={this.gameScoreCardHelper(game)}
+								gameScoreCardData={this.gameScoreHelper(game)}
 								sportName={sportName}
 							/>
 						</Col>
