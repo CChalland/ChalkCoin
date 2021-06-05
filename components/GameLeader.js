@@ -16,36 +16,33 @@ class GameLeader extends Component {
 			? gameLeadersData.away[gameLeadersData.away.length - 1].leaders[0]
 			: null;
 
+		console.log(gameLeadersData);
 		console.log(awayLeader);
 		console.log(homeLeader);
 
-		if (homeLeader) {
+		if (homeLeader && awayLeader) {
 			return (
 				<Container>
 					<Row>
 						<h6>{"Players to Watch"}</h6>
 					</Row>
 
-					<Row>
-						<Col>
+					<Row className="align-items-center">
+						<Col md="auto">
 							<Image width={45} height={40} src={awayLeader.athlete.headshot} roundedCircle />
 						</Col>
-						<Col>
-							<Row>
-								<h5>{awayLeader.athlete.displayName}</h5>
-							</Row>
+						<Col md="auto">
+							<Row className="h6">{awayLeader.athlete.displayName}</Row>
 							<Row>{awayLeader.displayValue}</Row>
 						</Col>
 					</Row>
 
-					<Row>
-						<Col>
+					<Row className="align-items-center">
+						<Col md="auto">
 							<Image width={45} height={40} src={homeLeader.athlete.headshot} roundedCircle />
 						</Col>
-						<Col>
-							<Row>
-								<h5>{homeLeader.athlete.displayName}</h5>
-							</Row>
+						<Col md="auto">
+							<Row className="h6">{homeLeader.athlete.displayName}</Row>
 							<Row>{homeLeader.displayValue}</Row>
 						</Col>
 					</Row>
