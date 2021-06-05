@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "../routes";
-import GameScoreTable from "./GameScoreTable";
+import GameScore from "./GameScore";
+import GamePlay from "./GamePlay";
+import GameLeader from "./GameLeader";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -23,7 +25,7 @@ class SportCard extends Component {
 		return { homeTeam, awayTeam };
 	}
 
-	gameScoreCardHelper(game) {
+	gameScoreHelper(game) {
 		const { sportName } = this.props;
 		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
 		let homePeriods, awayPeriods, homeRecords, awayRecords;
@@ -78,6 +80,28 @@ class SportCard extends Component {
 		};
 	}
 
+	gamePlayHelper(game) {
+		const { sportName } = this.props;
+
+		return game;
+	}
+
+	gameLeadersHelper(game) {
+		const { sportName } = this.props;
+		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
+		let homeLeaders, awayLeaders;
+
+		homeLeaders = homeTeam[0].leaders;
+		awayLeaders = awayTeam[0].leaders;
+
+		return {
+			sportName: sportName,
+			status: game.status,
+			away: awayLeaders,
+			home: homeLeaders,
+		};
+	}
+
 	renderGamesCards(sportId) {
 		const { sportData, sportName } = this.props;
 
@@ -86,16 +110,20 @@ class SportCard extends Component {
 				<Container>
 					<Row>
 						<Col>
-							<GameScoreTable
+							<GameScore
 								key={game.uid.toString()}
-								gameScoreCardData={this.gameScoreCardHelper(game)}
+								gameScoreCardData={this.gameScoreHelper(game)}
 								sportName={sportName}
 							/>
 						</Col>
 
-						<Col>{"Last Play"}</Col>
+						<Col>
+							<GamePlay gamePlayData={this.gamePlayHelper(game)} />
+						</Col>
 
-						<Col>{"TOP PERFORMERS"}</Col>
+						<Col>
+							<GameLeader gameLeadersData={this.gameLeadersHelper(game)} />
+						</Col>
 					</Row>
 				</Container>
 			);

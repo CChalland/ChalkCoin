@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Table, Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 
-class GameScoreTable extends Component {
+class GameScore extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
@@ -92,8 +92,6 @@ class GameScoreTable extends Component {
 			sportName
 		);
 
-		console.log(gameScoreCardData);
-
 		return (
 			<Container>
 				{title}
@@ -144,4 +142,4 @@ class GameScoreTable extends Component {
 	}
 }
 
-export default GameScoreTable;
+export default GameScore;
