@@ -40,6 +40,7 @@ class SportCard extends Component {
 		} else if (
 			game.status.type.description === "In Progress" ||
 			game.status.type.description === "End of Period" ||
+			game.status.type.description === "Halftime" ||
 			game.status.type.completed
 		) {
 			awayPeriods = awayTeam[0].linescores;
