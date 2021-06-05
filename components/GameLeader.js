@@ -10,10 +10,10 @@ class GameLeader extends Component {
 	renderGameLeaders() {
 		const { gameLeadersData } = this.props;
 		const homeLeader = gameLeadersData.home
-			? gameLeadersData.home[gameLeadersData.home.length - 1].leaders[0].athlete
+			? gameLeadersData.home[gameLeadersData.home.length - 1].leaders[0]
 			: null;
 		const awayLeader = gameLeadersData.away
-			? gameLeadersData.away[gameLeadersData.away.length - 1].leaders[0].athlete
+			? gameLeadersData.away[gameLeadersData.away.length - 1].leaders[0]
 			: null;
 
 		console.log(awayLeader);
@@ -28,13 +28,25 @@ class GameLeader extends Component {
 
 					<Row>
 						<Col>
-							<Image width={45} height={40} src={awayLeader.headshot} roundedCircle />
+							<Image width={45} height={40} src={awayLeader.athlete.headshot} roundedCircle />
+						</Col>
+						<Col>
+							<Row>
+								<h5>{awayLeader.athlete.displayName}</h5>
+							</Row>
+							<Row>{awayLeader.displayValue}</Row>
 						</Col>
 					</Row>
 
 					<Row>
 						<Col>
-							<Image width={45} height={40} src={homeLeader.headshot} roundedCircle />
+							<Image width={45} height={40} src={homeLeader.athlete.headshot} roundedCircle />
+						</Col>
+						<Col>
+							<Row>
+								<h5>{homeLeader.athlete.displayName}</h5>
+							</Row>
+							<Row>{homeLeader.displayValue}</Row>
 						</Col>
 					</Row>
 				</Container>
