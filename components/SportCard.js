@@ -81,15 +81,25 @@ class SportCard extends Component {
 	}
 
 	gamePlayerHelper(game) {
-		return null;
+		const { sportName } = this.props;
+		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
+		let homeLeaders, awayLeaders;
+
+		homeLeaders = homeTeam[0].leaders;
+		awayLeaders = awayTeam[0].leaders;
+
+		return {
+			sportName: sportName,
+			status: game.status,
+			away: awayLeaders,
+			home: homeLeaders,
+		};
 	}
 
 	renderGamesCards(sportId) {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			console.log(game);
-
 			return (
 				<Container>
 					<Row>
@@ -106,7 +116,7 @@ class SportCard extends Component {
 						</Col>
 
 						<Col>
-							<GamePlayer />
+							<GamePlayer gamePlayerData={this.gamePlayerHelper(game)} />
 						</Col>
 					</Row>
 				</Container>

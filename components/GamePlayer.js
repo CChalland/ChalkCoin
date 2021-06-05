@@ -8,6 +8,10 @@ class GamePlayer extends Component {
 	}
 
 	renderGamePlayers() {
+		const { gamePlayerData } = this.props;
+
+		console.log(gamePlayerData);
+
 		return <div>{"TOP PERFORMERS"}</div>;
 	}
 
