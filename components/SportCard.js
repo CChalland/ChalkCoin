@@ -96,7 +96,7 @@ class SportCard extends Component {
 
 		return {
 			sportName: sportName,
-			status: game.status,
+			status: game.competitions[0].status,
 			away: awayLeaders,
 			home: homeLeaders,
 		};

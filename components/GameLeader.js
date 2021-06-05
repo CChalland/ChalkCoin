@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Media } from "react-bootstrap";
 
 class GameLeader extends Component {
 	constructor(props) {
@@ -12,7 +12,13 @@ class GameLeader extends Component {
 
 		console.log(gameLeadersData);
 
-		return <div>{"TOP PERFORMERS"}</div>;
+		return (
+			<Container>
+				<Row>
+					<h6>{"Players to Watch"}</h6>
+				</Row>
+			</Container>
+		);
 	}
 
 	render() {
