@@ -8,6 +8,10 @@ class GamePlay extends Component {
 	}
 
 	renderGamePlays() {
+		const { gamePlayData } = this.props;
+
+		// console.log(gamePlayData);
+
 		return <div>{"Last Play"}</div>;
 	}
 

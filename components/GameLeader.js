@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-class GamePlayer extends Component {
+class GameLeader extends Component {
 	constructor(props) {
 		super(props);
 		this.state;
 	}
 
-	renderGamePlayers() {
-		const { gamePlayerData } = this.props;
+	renderGameLeaders() {
+		const { gameLeadersData } = this.props;
 
-		console.log(gamePlayerData);
+		console.log(gameLeadersData);
 
 		return <div>{"TOP PERFORMERS"}</div>;
 	}
 
 	render() {
-		return this.renderGamePlayers();
+		return this.renderGameLeaders();
 	}
 }
 
-export default GamePlayer;
+export default GameLeader;

@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "../routes";
 import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
-import GamePlayer from "./GamePlayer";
+import GameLeader from "./GameLeader";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -80,7 +80,13 @@ class SportCard extends Component {
 		};
 	}
 
-	gamePlayerHelper(game) {
+	gamePlayHelper(game) {
+		const { sportName } = this.props;
+
+		return game;
+	}
+
+	gameLeadersHelper(game) {
 		const { sportName } = this.props;
 		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
 		let homeLeaders, awayLeaders;
@@ -112,11 +118,11 @@ class SportCard extends Component {
 						</Col>
 
 						<Col>
-							<GamePlay />
+							<GamePlay gamePlayData={this.gamePlayHelper(game)} />
 						</Col>
 
 						<Col>
-							<GamePlayer gamePlayerData={this.gamePlayerHelper(game)} />
+							<GameLeader gameLeadersData={this.gameLeadersHelper(game)} />
 						</Col>
 					</Row>
 				</Container>
