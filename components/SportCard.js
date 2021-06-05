@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "../routes";
 import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
+import GamePlayer from "./GamePlayer";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -79,6 +80,10 @@ class SportCard extends Component {
 		};
 	}
 
+	gamePlayerHelper(game) {
+		return null;
+	}
+
 	renderGamesCards(sportId) {
 		const { sportData, sportName } = this.props;
 
@@ -100,7 +105,9 @@ class SportCard extends Component {
 							<GamePlay />
 						</Col>
 
-						<Col>{"TOP PERFORMERS"}</Col>
+						<Col>
+							<GamePlayer />
+						</Col>
 					</Row>
 				</Container>
 			);
