@@ -14,7 +14,7 @@ class GameLeader extends Component {
 		const awayLeader = gameLeadersData.away.leaders
 			? gameLeadersData.away.leaders[gameLeadersData.away.leaders.length - 1].leaders[0]
 			: null;
-		let featuredAthletes = gameLeadersData.featuredAthletes;
+		let featuredAthletes = gameLeadersData.status.featuredAthletes;
 
 		return { homeLeader, awayLeader, featuredAthletes };
 	}
@@ -24,8 +24,6 @@ class GameLeader extends Component {
 		const { homeLeader, awayLeader, featuredAthletes } = this.gameLeadersHelper(gameLeadersData);
 
 		console.log(gameLeadersData);
-		console.log(awayLeader);
-		console.log(homeLeader);
 
 		if (homeLeader && awayLeader) {
 			return (

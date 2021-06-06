@@ -90,16 +90,12 @@ class SportCard extends Component {
 	gameLeadersHelper(game) {
 		const { sportName } = this.props;
 		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
-		let homeLeaders, awayLeaders;
-
-		homeLeaders = homeTeam[0].leaders;
-		awayLeaders = awayTeam[0].leaders;
 
 		return {
 			sportName: sportName,
 			status: game.competitions[0].status,
-			away: { team: awayTeam[0].team, leaders: awayTeam[0].leaders },
-			home: { team: homeTeam[0].team, leaders: homeTeam[0].leaders },
+			away: { team: awayTeam[0].team, leaders: awayTeam[0].leaders, probables: awayTeam[0].probables },
+			home: { team: homeTeam[0].team, leaders: homeTeam[0].leaders, probables: homeTeam[0].probables },
 		};
 	}
 
