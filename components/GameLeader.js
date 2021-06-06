@@ -14,7 +14,11 @@ class GameLeader extends Component {
 		const awayLeader = gameLeadersData.away.leaders
 			? gameLeadersData.away.leaders[gameLeadersData.away.leaders.length - 1].leaders[0]
 			: null;
+		const homeProbables = gameLeadersData.home.probables ? gameLeadersData.home.probables[0] : null;
+		const awayProbables = gameLeadersData.away.probables ? gameLeadersData.away.probables[0] : null;
 		let featuredAthletes = gameLeadersData.status.featuredAthletes;
+
+		console.log({ home: homeProbables, away: awayProbables });
 
 		return { homeLeader, awayLeader, featuredAthletes };
 	}
