@@ -98,8 +98,8 @@ class SportCard extends Component {
 		return {
 			sportName: sportName,
 			status: game.competitions[0].status,
-			away: awayLeaders,
-			home: homeLeaders,
+			away: { team: awayTeam[0].team, leaders: awayTeam[0].leaders },
+			home: { team: homeTeam[0].team, leaders: homeTeam[0].leaders },
 		};
 	}
 

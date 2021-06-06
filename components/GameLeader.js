@@ -7,14 +7,21 @@ class GameLeader extends Component {
 		this.state;
 	}
 
+	gameLeadersHelper(gameLeadersData) {
+		const homeLeader = gameLeadersData.home.leaders
+			? gameLeadersData.home.leaders[gameLeadersData.home.leaders.length - 1].leaders[0]
+			: null;
+		const awayLeader = gameLeadersData.away.leaders
+			? gameLeadersData.away.leaders[gameLeadersData.away.leaders.length - 1].leaders[0]
+			: null;
+		let featuredAthletes = gameLeadersData.featuredAthletes;
+
+		return { homeLeader, awayLeader, featuredAthletes };
+	}
+
 	renderGameLeaders() {
 		const { gameLeadersData } = this.props;
-		const homeLeader = gameLeadersData.home
-			? gameLeadersData.home[gameLeadersData.home.length - 1].leaders[0]
-			: null;
-		const awayLeader = gameLeadersData.away
-			? gameLeadersData.away[gameLeadersData.away.length - 1].leaders[0]
-			: null;
+		const { homeLeader, awayLeader, featuredAthletes } = this.gameLeadersHelper(gameLeadersData);
 
 		console.log(gameLeadersData);
 		console.log(awayLeader);
