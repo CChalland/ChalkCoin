@@ -120,7 +120,7 @@ class SportCard extends Component {
 						</Col>
 
 						<Col>
-							<GameLeader gameLeadersData={this.gameLeadersHelper(game)} />
+							<GameLeader gameLeadersData={this.gameLeadersHelper(game)} sportName={sportName} />
 						</Col>
 					</Row>
 				</Container>

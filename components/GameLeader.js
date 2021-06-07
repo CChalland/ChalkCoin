@@ -7,7 +7,7 @@ class GameLeader extends Component {
 		this.state;
 	}
 
-	gameLeadersHelper(gameLeadersData) {
+	gameLeadersHelper(gameLeadersData, sportName) {
 		const homeLeader = gameLeadersData.home.leaders
 			? gameLeadersData.home.leaders[gameLeadersData.home.leaders.length - 1].leaders[0]
 			: null;
@@ -18,16 +18,42 @@ class GameLeader extends Component {
 		const awayProbables = gameLeadersData.away.probables ? gameLeadersData.away.probables[0] : null;
 		let featuredAthletes = gameLeadersData.status.featuredAthletes;
 
-		console.log({ home: homeProbables, away: awayProbables });
+		let athletes = [];
 
-		return { homeLeader, awayLeader, featuredAthletes };
+		if (
+			(gameLeadersData.status.type.name === "STATUS_SCHEDULED" ||
+				gameLeadersData.status.type.name === "STATUS_POSTPONED") &&
+			sportName === "MLB"
+		) {
+			athletes.push(awayProbables, homeProbables);
+		} else if (
+			gameLeadersData.status.type.name === "STATUS_SCHEDULED" ||
+			gameLeadersData.status.type.name === "STATUS_POSTPONED"
+		) {
+			athletes.push(awayLeader, homeLeader);
+		} else if (
+			gameLeadersData.status.type.description === "In Progress" ||
+			gameLeadersData.status.type.description === "End of Period" ||
+			gameLeadersData.status.type.description === "Halftime"
+		) {
+			athletes.push(awayLeader, homeLeader);
+		} else if (gameLeadersData.status.type.completed && (sportName === "NHL" || sportName === "MLB")) {
+			athletes = featuredAthletes;
+		} else if (gameLeadersData.status.type.completed) {
+			athletes.push(awayLeader, homeLeader);
+		}
+		return { homeLeader, awayLeader, featuredAthletes, athletes };
 	}
 
 	renderGameLeaders() {
-		const { gameLeadersData } = this.props;
-		const { homeLeader, awayLeader, featuredAthletes } = this.gameLeadersHelper(gameLeadersData);
+		const { gameLeadersData, sportName } = this.props;
+		const { homeLeader, awayLeader, featuredAthletes, athletes } = this.gameLeadersHelper(
+			gameLeadersData,
+			sportName
+		);
 
 		console.log(gameLeadersData);
+		console.log(athletes);
 
 		if (homeLeader && awayLeader) {
 			return (
