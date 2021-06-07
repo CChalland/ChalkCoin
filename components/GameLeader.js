@@ -52,6 +52,23 @@ class GameLeader extends Component {
 		const { gameLeadersData, sportName } = this.props;
 		const { homeLeader, awayLeader, athletes } = this.gameLeadersHelper(gameLeadersData, sportName);
 
+		let gameAthletes = athletes.map((athlete) => {
+			console.log(athlete);
+
+			if (athlete) {
+				return (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.athlete.displayName}</Row>
+							<Row>{athlete.displayValue}</Row>
+						</Col>
+					</Row>
+				);
+			}
+		});
 		console.log(gameLeadersData);
 		console.log(athletes);
 
@@ -62,25 +79,7 @@ class GameLeader extends Component {
 						<h6>{"Players to Watch"}</h6>
 					</Row>
 
-					<Row className="align-items-center">
-						<Col md="auto">
-							<Image width={45} height={40} src={awayLeader.athlete.headshot} roundedCircle />
-						</Col>
-						<Col md="auto">
-							<Row className="h6">{awayLeader.athlete.displayName}</Row>
-							<Row>{awayLeader.displayValue}</Row>
-						</Col>
-					</Row>
-
-					<Row className="align-items-center">
-						<Col md="auto">
-							<Image width={45} height={40} src={homeLeader.athlete.headshot} roundedCircle />
-						</Col>
-						<Col md="auto">
-							<Row className="h6">{homeLeader.athlete.displayName}</Row>
-							<Row>{homeLeader.displayValue}</Row>
-						</Col>
-					</Row>
+					{gameAthletes}
 				</Container>
 			);
 		} else {
