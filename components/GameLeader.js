@@ -16,7 +16,10 @@ class GameLeader extends Component {
 			: null;
 		const homeProbables = gameLeadersData.home.probables ? gameLeadersData.home.probables[0] : null;
 		const awayProbables = gameLeadersData.away.probables ? gameLeadersData.away.probables[0] : null;
-		let featuredAthletes = gameLeadersData.status.featuredAthletes;
+		const featuredAthletes =
+			sportName === "NHL"
+				? gameLeadersData.status.featuredAthletes.splice(2, 5)
+				: gameLeadersData.status.featuredAthletes;
 
 		let athletes = [];
 
@@ -42,15 +45,12 @@ class GameLeader extends Component {
 		} else if (gameLeadersData.status.type.completed) {
 			athletes.push(awayLeader, homeLeader);
 		}
-		return { homeLeader, awayLeader, featuredAthletes, athletes };
+		return { homeLeader, awayLeader, athletes };
 	}
 
 	renderGameLeaders() {
 		const { gameLeadersData, sportName } = this.props;
-		const { homeLeader, awayLeader, featuredAthletes, athletes } = this.gameLeadersHelper(
-			gameLeadersData,
-			sportName
-		);
+		const { homeLeader, awayLeader, athletes } = this.gameLeadersHelper(gameLeadersData, sportName);
 
 		console.log(gameLeadersData);
 		console.log(athletes);
