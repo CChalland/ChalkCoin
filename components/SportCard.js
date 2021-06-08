@@ -87,9 +87,43 @@ class SportCard extends Component {
 		return game;
 	}
 
-	gameLeadersHelper(game) {
-		const { sportName } = this.props;
+	gameLeadersHelper(game, sportName) {
 		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
+		let homeAthlete, homeLeader, awayAthlete, awayLeader;
+		let athletes = [];
+
+		awayLeader = awayTeam[0].leaders ? awayTeam[0].leaders.pop() : awayTeam[0].leaders;
+		homeLeader = homeTeam[0].leaders ? homeTeam[0].leaders.pop() : homeTeam[0].leaders;
+
+		if (
+			(game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
+				game.competitions[0].status.type.name === "STATUS_POSTPONED") &&
+			sportName === "MLB"
+		) {
+			awayAthlete = awayTeam[0].probables ? awayTeam[0].probables[0] : awayTeam[0].probables;
+			homeAthlete = homeTeam[0].probables ? homeTeam[0].probables[0] : homeTeam[0].probables;
+			athletes.push(awayAthlete, homeAthlete);
+		} else if (
+			game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
+			game.competitions[0].status.type.name === "STATUS_POSTPONED"
+		) {
+			athletes.push(awayLeader, homeLeader);
+		} else if (
+			game.competitions[0].status.type.description === "In Progress" ||
+			game.competitions[0].status.type.description === "End of Period" ||
+			game.competitions[0].status.type.description === "Halftime"
+		) {
+			athletes.push(awayAthlete, homeAthlete);
+		} else if (game.competitions[0].status.type.completed && (sportName === "NHL" || sportName === "MLB")) {
+			athletes =
+				sportName === "NHL"
+					? game.competitions[0].status.featuredAthletes.splice(2, 5)
+					: game.competitions[0].status.featuredAthletes;
+		} else if (game.competitions[0].status.type.completed) {
+			athletes.push(awayLeader, homeLeader);
+		}
+
+		console.log(athletes);
 
 		return {
 			sportName: sportName,
@@ -120,7 +154,7 @@ class SportCard extends Component {
 						</Col>
 
 						<Col>
-							<GameLeader gameLeadersData={this.gameLeadersHelper(game)} sportName={sportName} />
+							<GameLeader gameLeadersData={this.gameLeadersHelper(game, sportName)} sportName={sportName} />
 						</Col>
 					</Row>
 				</Container>

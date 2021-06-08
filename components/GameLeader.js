@@ -17,7 +17,7 @@ class GameLeader extends Component {
 		const homeProbables = gameLeadersData.home.probables ? gameLeadersData.home.probables[0] : null;
 		const awayProbables = gameLeadersData.away.probables ? gameLeadersData.away.probables[0] : null;
 		const featuredAthletes =
-			sportName === "NHL"
+			sportName === null
 				? gameLeadersData.status.featuredAthletes.splice(2, 5)
 				: gameLeadersData.status.featuredAthletes;
 
