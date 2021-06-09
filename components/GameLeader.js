@@ -52,8 +52,10 @@ class GameLeader extends Component {
 		const { gameLeadersData, sportName } = this.props;
 		const { homeLeader, awayLeader, athletes } = this.gameLeadersHelper(gameLeadersData, sportName);
 
+		console.log(gameLeadersData.athletes);
+
 		let gameAthletes = athletes.map((athlete) => {
-			console.log(athlete);
+			// console.log(athlete);
 
 			if (athlete) {
 				return (
@@ -69,8 +71,8 @@ class GameLeader extends Component {
 				);
 			}
 		});
-		console.log(gameLeadersData);
-		console.log(athletes);
+		// console.log(gameLeadersData);
+		// console.log(athletes);
 
 		if (homeLeader && awayLeader) {
 			return (
