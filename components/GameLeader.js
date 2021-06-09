@@ -12,12 +12,12 @@ class GameLeader extends Component {
 	renderGameLeaders() {
 		const { gameLeadersData, sportName } = this.props;
 
-		console.log(gameLeadersData.athletes);
+		console.log(gameLeadersData);
 
 		let gameAthletes = gameLeadersData.athletes.map((athlete) => {
 			// console.log(athlete);
 
-			if (athlete) {
+			if (null) {
 				return (
 					<Row className="align-items-center">
 						<Col md="auto">

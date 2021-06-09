@@ -124,7 +124,11 @@ class SportCard extends Component {
 			game.competitions[0].status.type.description === "End of Period" ||
 			game.competitions[0].status.type.description === "Halftime"
 		) {
-			athletes.push(awayAthlete, homeAthlete);
+			if (game.competitions[0].situation.dueUp) {
+				athletes.push(game.competitions[0].situation.dueUp);
+			} else if (game.competitions[0].situation.putcher && game.competitions[0].situation.batter) {
+				athletes.push(game.competitions[0].situation.pitcher, game.competitions[0].situation.batter);
+			} else athletes.push(awayLeader, homeLeader);
 		} else if (game.competitions[0].status.type.completed && (sportName === "NHL" || sportName === "MLB")) {
 			athletes =
 				sportName === "NHL"
@@ -137,7 +141,7 @@ class SportCard extends Component {
 		return {
 			sportName: sportName,
 			status: game.competitions[0].status,
-			athletes: athletes,
+			athletes: athletes.flat(),
 		};
 	}
 
