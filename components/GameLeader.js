@@ -7,54 +7,14 @@ class GameLeader extends Component {
 		this.state;
 	}
 
-	gameLeadersHelper(gameLeadersData, sportName) {
-		const homeLeader = gameLeadersData.home.leaders
-			? gameLeadersData.home.leaders[gameLeadersData.home.leaders.length - 1].leaders[0]
-			: null;
-		const awayLeader = gameLeadersData.away.leaders
-			? gameLeadersData.away.leaders[gameLeadersData.away.leaders.length - 1].leaders[0]
-			: null;
-		const homeProbables = gameLeadersData.home.probables ? gameLeadersData.home.probables[0] : null;
-		const awayProbables = gameLeadersData.away.probables ? gameLeadersData.away.probables[0] : null;
-		const featuredAthletes =
-			sportName === null
-				? gameLeadersData.status.featuredAthletes.splice(2, 5)
-				: gameLeadersData.status.featuredAthletes;
-
-		let athletes = [];
-
-		if (
-			(gameLeadersData.status.type.name === "STATUS_SCHEDULED" ||
-				gameLeadersData.status.type.name === "STATUS_POSTPONED") &&
-			sportName === "MLB"
-		) {
-			athletes.push(awayProbables, homeProbables);
-		} else if (
-			gameLeadersData.status.type.name === "STATUS_SCHEDULED" ||
-			gameLeadersData.status.type.name === "STATUS_POSTPONED"
-		) {
-			athletes.push(awayLeader, homeLeader);
-		} else if (
-			gameLeadersData.status.type.description === "In Progress" ||
-			gameLeadersData.status.type.description === "End of Period" ||
-			gameLeadersData.status.type.description === "Halftime"
-		) {
-			athletes.push(awayLeader, homeLeader);
-		} else if (gameLeadersData.status.type.completed && (sportName === "NHL" || sportName === "MLB")) {
-			athletes = featuredAthletes;
-		} else if (gameLeadersData.status.type.completed) {
-			athletes.push(awayLeader, homeLeader);
-		}
-		return { homeLeader, awayLeader, athletes };
-	}
+	gameLeadersHelper() {}
 
 	renderGameLeaders() {
 		const { gameLeadersData, sportName } = this.props;
-		const { homeLeader, awayLeader, athletes } = this.gameLeadersHelper(gameLeadersData, sportName);
 
 		console.log(gameLeadersData.athletes);
 
-		let gameAthletes = athletes.map((athlete) => {
+		let gameAthletes = gameLeadersData.athletes.map((athlete) => {
 			// console.log(athlete);
 
 			if (athlete) {
@@ -73,20 +33,15 @@ class GameLeader extends Component {
 		});
 		// console.log(gameLeadersData);
 		// console.log(athletes);
+		return (
+			<Container>
+				<Row>
+					<h6>{"Players to Watch"}</h6>
+				</Row>
 
-		if (homeLeader && awayLeader) {
-			return (
-				<Container>
-					<Row>
-						<h6>{"Players to Watch"}</h6>
-					</Row>
-
-					{gameAthletes}
-				</Container>
-			);
-		} else {
-			return null;
-		}
+				{gameAthletes}
+			</Container>
+		);
 	}
 
 	render() {

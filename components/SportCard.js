@@ -93,10 +93,16 @@ class SportCard extends Component {
 		let athletes = [];
 
 		awayLeader = awayTeam[0].leaders ? awayTeam[0].leaders.pop() : awayTeam[0].leaders;
-		if (awayLeader) awayLeader.leaders[0].athlete.team = awayTeam[0].team;
+		if (awayLeader) {
+			awayLeader.leaders[0].athlete.team = awayTeam[0].team;
+			awayLeader = awayLeader.leaders[0];
+		}
 
 		homeLeader = homeTeam[0].leaders ? homeTeam[0].leaders.pop() : homeTeam[0].leaders;
-		if (homeLeader) homeLeader.leaders[0].athlete.team = homeTeam[0].team;
+		if (homeLeader) {
+			homeLeader.leaders[0].athlete.team = homeTeam[0].team;
+			homeLeader = homeLeader.leaders[0];
+		}
 
 		if (
 			(game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
@@ -132,8 +138,6 @@ class SportCard extends Component {
 			sportName: sportName,
 			status: game.competitions[0].status,
 			athletes: athletes,
-			away: { team: awayTeam[0].team, leaders: awayTeam[0].leaders, probables: awayTeam[0].probables },
-			home: { team: homeTeam[0].team, leaders: homeTeam[0].leaders, probables: homeTeam[0].probables },
 		};
 	}
 
