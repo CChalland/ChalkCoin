@@ -21,14 +21,14 @@ class GameLeader extends Component {
 		let gameAthletes = athletes.map((athlete) => {
 			// console.log(athlete);
 
-			if (null) {
+			if (athlete) {
 				return (
 					<Row className="align-items-center">
 						<Col md="auto">
-							<Image width={45} height={40} src={athlete.athlete.headshot} roundedCircle />
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
 						<Col md="auto">
-							<Row className="h6">{athlete.athlete.displayName}</Row>
+							<Row className="h6">{athlete.displayName}</Row>
 							<Row>{athlete.displayValue}</Row>
 						</Col>
 					</Row>

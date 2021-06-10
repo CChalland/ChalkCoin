@@ -64,6 +64,7 @@ class SportCard extends Component {
 		return {
 			status: game.status,
 			shortDetail: game.competitions[0].status.type.shortDetail,
+			detail: game.competitions[0].status.type.detail,
 			away: {
 				logo: awayTeam[0].team.logo,
 				name: awayTeam[0].team.name,
@@ -171,11 +172,43 @@ class SportCard extends Component {
 			game.competitions[0].status.type.description === "Halftime"
 		) {
 			if (game.competitions[0].situation.dueUp) {
-				console.log(game.competitions[0].situation.dueUp);
-				athletes.push(game.competitions[0].situation.dueUp);
+				athletes = game.competitions[0].situation.dueUp.map((athlete) => {
+					return {
+						title: "DUE UP FOR",
+						headshot: athlete.athlete.headshot,
+						displayName: athlete.athlete.shortName,
+						teamAbr:
+							athlete.athlete.team.id === homeTeam[0].team.id
+								? homeTeam[0].team.abbreviation
+								: awayTeam[0].team.abbreviation,
+						position: athlete.athlete.position,
+						displayValue: athlete.summary,
+					};
+				});
 			} else if (game.competitions[0].situation.pitcher && game.competitions[0].situation.batter) {
-				console.log(game.competitions[0].situation.pitcher, game.competitions[0].situation.batter);
-				athletes.push(game.competitions[0].situation.pitcher, game.competitions[0].situation.batter);
+				let pitcher = {
+					title: "Pitcher",
+					headshot: game.competitions[0].situation.pitcher.athlete.headshot,
+					displayName: game.competitions[0].situation.pitcher.athlete.shortName,
+					teamAbr:
+						game.competitions[0].situation.pitcher.athlete.team.id === homeTeam[0].team.id
+							? homeTeam[0].team.abbreviation
+							: awayTeam[0].team.abbreviation,
+					position: game.competitions[0].situation.pitcher.athlete.position,
+					displayValue: game.competitions[0].situation.pitcher.summary,
+				};
+				let batter = {
+					title: "batter",
+					headshot: game.competitions[0].situation.batter.athlete.headshot,
+					displayName: game.competitions[0].situation.batter.athlete.shortName,
+					teamAbr:
+						game.competitions[0].situation.batter.athlete.team.id === homeTeam[0].team.id
+							? homeTeam[0].team.abbreviation
+							: awayTeam[0].team.abbreviation,
+					position: game.competitions[0].situation.batter.athlete.position,
+					displayValue: game.competitions[0].situation.batter.summary,
+				};
+				athletes.push(pitcher, batter);
 			} else athletes.push(awayAthlete, homeAthlete);
 		} else if (game.competitions[0].status.type.completed && (sportName === "NHL" || sportName === "MLB")) {
 			athletes =
