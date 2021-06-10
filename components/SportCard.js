@@ -199,7 +199,7 @@ class SportCard extends Component {
 					displayValue: game.competitions[0].situation.pitcher.summary,
 				};
 				let batter = {
-					title: "batter",
+					title: "Batter",
 					headshot: game.competitions[0].situation.batter.athlete.headshot,
 					displayName: game.competitions[0].situation.batter.athlete.shortName,
 					teamAbr:
