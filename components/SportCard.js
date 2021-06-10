@@ -102,6 +102,7 @@ class SportCard extends Component {
 				teamAbr: awayTeam[0].team.abbreviation,
 				position: awayAthlete.leaders[0].athlete.position.abbreviation,
 				displayValue: awayAthlete.leaders[0].displayValue,
+				type: awayAthlete.abbreviation,
 			};
 		}
 		if (homeAthlete) {
@@ -112,6 +113,7 @@ class SportCard extends Component {
 				teamAbr: homeTeam[0].team.abbreviation,
 				position: homeAthlete.leaders[0].athlete.position.abbreviation,
 				displayValue: homeAthlete.leaders[0].displayValue,
+				type: homeAthlete.abbreviation,
 			};
 		}
 
@@ -138,6 +140,7 @@ class SportCard extends Component {
 					teamAbr: awayTeam[0].team.abbreviation,
 					position: athlete.athlete.position,
 					displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
+					type: awayAthlete.abbreviation,
 				};
 			});
 			homeAthlete = homeTeam[0].probables.map((athlete) => {
@@ -158,6 +161,7 @@ class SportCard extends Component {
 					teamAbr: homeTeam[0].team.abbreviation,
 					position: athlete.athlete.position,
 					displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
+					type: homeAthlete.abbreviation,
 				};
 			});
 			athletes.push(awayAthlete, homeAthlete);
@@ -222,7 +226,6 @@ class SportCard extends Component {
 
 		return {
 			sportName: sportName,
-			status: game.competitions[0].status,
 			athletes: athletes.flat(),
 		};
 	}
@@ -231,7 +234,7 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			console.log(game);
+			// console.log(game);
 			return (
 				<Container>
 					<Row>
