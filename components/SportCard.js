@@ -169,7 +169,8 @@ class SportCard extends Component {
 		} else if (
 			game.competitions[0].status.type.description === "In Progress" ||
 			game.competitions[0].status.type.description === "End of Period" ||
-			game.competitions[0].status.type.description === "Halftime"
+			game.competitions[0].status.type.description === "Halftime" ||
+			game.competitions[0].status.type.description === "Rain Delay"
 		) {
 			if (game.competitions[0].situation.dueUp) {
 				athletes = game.competitions[0].situation.dueUp.map((athlete) => {
@@ -230,7 +231,7 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			// console.log(game);
+			console.log(game);
 			return (
 				<Container>
 					<Row>
