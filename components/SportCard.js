@@ -89,19 +89,29 @@ class SportCard extends Component {
 
 	gameLeadersHelper(game, sportName) {
 		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
-		let homeAthlete, homeLeader, awayAthlete, awayLeader;
 		let athletes = [];
 
-		awayLeader = awayTeam[0].leaders ? awayTeam[0].leaders.pop() : awayTeam[0].leaders;
-		if (awayLeader) {
-			awayLeader.leaders[0].athlete.team = awayTeam[0].team;
-			awayLeader = awayLeader.leaders[0];
+		let awayAthlete = awayTeam[0].leaders ? awayTeam[0].leaders.pop() : awayTeam[0].leaders;
+		let homeAthlete = homeTeam[0].leaders ? homeTeam[0].leaders.pop() : homeTeam[0].leaders;
+		if (awayAthlete) {
+			awayAthlete = {
+				title: "PLAYERS TO WATCH",
+				headshot: awayAthlete.leaders[0].athlete.headshot,
+				displayName: awayAthlete.leaders[0].athlete.displayName,
+				teamAbr: awayTeam[0].team.abbreviation,
+				position: awayAthlete.leaders[0].athlete.position.abbreviation,
+				displayValue: awayAthlete.leaders[0].displayValue,
+			};
 		}
-
-		homeLeader = homeTeam[0].leaders ? homeTeam[0].leaders.pop() : homeTeam[0].leaders;
-		if (homeLeader) {
-			homeLeader.leaders[0].athlete.team = homeTeam[0].team;
-			homeLeader = homeLeader.leaders[0];
+		if (homeAthlete) {
+			homeAthlete = {
+				title: "PLAYERS TO WATCH",
+				headshot: homeAthlete.leaders[0].athlete.headshot,
+				displayName: homeAthlete.leaders[0].athlete.displayName,
+				teamAbr: homeTeam[0].team.abbreviation,
+				position: homeAthlete.leaders[0].athlete.position.abbreviation,
+				displayValue: homeAthlete.leaders[0].displayValue,
+			};
 		}
 
 		if (
@@ -109,33 +119,71 @@ class SportCard extends Component {
 				game.competitions[0].status.type.name === "STATUS_POSTPONED") &&
 			sportName === "MLB"
 		) {
-			awayAthlete = awayTeam[0].probables ? awayTeam[0].probables[0] : awayTeam[0].probables;
-			if (awayAthlete) awayAthlete.athlete.team = awayTeam[0].team;
-			homeAthlete = homeTeam[0].probables ? homeTeam[0].probables[0] : homeTeam[0].probables;
-			if (homeAthlete) homeAthlete.athlete.team = homeTeam[0].team;
+			awayAthlete = awayTeam[0].probables.map((athlete) => {
+				let wins = athlete.statistics.filter((stat) => {
+					return stat.name === "wins";
+				});
+				let losses = athlete.statistics.filter((stat) => {
+					return stat.name === "losses";
+				});
+				let era = athlete.statistics.filter((stat) => {
+					return stat.name === "ERA";
+				});
+
+				return {
+					title: athlete.displayName,
+					headshot: athlete.athlete.headshot,
+					displayName: athlete.athlete.displayName,
+					teamAbr: awayTeam[0].team.abbreviation,
+					position: athlete.athlete.position,
+					displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
+				};
+			});
+			homeAthlete = homeTeam[0].probables.map((athlete) => {
+				let wins = athlete.statistics.filter((stat) => {
+					return stat.name === "wins";
+				});
+				let losses = athlete.statistics.filter((stat) => {
+					return stat.name === "losses";
+				});
+				let era = athlete.statistics.filter((stat) => {
+					return stat.name === "ERA";
+				});
+
+				return {
+					title: athlete.displayName,
+					headshot: athlete.athlete.headshot,
+					displayName: athlete.athlete.displayName,
+					teamAbr: homeTeam[0].team.abbreviation,
+					position: athlete.athlete.position,
+					displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
+				};
+			});
 			athletes.push(awayAthlete, homeAthlete);
 		} else if (
 			game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
 			game.competitions[0].status.type.name === "STATUS_POSTPONED"
 		) {
-			athletes.push(awayLeader, homeLeader);
+			athletes.push(awayAthlete, homeAthlete);
 		} else if (
 			game.competitions[0].status.type.description === "In Progress" ||
 			game.competitions[0].status.type.description === "End of Period" ||
 			game.competitions[0].status.type.description === "Halftime"
 		) {
 			if (game.competitions[0].situation.dueUp) {
+				console.log(game.competitions[0].situation.dueUp);
 				athletes.push(game.competitions[0].situation.dueUp);
-			} else if (game.competitions[0].situation.putcher && game.competitions[0].situation.batter) {
+			} else if (game.competitions[0].situation.pitcher && game.competitions[0].situation.batter) {
+				console.log(game.competitions[0].situation.pitcher, game.competitions[0].situation.batter);
 				athletes.push(game.competitions[0].situation.pitcher, game.competitions[0].situation.batter);
-			} else athletes.push(awayLeader, homeLeader);
+			} else athletes.push(awayAthlete, homeAthlete);
 		} else if (game.competitions[0].status.type.completed && (sportName === "NHL" || sportName === "MLB")) {
 			athletes =
 				sportName === "NHL"
 					? game.competitions[0].status.featuredAthletes.splice(2, 5)
 					: game.competitions[0].status.featuredAthletes;
 		} else if (game.competitions[0].status.type.completed) {
-			athletes.push(awayLeader, homeLeader);
+			athletes.push(awayAthlete, homeAthlete);
 		}
 
 		return {
@@ -149,7 +197,7 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			console.log(game);
+			// console.log(game);
 			return (
 				<Container>
 					<Row>

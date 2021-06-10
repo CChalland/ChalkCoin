@@ -7,14 +7,18 @@ class GameLeader extends Component {
 		this.state;
 	}
 
-	gameLeadersHelper() {}
+	gameLeadersHelper(gameLeadersData, sportName) {
+		let athletes = gameLeadersData.athletes;
+
+		console.log(gameLeadersData);
+		return athletes;
+	}
 
 	renderGameLeaders() {
 		const { gameLeadersData, sportName } = this.props;
+		const athletes = this.gameLeadersHelper(gameLeadersData, sportName);
 
-		console.log(gameLeadersData);
-
-		let gameAthletes = gameLeadersData.athletes.map((athlete) => {
+		let gameAthletes = athletes.map((athlete) => {
 			// console.log(athlete);
 
 			if (null) {
@@ -31,8 +35,7 @@ class GameLeader extends Component {
 				);
 			}
 		});
-		// console.log(gameLeadersData);
-		// console.log(athletes);
+
 		return (
 			<Container>
 				<Row>
