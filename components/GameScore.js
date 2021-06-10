@@ -34,7 +34,7 @@ class GameScore extends Component {
 		} else if (sportName === "MLB") {
 			title = (
 				<Row className="h6 align-items-center">
-					<Col>{gameScoreCardData.shortDetail}</Col>
+					<Col>{gameScoreCardData.detail}</Col>
 					<Col>
 						<ul className="list-inline">
 							<li className="list-inline-item">{"R"}</li>
