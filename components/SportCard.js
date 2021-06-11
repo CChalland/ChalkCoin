@@ -122,48 +122,53 @@ class SportCard extends Component {
 				game.competitions[0].status.type.name === "STATUS_POSTPONED") &&
 			sportName === "MLB"
 		) {
-			awayAthlete = awayTeam[0].probables.map((athlete) => {
-				let wins = athlete.statistics.filter((stat) => {
-					return stat.name === "wins";
-				});
-				let losses = athlete.statistics.filter((stat) => {
-					return stat.name === "losses";
-				});
-				let era = athlete.statistics.filter((stat) => {
-					return stat.name === "ERA";
-				});
+			if (awayTeam[0].probables) {
+				awayAthlete = awayTeam[0].probables.map((athlete) => {
+					let wins = athlete.statistics.filter((stat) => {
+						return stat.name === "wins";
+					});
+					let losses = athlete.statistics.filter((stat) => {
+						return stat.name === "losses";
+					});
+					let era = athlete.statistics.filter((stat) => {
+						return stat.name === "ERA";
+					});
 
-				return {
-					title: athlete.displayName,
-					headshot: athlete.athlete.headshot,
-					displayName: athlete.athlete.displayName,
-					teamAbr: awayTeam[0].team.abbreviation,
-					position: athlete.athlete.position,
-					displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
-					type: awayAthlete.abbreviation,
-				};
-			});
-			homeAthlete = homeTeam[0].probables.map((athlete) => {
-				let wins = athlete.statistics.filter((stat) => {
-					return stat.name === "wins";
+					return {
+						title: athlete.displayName,
+						headshot: athlete.athlete.headshot,
+						displayName: athlete.athlete.displayName,
+						teamAbr: awayTeam[0].team.abbreviation,
+						position: athlete.athlete.position,
+						displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
+						type: awayAthlete.abbreviation,
+					};
 				});
-				let losses = athlete.statistics.filter((stat) => {
-					return stat.name === "losses";
-				});
-				let era = athlete.statistics.filter((stat) => {
-					return stat.name === "ERA";
-				});
+			}
+			if (homeTeam[0].probables) {
+				homeAthlete = homeTeam[0].probables.map((athlete) => {
+					let wins = athlete.statistics.filter((stat) => {
+						return stat.name === "wins";
+					});
+					let losses = athlete.statistics.filter((stat) => {
+						return stat.name === "losses";
+					});
+					let era = athlete.statistics.filter((stat) => {
+						return stat.name === "ERA";
+					});
 
-				return {
-					title: athlete.displayName,
-					headshot: athlete.athlete.headshot,
-					displayName: athlete.athlete.displayName,
-					teamAbr: homeTeam[0].team.abbreviation,
-					position: athlete.athlete.position,
-					displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
-					type: homeAthlete.abbreviation,
-				};
-			});
+					return {
+						title: athlete.displayName,
+						headshot: athlete.athlete.headshot,
+						displayName: athlete.athlete.displayName,
+						teamAbr: homeTeam[0].team.abbreviation,
+						position: athlete.athlete.position,
+						displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
+						type: homeAthlete.abbreviation,
+					};
+				});
+			}
+
 			athletes.push(awayAthlete, homeAthlete);
 		} else if (
 			game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
@@ -234,7 +239,7 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			// console.log(game);
+			console.log(game);
 			return (
 				<Container>
 					<Row>
