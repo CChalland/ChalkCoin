@@ -10,6 +10,17 @@ class GameLeader extends Component {
 	gameLeadersHelper(gameLeadersData, sportName) {
 		let athletes = gameLeadersData.athletes;
 
+		// ** Add conditional when athlete.displayValue is undefined **
+		// let wins = athlete.statistics.filter((stat) => {
+		// 	return stat.name === "wins";
+		// });
+		// let losses = athlete.statistics.filter((stat) => {
+		// 	return stat.name === "losses";
+		// });
+		// let era = athlete.statistics.filter((stat) => {
+		// 	return stat.name === "ERA";
+		// });
+
 		console.log(gameLeadersData);
 		return athletes;
 	}

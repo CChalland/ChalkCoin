@@ -124,51 +124,30 @@ class SportCard extends Component {
 		) {
 			if (awayTeam[0].probables) {
 				awayAthlete = awayTeam[0].probables.map((athlete) => {
-					let wins = athlete.statistics.filter((stat) => {
-						return stat.name === "wins";
-					});
-					let losses = athlete.statistics.filter((stat) => {
-						return stat.name === "losses";
-					});
-					let era = athlete.statistics.filter((stat) => {
-						return stat.name === "ERA";
-					});
-
 					return {
 						title: athlete.displayName,
 						headshot: athlete.athlete.headshot,
 						displayName: athlete.athlete.displayName,
 						teamAbr: awayTeam[0].team.abbreviation,
 						position: athlete.athlete.position,
-						displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
+						statistics: athlete.statistics,
 						type: awayAthlete.abbreviation,
 					};
 				});
 			}
 			if (homeTeam[0].probables) {
 				homeAthlete = homeTeam[0].probables.map((athlete) => {
-					let wins = athlete.statistics.filter((stat) => {
-						return stat.name === "wins";
-					});
-					let losses = athlete.statistics.filter((stat) => {
-						return stat.name === "losses";
-					});
-					let era = athlete.statistics.filter((stat) => {
-						return stat.name === "ERA";
-					});
-
 					return {
 						title: athlete.displayName,
 						headshot: athlete.athlete.headshot,
 						displayName: athlete.athlete.displayName,
 						teamAbr: homeTeam[0].team.abbreviation,
 						position: athlete.athlete.position,
-						displayValue: `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`,
+						statistics: athlete.statistics,
 						type: homeAthlete.abbreviation,
 					};
 				});
 			}
-
 			athletes.push(awayAthlete, homeAthlete);
 		} else if (
 			game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
@@ -220,13 +199,40 @@ class SportCard extends Component {
 				};
 				athletes.push(pitcher, batter);
 			} else athletes.push(awayAthlete, homeAthlete);
-		} else if (game.competitions[0].status.type.completed && (sportName === "NHL" || sportName === "MLB")) {
-			athletes =
-				sportName === "NHL"
-					? game.competitions[0].status.featuredAthletes.splice(2, 5)
-					: game.competitions[0].status.featuredAthletes;
 		} else if (game.competitions[0].status.type.completed) {
-			athletes.push(awayAthlete, homeAthlete);
+			if (sportName === "NHL") {
+				athletes = game.competitions[0].status.featuredAthletes.splice(2, 5).map((athlete) => {
+					return {
+						title: athlete.displayName,
+						headshot: athlete.athlete.headshot,
+						displayName: athlete.athlete.displayName,
+						teamAbr:
+							athlete.athlete.team.id === homeTeam[0].team.id
+								? homeTeam[0].team.abbreviation
+								: awayTeam[0].team.abbreviation,
+						position: athlete.athlete.position,
+						statistics: athlete.statistics,
+						type: athlete.abbreviation,
+					};
+				});
+			} else if (sportName === "MLB") {
+				athletes = game.competitions[0].status.featuredAthletes.map((athlete) => {
+					return {
+						title: athlete.displayName,
+						headshot: athlete.athlete.headshot,
+						displayName: athlete.athlete.displayName,
+						teamAbr:
+							athlete.athlete.team.id === homeTeam[0].team.id
+								? homeTeam[0].team.abbreviation
+								: awayTeam[0].team.abbreviation,
+						position: athlete.athlete.position,
+						statistics: athlete.statistics,
+						type: homeAthlete.abbreviation,
+					};
+				});
+			} else {
+				athletes.push(awayAthlete, homeAthlete);
+			}
 		}
 
 		return {
