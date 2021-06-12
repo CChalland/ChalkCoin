@@ -102,7 +102,7 @@ class SportCard extends Component {
 				teamAbr: awayTeam[0].team.abbreviation,
 				position: awayAthlete.leaders[0].athlete.position.abbreviation,
 				displayValue: awayAthlete.leaders[0].displayValue,
-				type: awayAthlete.abbreviation,
+				type: "pre",
 			};
 		}
 		if (homeAthlete) {
@@ -113,7 +113,7 @@ class SportCard extends Component {
 				teamAbr: homeTeam[0].team.abbreviation,
 				position: homeAthlete.leaders[0].athlete.position.abbreviation,
 				displayValue: homeAthlete.leaders[0].displayValue,
-				type: homeAthlete.abbreviation,
+				type: "pre",
 			};
 		}
 
@@ -131,7 +131,8 @@ class SportCard extends Component {
 						teamAbr: awayTeam[0].team.abbreviation,
 						position: athlete.athlete.position,
 						statistics: athlete.statistics,
-						type: awayAthlete.abbreviation,
+						displayValue: null,
+						type: "pre",
 					};
 				});
 			}
@@ -144,7 +145,8 @@ class SportCard extends Component {
 						teamAbr: homeTeam[0].team.abbreviation,
 						position: athlete.athlete.position,
 						statistics: athlete.statistics,
-						type: homeAthlete.abbreviation,
+						displayValue: null,
+						type: "pre",
 					};
 				});
 			}
@@ -172,6 +174,7 @@ class SportCard extends Component {
 								: awayTeam[0].team.abbreviation,
 						position: athlete.athlete.position,
 						displayValue: athlete.summary,
+						type: "dueUp",
 					};
 				});
 			} else if (game.competitions[0].situation.pitcher && game.competitions[0].situation.batter) {
@@ -185,6 +188,7 @@ class SportCard extends Component {
 							: awayTeam[0].team.abbreviation,
 					position: game.competitions[0].situation.pitcher.athlete.position,
 					displayValue: game.competitions[0].situation.pitcher.summary,
+					type: "in",
 				};
 				let batter = {
 					title: "Batter",
@@ -196,14 +200,19 @@ class SportCard extends Component {
 							: awayTeam[0].team.abbreviation,
 					position: game.competitions[0].situation.batter.athlete.position,
 					displayValue: game.competitions[0].situation.batter.summary,
+					type: "in",
 				};
 				athletes.push(pitcher, batter);
-			} else athletes.push(awayAthlete, homeAthlete);
+			} else {
+				awayAthlete.type = "in";
+				homeAthlete.type = "in";
+				athletes.push(awayAthlete, homeAthlete);
+			}
 		} else if (game.competitions[0].status.type.completed) {
 			if (sportName === "NHL") {
 				athletes = game.competitions[0].status.featuredAthletes.splice(2, 5).map((athlete) => {
 					return {
-						title: athlete.displayName,
+						title: athlete.shortDisplayName,
 						headshot: athlete.athlete.headshot,
 						displayName: athlete.athlete.displayName,
 						teamAbr:
@@ -212,13 +221,14 @@ class SportCard extends Component {
 								: awayTeam[0].team.abbreviation,
 						position: athlete.athlete.position,
 						statistics: athlete.statistics,
-						type: athlete.abbreviation,
+						displayValue: null,
+						type: "completed",
 					};
 				});
 			} else if (sportName === "MLB") {
 				athletes = game.competitions[0].status.featuredAthletes.map((athlete) => {
 					return {
-						title: athlete.displayName,
+						title: athlete.shortDisplayName,
 						headshot: athlete.athlete.headshot,
 						displayName: athlete.athlete.displayName,
 						teamAbr:
@@ -227,16 +237,18 @@ class SportCard extends Component {
 								: awayTeam[0].team.abbreviation,
 						position: athlete.athlete.position,
 						statistics: athlete.statistics,
-						type: homeAthlete.abbreviation,
+						displayValue: null,
+						type: "completed",
 					};
 				});
 			} else {
+				awayAthlete.type = "completed";
+				homeAthlete.type = "completed";
 				athletes.push(awayAthlete, homeAthlete);
 			}
 		}
 
 		return {
-			sportName: sportName,
 			athletes: athletes.flat(),
 		};
 	}
@@ -245,7 +257,7 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			console.log(game);
+			// console.log(game);
 			return (
 				<Container>
 					<Row>

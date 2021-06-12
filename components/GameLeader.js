@@ -7,32 +7,75 @@ class GameLeader extends Component {
 		this.state;
 	}
 
-	gameLeadersHelper(gameLeadersData, sportName) {
-		let athletes = gameLeadersData.athletes;
+	leadersHelper(athlete, sportName) {
+		let title, player;
 
-		// ** Add conditional when athlete.displayValue is undefined **
-		// let wins = athlete.statistics.filter((stat) => {
-		// 	return stat.name === "wins";
-		// });
-		// let losses = athlete.statistics.filter((stat) => {
-		// 	return stat.name === "losses";
-		// });
-		// let era = athlete.statistics.filter((stat) => {
-		// 	return stat.name === "ERA";
-		// });
+		if (sportName === "MLB") {
+			if (!athlete.displayValue) {
+				let wins = athlete.statistics.filter((stat) => {
+					return stat.name === "wins";
+				});
+				let losses = athlete.statistics.filter((stat) => {
+					return stat.name === "losses";
+				});
+				let era = athlete.statistics.filter((stat) => {
+					return stat.name === "ERA";
+				});
+				athlete.displayValue = `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`;
+			}
 
-		console.log(gameLeadersData);
-		return athletes;
+			player = (
+				<Row className="align-items-center">
+					<Col md="auto">
+						<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+					</Col>
+					<Col md="auto">
+						<Row className="h6">{athlete.title}</Row>
+						<Row>{athlete.displayName}</Row>
+					</Col>
+					<Col>{athlete.displayValue}</Col>
+				</Row>
+			);
+		} else if (!athlete.displayValue && sportName === "NHL") {
+			let goals = athlete.statistics.filter((stat) => {
+				return stat.name === "goals";
+			});
+			let assists = athlete.statistics.filter((stat) => {
+				return stat.name === "assists";
+			});
+			let points = athlete.statistics.filter((stat) => {
+				return stat.name === "points";
+			});
+			athlete.displayValue = `(${goals}-${assists}, ${points})`;
+
+			player = (
+				<Row className="align-items-center">
+					<Col md="auto">
+						<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+					</Col>
+					<Col md="auto">
+						<Row className="h6">
+							{athlete.displayName}
+							{`${athlete.position} - ${athlete.teamAbr}`}
+						</Row>
+						<Row>{athlete.displayName}</Row>
+					</Col>
+					<Col>{athlete.displayValue}</Col>
+				</Row>
+			);
+		}
+
+		console.log(athlete);
+		return { title, athlete };
 	}
 
 	renderGameLeaders() {
 		const { gameLeadersData, sportName } = this.props;
-		const athletes = this.gameLeadersHelper(gameLeadersData, sportName);
 
-		let gameAthletes = athletes.map((athlete) => {
-			// console.log(athlete);
-
+		let gameAthletes = gameLeadersData.athletes.map((athlete) => {
 			if (athlete) {
+				const { title, player } = this.leadersHelper(athlete, sportName);
+
 				return (
 					<Row className="align-items-center">
 						<Col md="auto">
