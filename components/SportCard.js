@@ -135,7 +135,7 @@ class SportCard extends Component {
 						type: "pre",
 					};
 				});
-			}
+			} else awayAthlete = null;
 			if (homeTeam[0].probables) {
 				homeAthlete = homeTeam[0].probables.map((athlete) => {
 					return {
@@ -149,7 +149,7 @@ class SportCard extends Component {
 						type: "pre",
 					};
 				});
-			}
+			} else homeAthlete = null;
 			athletes.push(awayAthlete, homeAthlete);
 		} else if (
 			game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||

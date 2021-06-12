@@ -11,7 +11,7 @@ class GameLeader extends Component {
 		let title, player;
 
 		if (sportName === "MLB") {
-			if (!athlete.displayValue) {
+			if (athlete && !athlete.displayValue) {
 				let wins = athlete.statistics.filter((stat) => {
 					return stat.name === "wins";
 				});
@@ -24,7 +24,7 @@ class GameLeader extends Component {
 				athlete.displayValue = `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`;
 			}
 
-			if (athlete.type === "pre") {
+			if (athlete && athlete.type === "pre") {
 				title = "PROBABLE PITCHERS";
 				player = (
 					<Row className="align-items-center">
@@ -37,7 +37,7 @@ class GameLeader extends Component {
 						</Col>
 					</Row>
 				);
-			} else if (athlete.type === "dueUp") {
+			} else if (athlete && athlete.type === "dueUp") {
 				title = `DUE UP FOR ${athlete.teamAbr}`;
 				player = (
 					<Row className="align-items-center">
@@ -50,7 +50,7 @@ class GameLeader extends Component {
 						</Col>
 					</Row>
 				);
-			} else if (athlete.type === "in") {
+			} else if (athlete && athlete.type === "in") {
 				player = (
 					<Container>
 						<Row>{athlete.title}</Row>
@@ -65,7 +65,7 @@ class GameLeader extends Component {
 						</Row>
 					</Container>
 				);
-			} else if (athlete.type === "completed") {
+			} else if (athlete && athlete.type === "completed") {
 				player = (
 					<Row className="align-items-center">
 						<Col md="auto">
@@ -78,8 +78,18 @@ class GameLeader extends Component {
 						<Col>{athlete.displayValue}</Col>
 					</Row>
 				);
+			} else {
+				title = "PROBABLE PITCHERS";
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={null} roundedCircle />
+						</Col>
+						<Col md="auto">{"Undecided"}</Col>
+					</Row>
+				);
 			}
-		} else if (sportName === "NHL") {
+		} else if (athlete && sportName === "NHL") {
 			if (!athlete.displayValue) {
 				let goals = athlete.statistics.filter((stat) => {
 					return stat.name === "goals";
@@ -176,8 +186,6 @@ class GameLeader extends Component {
 				);
 			}
 		}
-
-		console.log(athlete);
 		return { title, player };
 	}
 
@@ -186,12 +194,11 @@ class GameLeader extends Component {
 		let gameTitle;
 
 		let athletes = gameLeadersData.athletes.map((athlete) => {
-			if (athlete) {
-				const { title, player } = this.leadersHelper(athlete, sportName);
-				gameTitle = title;
+			// console.log(athlete);
+			const { title, player } = this.leadersHelper(athlete, sportName);
+			gameTitle = title;
 
-				return player;
-			}
+			return player;
 		});
 
 		return (
