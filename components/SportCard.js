@@ -82,10 +82,19 @@ class SportCard extends Component {
 		};
 	}
 
-	gamePlayHelper(game) {
-		const { sportName } = this.props;
+	gamePlayHelper(game, sportName) {
+		let status, venue, tickets, weather;
 
-		return game;
+		console.log(game);
+
+		if (game.weather) {
+			weather = game.weather;
+		}
+		venue = game.competitions[0].venue;
+		tickets = game.competitions[0].tickets;
+		status = game.competitions[0].status;
+
+		return { status, venue, tickets, weather };
 	}
 
 	gameLeadersHelper(game, sportName) {
@@ -270,7 +279,7 @@ class SportCard extends Component {
 						</Col>
 
 						<Col>
-							<GamePlay gamePlayData={this.gamePlayHelper(game)} />
+							<GamePlay gamePlayData={this.gamePlayHelper(game, sportName)} />
 						</Col>
 
 						<Col>
