@@ -265,7 +265,7 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			console.log(game);
+			// console.log(game);
 			return (
 				<Container>
 					<Row>
