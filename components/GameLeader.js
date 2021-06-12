@@ -11,7 +11,7 @@ class GameLeader extends Component {
 		let title, player;
 
 		if (sportName === "MLB") {
-			if (athlete && !athlete.displayValue) {
+			if (athlete && !athlete.displayValue && athlete.statistics.length > 0) {
 				let wins = athlete.statistics.filter((stat) => {
 					return stat.name === "wins";
 				});
@@ -38,7 +38,7 @@ class GameLeader extends Component {
 					</Row>
 				);
 			} else if (athlete && athlete.type === "dueUp") {
-				title = `DUE UP FOR ${athlete.teamAbr}`;
+				title = `DUE UP FOR ${athlete.team.toUpperCase()}`;
 				player = (
 					<Row className="align-items-center">
 						<Col md="auto">
@@ -52,7 +52,7 @@ class GameLeader extends Component {
 				);
 			} else if (athlete && athlete.type === "in") {
 				player = (
-					<Container>
+					<div>
 						<Row>{athlete.title}</Row>
 						<Row className="align-items-center">
 							<Col md="auto">
@@ -63,7 +63,7 @@ class GameLeader extends Component {
 								<Row>{athlete.displayValue}</Row>
 							</Col>
 						</Row>
-					</Container>
+					</div>
 				);
 			} else if (athlete && athlete.type === "completed") {
 				player = (
@@ -194,7 +194,7 @@ class GameLeader extends Component {
 		let gameTitle;
 
 		let athletes = gameLeadersData.athletes.map((athlete) => {
-			// console.log(athlete);
+			console.log(athlete);
 			const { title, player } = this.leadersHelper(athlete, sportName);
 			gameTitle = title;
 

@@ -83,18 +83,17 @@ class SportCard extends Component {
 	}
 
 	gamePlayHelper(game, sportName) {
-		let status, venue, tickets, weather;
+		let status, situation, venue, tickets, weather;
 
 		console.log(game);
 
-		if (game.weather) {
-			weather = game.weather;
-		}
+		if (game.weather) weather = game.weather;
+		if (game.competitions[0].situation) situation = game.competitions[0].situation;
 		venue = game.competitions[0].venue;
 		tickets = game.competitions[0].tickets;
 		status = game.competitions[0].status;
 
-		return { status, venue, tickets, weather };
+		return { status, situation, venue, tickets, weather };
 	}
 
 	gameLeadersHelper(game, sportName) {
@@ -108,7 +107,7 @@ class SportCard extends Component {
 				title: "PLAYERS TO WATCH",
 				headshot: awayAthlete.leaders[0].athlete.headshot,
 				displayName: awayAthlete.leaders[0].athlete.displayName,
-				teamAbr: awayTeam[0].team.abbreviation,
+				team: awayTeam[0].team.abbreviation,
 				position: awayAthlete.leaders[0].athlete.position.abbreviation,
 				displayValue: awayAthlete.leaders[0].displayValue,
 				type: "pre",
@@ -119,7 +118,7 @@ class SportCard extends Component {
 				title: "PLAYERS TO WATCH",
 				headshot: homeAthlete.leaders[0].athlete.headshot,
 				displayName: homeAthlete.leaders[0].athlete.displayName,
-				teamAbr: homeTeam[0].team.abbreviation,
+				team: homeTeam[0].team.abbreviation,
 				position: homeAthlete.leaders[0].athlete.position.abbreviation,
 				displayValue: homeAthlete.leaders[0].displayValue,
 				type: "pre",
@@ -137,7 +136,7 @@ class SportCard extends Component {
 						title: athlete.displayName,
 						headshot: athlete.athlete.headshot,
 						displayName: athlete.athlete.displayName,
-						teamAbr: awayTeam[0].team.abbreviation,
+						team: awayTeam[0].team.abbreviation,
 						position: athlete.athlete.position,
 						statistics: athlete.statistics,
 						displayValue: null,
@@ -151,7 +150,7 @@ class SportCard extends Component {
 						title: athlete.displayName,
 						headshot: athlete.athlete.headshot,
 						displayName: athlete.athlete.displayName,
-						teamAbr: homeTeam[0].team.abbreviation,
+						team: homeTeam[0].team.abbreviation,
 						position: athlete.athlete.position,
 						statistics: athlete.statistics,
 						displayValue: null,
@@ -177,10 +176,10 @@ class SportCard extends Component {
 						title: "DUE UP FOR",
 						headshot: athlete.athlete.headshot,
 						displayName: athlete.athlete.shortName,
-						teamAbr:
+						team:
 							athlete.athlete.team.id === homeTeam[0].team.id
-								? homeTeam[0].team.abbreviation
-								: awayTeam[0].team.abbreviation,
+								? homeTeam[0].team.location
+								: awayTeam[0].team.location,
 						position: athlete.athlete.position,
 						displayValue: athlete.summary,
 						type: "dueUp",
@@ -191,7 +190,7 @@ class SportCard extends Component {
 					title: "Pitcher",
 					headshot: game.competitions[0].situation.pitcher.athlete.headshot,
 					displayName: game.competitions[0].situation.pitcher.athlete.shortName,
-					teamAbr:
+					team:
 						game.competitions[0].situation.pitcher.athlete.team.id === homeTeam[0].team.id
 							? homeTeam[0].team.abbreviation
 							: awayTeam[0].team.abbreviation,
@@ -203,7 +202,7 @@ class SportCard extends Component {
 					title: "Batter",
 					headshot: game.competitions[0].situation.batter.athlete.headshot,
 					displayName: game.competitions[0].situation.batter.athlete.shortName,
-					teamAbr:
+					team:
 						game.competitions[0].situation.batter.athlete.team.id === homeTeam[0].team.id
 							? homeTeam[0].team.abbreviation
 							: awayTeam[0].team.abbreviation,
@@ -224,7 +223,7 @@ class SportCard extends Component {
 						title: athlete.shortDisplayName,
 						headshot: athlete.athlete.headshot,
 						displayName: athlete.athlete.displayName,
-						teamAbr:
+						team:
 							athlete.athlete.team.id === homeTeam[0].team.id
 								? homeTeam[0].team.abbreviation
 								: awayTeam[0].team.abbreviation,
@@ -240,7 +239,7 @@ class SportCard extends Component {
 						title: athlete.shortDisplayName,
 						headshot: athlete.athlete.headshot,
 						displayName: athlete.athlete.displayName,
-						teamAbr:
+						team:
 							athlete.athlete.team.id === homeTeam[0].team.id
 								? homeTeam[0].team.abbreviation
 								: awayTeam[0].team.abbreviation,
@@ -266,7 +265,7 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			// console.log(game);
+			console.log(game);
 			return (
 				<Container>
 					<Row>
