@@ -83,18 +83,19 @@ class SportCard extends Component {
 	}
 
 	gamePlayHelper(game, sportName) {
-		let status, situation, headlines, venue, tickets, weather;
+		let status, situation, headlines, venue, tickets, weather, odds;
 
 		console.log(game);
 
 		if (game.weather) weather = game.weather;
 		if (game.competitions[0].situation) situation = game.competitions[0].situation;
 		if (game.competitions[0].headlines) headlines = game.competitions[0].headlines[0];
+		if (game.competitions[0].odds) odds = game.competitions[0].odds[0];
 		venue = game.competitions[0].venue;
-		tickets = game.competitions[0].tickets;
+		if (game.competitions[0].tickets) tickets = game.competitions[0].tickets[0];
 		status = game.competitions[0].status;
 
-		return { status, situation, headlines, venue, tickets, weather };
+		return { status, situation, headlines, venue, tickets, weather, odds };
 	}
 
 	gameLeadersHelper(game, sportName) {
@@ -266,7 +267,7 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			// console.log(game);
+			console.log(game);
 			return (
 				<Container>
 					<Row>
