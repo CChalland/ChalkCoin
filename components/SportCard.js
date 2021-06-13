@@ -91,9 +91,9 @@ class SportCard extends Component {
 		if (game.competitions[0].situation) situation = game.competitions[0].situation;
 		if (game.competitions[0].headlines) headlines = game.competitions[0].headlines[0];
 		if (game.competitions[0].odds) odds = game.competitions[0].odds[0];
-		venue = game.competitions[0].venue;
 		if (game.competitions[0].tickets) tickets = game.competitions[0].tickets[0];
 		status = game.competitions[0].status;
+		venue = game.competitions[0].venue;
 
 		return { status, situation, headlines, venue, tickets, weather, odds };
 	}
