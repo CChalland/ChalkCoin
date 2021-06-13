@@ -15,7 +15,7 @@ class GamePlay extends Component {
 
 		if (gamePlayData.status.type.name === "STATUS_SCHEDULED") {
 			if (gamePlayData.weather) {
-				weather = <Col></Col>;
+				weather = <Col>{`${gamePlayData.weather.temperature} °F`}</Col>;
 			}
 
 			if (gamePlayData.tickets) {
