@@ -9,7 +9,7 @@ class GamePlay extends Component {
 
 	renderGamePlays() {
 		const { gamePlayData } = this.props;
-		let venue, weather, tickets, odds, lastPlay;
+		let venue, weather, tickets, odds, lastPlay, headline;
 
 		console.log(gamePlayData);
 
@@ -35,6 +35,14 @@ class GamePlay extends Component {
 					<Row>{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
 				</div>
 			);
+		} else if (gamePlayData.status.type.state === "in") {
+		} else if (gamePlayData.status.type.completed) {
+			headline = (
+				<Row>
+					<div>{gamePlayData.headlines.shortLinkText}</div>
+					<div>{gamePlayData.headlines.description}</div>
+				</Row>
+			);
 		}
 		return (
 			<Container>
@@ -42,7 +50,7 @@ class GamePlay extends Component {
 					{venue}
 					{weather}
 				</Row>
-
+				{headline}
 				{tickets}
 				{odds}
 			</Container>
