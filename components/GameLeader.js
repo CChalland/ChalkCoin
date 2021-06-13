@@ -143,8 +143,9 @@ class GameLeader extends Component {
 					</Row>
 				);
 			}
-		} else if (sportName === "NFL") {
-		} else {
+		} else if (athlete && sportName === "NFL") {
+		} else if (athlete) {
+			console.log(athlete);
 			if (athlete.type === "pre") {
 				title = athlete.title;
 				player = (

@@ -37,12 +37,12 @@ class GamePlay extends Component {
 			);
 		} else if (gamePlayData.status.type.state === "in") {
 		} else if (gamePlayData.status.type.completed) {
-			headline = (
-				<Row>
-					<div>{gamePlayData.headlines.shortLinkText}</div>
-					<div>{gamePlayData.headlines.description}</div>
-				</Row>
-			);
+			// headline = (
+			// 	<Row>
+			// 		<div>{gamePlayData.headlines.shortLinkText}</div>
+			// 		<div>{gamePlayData.headlines.description}</div>
+			// 	</Row>
+			// );
 		}
 		return (
 			<Container>

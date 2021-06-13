@@ -85,7 +85,7 @@ class SportCard extends Component {
 	gamePlayHelper(game, sportName) {
 		let status, situation, headlines, venue, tickets, weather, odds;
 
-		console.log(game);
+		// console.log(game);
 
 		if (game.weather) weather = game.weather;
 		if (game.competitions[0].situation) situation = game.competitions[0].situation;
@@ -214,8 +214,8 @@ class SportCard extends Component {
 				};
 				athletes.push(pitcher, batter);
 			} else {
-				awayAthlete.type = "in";
-				homeAthlete.type = "in";
+				if (awayAthlete) awayAthlete.type = "in";
+				if (homeAthlete) homeAthlete.type = "in";
 				athletes.push(awayAthlete, homeAthlete);
 			}
 		} else if (game.competitions[0].status.type.completed) {
