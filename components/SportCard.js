@@ -85,7 +85,7 @@ class SportCard extends Component {
 	gamePlayHelper(game, sportName) {
 		let status, situation, headlines, venue, tickets, weather, odds;
 
-		// console.log(game);
+		console.log(game);
 
 		if (game.weather) weather = game.weather;
 		if (game.competitions[0].situation) situation = game.competitions[0].situation;

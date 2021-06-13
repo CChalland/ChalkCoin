@@ -91,16 +91,26 @@ class GameLeader extends Component {
 			}
 		} else if (athlete && sportName === "NHL") {
 			if (!athlete.displayValue) {
-				let goals = athlete.statistics.filter((stat) => {
-					return stat.name === "goals";
-				});
-				let assists = athlete.statistics.filter((stat) => {
-					return stat.name === "assists";
-				});
-				let points = athlete.statistics.filter((stat) => {
-					return stat.name === "points";
-				});
-				athlete.displayValue = `(${goals}-${assists}, ${points})`;
+				if (athlete.position === "G") {
+					let saves = athlete.statistics.filter((stat) => {
+						return stat.name === "saves";
+					});
+					let savesPrecent = athlete.statistics.filter((stat) => {
+						return stat.name === "savePct";
+					});
+					athlete.displayValue = `${saves[0].displayValue} SV. ${savesPrecent[0].displayValue}`;
+				} else {
+					let goals = athlete.statistics.filter((stat) => {
+						return stat.name === "goals";
+					});
+					let assists = athlete.statistics.filter((stat) => {
+						return stat.name === "assists";
+					});
+					let plusMinus = athlete.statistics.filter((stat) => {
+						return stat.name === "plusMinus";
+					});
+					athlete.displayValue = `${goals[0].displayValue} G, ${assists[0].displayValue} A, ${plusMinus[0].displayValue}`;
+				}
 			}
 
 			if (athlete.type === "pre") {
@@ -194,7 +204,7 @@ class GameLeader extends Component {
 		let gameTitle;
 
 		let athletes = gameLeadersData.athletes.map((athlete) => {
-			// console.log(athlete);
+			console.log(athlete);
 			const { title, player } = this.leadersHelper(athlete, sportName);
 			gameTitle = title;
 
