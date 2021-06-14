@@ -83,7 +83,8 @@ class SportCard extends Component {
 	}
 
 	gamePlayHelper(game, sportName) {
-		let status, situation, headlines, venue, tickets, weather, odds;
+		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
+		let status, situation, headlines, venue, tickets, weather, odds, lastPlay;
 
 		console.log(game);
 
@@ -95,7 +96,17 @@ class SportCard extends Component {
 		status = game.competitions[0].status;
 		venue = game.competitions[0].venue;
 
-		return { status, situation, headlines, venue, tickets, weather, odds };
+		if (game.status.type.state === "in") {
+			lastPlay = {
+				athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
+				text: game.competitions[0].situation.lastPlay.text,
+				team:
+					game.competitions[0].situation.lastPlay.team.id === homeTeam[0].team.id
+						? homeTeam[0].team.abbreviation
+						: awayTeam[0].team.abbreviation,
+			};
+		}
+		return { status, situation, headlines, venue, tickets, weather, odds, lastPlay };
 	}
 
 	gameLeadersHelper(game, sportName) {

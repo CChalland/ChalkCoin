@@ -7,6 +7,8 @@ class GamePlay extends Component {
 		this.state = {};
 	}
 
+	basesHelper(bases) {}
+
 	renderGamePlays() {
 		const { gamePlayData } = this.props;
 		let venue, weather, tickets, odds, lastPlay, headline;
