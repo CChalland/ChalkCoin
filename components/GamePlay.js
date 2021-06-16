@@ -27,7 +27,7 @@ class GamePlay extends Component {
 			},
 		};
 		return (
-			<Container style={styles.grid}>
+			<Container>
 				<Row>
 					<Col sm="auto">
 						<Row style={styles.row}>
@@ -70,6 +70,7 @@ class GamePlay extends Component {
 						</div>
 					</Col>
 				</Row>
+				<Row>{"LAST PLAY: "}</Row>
 			</Container>
 		);
 	}
