@@ -75,7 +75,7 @@ class GamePlay extends Component {
 
 	renderGamePlays() {
 		const { gamePlayData, sportName } = this.props;
-		let venue, weather, tickets, odds, lastPlay, headline;
+		let venue, weather, tickets, odds, lastPlayBaseball, lastPlay, headline;
 
 		console.log(gamePlayData);
 
@@ -106,9 +106,10 @@ class GamePlay extends Component {
 		} else if (gamePlayData.status.type.state === "in") {
 			if (sportName === "NFL") {
 			} else if (sportName === "NHL") {
+				lastPlay = this.baseballHelper((bases = 1));
 			} else if (sportName === "MLB") {
 			} else {
-				lastPlay = (
+				lastPlayBaseball = (
 					<div>
 						<Row>
 							<h6>{"Last Play"}</h6>
@@ -131,19 +132,19 @@ class GamePlay extends Component {
 				);
 			}
 		}
-		let bases = 1;
-		return this.baseballHelper(bases);
-		// return (
-		// 	<Container>
-		// 		<Row>
-		// 			{venue}
-		// 			{weather}
-		// 		</Row>
-		// 		{headline}
-		// 		{tickets}
-		// 		{odds}
-		// 	</Container>
-		// );
+
+		return (
+			<Container>
+				<Row>
+					{venue}
+					{weather}
+				</Row>
+				{lastPlay}
+				{headline}
+				{tickets}
+				{odds}
+			</Container>
+		);
 	}
 
 	render() {
