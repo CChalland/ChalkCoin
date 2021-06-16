@@ -7,7 +7,7 @@ class GamePlay extends Component {
 		this.state = {};
 	}
 
-	basesHelper(bases) {
+	baseballHelper(bases) {
 		const styles = {
 			grid: {
 				paddingLeft: 0,
@@ -28,17 +28,45 @@ class GamePlay extends Component {
 		};
 		return (
 			<Container style={styles.grid}>
-				<Row style={styles.row}>
-					<Col sm="auto" style={styles.col}>
-						<div class="diamond second-base"></div>
+				<Row>
+					<Col sm="auto">
+						<Row style={styles.row}>
+							<Col sm="auto" style={styles.col}>
+								<div className="diamond second-base"></div>
+							</Col>
+						</Row>
+						<Row style={styles.col}>
+							<Col sm="auto" style={styles.center}>
+								<div className="diamond third-base"></div>
+							</Col>
+							<Col sm="auto" style={styles.col}>
+								<div className="diamond first-base"></div>
+							</Col>
+						</Row>
 					</Col>
-				</Row>
-				<Row style={styles.col}>
-					<Col sm="auto" style={styles.center}>
-						<div class="diamond third-base"></div>
-					</Col>
-					<Col sm="auto" style={styles.col}>
-						<div class="diamond first-base"></div>
+					<Col sm="auto">
+						<div className="circleGraphs">
+							<div className="circleGraph  four">
+								<span className="abbrev">B</span>
+								<span className="circle balls active"></span>
+								<span className="circle balls"></span>
+								<span className="circle balls "></span>
+								<span className="circle balls "></span>
+							</div>
+
+							<div className="circleGraph ">
+								<span className="abbrev">S</span>
+								<span className="circle strikes active"></span>
+								<span className="circle strikes "></span>
+							</div>
+
+							<div className="circleGraph ">
+								<span className="abbrev">O</span>
+								<span className="circle outs active"></span>
+								<span className="circle outs "></span>
+								<span className="circle outs "></span>
+							</div>
+						</div>
 					</Col>
 				</Row>
 			</Container>
@@ -104,7 +132,7 @@ class GamePlay extends Component {
 			}
 		}
 		let bases = 1;
-		return this.basesHelper(bases);
+		return this.baseballHelper(bases);
 		// return (
 		// 	<Container>
 		// 		<Row>
