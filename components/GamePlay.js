@@ -58,6 +58,7 @@ class GamePlay extends Component {
 								<span className="abbrev">S</span>
 								<span className="circle strikes active"></span>
 								<span className="circle strikes "></span>
+								<span className="circle strikes "></span>
 							</div>
 
 							<div className="circleGraph ">
@@ -106,7 +107,7 @@ class GamePlay extends Component {
 		} else if (gamePlayData.status.type.state === "in") {
 			if (sportName === "NFL") {
 			} else if (sportName === "NHL") {
-				lastPlay = this.baseballHelper((bases = 1));
+				lastPlay = this.baseballHelper();
 			} else if (sportName === "MLB") {
 			} else {
 				lastPlayBaseball = (
