@@ -279,7 +279,6 @@ span.abbrev {
   line-height: inherit;
   margin: 0 5px 0 0;
   padding: 0;
-  vertical-align: baseline;
 }
 
 span.circle.balls.active {
@@ -303,7 +302,6 @@ span.circle.balls.active {
   line-height: inherit;
   margin: 0 3px 0 0;
   padding: 0;
-  vertical-align: baseline;
   width: 10px;
 }
 
@@ -328,7 +326,6 @@ span.circle.balls {
   line-height: inherit;
   margin: 0 3px 0 0;
   padding: 0;
-  vertical-align: baseline;
   width: 10px;
 }
 
@@ -375,7 +372,6 @@ span.circle.strikes.active {
   line-height: inherit;
   margin: 0 3px 0 0;
   padding: 0;
-  vertical-align: baseline;
   width: 10px;
 }
 
@@ -400,7 +396,6 @@ span.circle.strikes {
   line-height: inherit;
   margin: 0 3px 0 0;
   padding: 0;
-  vertical-align: baseline;
   width: 10px;
 }
 
@@ -425,7 +420,6 @@ span.circle.outs.active {
   line-height: inherit;
   margin: 0 3px 0 0;
   padding: 0;
-  vertical-align: baseline;
   width: 10px;
 }
 
@@ -450,6 +444,5 @@ span.circle.outs {
   line-height: inherit;
   margin: 0 3px 0 0;
   padding: 0;
-  vertical-align: baseline;
   width: 10px;
 }
