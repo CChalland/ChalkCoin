@@ -32,7 +32,7 @@ class GamePlay extends Component {
 					<Col sm="auto">
 						<Row style={styles.row}>
 							<Col sm="auto" style={styles.col}>
-								<div className="diamond second-base"></div>
+								<div className="diamond second-base active"></div>
 							</Col>
 						</Row>
 						<Row style={styles.col}>
