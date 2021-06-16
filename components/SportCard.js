@@ -100,10 +100,10 @@ class SportCard extends Component {
 			lastPlay = {
 				athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
 				text: game.competitions[0].situation.lastPlay.text,
-				team:
-					game.competitions[0].situation.lastPlay.team.id === homeTeam[0].team.id
-						? homeTeam[0].team.abbreviation
-						: awayTeam[0].team.abbreviation,
+				// team:
+				// 	game.competitions[0].situation.lastPlay.team.id === homeTeam[0].team.id
+				// 		? homeTeam[0].team.abbreviation
+				// 		: awayTeam[0].team.abbreviation,
 			};
 		}
 		return { status, situation, headlines, venue, tickets, weather, odds, lastPlay };
@@ -291,7 +291,7 @@ class SportCard extends Component {
 						</Col>
 
 						<Col>
-							<GamePlay gamePlayData={this.gamePlayHelper(game, sportName)} />
+							<GamePlay gamePlayData={this.gamePlayHelper(game, sportName)} sportName={sportName} />
 						</Col>
 
 						<Col>

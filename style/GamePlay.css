@@ -1,0 +1,107 @@
+div.diamond.second-base {
+  border: 13px solid transparent;
+  border-bottom: 13px solid #0066CC;
+  box-sizing: border-box;
+  clear: both;
+  color: #6C6D6F;
+  font-family: inherit;
+  font-size: 100%;
+  font-stretch: inherit;
+  font-style: inherit;
+  font-variant-caps: inherit;
+  font-variant-east-asian: inherit;
+  font-variant-ligatures: inherit;
+  font-variant-numeric: inherit;
+  font-weight: inherit;
+  height: 0;
+  line-height: inherit;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  top: -2px;
+  vertical-align: baseline;
+  width: 0;
+}
+
+div.diamond.second-base:after {
+  border: 13px solid transparent;
+  border-top: 13px solid #0066CC;
+  content: "";
+  height: 0;
+  left: -13px;
+  position: absolute;
+  top: 13px;
+  width: 0;
+}
+
+div.diamond.third-base {
+  border: 13px solid transparent;
+  border-bottom: 13px solid #CBCCCE;
+  box-sizing: border-box;
+  color: #6C6D6F;
+  float: left;
+  font-family: inherit;
+  font-size: 100%;
+  font-stretch: inherit;
+  font-style: inherit;
+  font-variant-caps: inherit;
+  font-variant-east-asian: inherit;
+  font-variant-ligatures: inherit;
+  font-variant-numeric: inherit;
+  font-weight: inherit;
+  height: 0;
+  line-height: inherit;
+  margin: 0 4px 0 0;
+  padding: 0;
+  position: relative;
+  top: -13px;
+  vertical-align: baseline;
+  width: 0;
+}
+
+div.diamond.third-base:after {
+  border: 13px solid transparent;
+  border-top: 13px solid #CBCCCE;
+  content: "";
+  height: 0;
+  left: -13px;
+  position: absolute;
+  top: 13px;
+  width: 0;
+}
+
+div.diamond.first-base {
+  border: 13px solid transparent;
+  border-bottom: 13px solid #0066CC;
+  box-sizing: border-box;
+  color: #6C6D6F;
+  float: right;
+  font-family: inherit;
+  font-size: 100%;
+  font-stretch: inherit;
+  font-style: inherit;
+  font-variant-caps: inherit;
+  font-variant-east-asian: inherit;
+  font-variant-ligatures: inherit;
+  font-variant-numeric: inherit;
+  font-weight: inherit;
+  height: 0;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: -13px;
+  vertical-align: baseline;
+  width: 0;
+}
+
+div.diamond.first-base:after {
+  border: 13px solid transparent;
+  border-top: 13px solid #0066CC;
+  content: "";
+  height: 0;
+  left: -13px;
+  position: absolute;
+  top: 13px;
+  width: 0;
+}

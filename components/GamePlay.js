@@ -7,10 +7,46 @@ class GamePlay extends Component {
 		this.state = {};
 	}
 
-	basesHelper(bases) {}
+	basesHelper(bases) {
+		const styles = {
+			grid: {
+				paddingLeft: 0,
+				paddingRight: 0,
+			},
+			row: {
+				marginLeft: 5,
+				marginRight: 0,
+			},
+			col: {
+				paddingLeft: 0,
+				paddingRight: 0,
+			},
+			center: {
+				paddingLeft: 0,
+				paddingRight: 0,
+			},
+		};
+		return (
+			<Container style={styles.grid}>
+				<Row style={styles.row}>
+					<Col sm="auto" style={styles.col}>
+						<div class="diamond second-base"></div>
+					</Col>
+				</Row>
+				<Row style={styles.col}>
+					<Col sm="auto" style={styles.center}>
+						<div class="diamond third-base"></div>
+					</Col>
+					<Col sm="auto" style={styles.col}>
+						<div class="diamond first-base"></div>
+					</Col>
+				</Row>
+			</Container>
+		);
+	}
 
 	renderGamePlays() {
-		const { gamePlayData } = this.props;
+		const { gamePlayData, sportName } = this.props;
 		let venue, weather, tickets, odds, lastPlay, headline;
 
 		console.log(gamePlayData);
@@ -31,13 +67,32 @@ class GamePlay extends Component {
 				</Col>
 			);
 
-			odds = (
-				<div>
-					<Row>{`Line: ${gamePlayData.odds.details}`}</Row>
-					<Row>{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
-				</div>
-			);
+			if (gamePlayData.odds) {
+				odds = (
+					<div>
+						<Row>{`Line: ${gamePlayData.odds.details}`}</Row>
+						<Row>{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
+					</div>
+				);
+			}
 		} else if (gamePlayData.status.type.state === "in") {
+			if (sportName === "NFL") {
+			} else if (sportName === "NHL") {
+			} else if (sportName === "MLB") {
+			} else {
+				lastPlay = (
+					<div>
+						<Row>
+							<h6>{"Last Play"}</h6>
+						</Row>
+						<Row>
+							<Col md="auto">
+								<Image width={45} height={40} src={null} roundedCircle />
+							</Col>
+						</Row>
+					</div>
+				);
+			}
 		} else if (gamePlayData.status.type.completed) {
 			if (gamePlayData.headlines) {
 				headline = (
@@ -48,17 +103,19 @@ class GamePlay extends Component {
 				);
 			}
 		}
-		return (
-			<Container>
-				<Row>
-					{venue}
-					{weather}
-				</Row>
-				{headline}
-				{tickets}
-				{odds}
-			</Container>
-		);
+		let bases = 1;
+		return this.basesHelper(bases);
+		// return (
+		// 	<Container>
+		// 		<Row>
+		// 			{venue}
+		// 			{weather}
+		// 		</Row>
+		// 		{headline}
+		// 		{tickets}
+		// 		{odds}
+		// 	</Container>
+		// );
 	}
 
 	render() {
