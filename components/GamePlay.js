@@ -33,10 +33,10 @@ class GamePlay extends Component {
 		for (let i = 0; i < situation.balls; i++) {
 			balls[i] = <span className="circle balls active"></span>;
 		}
-		for (let i = 0; i < situation.balls; i++) {
+		for (let i = 0; i < situation.strikes; i++) {
 			strikes[i] = <span className="circle strikes active"></span>;
 		}
-		for (let i = 0; i < situation.balls; i++) {
+		for (let i = 0; i < situation.outs; i++) {
 			outs[i] = <span className="circle outs active"></span>;
 		}
 
