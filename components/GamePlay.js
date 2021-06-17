@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 
 class GamePlay extends Component {
 	constructor(props) {
@@ -7,7 +7,7 @@ class GamePlay extends Component {
 		this.state = {};
 	}
 
-	baseballHelper(bases) {
+	baseballHelper(situation) {
 		const styles = {
 			grid: {
 				paddingLeft: 0,
@@ -26,21 +26,35 @@ class GamePlay extends Component {
 				paddingRight: 0,
 			},
 		};
+		let balls = new Array(4).fill(<span className="circle balls"></span>);
+		let strikes = new Array(3).fill(<span className="circle strikes"></span>);
+		let outs = new Array(3).fill(<span className="circle outs"></span>);
+
+		for (let i = 0; i < situation.balls; i++) {
+			balls[i] = <span className="circle balls active"></span>;
+		}
+		for (let i = 0; i < situation.balls; i++) {
+			strikes[i] = <span className="circle strikes active"></span>;
+		}
+		for (let i = 0; i < situation.balls; i++) {
+			outs[i] = <span className="circle outs active"></span>;
+		}
+
 		return (
 			<Container>
 				<Row>
 					<Col sm="auto">
 						<Row style={styles.row}>
 							<Col sm="auto" style={styles.col}>
-								<div className="diamond second-base active"></div>
+								<div className={"diamond second-base " + (situation.onSecond ? "active" : null)}></div>
 							</Col>
 						</Row>
 						<Row style={styles.col}>
 							<Col sm="auto" style={styles.center}>
-								<div className="diamond third-base"></div>
+								<div className={"diamond third-base " + (situation.onThird ? "active" : null)}></div>
 							</Col>
 							<Col sm="auto" style={styles.col}>
-								<div className="diamond first-base"></div>
+								<div className={"diamond first-base " + (situation.onFirst ? "active" : null)}></div>
 							</Col>
 						</Row>
 					</Col>
@@ -48,29 +62,22 @@ class GamePlay extends Component {
 						<div className="circleGraphs">
 							<div className="circleGraph  four">
 								<span className="abbrev">B</span>
-								<span className="circle balls active"></span>
-								<span className="circle balls"></span>
-								<span className="circle balls "></span>
-								<span className="circle balls "></span>
+								{balls}
 							</div>
 
 							<div className="circleGraph ">
 								<span className="abbrev">S</span>
-								<span className="circle strikes active"></span>
-								<span className="circle strikes "></span>
-								<span className="circle strikes "></span>
+								{strikes}
 							</div>
 
 							<div className="circleGraph ">
 								<span className="abbrev">O</span>
-								<span className="circle outs active"></span>
-								<span className="circle outs "></span>
-								<span className="circle outs "></span>
+								{outs}
 							</div>
 						</div>
 					</Col>
 				</Row>
-				<Row>{"LAST PLAY: "}</Row>
+				<Row>{`LAST PLAY: ${situation.lastPlay.text}`}</Row>
 			</Container>
 		);
 	}
@@ -83,7 +90,20 @@ class GamePlay extends Component {
 
 		if (gamePlayData.status.type.name === "STATUS_SCHEDULED") {
 			if (gamePlayData.weather) {
-				weather = <Col>{`${gamePlayData.weather.temperature} °F`}</Col>;
+				let conditionId = gamePlayData.weather.conditionId;
+				if (parseInt(conditionId) < 10) conditionId = "0" + conditionId;
+				weather = (
+					<Col>
+						<Col sm="auto">
+							<Image
+								width={20}
+								height={20}
+								src={`https://a.espncdn.com/redesign/assets/img/icons/accuWeather/${conditionId}.png`}
+							/>
+						</Col>
+						<Col sm="auto">{`${gamePlayData.weather.temperature} °F`}</Col>
+					</Col>
+				);
 			}
 
 			if (gamePlayData.tickets) {
@@ -108,8 +128,8 @@ class GamePlay extends Component {
 		} else if (gamePlayData.status.type.state === "in") {
 			if (sportName === "NFL") {
 			} else if (sportName === "NHL") {
-				lastPlay = this.baseballHelper();
 			} else if (sportName === "MLB") {
+				lastPlay = this.baseballHelper(gamePlayData.situation);
 			} else {
 				lastPlayBaseball = (
 					<div>

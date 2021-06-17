@@ -202,7 +202,7 @@ class SportCard extends Component {
 				});
 			} else if (game.competitions[0].situation.pitcher && game.competitions[0].situation.batter) {
 				let pitcher = {
-					title: "Pitcher",
+					title: "PITCHING",
 					headshot: game.competitions[0].situation.pitcher.athlete.headshot,
 					displayName: game.competitions[0].situation.pitcher.athlete.shortName,
 					team:
@@ -214,7 +214,7 @@ class SportCard extends Component {
 					type: "in",
 				};
 				let batter = {
-					title: "Batter",
+					title: "BATTING",
 					headshot: game.competitions[0].situation.batter.athlete.headshot,
 					displayName: game.competitions[0].situation.batter.athlete.shortName,
 					team:
