@@ -84,9 +84,9 @@ class GamePlay extends Component {
 
 	renderGamePlays() {
 		const { gamePlayData, sportName } = this.props;
-		let venue, weather, tickets, odds, lastPlayBaseball, lastPlay, headline;
+		let venue, weather, tickets, odds, lastPlay, headline, video;
 
-		console.log(gamePlayData);
+		console.log(gamePlayData, sportName);
 
 		if (gamePlayData.status.type.name === "STATUS_SCHEDULED") {
 			if (gamePlayData.weather) {
@@ -106,9 +106,7 @@ class GamePlay extends Component {
 				);
 			}
 
-			if (gamePlayData.tickets) {
-				tickets = <Row>{gamePlayData.tickets.summary}</Row>;
-			}
+			if (gamePlayData.tickets) tickets = <Row>{gamePlayData.tickets.summary}</Row>;
 
 			venue = (
 				<Col>
@@ -131,7 +129,7 @@ class GamePlay extends Component {
 			} else if (sportName === "MLB") {
 				lastPlay = this.baseballHelper(gamePlayData.situation);
 			} else {
-				lastPlayBaseball = (
+				lastPlay = (
 					<div>
 						<Row>
 							<h6>{"Last Play"}</h6>
@@ -145,7 +143,11 @@ class GamePlay extends Component {
 				);
 			}
 		} else if (gamePlayData.status.type.completed) {
-			if (gamePlayData.headlines) {
+			if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines) {
+				console.log(gamePlayData.headlines.video[0]);
+
+				headline = <video controls src={gamePlayData.headlines.video[0].links.source.href} />;
+			} else if (gamePlayData.headlines) {
 				headline = (
 					<Row>
 						<div>{gamePlayData.headlines.shortLinkText}</div>
