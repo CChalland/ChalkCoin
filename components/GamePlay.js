@@ -82,47 +82,63 @@ class GamePlay extends Component {
 		);
 	}
 
+	scheduledHelper(gamePlayData) {
+		let weather, tickets, venue, odds;
+
+		if (gamePlayData.weather) {
+			let conditionId = gamePlayData.weather.conditionId;
+			if (parseInt(conditionId) < 10) conditionId = "0" + conditionId;
+			weather = (
+				<Col>
+					<Col sm="auto">
+						<Image
+							width={20}
+							height={20}
+							src={`https://a.espncdn.com/redesign/assets/img/icons/accuWeather/${conditionId}.png`}
+						/>
+					</Col>
+					<Col sm="auto">{`${gamePlayData.weather.temperature} °F`}</Col>
+				</Col>
+			);
+		}
+
+		if (gamePlayData.tickets) tickets = <Row>{gamePlayData.tickets.summary}</Row>;
+
+		venue = (
+			<Col>
+				<Row>{gamePlayData.venue.fullName}</Row>
+				<Row>{`${gamePlayData.venue.address.city}, ${gamePlayData.venue.address.state}`}</Row>
+			</Col>
+		);
+
+		if (gamePlayData.odds) {
+			odds = (
+				<div>
+					<Row>{`Line: ${gamePlayData.odds.details}`}</Row>
+					<Row>{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
+				</div>
+			);
+		}
+		return (
+			<Container>
+				<Row>
+					{venue}
+					{weather}
+				</Row>
+				{tickets}
+				{odds}
+			</Container>
+		);
+	}
+
 	renderGamePlays() {
 		const { gamePlayData, sportName } = this.props;
-		let venue, weather, tickets, odds, lastPlay, headline, video;
+		let scheduled, lastPlay, headline, video;
 
 		console.log(gamePlayData, sportName);
 
 		if (gamePlayData.status.type.name === "STATUS_SCHEDULED") {
-			if (gamePlayData.weather) {
-				let conditionId = gamePlayData.weather.conditionId;
-				if (parseInt(conditionId) < 10) conditionId = "0" + conditionId;
-				weather = (
-					<Col>
-						<Col sm="auto">
-							<Image
-								width={20}
-								height={20}
-								src={`https://a.espncdn.com/redesign/assets/img/icons/accuWeather/${conditionId}.png`}
-							/>
-						</Col>
-						<Col sm="auto">{`${gamePlayData.weather.temperature} °F`}</Col>
-					</Col>
-				);
-			}
-
-			if (gamePlayData.tickets) tickets = <Row>{gamePlayData.tickets.summary}</Row>;
-
-			venue = (
-				<Col>
-					<Row>{gamePlayData.venue.fullName}</Row>
-					<Row>{`${gamePlayData.venue.address.city}, ${gamePlayData.venue.address.state}`}</Row>
-				</Col>
-			);
-
-			if (gamePlayData.odds) {
-				odds = (
-					<div>
-						<Row>{`Line: ${gamePlayData.odds.details}`}</Row>
-						<Row>{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
-					</div>
-				);
-			}
+			scheduled = this.scheduledHelper(gamePlayData);
 		} else if (gamePlayData.status.type.state === "in") {
 			if (sportName === "NFL") {
 			} else if (sportName === "NHL") {
@@ -146,7 +162,15 @@ class GamePlay extends Component {
 			if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines) {
 				console.log(gamePlayData.headlines.video[0]);
 
-				headline = <video controls src={gamePlayData.headlines.video[0].links.source.href} />;
+				headline = (
+					<video
+						width={256}
+						height={144}
+						poster={gamePlayData.headlines.video[0].thumbnail}
+						controls
+						src={gamePlayData.headlines.video[0].links.source.href}
+					/>
+				);
 			} else if (gamePlayData.headlines) {
 				headline = (
 					<Row>
@@ -160,16 +184,11 @@ class GamePlay extends Component {
 		// return this.baseballHelper();
 
 		return (
-			<Container>
-				<Row>
-					{venue}
-					{weather}
-				</Row>
+			<div>
+				{scheduled}
 				{lastPlay}
 				{headline}
-				{tickets}
-				{odds}
-			</Container>
+			</div>
 		);
 	}
 
