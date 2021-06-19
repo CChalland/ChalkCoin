@@ -131,6 +131,26 @@ class GamePlay extends Component {
 		);
 	}
 
+	videoHelper(headlines) {
+		let video = (
+			<video
+				width={256}
+				height={144}
+				poster={headlines.video[0].thumbnail}
+				controls
+				src={headlines.video[0].links.source.href}
+			/>
+		);
+
+		// console.log(headlines.video[0]);
+
+		return (
+			<Container>
+				<div>{video}</div>
+			</Container>
+		);
+	}
+
 	renderGamePlays() {
 		const { gamePlayData, sportName } = this.props;
 		let scheduled, lastPlay, headline, video;
@@ -160,17 +180,7 @@ class GamePlay extends Component {
 			}
 		} else if (gamePlayData.status.type.completed) {
 			if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines) {
-				console.log(gamePlayData.headlines.video[0]);
-
-				headline = (
-					<video
-						width={256}
-						height={144}
-						poster={gamePlayData.headlines.video[0].thumbnail}
-						controls
-						src={gamePlayData.headlines.video[0].links.source.href}
-					/>
-				);
+				headline = this.videoHelper(gamePlayData.headlines);
 			} else if (gamePlayData.headlines) {
 				headline = (
 					<Row>
@@ -180,8 +190,6 @@ class GamePlay extends Component {
 				);
 			}
 		}
-
-		// return this.baseballHelper();
 
 		return (
 			<div>
