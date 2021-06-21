@@ -136,25 +136,18 @@ class GamePlay extends Component {
 	}
 
 	videoHelper(headlines) {
-		let video = (
-			<video
-				width={256}
-				height={144}
-				poster={headlines.video[0].thumbnail}
-				controls
-				src={headlines.video[0].links.source.href}
-			/>
-		);
-
-		// console.log(headlines.video[0]);
+		console.log(headlines.video[0]);
 
 		return (
 			<Container>
-				<div>{video}</div>
-
-				<Button variant="primary" onClick={() => this.setState({ modalShow: true })}>
-					Launch demo modal
-				</Button>
+				<div>
+					<Image
+						width={256}
+						height={144}
+						src={headlines.video[0].thumbnail}
+						onClick={() => this.setState({ modalShow: true })}
+					/>
+				</div>
 
 				<Modal
 					size="lg"
@@ -164,9 +157,11 @@ class GamePlay extends Component {
 					onHide={() => this.setState({ modalShow: false })}
 				>
 					<Modal.Header closeButton>
-						<Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
+						<Modal.Title id="contained-modal-title-vcenter">{headlines.video[0].headline}</Modal.Title>
 					</Modal.Header>
-					<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+					<Modal.Body>
+						<video controls src={headlines.video[0].links.source.href} autoplay />
+					</Modal.Body>
 					<Modal.Footer>
 						<Button variant="secondary" onClick={() => this.setState({ modalShow: false })}>
 							Close
