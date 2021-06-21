@@ -90,14 +90,16 @@ class GamePlay extends Component {
 			if (parseInt(conditionId) < 10) conditionId = "0" + conditionId;
 			weather = (
 				<Col>
-					<Col sm="auto">
-						<Image
-							width={20}
-							height={20}
-							src={`https://a.espncdn.com/redesign/assets/img/icons/accuWeather/${conditionId}.png`}
-						/>
-					</Col>
-					<Col sm="auto">{`${gamePlayData.weather.temperature} °F`}</Col>
+					<Row>
+						<Col sm="auto">
+							<Image
+								width={20}
+								height={20}
+								src={`https://a.espncdn.com/redesign/assets/img/icons/accuWeather/${conditionId}.png`}
+							/>
+						</Col>
+						<Col sm="auto">{`${gamePlayData.weather.temperature} °F`}</Col>
+					</Row>
 				</Col>
 			);
 		}
