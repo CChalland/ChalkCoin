@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
 
 class GamePlay extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			modalShow: false,
+		};
 	}
 
 	baseballHelper(situation) {
@@ -149,6 +151,31 @@ class GamePlay extends Component {
 		return (
 			<Container>
 				<div>{video}</div>
+
+				<Button variant="primary" onClick={() => this.setState({ modalShow: true })}>
+					Launch demo modal
+				</Button>
+
+				<Modal
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
+					centered
+					show={this.state.modalShow}
+					onHide={() => this.setState({ modalShow: false })}
+				>
+					<Modal.Header closeButton>
+						<Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={() => this.setState({ modalShow: false })}>
+							Close
+						</Button>
+						<Button variant="primary" onClick={() => this.setState({ modalShow: false })}>
+							Save Changes
+						</Button>
+					</Modal.Footer>
+				</Modal>
 			</Container>
 		);
 	}
