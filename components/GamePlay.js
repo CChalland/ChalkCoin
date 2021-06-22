@@ -146,6 +146,7 @@ class GamePlay extends Component {
 						height={144}
 						src={headlines.video[0].thumbnail}
 						onClick={() => this.setState({ modalShow: true })}
+						rounded
 					/>
 				</div>
 
@@ -156,11 +157,11 @@ class GamePlay extends Component {
 					show={this.state.modalShow}
 					onHide={() => this.setState({ modalShow: false })}
 				>
-					<Modal.Header closeButton>
+					<Modal.Header>
 						<Modal.Title id="contained-modal-title-vcenter">{headlines.video[0].headline}</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<video controls src={headlines.video[0].links.source.href} autoplay />
+						<video controls src={headlines.video[0].links.source.href} autoPlay />
 					</Modal.Body>
 					<Modal.Footer>
 						<Button variant="secondary" onClick={() => this.setState({ modalShow: false })}>
