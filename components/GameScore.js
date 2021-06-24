@@ -45,22 +45,10 @@ class GameScore extends Component {
 				</Row>
 			);
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
-				if (period.abbreviation === "R") {
-					return <li className="list-inline-item">{period.displayValue}</li>;
-				} else if (period.abbreviation === "H") {
-					return <li className="list-inline-item">{period.displayValue}</li>;
-				} else if (period.abbreviation === "E") {
-					return <li className="list-inline-item">{period.displayValue}</li>;
-				}
+				return <li className="list-inline-item">{period.displayValue}</li>;
 			});
 			homePeriods = gameScoreCardData.home.periods.map((period) => {
-				if (period.abbreviation === "R") {
-					return <li className="list-inline-item">{period.displayValue}</li>;
-				} else if (period.abbreviation === "H") {
-					return <li className="list-inline-item">{period.displayValue}</li>;
-				} else if (period.abbreviation === "E") {
-					return <li className="list-inline-item">{period.displayValue}</li>;
-				}
+				return <li className="list-inline-item">{period.displayValue}</li>;
 			});
 		} else {
 			title = (

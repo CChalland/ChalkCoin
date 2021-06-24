@@ -35,8 +35,28 @@ class SportCard extends Component {
 		];
 
 		if (sportName === "MLB") {
-			awayPeriods = awayTeam[0].statistics;
-			homePeriods = homeTeam[0].statistics;
+			let runs, hits, errors;
+			runs = awayTeam[0].statistics.filter((stat) => {
+				return stat.name === "runs";
+			});
+			hits = awayTeam[0].statistics.filter((stat) => {
+				return stat.name === "hits";
+			});
+			errors = awayTeam[0].statistics.filter((stat) => {
+				return stat.name === "errors";
+			});
+			awayPeriods = [runs[0], hits[0], errors[0]];
+
+			runs = homeTeam[0].statistics.filter((stat) => {
+				return stat.name === "runs";
+			});
+			hits = homeTeam[0].statistics.filter((stat) => {
+				return stat.name === "hits";
+			});
+			errors = homeTeam[0].statistics.filter((stat) => {
+				return stat.name === "errors";
+			});
+			homePeriods = [runs[0], hits[0], errors[0]];
 		} else if (
 			game.status.type.description === "In Progress" ||
 			game.status.type.description === "End of Period" ||

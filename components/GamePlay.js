@@ -148,6 +148,8 @@ class GamePlay extends Component {
 						onClick={() => this.setState({ modalShow: true })}
 						rounded
 					/>
+
+					<div>{headlines.video[0].headline}</div>
 				</div>
 
 				<Modal
