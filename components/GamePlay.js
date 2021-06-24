@@ -157,20 +157,12 @@ class GamePlay extends Component {
 					show={this.state.modalShow}
 					onHide={() => this.setState({ modalShow: false })}
 				>
-					<Modal.Header>
+					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-vcenter">{headlines.video[0].headline}</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
 						<video controls src={headlines.video[0].links.source.href} autoPlay />
 					</Modal.Body>
-					<Modal.Footer>
-						<Button variant="secondary" onClick={() => this.setState({ modalShow: false })}>
-							Close
-						</Button>
-						<Button variant="primary" onClick={() => this.setState({ modalShow: false })}>
-							Save Changes
-						</Button>
-					</Modal.Footer>
 				</Modal>
 			</Container>
 		);
