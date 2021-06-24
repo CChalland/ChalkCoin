@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 
 class GameLeader extends Component {
 	constructor(props) {
@@ -7,12 +7,219 @@ class GameLeader extends Component {
 		this.state;
 	}
 
+	leadersHelper(athlete, sportName) {
+		let title, player;
+
+		if (sportName === "MLB") {
+			if (athlete && !athlete.displayValue && athlete.statistics.length > 0) {
+				let wins = athlete.statistics.filter((stat) => {
+					return stat.name === "wins";
+				});
+				let losses = athlete.statistics.filter((stat) => {
+					return stat.name === "losses";
+				});
+				let era = athlete.statistics.filter((stat) => {
+					return stat.name === "ERA";
+				});
+				athlete.displayValue = `(${wins[0].displayValue}-${losses[0].displayValue}, ${era[0].displayValue})`;
+			}
+
+			if (athlete && athlete.type === "pre") {
+				title = "PROBABLE PITCHERS";
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.displayName}</Row>
+							<Row>{athlete.displayValue}</Row>
+						</Col>
+					</Row>
+				);
+			} else if (athlete && athlete.type === "dueUp") {
+				title = `DUE UP FOR ${athlete.team.toUpperCase()}`;
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.displayName}</Row>
+							<Row>{athlete.displayValue}</Row>
+						</Col>
+					</Row>
+				);
+			} else if (athlete && athlete.type === "in") {
+				player = (
+					<div>
+						<Row>{athlete.title}</Row>
+						<Row className="align-items-center">
+							<Col md="auto">
+								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+							</Col>
+							<Col md="auto">
+								<Row className="h6">{athlete.displayName}</Row>
+								<Row>{athlete.displayValue}</Row>
+							</Col>
+						</Row>
+					</div>
+				);
+			} else if (athlete && athlete.type === "completed") {
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.title}</Row>
+							<Row>{athlete.displayName}</Row>
+						</Col>
+						<Col>{athlete.displayValue}</Col>
+					</Row>
+				);
+			} else {
+				title = "PROBABLE PITCHERS";
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={null} roundedCircle />
+						</Col>
+						<Col md="auto">{"Undecided"}</Col>
+					</Row>
+				);
+			}
+		} else if (athlete && sportName === "NHL") {
+			if (!athlete.displayValue) {
+				if (athlete.position === "G") {
+					let saves = athlete.statistics.filter((stat) => {
+						return stat.name === "saves";
+					});
+					let savesPrecent = athlete.statistics.filter((stat) => {
+						return stat.name === "savePct";
+					});
+					athlete.displayValue = `${saves[0].displayValue} SV. ${savesPrecent[0].displayValue}`;
+				} else {
+					let goals = athlete.statistics.filter((stat) => {
+						return stat.name === "goals";
+					});
+					let assists = athlete.statistics.filter((stat) => {
+						return stat.name === "assists";
+					});
+					let plusMinus = athlete.statistics.filter((stat) => {
+						return stat.name === "plusMinus";
+					});
+					athlete.displayValue = `${goals[0].displayValue} G, ${assists[0].displayValue} A, ${plusMinus[0].displayValue}`;
+				}
+			}
+
+			if (athlete.type === "pre") {
+				title = athlete.title;
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.displayName}</Row>
+							<Row>{athlete.displayValue}</Row>
+						</Col>
+					</Row>
+				);
+			} else if (athlete.type === "in") {
+				title = athlete.title;
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.displayName}</Row>
+							<Row>{athlete.displayValue}</Row>
+						</Col>
+					</Row>
+				);
+			} else if (athlete.type === "completed") {
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.title}</Row>
+							<Row>{athlete.displayName}</Row>
+						</Col>
+						<Col>{athlete.displayValue}</Col>
+					</Row>
+				);
+			}
+		} else if (athlete && sportName === "NFL") {
+		} else if (athlete) {
+			if (athlete.type === "pre") {
+				title = athlete.title;
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.displayName}</Row>
+							<Row>{athlete.displayValue}</Row>
+						</Col>
+					</Row>
+				);
+			} else if (athlete.type === "in") {
+				title = athlete.title;
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.displayName}</Row>
+							<Row>{athlete.displayValue}</Row>
+						</Col>
+					</Row>
+				);
+			} else if (athlete.type === "completed") {
+				title = athlete.title;
+				player = (
+					<Row className="align-items-center">
+						<Col md="auto">
+							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+						</Col>
+						<Col md="auto">
+							<Row className="h6">{athlete.displayName}</Row>
+							<Row>{athlete.displayValue}</Row>
+						</Col>
+					</Row>
+				);
+			}
+		}
+		return { title, player };
+	}
+
 	renderGameLeaders() {
-		const { gameLeadersData } = this.props;
+		const { gameLeadersData, sportName } = this.props;
+		let gameTitle;
 
-		console.log(gameLeadersData);
+		let athletes = gameLeadersData.athletes.map((athlete) => {
+			console.log(athlete);
+			const { title, player } = this.leadersHelper(athlete, sportName);
+			gameTitle = title;
 
-		return <div>{"TOP PERFORMERS"}</div>;
+			return player;
+		});
+
+		return (
+			<Container>
+				<Row>
+					<h6>{gameTitle}</h6>
+				</Row>
+
+				{athletes}
+			</Container>
+		);
 	}
 
 	render() {

@@ -2,6 +2,7 @@ import React from "react";
 import App from "next/app";
 import { SportProvider } from "../contexts/SportContext";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../style/GamePlay.css";
 
 class MyApp extends App {
 	// Only uncomment this method if you have blocking data requirements for
