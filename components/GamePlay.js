@@ -140,7 +140,7 @@ class GamePlay extends Component {
 
 		return (
 			<Container>
-				<div>
+				<figure className="position-relative">
 					<Image
 						width={256}
 						height={144}
@@ -149,8 +149,8 @@ class GamePlay extends Component {
 						rounded
 					/>
 
-					<div>{headlines.video[0].headline}</div>
-				</div>
+					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
+				</figure>
 
 				<Modal
 					size="lg"
@@ -198,15 +198,17 @@ class GamePlay extends Component {
 				);
 			}
 		} else if (gamePlayData.status.type.completed) {
-			if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines) {
-				headline = this.videoHelper(gamePlayData.headlines);
-			} else if (gamePlayData.headlines) {
-				headline = (
-					<Row>
-						<div>{gamePlayData.headlines.shortLinkText}</div>
-						<div>{gamePlayData.headlines.description}</div>
-					</Row>
-				);
+			if (gamePlayData.headlines) {
+				if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines.video) {
+					headline = this.videoHelper(gamePlayData.headlines);
+				} else {
+					headline = (
+						<Row>
+							<div>{gamePlayData.headlines.shortLinkText}</div>
+							<div>{gamePlayData.headlines.description}</div>
+						</Row>
+					);
+				}
 			}
 		}
 

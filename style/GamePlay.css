@@ -216,7 +216,6 @@ div.diamond.first-base.active:after {
 
 
 
-
 div.circleGraphs {
   border-width: 0;
   box-sizing: border-box;
@@ -445,4 +444,16 @@ span.circle.outs {
   margin: 0 3px 0 0;
   padding: 0;
   width: 10px;
+}
+
+
+
+
+
+figcaption.highlightVideoText {
+  position: absolute;
+  bottom: 1rem;
+  margin: 0 1rem;
+  color: black;
+  font-size: .9em;
 }
