@@ -83,13 +83,13 @@ class GameScore extends Component {
 		return (
 			<Container>
 				{title}
-				<Row className="align-items-center">
+				<Row className="mt-3 mb-3 align-items-center">
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
 					<Col md={5}>
-						<Row className="h5">{gameScoreCardData.away.name}</Row>
-						<Row className="text-secondary" style={{ fontSize: 12 }}>
+						<Row className="mb-0 h5">{gameScoreCardData.away.name}</Row>
+						<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 							{"(" +
 								gameScoreCardData.away.records[0].summary +
 								", " +
@@ -102,13 +102,13 @@ class GameScore extends Component {
 					</Col>
 					<Col md={1}>{awayScore}</Col>
 				</Row>
-				<Row className="align-items-center">
+				<Row className="mt-3 mb-3 align-items-center">
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 					</Col>
 					<Col md={5}>
-						<Row className="h5">{gameScoreCardData.home.name}</Row>
-						<Row className="text-secondary" style={{ fontSize: 12 }}>
+						<Row className="mb-0 h5">{gameScoreCardData.home.name}</Row>
+						<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 							{"(" +
 								gameScoreCardData.home.records[0].summary +
 								", " +

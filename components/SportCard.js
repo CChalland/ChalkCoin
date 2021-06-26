@@ -303,7 +303,7 @@ class SportCard extends Component {
 			// console.log(game);
 			return (
 				<Container>
-					<Row>
+					<Row className="mt-3 mb-3">
 						<Col>
 							<GameScore
 								key={game.uid.toString()}
