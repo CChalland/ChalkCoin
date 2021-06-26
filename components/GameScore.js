@@ -26,15 +26,11 @@ class GameScore extends Component {
 			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
 			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
 		) {
-			title = (
-				<Row className="h6 align-items-center">
-					<Col>{gameScoreCardData.shortDetail}</Col>
-				</Row>
-			);
+			title = <Col className="pl-0">{gameScoreCardData.shortDetail}</Col>;
 		} else if (sportName === "MLB") {
 			title = (
-				<Row className="h6 align-items-center">
-					<Col>{gameScoreCardData.detail}</Col>
+				<>
+					<Col className="pl-0">{gameScoreCardData.detail}</Col>
 					<Col>
 						<ul className="list-inline">
 							<li className="list-inline-item">{"R"}</li>
@@ -42,7 +38,7 @@ class GameScore extends Component {
 							<li className="list-inline-item">{"E"}</li>
 						</ul>
 					</Col>
-				</Row>
+				</>
 			);
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
 				return <li className="list-inline-item">{period.displayValue}</li>;
@@ -52,13 +48,15 @@ class GameScore extends Component {
 			});
 		} else {
 			title = (
-				<Row className="h6 align-items-center">
-					<Col md={7}>{gameScoreCardData.shortDetail}</Col>
+				<>
+					<Col md={7} className="pl-0">
+						{gameScoreCardData.shortDetail}
+					</Col>
 					<Col md={4}>
 						<ul className="list-inline">{linescoresHeader}</ul>
 					</Col>
 					<Col md={1}>{"T"}</Col>
-				</Row>
+				</>
 			);
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
 				return <li className="list-inline-item">{period.value}</li>;
@@ -82,8 +80,9 @@ class GameScore extends Component {
 
 		return (
 			<Container>
-				{title}
-				<Row className="mt-3 mb-3 align-items-center">
+				<Row className="py-2 h6 align-items-center">{title}</Row>
+
+				<Row className="mb-3 align-items-center">
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
@@ -102,7 +101,7 @@ class GameScore extends Component {
 					</Col>
 					<Col md={1}>{awayScore}</Col>
 				</Row>
-				<Row className="mt-3 mb-3 align-items-center">
+				<Row className="my-3 align-items-center">
 					<Col md="auto">
 						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 					</Col>
