@@ -303,8 +303,8 @@ class SportCard extends Component {
 			// console.log(game);
 			return (
 				<Container>
-					<Row className="mt-3 mb-3" style={{ border: "1px solid #333" }}>
-						<Col className="px-0">
+					<Row className="mt-3 mb-3 border rounded">
+						<Col className="border">
 							<GameScore
 								key={game.uid.toString()}
 								gameScoreCardData={this.gameScoreHelper(game)}
@@ -312,11 +312,11 @@ class SportCard extends Component {
 							/>
 						</Col>
 
-						<Col>
+						<Col className="border">
 							<GamePlay gamePlayData={this.gamePlayHelper(game, sportName)} sportName={sportName} />
 						</Col>
 
-						<Col>
+						<Col className="border">
 							<GameLeader gameLeadersData={this.gameLeadersHelper(game, sportName)} sportName={sportName} />
 						</Col>
 					</Row>

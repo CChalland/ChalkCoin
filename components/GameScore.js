@@ -26,11 +26,11 @@ class GameScore extends Component {
 			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
 			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
 		) {
-			title = <Col className="pl-0">{gameScoreCardData.shortDetail}</Col>;
+			title = <Col className="mx-0 pl-0">{gameScoreCardData.shortDetail}</Col>;
 		} else if (sportName === "MLB") {
 			title = (
 				<>
-					<Col className="pl-0">{gameScoreCardData.detail}</Col>
+					<Col className="mx-0 pl-0">{gameScoreCardData.detail}</Col>
 					<Col>
 						<ul className="list-inline">
 							<li className="list-inline-item">{"R"}</li>
@@ -49,7 +49,7 @@ class GameScore extends Component {
 		} else {
 			title = (
 				<>
-					<Col md={7} className="pl-0">
+					<Col md={7} className="mx-0 pl-0">
 						{gameScoreCardData.shortDetail}
 					</Col>
 					<Col md={4}>
@@ -79,8 +79,8 @@ class GameScore extends Component {
 		);
 
 		return (
-			<Container>
-				<Row className="py-2 h6 align-items-center">{title}</Row>
+			<>
+				<Row className="py-2 h6 align-items-center border">{title}</Row>
 
 				<Row className="mb-3 align-items-center">
 					<Col md="auto">
@@ -120,7 +120,7 @@ class GameScore extends Component {
 					</Col>
 					<Col md={1}>{homeScore}</Col>
 				</Row>
-			</Container>
+			</>
 		);
 	}
 
