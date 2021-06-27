@@ -30,7 +30,7 @@ class GameScore extends Component {
 		} else if (sportName === "MLB") {
 			title = (
 				<>
-					<Col md={7} className="mx-0 pl-0">
+					<Col md={6} className="mx-0 pl-0">
 						{gameScoreCardData.detail}
 					</Col>
 					<Col md={2}>{"R"}</Col>
@@ -39,15 +39,39 @@ class GameScore extends Component {
 				</>
 			);
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
-				return <Col className="list-inline-item">{period.displayValue}</Col>;
+				if (period.name === "errors") {
+					return (
+						<Col md={1} className="list-inline-item">
+							{period.displayValue}
+						</Col>
+					);
+				} else {
+					return (
+						<Col md={2} className="list-inline-item">
+							{period.displayValue}
+						</Col>
+					);
+				}
 			});
 			homePeriods = gameScoreCardData.home.periods.map((period) => {
-				return <Col className="list-inline-item">{period.displayValue}</Col>;
+				if (period.name === "errors") {
+					return (
+						<Col md={1} className="list-inline-item">
+							{period.displayValue}
+						</Col>
+					);
+				} else {
+					return (
+						<Col md={2} className="list-inline-item">
+							{period.displayValue}
+						</Col>
+					);
+				}
 			});
 		} else {
 			title = (
 				<>
-					<Col md={7} className="mx-0 pl-0">
+					<Col md={6} className="mx-0 pl-0">
 						{gameScoreCardData.shortDetail}
 					</Col>
 					<Col md={4}>{linescoresHeader}</Col>
@@ -79,10 +103,10 @@ class GameScore extends Component {
 				<Row className="py-2 h6 align-items-center border">{title}</Row>
 
 				<Row className="mb-3 align-items-center">
-					<Col md="auto">
+					<Col md={2}>
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
-					<Col md={5}>
+					<Col md={4}>
 						<Row className="mb-0 h5">{gameScoreCardData.away.name}</Row>
 						<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 							{"(" +
@@ -92,15 +116,15 @@ class GameScore extends Component {
 								" Away)"}
 						</Row>
 					</Col>
-					<Col md={4}>{awayPeriods}</Col>
-					<Col md={1}>{awayScore}</Col>
+					{awayPeriods}
+					{awayScore}
 				</Row>
 
 				<Row className="my-3 align-items-center">
-					<Col md="auto">
+					<Col md={2}>
 						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 					</Col>
-					<Col md={5}>
+					<Col md={4}>
 						<Row className="mb-0 h5">{gameScoreCardData.home.name}</Row>
 						<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 							{"(" +
@@ -110,8 +134,8 @@ class GameScore extends Component {
 								" Home)"}
 						</Row>
 					</Col>
-					<Col md={4}>{homePeriods}</Col>
-					<Col md={1}>{homeScore}</Col>
+					{homePeriods}
+					{homeScore}
 				</Row>
 			</>
 		);
