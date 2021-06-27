@@ -56,13 +56,13 @@ class GameScore extends Component {
 			homePeriods = gameScoreCardData.home.periods.map((period) => {
 				if (period.name === "errors") {
 					return (
-						<Col md={1} className="list-inline-item">
+						<Col md={1} className="mx-0 list-inline-item">
 							{period.displayValue}
 						</Col>
 					);
 				} else {
 					return (
-						<Col md={2} className="list-inline-item">
+						<Col md={2} className="mx-0 list-inline-item">
 							{period.displayValue}
 						</Col>
 					);
