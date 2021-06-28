@@ -13,12 +13,24 @@ class GameScore extends Component {
 		let linescoresHeader = gameScoreCardData.away.periods.map((period) => {
 			index++;
 			if ((sportName == "NHL" && index == 4) || index == 5) {
-				return <Col className="list-inline-item">{"OT"}</Col>;
+				return (
+					<Col md={2} className="mx-0 list-inline-item">
+						{"OT"}
+					</Col>
+				);
 			} else if ((sportName == "NHL" && index > 4) || index > 5) {
 				let numberOT = sportName == "NHL" ? (index - 4).toString() : (index - 5).toString();
-				return <Col className="list-inline-item">{numberOT + "OT"}</Col>;
+				return (
+					<Col md={2} className="mx-0 list-inline-item">
+						{numberOT + "OT"}
+					</Col>
+				);
 			} else {
-				return <Col className="list-inline-item">{index}</Col>;
+				return (
+					<Col md={2} className="mx-0 list-inline-item">
+						{index}
+					</Col>
+				);
 			}
 		});
 
@@ -41,13 +53,13 @@ class GameScore extends Component {
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
 				if (period.name === "errors") {
 					return (
-						<Col md={1} className="mx-0 list-inline-item">
+						<Col md={1} className="mx-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
 				} else {
 					return (
-						<Col md={2} className="mx-0 list-inline-item">
+						<Col md={2} className="mx-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
@@ -56,13 +68,13 @@ class GameScore extends Component {
 			homePeriods = gameScoreCardData.home.periods.map((period) => {
 				if (period.name === "errors") {
 					return (
-						<Col md={1} className="mx-0 list-inline-item">
+						<Col md={1} className="mx-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
 				} else {
 					return (
-						<Col md={2} className="mx-0 list-inline-item">
+						<Col md={2} className="mx-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
@@ -74,18 +86,34 @@ class GameScore extends Component {
 					<Col md={6} className="mx-0 pl-0">
 						{gameScoreCardData.shortDetail}
 					</Col>
-					<Col md={4}>{linescoresHeader}</Col>
+					<Col md={5}>{linescoresHeader}</Col>
 					<Col md={1}>{"T"}</Col>
 				</>
 			);
-			awayPeriods = gameScoreCardData.away.periods.map((period) => {
-				return <Col className="list-inline-item">{period.value}</Col>;
-			});
-			homePeriods = gameScoreCardData.home.periods.map((period) => {
-				return <Col className="list-inline-item">{period.value}</Col>;
-			});
-			awayScore = gameScoreCardData.away.score;
-			homeScore = gameScoreCardData.home.score;
+			awayPeriods = (
+				<Col md={5}>
+					{gameScoreCardData.away.periods.map((period) => {
+						return (
+							<Col md={2} className="mx-0 list-inline-item">
+								{period.value}
+							</Col>
+						);
+					})}
+				</Col>
+			);
+			homePeriods = (
+				<Col md={5}>
+					{gameScoreCardData.home.periods.map((period) => {
+						return (
+							<Col md={2} className="mx-0 list-inline-item">
+								{period.value}
+							</Col>
+						);
+					})}
+				</Col>
+			);
+			awayScore = <Col md={1}>{gameScoreCardData.away.score}</Col>;
+			homeScore = <Col md={1}>{gameScoreCardData.home.score}</Col>;
 		}
 
 		return { title, awayPeriods, homePeriods, awayScore, homeScore };
