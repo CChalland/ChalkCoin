@@ -86,12 +86,12 @@ class GameScore extends Component {
 					<Col md={6} className="mx-0 pl-0">
 						{gameScoreCardData.shortDetail}
 					</Col>
-					<Col md={5}>{linescoresHeader}</Col>
+					<Col md={4}>{linescoresHeader}</Col>
 					<Col md={1}>{"T"}</Col>
 				</>
 			);
 			awayPeriods = (
-				<Col md={5}>
+				<Col md={4}>
 					{gameScoreCardData.away.periods.map((period) => {
 						return (
 							<Col md={2} className="mx-0 list-inline-item">
@@ -102,7 +102,7 @@ class GameScore extends Component {
 				</Col>
 			);
 			homePeriods = (
-				<Col md={5}>
+				<Col md={4}>
 					{gameScoreCardData.home.periods.map((period) => {
 						return (
 							<Col md={2} className="mx-0 list-inline-item">
