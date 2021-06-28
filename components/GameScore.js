@@ -45,36 +45,54 @@ class GameScore extends Component {
 					<Col md={6} className="mx-0 pl-0">
 						{gameScoreCardData.detail}
 					</Col>
-					<Col md={2}>{"R"}</Col>
-					<Col md={2}>{"H"}</Col>
-					<Col md={1}>{"E"}</Col>
+					<Col md={2} className="mx-3 px-4">
+						{"R"}
+					</Col>
+					<Col md={2} className="mx-0 px-0">
+						{"H"}
+					</Col>
+					<Col md={1} className="mx-0 px-0">
+						{"E"}
+					</Col>
 				</>
 			);
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
-				if (period.name === "errors") {
+				if (period.name === "runs") {
 					return (
-						<Col md={1} className="mx-0 list-inline-item h6">
+						<Col md={2} className="mx-3 px-4 list-inline-item h6">
+							{period.displayValue}
+						</Col>
+					);
+				} else if (period.name === "errors") {
+					return (
+						<Col md={1} className="mx-0 px-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
 				} else {
 					return (
-						<Col md={2} className="mx-0 list-inline-item h6">
+						<Col md={2} className="mx-0 px-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
 				}
 			});
 			homePeriods = gameScoreCardData.home.periods.map((period) => {
-				if (period.name === "errors") {
+				if (period.name === "runs") {
 					return (
-						<Col md={1} className="mx-0 list-inline-item h6">
+						<Col md={2} className="mx-3 px-4 list-inline-item h6">
+							{period.displayValue}
+						</Col>
+					);
+				} else if (period.name === "errors") {
+					return (
+						<Col md={1} className="mx-0 px-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
 				} else {
 					return (
-						<Col md={2} className="mx-0 list-inline-item h6">
+						<Col md={2} className="mx-0 px-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
