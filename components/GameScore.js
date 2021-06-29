@@ -106,8 +106,8 @@ class GameScore extends Component {
 			});
 
 			if (gameScoreCardData.status.type.state === "post") {
-				awayFinalStyle = awayRuns > homeRuns ? "winningIndicator" : "text-secondary";
-				homeFinalStyle = homeRuns > awayRuns ? "winningIndicator" : "text-secondary";
+				awayFinalStyle = awayRuns > homeRuns ? "winIndicator" : "text-secondary";
+				homeFinalStyle = homeRuns > awayRuns ? "winIndicator" : "text-secondary";
 			}
 		} else {
 			title = (
@@ -158,9 +158,9 @@ class GameScore extends Component {
 
 			if (gameScoreCardData.status.type.state === "post") {
 				awayFinalStyle =
-					gameScoreCardData.away.score > gameScoreCardData.home.score ? "winningIndicator" : "text-secondary";
+					gameScoreCardData.away.score > gameScoreCardData.home.score ? "winIndicator" : "text-secondary";
 				homeFinalStyle =
-					gameScoreCardData.home.score > gameScoreCardData.away.score ? "winningIndicator" : "text-secondary";
+					gameScoreCardData.home.score > gameScoreCardData.away.score ? "winIndicator" : "text-secondary";
 			}
 		}
 
