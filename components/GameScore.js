@@ -8,11 +8,11 @@ class GameScore extends Component {
 	}
 
 	scoreTableHelper(gameScoreCardData, sportName) {
-		let title, awayPeriods, awayScore, homePeriods, homeScore;
-		let titleStyle = gameScoreCardData.status.type.state === "in" ? "text-danger" : "";
+		let title, awayPeriods, awayScore, homePeriods, homeScore, awayFinalStyle, homeFinalStyle;
+		const titleStyle = gameScoreCardData.status.type.state === "in" ? "text-danger" : "";
 
 		let index = 0;
-		let linescoresHeader = gameScoreCardData.away.periods.map((period) => {
+		const linescoresHeader = gameScoreCardData.away.periods.map((period) => {
 			index++;
 			if ((sportName == "NHL" && index == 4) || index == 5) {
 				return (
@@ -42,6 +42,8 @@ class GameScore extends Component {
 		) {
 			title = <Col className="mx-0 pl-0">{gameScoreCardData.shortDetail}</Col>;
 		} else if (sportName === "MLB") {
+			let awayRuns, homeRuns;
+
 			title = (
 				<>
 					<Col md={6} className={`mx-0 pl-0 ${titleStyle} h6`}>
@@ -60,6 +62,7 @@ class GameScore extends Component {
 			);
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
 				if (period.name === "runs") {
+					awayRuns = period.displayValue;
 					return (
 						<Col md={2} className="mx-2 px-5 list-inline-item h5">
 							{period.displayValue}
@@ -81,6 +84,7 @@ class GameScore extends Component {
 			});
 			homePeriods = gameScoreCardData.home.periods.map((period) => {
 				if (period.name === "runs") {
+					homeRuns = period.displayValue;
 					return (
 						<Col md={2} className="mx-2 px-5 list-inline-item h5">
 							{period.displayValue}
@@ -100,6 +104,11 @@ class GameScore extends Component {
 					);
 				}
 			});
+
+			if (gameScoreCardData.status.type.state === "post") {
+				awayFinalStyle = awayRuns > homeRuns ? "winningIndicator" : "text-secondary";
+				homeFinalStyle = homeRuns > awayRuns ? "winningIndicator" : "text-secondary";
+			}
 		} else {
 			title = (
 				<>
@@ -146,23 +155,28 @@ class GameScore extends Component {
 					{gameScoreCardData.home.score}
 				</Col>
 			);
+
+			if (gameScoreCardData.status.type.state === "post") {
+				awayFinalStyle =
+					gameScoreCardData.away.score > gameScoreCardData.home.score ? "winningIndicator" : "text-secondary";
+				homeFinalStyle =
+					gameScoreCardData.home.score > gameScoreCardData.away.score ? "winningIndicator" : "text-secondary";
+			}
 		}
 
-		return { title, awayPeriods, homePeriods, awayScore, homeScore };
+		return { title, awayPeriods, homePeriods, awayScore, homeScore, awayFinalStyle, homeFinalStyle };
 	}
 
 	renderScoreTable() {
 		const { gameScoreCardData, sportName } = this.props;
-		const { title, awayPeriods, awayScore, homePeriods, homeScore } = this.scoreTableHelper(
-			gameScoreCardData,
-			sportName
-		);
+		const { title, awayPeriods, awayScore, homePeriods, homeScore, awayFinalStyle, homeFinalStyle } =
+			this.scoreTableHelper(gameScoreCardData, sportName);
 
 		return (
 			<>
 				<Row className="py-2 h6 align-items-center border">{title}</Row>
 
-				<Row className="mb-3 align-items-center">
+				<Row className={`mb-3 align-items-center ${awayFinalStyle}`}>
 					<Col md={2} className="px-4">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
@@ -178,9 +192,10 @@ class GameScore extends Component {
 					</Col>
 					{awayPeriods}
 					{awayScore}
+					<span className={awayFinalStyle}></span>
 				</Row>
 
-				<Row className="my-3 align-items-center">
+				<Row className={`my-3 align-items-center ${homeFinalStyle}`}>
 					<Col md={2} className="px-4">
 						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 					</Col>
@@ -196,6 +211,7 @@ class GameScore extends Component {
 					</Col>
 					{homePeriods}
 					{homeScore}
+					<span className={homeFinalStyle}></span>
 				</Row>
 			</>
 		);
