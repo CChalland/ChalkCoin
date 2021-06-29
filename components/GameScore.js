@@ -47,10 +47,10 @@ class GameScore extends Component {
 					<Col md={6} className={`mx-0 pl-0 ${titleStyle}`}>
 						{gameScoreCardData.detail}
 					</Col>
-					<Col md={2} className="mx-3 px-4">
+					<Col md={2} className="mx-2 px-5">
 						{"R"}
 					</Col>
-					<Col md={2} className="mx-0 px-0">
+					<Col md={2} className="mx-0 px-3">
 						{"H"}
 					</Col>
 					<Col md={1} className="mx-0 px-0">
@@ -61,7 +61,7 @@ class GameScore extends Component {
 			awayPeriods = gameScoreCardData.away.periods.map((period) => {
 				if (period.name === "runs") {
 					return (
-						<Col md={2} className="mx-3 px-4 list-inline-item h6">
+						<Col md={2} className="mx-2 px-5 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
@@ -73,7 +73,7 @@ class GameScore extends Component {
 					);
 				} else {
 					return (
-						<Col md={2} className="mx-0 px-0 list-inline-item h6">
+						<Col md={2} className="mx-0 px-3 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
@@ -82,7 +82,7 @@ class GameScore extends Component {
 			homePeriods = gameScoreCardData.home.periods.map((period) => {
 				if (period.name === "runs") {
 					return (
-						<Col md={2} className="mx-3 px-4 list-inline-item h6">
+						<Col md={2} className="mx-2 px-5 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
@@ -94,7 +94,7 @@ class GameScore extends Component {
 					);
 				} else {
 					return (
-						<Col md={2} className="mx-0 px-0 list-inline-item h6">
+						<Col md={2} className="mx-0 px-3 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
@@ -151,7 +151,7 @@ class GameScore extends Component {
 				<Row className="py-2 h6 align-items-center border">{title}</Row>
 
 				<Row className="mb-3 align-items-center">
-					<Col md={2}>
+					<Col md={2} className="px-4">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
 					<Col md={4}>
@@ -169,7 +169,7 @@ class GameScore extends Component {
 				</Row>
 
 				<Row className="my-3 align-items-center">
-					<Col md={2}>
+					<Col md={2} className="px-4">
 						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 					</Col>
 					<Col md={4}>
