@@ -16,7 +16,7 @@ class GameScore extends Component {
 			index++;
 			if ((sportName == "NHL" && index == 4) || index == 5) {
 				return (
-					<Col md={2} className="mx-0 list-inline-item">
+					<Col md={2} className="mx-0 list-inline-item text-center">
 						{"OT"}
 					</Col>
 				);
@@ -29,7 +29,7 @@ class GameScore extends Component {
 				);
 			} else {
 				return (
-					<Col md={2} className="mx-0 list-inline-item">
+					<Col md={2} className="mx-0 list-inline-item text-center">
 						{index}
 					</Col>
 				);
@@ -109,7 +109,7 @@ class GameScore extends Component {
 					<Col md={4} className="h6">
 						{linescoresHeader}
 					</Col>
-					<Col md={1} className="h6">
+					<Col md={1} className="mx-3 h6 text-center">
 						{"T"}
 					</Col>
 				</>
@@ -118,7 +118,7 @@ class GameScore extends Component {
 				<Col md={4}>
 					{gameScoreCardData.away.periods.map((period) => {
 						return (
-							<Col md={2} className="mx-0 list-inline-item h6">
+							<Col md={2} className="mx-0 list-inline-item h6 text-center">
 								{period.value}
 							</Col>
 						);
@@ -129,7 +129,7 @@ class GameScore extends Component {
 				<Col md={4}>
 					{gameScoreCardData.home.periods.map((period) => {
 						return (
-							<Col md={2} className="mx-0 list-inline-item h6">
+							<Col md={2} className="mx-0 list-inline-item h6 text-center">
 								{period.value}
 							</Col>
 						);
