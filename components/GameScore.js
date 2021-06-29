@@ -9,6 +9,8 @@ class GameScore extends Component {
 
 	scoreTableHelper(gameScoreCardData, sportName) {
 		let title, awayPeriods, awayScore, homePeriods, homeScore;
+		let titleStyle = gameScoreCardData.status.type.state === "in" ? "text-danger" : "";
+
 		let index = 0;
 		let linescoresHeader = gameScoreCardData.away.periods.map((period) => {
 			index++;
@@ -42,7 +44,7 @@ class GameScore extends Component {
 		} else if (sportName === "MLB") {
 			title = (
 				<>
-					<Col md={6} className="mx-0 pl-0">
+					<Col md={6} className={`mx-0 pl-0 ${titleStyle}`}>
 						{gameScoreCardData.detail}
 					</Col>
 					<Col md={2} className="mx-3 px-4">
@@ -101,7 +103,7 @@ class GameScore extends Component {
 		} else {
 			title = (
 				<>
-					<Col md={6} className="mx-0 pl-0">
+					<Col md={6} className={`mx-0 pl-0 ${titleStyle}`}>
 						{gameScoreCardData.shortDetail}
 					</Col>
 					<Col md={4}>{linescoresHeader}</Col>
