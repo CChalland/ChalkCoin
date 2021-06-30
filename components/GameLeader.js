@@ -27,26 +27,33 @@ class GameLeader extends Component {
 			if (athlete && athlete.type === "pre") {
 				title = "PROBABLE PITCHERS";
 				player = (
-					<Row className="align-items-center">
+					<Row className="mb-3 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
 						<Col md="auto">
-							<Row className="h6">{athlete.displayName}</Row>
-							<Row>{athlete.displayValue}</Row>
+							<Row className="mb-0">
+								<Col md="auto" className="px-0">
+									{athlete.displayName}
+								</Col>
+								<Col md="auto" className="px-2 text-secondary">
+									{athlete.team}
+								</Col>
+							</Row>
+							<Row className="mb-0 text-secondary">{athlete.displayValue}</Row>
 						</Col>
 					</Row>
 				);
 			} else if (athlete && athlete.type === "dueUp") {
 				title = `DUE UP FOR ${athlete.team.toUpperCase()}`;
 				player = (
-					<Row className="align-items-center">
+					<Row className="mb-3 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
 						<Col md="auto">
-							<Row className="h6">{athlete.displayName}</Row>
-							<Row>{athlete.displayValue}</Row>
+							<Row className="mb-0 h6">{athlete.displayName}</Row>
+							<Row className="mb-0 text-secondary">{athlete.displayValue}</Row>
 						</Col>
 					</Row>
 				);
@@ -81,7 +88,7 @@ class GameLeader extends Component {
 			} else {
 				title = "PROBABLE PITCHERS";
 				player = (
-					<Row className="align-items-center">
+					<Row className="mb-3 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={null} roundedCircle />
 						</Col>
@@ -213,7 +220,7 @@ class GameLeader extends Component {
 
 		return (
 			<Container>
-				<Row>
+				<Row className="mt-2 py-1 text-secondary">
 					<h6>{gameTitle}</h6>
 				</Row>
 
