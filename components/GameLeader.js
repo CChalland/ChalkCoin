@@ -97,64 +97,67 @@ class GameLeader extends Component {
 				);
 			}
 		} else if (athlete && sportName === "NHL") {
-			if (!athlete.displayValue) {
-				if (athlete.position === "G") {
-					let saves = athlete.statistics.filter((stat) => {
-						return stat.name === "saves";
-					});
-					let savesPrecent = athlete.statistics.filter((stat) => {
-						return stat.name === "savePct";
-					});
-					athlete.displayValue = `${saves[0].displayValue} SV. ${savesPrecent[0].displayValue}`;
-				} else {
-					let goals = athlete.statistics.filter((stat) => {
-						return stat.name === "goals";
-					});
-					let assists = athlete.statistics.filter((stat) => {
-						return stat.name === "assists";
-					});
-					let plusMinus = athlete.statistics.filter((stat) => {
-						return stat.name === "plusMinus";
-					});
-					athlete.displayValue = `${goals[0].displayValue} G, ${assists[0].displayValue} A, ${plusMinus[0].displayValue}`;
-				}
+			if (!athlete.displayValue && athlete.position === "G") {
+				let saves = athlete.statistics.filter((stat) => {
+					return stat.name === "saves";
+				});
+				let savesPrecent = athlete.statistics.filter((stat) => {
+					return stat.name === "savePct";
+				});
+				athlete.displayValue = `${saves[0].displayValue} SV. ${savesPrecent[0].displayValue}`;
+			} else if (!athlete.displayValue) {
+				let goals = athlete.statistics.filter((stat) => {
+					return stat.name === "goals";
+				});
+				let assists = athlete.statistics.filter((stat) => {
+					return stat.name === "assists";
+				});
+				let plusMinus = athlete.statistics.filter((stat) => {
+					return stat.name === "plusMinus";
+				});
+				athlete.displayValue = `${goals[0].displayValue} G, ${assists[0].displayValue} A, ${plusMinus[0].displayValue}`;
 			}
 
 			if (athlete.type === "pre") {
 				title = athlete.title;
 				player = (
-					<Row className="align-items-center">
+					<Row className="mb-3 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
 						<Col md="auto">
-							<Row className="h6">{athlete.displayName}</Row>
-							<Row>{athlete.displayValue}</Row>
+							<Row className="mb-0 h6">
+								<Col md="auto" className="px-0">
+									{athlete.displayName}
+								</Col>
+								<Col md="auto" className="px-2 text-secondary">{`${athlete.position} - ${athlete.team}`}</Col>
+							</Row>
+							<Row className="mb-0 text-secondary">{`${athlete.displayValue} PTS`}</Row>
 						</Col>
 					</Row>
 				);
 			} else if (athlete.type === "in") {
 				title = athlete.title;
 				player = (
-					<Row className="align-items-center">
+					<Row className="mb-3 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
 						<Col md="auto">
-							<Row className="h6">{athlete.displayName}</Row>
-							<Row>{athlete.displayValue}</Row>
+							<Row className="mb-0 h6">{athlete.displayName}</Row>
+							<Row className="mb-0 text-secondary">{athlete.displayValue}</Row>
 						</Col>
 					</Row>
 				);
 			} else if (athlete.type === "completed") {
 				player = (
-					<Row className="align-items-center">
+					<Row className="mb-3 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
 						<Col md="auto">
-							<Row className="h6">{athlete.title}</Row>
-							<Row>{athlete.displayName}</Row>
+							<Row className="mb-0 h6">{athlete.title}</Row>
+							<Row className="mb-0">{athlete.displayName}</Row>
 						</Col>
 						<Col>{athlete.displayValue}</Col>
 					</Row>
