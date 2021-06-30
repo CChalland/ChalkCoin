@@ -144,10 +144,14 @@ class GameLeader extends Component {
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
 						<Col md="auto">
-							<Row className="mb-0 h6">{athlete.title}</Row>
-							<Row className="mb-0">{athlete.displayName}</Row>
+							<Row className="mb-0 h6">
+								<Col md="auto" className="px-0">
+									{athlete.displayName}
+								</Col>
+								<Col md="auto" className="px-2 text-secondary">{`${athlete.position} - ${athlete.team}`}</Col>
+							</Row>
+							<Row className="mb-0 text-secondary">{`${athlete.displayValue}`}</Row>
 						</Col>
-						<Col>{athlete.displayValue}</Col>
 					</Row>
 				);
 			}
