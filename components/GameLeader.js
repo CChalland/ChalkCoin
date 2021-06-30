@@ -157,7 +157,7 @@ class GameLeader extends Component {
 			}
 		} else if (athlete && sportName === "NFL") {
 		} else if (athlete) {
-			if (athlete.type === "pre") {
+			if (athlete.type === "pre" || athlete.type === "in" || athlete.type === "completed") {
 				let playerStats = athlete.displayValue.split(",");
 				title = athlete.title;
 				player = (
@@ -169,32 +169,6 @@ class GameLeader extends Component {
 							<Row className="mb-0 h6">{athlete.displayName}</Row>
 							<Row className="mb-0 text-secondary">{`${athlete.team} - ${athlete.position}`}</Row>
 							<Row className="mb-0 text-secondary">{`${playerStats[0]},${playerStats[1]},${playerStats[2]}`}</Row>
-						</Col>
-					</Row>
-				);
-			} else if (athlete.type === "in") {
-				title = athlete.title;
-				player = (
-					<Row className="align-items-center">
-						<Col md="auto">
-							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
-						</Col>
-						<Col md="auto">
-							<Row className="h6">{athlete.displayName}</Row>
-							<Row>{athlete.displayValue}</Row>
-						</Col>
-					</Row>
-				);
-			} else if (athlete.type === "completed") {
-				title = athlete.title;
-				player = (
-					<Row className="align-items-center">
-						<Col md="auto">
-							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
-						</Col>
-						<Col md="auto">
-							<Row className="h6">{athlete.displayName}</Row>
-							<Row>{athlete.displayValue}</Row>
 						</Col>
 					</Row>
 				);
