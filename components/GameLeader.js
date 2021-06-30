@@ -118,7 +118,8 @@ class GameLeader extends Component {
 				athlete.displayValue = `${goals[0].displayValue} G, ${assists[0].displayValue} A, ${plusMinus[0].displayValue}`;
 			}
 
-			if (athlete.type === "pre") {
+			if (athlete.type === "pre" || athlete.type === "in") {
+				const filler = athlete.type === "pre" ? "PTS" : null;
 				title = athlete.title;
 				player = (
 					<Row className="mb-3 align-items-center">
@@ -132,20 +133,7 @@ class GameLeader extends Component {
 								</Col>
 								<Col md="auto" className="px-2 text-secondary">{`${athlete.position} - ${athlete.team}`}</Col>
 							</Row>
-							<Row className="mb-0 text-secondary">{`${athlete.displayValue} PTS`}</Row>
-						</Col>
-					</Row>
-				);
-			} else if (athlete.type === "in") {
-				title = athlete.title;
-				player = (
-					<Row className="mb-3 align-items-center">
-						<Col md="auto">
-							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
-						</Col>
-						<Col md="auto">
-							<Row className="mb-0 h6">{athlete.displayName}</Row>
-							<Row className="mb-0 text-secondary">{athlete.displayValue}</Row>
+							<Row className="mb-0 text-secondary">{`${athlete.displayValue} ${filler}`}</Row>
 						</Col>
 					</Row>
 				);
