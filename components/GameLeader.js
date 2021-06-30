@@ -59,28 +59,28 @@ class GameLeader extends Component {
 				);
 			} else if (athlete && athlete.type === "in") {
 				player = (
-					<div>
-						<Row>{athlete.title}</Row>
-						<Row className="align-items-center">
+					<>
+						<Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>
+						<Row className="mb-0 align-items-center">
 							<Col md="auto">
 								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 							</Col>
 							<Col md="auto">
-								<Row className="h6">{athlete.displayName}</Row>
-								<Row>{athlete.displayValue}</Row>
+								<Row className="mb-0 h6">{athlete.displayName}</Row>
+								<Row className="mb-0 text-secondary">{athlete.displayValue}</Row>
 							</Col>
 						</Row>
-					</div>
+					</>
 				);
 			} else if (athlete && athlete.type === "completed") {
 				player = (
-					<Row className="align-items-center">
+					<Row className="mb-3 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
 						<Col md="auto">
-							<Row className="h6">{athlete.title}</Row>
-							<Row>{athlete.displayName}</Row>
+							<Row className="mb-0 h6 text-secondary">{athlete.title}</Row>
+							<Row className="mb-0">{athlete.displayName}</Row>
 						</Col>
 						<Col>{athlete.displayValue}</Col>
 					</Row>
