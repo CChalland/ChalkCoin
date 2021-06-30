@@ -158,15 +158,17 @@ class GameLeader extends Component {
 		} else if (athlete && sportName === "NFL") {
 		} else if (athlete) {
 			if (athlete.type === "pre") {
+				let playerStats = athlete.displayValue.split(",");
 				title = athlete.title;
 				player = (
-					<Row className="align-items-center">
+					<Row className="mb-2 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
 						<Col md="auto">
-							<Row className="h6">{athlete.displayName}</Row>
-							<Row>{athlete.displayValue}</Row>
+							<Row className="mb-0 h6">{athlete.displayName}</Row>
+							<Row className="mb-0 text-secondary">{`${athlete.team} - ${athlete.position}`}</Row>
+							<Row className="mb-0 text-secondary">{`${playerStats[0]},${playerStats[1]},${playerStats[2]}`}</Row>
 						</Col>
 					</Row>
 				);
