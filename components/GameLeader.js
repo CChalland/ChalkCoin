@@ -25,7 +25,7 @@ class GameLeader extends Component {
 			}
 
 			if (athlete && athlete.type === "pre") {
-				title = "PROBABLE PITCHERS";
+				title = <Row className="mt-2 py-1 text-secondary h6">{"PROBABLE PITCHERS"}</Row>;
 				player = (
 					<Row className="mb-3 align-items-center">
 						<Col md="auto">
@@ -45,7 +45,9 @@ class GameLeader extends Component {
 					</Row>
 				);
 			} else if (athlete && athlete.type === "dueUp") {
-				title = `DUE UP FOR ${athlete.team.toUpperCase()}`;
+				title = (
+					<Row className="mt-2 py-1 text-secondary h6">{`DUE UP FOR ${athlete.team.toUpperCase()}`}</Row>
+				);
 				player = (
 					<Row className="mb-3 align-items-center">
 						<Col md="auto">
@@ -86,7 +88,7 @@ class GameLeader extends Component {
 					</Row>
 				);
 			} else {
-				title = "PROBABLE PITCHERS";
+				title = <Row className="mt-2 py-1 text-secondary h6">{"PROBABLE PITCHERS"}</Row>;
 				player = (
 					<Row className="mb-3 align-items-center">
 						<Col md="auto">
@@ -120,7 +122,7 @@ class GameLeader extends Component {
 
 			if (athlete.type === "pre" || athlete.type === "in") {
 				const filler = athlete.type === "pre" ? "PTS" : null;
-				title = athlete.title;
+				title = <Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>;
 				player = (
 					<Row className="mb-3 align-items-center">
 						<Col md="auto">
@@ -159,7 +161,7 @@ class GameLeader extends Component {
 		} else if (athlete) {
 			if (athlete.type === "pre" || athlete.type === "in" || athlete.type === "completed") {
 				let playerStats = athlete.displayValue.split(",");
-				title = athlete.title;
+				title = <Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>;
 				player = (
 					<Row className="mb-2 align-items-center">
 						<Col md="auto">
@@ -191,10 +193,7 @@ class GameLeader extends Component {
 
 		return (
 			<Container>
-				<Row className="mt-2 py-1 text-secondary">
-					<h6>{gameTitle}</h6>
-				</Row>
-
+				{gameTitle}
 				{athletes}
 			</Container>
 		);
