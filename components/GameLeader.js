@@ -49,7 +49,7 @@ class GameLeader extends Component {
 					<Row className="mt-2 py-1 text-secondary h6">{`DUE UP FOR ${athlete.team.toUpperCase()}`}</Row>
 				);
 				player = (
-					<Row className="mb-3 align-items-center">
+					<Row className="mb-2 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
