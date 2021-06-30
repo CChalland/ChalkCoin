@@ -38,7 +38,8 @@ class GameScore extends Component {
 
 		if (
 			gameScoreCardData.status.type.name === "STATUS_SCHEDULED" ||
-			gameScoreCardData.status.type.name === "STATUS_POSTPONED"
+			gameScoreCardData.status.type.name === "STATUS_POSTPONED" ||
+			gameScoreCardData.status.type.name === "STATUS_DELAYED"
 		) {
 			title = <Col className="mx-0 pl-0">{gameScoreCardData.shortDetail}</Col>;
 		} else if (sportName === "MLB") {
