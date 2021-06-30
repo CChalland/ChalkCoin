@@ -184,7 +184,7 @@ class GameLeader extends Component {
 		let gameTitle;
 
 		let athletes = gameLeadersData.athletes.map((athlete) => {
-			console.log(athlete);
+			// console.log(athlete);
 			const { title, player } = this.leadersHelper(athlete, sportName);
 			gameTitle = title;
 
