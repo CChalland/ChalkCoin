@@ -285,7 +285,10 @@ class SportCard extends Component {
 					};
 				});
 			} else {
+				awayAthlete.title = "TOP PERFORMERS";
 				awayAthlete.type = "completed";
+
+				homeAthlete.title = "TOP PERFORMERS";
 				homeAthlete.type = "completed";
 				athletes.push(awayAthlete, homeAthlete);
 			}
