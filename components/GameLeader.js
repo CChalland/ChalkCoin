@@ -76,15 +76,15 @@ class GameLeader extends Component {
 				);
 			} else if (athlete && athlete.type === "completed") {
 				player = (
-					<Row className="mb-3 align-items-center">
+					<Row className="mt-2 mb-1 align-items-center">
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
-						<Col md="auto">
-							<Row className="mb-0 h6 text-secondary">{athlete.title}</Row>
-							<Row className="mb-0">{athlete.displayName}</Row>
+						<Col md={4}>
+							<Row className="mb-0 text-secondary">{athlete.title}</Row>
+							<Row className="mb-0 h6">{athlete.displayName}</Row>
 						</Col>
-						<Col>{athlete.displayValue}</Col>
+						<Col className="mx-0 px-0 text-secondary">{athlete.displayValue}</Col>
 					</Row>
 				);
 			} else {
