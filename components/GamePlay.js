@@ -140,7 +140,7 @@ class GamePlay extends Component {
 
 		return (
 			<Container>
-				<figure className="position-relative">
+				<figure className="position-relative" onClick={() => this.setState({ modalShow: true })}>
 					<Image
 						width={256}
 						height={144}
@@ -148,7 +148,7 @@ class GamePlay extends Component {
 						onClick={() => this.setState({ modalShow: true })}
 						rounded
 					/>
-					<Image width={40} height={40} className="OverlayIcon" src="../static/media/play-button-icon.png" />
+					<span class="video-play-button">Play</span>
 					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
 				</figure>
 
