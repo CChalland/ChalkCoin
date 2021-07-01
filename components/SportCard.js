@@ -306,8 +306,8 @@ class SportCard extends Component {
 			// console.log(game);
 			return (
 				<Container>
-					<Row className="mt-3 mb-3 border rounded">
-						<Col className="border">
+					<Row className="mt-3 mb-3">
+						<Col sm={4} className="border rounded">
 							<GameScore
 								key={game.uid.toString()}
 								gameScoreCardData={this.gameScoreHelper(game)}
@@ -315,11 +315,11 @@ class SportCard extends Component {
 							/>
 						</Col>
 
-						<Col className="border">
+						<Col sm={3} className="border rounded">
 							<GamePlay gamePlayData={this.gamePlayHelper(game, sportName)} sportName={sportName} />
 						</Col>
 
-						<Col className="border">
+						<Col sm={3} className="border rounded">
 							<GameLeader gameLeadersData={this.gameLeadersHelper(game, sportName)} sportName={sportName} />
 						</Col>
 					</Row>

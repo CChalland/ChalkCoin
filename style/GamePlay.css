@@ -453,7 +453,6 @@ span.winIndicator {
   margin-bottom: 7px;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-
   border-right: 15px solid black;
 }
 
@@ -465,7 +464,6 @@ span.winIndicatorMLB {
   margin-bottom: 7px;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-
   border-right: 15px solid black;
 }
 
@@ -477,6 +475,12 @@ figcaption.highlightVideoText {
   position: absolute;
   bottom: 1rem;
   margin: 0 1rem;
-  color: black;
+  color: white;
   font-size: .9em;
+}
+
+.OverlayIcon {
+  position: absolute;
+  top: 40px;
+  left: 65px;
 }

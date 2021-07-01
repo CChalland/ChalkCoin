@@ -21,7 +21,7 @@ class SportTabs extends Component {
 		let gamePanes = this.props.allSportsData.map((game) => {
 			let img = (
 				<div key={game.sport_name.toString()}>
-					<Image className="ui avatar image" src={`../static/media/${game.sport_id}.png`} />
+					<Image className="ui avatar image" src={`../static/media/sports-icons/${game.sport_id}.png`} />
 					{game.sport_name}
 				</div>
 			);
