@@ -148,7 +148,7 @@ class GamePlay extends Component {
 						onClick={() => this.setState({ modalShow: true })}
 						rounded
 					/>
-
+					<Image width={40} height={40} className="OverlayIcon" src="../static/media/play-button-icon.png" />
 					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
 				</figure>
 
