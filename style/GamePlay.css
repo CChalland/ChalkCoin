@@ -457,6 +457,18 @@ span.winIndicator {
   border-right: 15px solid black;
 }
 
+span.winIndicatorMLB {
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  margin-right: 0;
+  margin-bottom: 7px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+
+  border-right: 15px solid black;
+}
+
 
 
 

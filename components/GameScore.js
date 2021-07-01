@@ -50,13 +50,13 @@ class GameScore extends Component {
 					<Col md={6} className={`mx-0 pl-0 ${titleStyle} h6`}>
 						{gameScoreCardData.detail}
 					</Col>
-					<Col md={2} className="mx-2 px-5 h6">
+					<Col md={1} className="mx-2 px-5 h6">
 						{"R"}
 					</Col>
-					<Col md={2} className="mx-0 px-3 h6">
+					<Col md={1} className="mx-1 px-0 h6">
 						{"H"}
 					</Col>
-					<Col md={1} className="mx-0 px-0 h6">
+					<Col md={1} className="mx-0 px-2 h6">
 						{"E"}
 					</Col>
 				</>
@@ -65,19 +65,19 @@ class GameScore extends Component {
 				if (period.name === "runs") {
 					awayRuns = period.displayValue;
 					return (
-						<Col md={2} className="mx-2 px-5 list-inline-item h5">
+						<Col md={1} className="mx-2 px-5 list-inline-item h5">
 							{period.displayValue}
 						</Col>
 					);
 				} else if (period.name === "errors") {
 					return (
-						<Col md={1} className="mx-0 px-0 list-inline-item h6">
+						<Col md={1} className="mx-0 px-2 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
 				} else {
 					return (
-						<Col md={2} className="mx-0 px-3 list-inline-item h6">
+						<Col md={1} className="mx-1 px-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
@@ -87,19 +87,19 @@ class GameScore extends Component {
 				if (period.name === "runs") {
 					homeRuns = period.displayValue;
 					return (
-						<Col md={2} className="mx-2 px-5 list-inline-item h5">
+						<Col md={1} className="mx-2 px-5 list-inline-item h5">
 							{period.displayValue}
 						</Col>
 					);
 				} else if (period.name === "errors") {
 					return (
-						<Col md={1} className="mx-0 px-0 list-inline-item h6">
+						<Col md={1} className="mx-0 px-2 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
 				} else {
 					return (
-						<Col md={2} className="mx-0 px-3 list-inline-item h6">
+						<Col md={1} className="mx-1 px-0 list-inline-item h6">
 							{period.displayValue}
 						</Col>
 					);
@@ -107,8 +107,8 @@ class GameScore extends Component {
 			});
 
 			if (gameScoreCardData.status.type.state === "post") {
-				awayFinalStyle = awayRuns > homeRuns ? "winIndicator" : "text-secondary";
-				homeFinalStyle = homeRuns > awayRuns ? "winIndicator" : "text-secondary";
+				awayFinalStyle = awayRuns > homeRuns ? "winIndicatorMLB" : "text-secondary";
+				homeFinalStyle = homeRuns > awayRuns ? "winIndicatorMLB" : "text-secondary";
 			}
 		} else {
 			title = (
