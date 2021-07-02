@@ -80,7 +80,7 @@ class GameLeader extends Component {
 						<Col md="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
-						<Col md={4}>
+						<Col md={6}>
 							<Row className="mb-0 text-secondary">{athlete.title}</Row>
 							<Row className="mb-0 h6">{athlete.displayName}</Row>
 						</Col>
