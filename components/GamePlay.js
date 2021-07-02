@@ -139,8 +139,8 @@ class GamePlay extends Component {
 		console.log(headlines.video[0]);
 
 		return (
-			<Container>
-				<figure className="position-relative" onClick={() => this.setState({ modalShow: true })}>
+			<Container fluid>
+				<figure className="mt-3 position-relative" onClick={() => this.setState({ modalShow: true })}>
 					<Image
 						width={256}
 						height={144}
@@ -162,7 +162,7 @@ class GamePlay extends Component {
 					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-vcenter">{headlines.video[0].headline}</Modal.Title>
 					</Modal.Header>
-					<Modal.Body>
+					<Modal.Body className="m-0 p-0">
 						<video controls src={headlines.video[0].links.source.href} autoPlay />
 					</Modal.Body>
 				</Modal>
@@ -213,11 +213,11 @@ class GamePlay extends Component {
 		}
 
 		return (
-			<div>
+			<>
 				{scheduled}
 				{lastPlay}
 				{headline}
-			</div>
+			</>
 		);
 	}
 
