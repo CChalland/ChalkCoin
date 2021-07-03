@@ -233,7 +233,7 @@ div.circleGraphs {
   line-height: inherit;
   margin: 0;
   overflow: hidden;
-  padding: 2px 0 5px;
+  padding: 3px 0 7.5px;
   vertical-align: baseline;
   width: auto;
 }
@@ -244,7 +244,7 @@ div.circleGraph.four {
   color: #6C6D6F;
   float: none;
   font-family: inherit;
-  font-size: 10px;
+  font-size: 15px;
   font-stretch: inherit;
   font-style: inherit;
   font-variant-caps: inherit;
@@ -252,12 +252,12 @@ div.circleGraph.four {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  line-height: 11px;
-  margin: 0 6px 5px 0;
+  line-height: 16.5px;
+  margin: 0 9px 7.5px 0;
   overflow: hidden;
   padding: 0;
   vertical-align: baseline;
-  width: 64px;
+  width: 96px;
 }
 
 span.abbrev {
@@ -276,13 +276,13 @@ span.abbrev {
   font-variant-numeric: inherit;
   font-weight: inherit;
   line-height: inherit;
-  margin: 0 5px 0 0;
+  margin: 0 7.5px 0 0;
   padding: 0;
 }
 
 span.circle.balls.active {
   background-color: #009944;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -297,16 +297,16 @@ span.circle.balls.active {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 span.circle.balls {
   background-color: #CBCCCE;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -321,11 +321,11 @@ span.circle.balls {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 div.circleGraph {
@@ -334,7 +334,7 @@ div.circleGraph {
   color: #6C6D6F;
   float: none;
   font-family: inherit;
-  font-size: 10px;
+  font-size: 15px;
   font-stretch: inherit;
   font-style: inherit;
   font-variant-caps: inherit;
@@ -342,8 +342,8 @@ div.circleGraph {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  line-height: 11px;
-  margin: 0 6px 5px 0;
+  line-height: 16.5px;
+  margin: 0 9px 7.5px 0;
   overflow: hidden;
   padding: 0;
   vertical-align: baseline;
@@ -352,7 +352,7 @@ div.circleGraph {
 
 span.circle.strikes.active {
   background-color: #DD0000;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -367,16 +367,16 @@ span.circle.strikes.active {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 span.circle.strikes {
   background-color: #CBCCCE;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -391,16 +391,16 @@ span.circle.strikes {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 span.circle.outs.active {
   background-color: #DD0000;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -415,16 +415,16 @@ span.circle.outs.active {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 span.circle.outs {
   background-color: #CBCCCE;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -439,12 +439,15 @@ span.circle.outs {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
+
+
+
 
 span.winIndicator {
   width: 0;
@@ -466,10 +469,6 @@ span.winIndicatorMLB {
   border-bottom: 10px solid transparent;
   border-right: 15px solid black;
 }
-
-
-
-
 
 figcaption.highlightVideoText {
   position: absolute;
