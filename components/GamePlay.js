@@ -106,26 +106,27 @@ class GamePlay extends Component {
 			);
 		}
 
-		if (gamePlayData.tickets) tickets = <Row>{gamePlayData.tickets.summary}</Row>;
+		if (gamePlayData.tickets)
+			tickets = <Row className="py-2 border-top border-bottom">{gamePlayData.tickets.summary}</Row>;
 
 		venue = (
 			<Col>
-				<Row>{gamePlayData.venue.fullName}</Row>
+				<Row className="mb-0 h6">{gamePlayData.venue.fullName}</Row>
 				<Row>{`${gamePlayData.venue.address.city}, ${gamePlayData.venue.address.state}`}</Row>
 			</Col>
 		);
 
 		if (gamePlayData.odds) {
 			odds = (
-				<div>
-					<Row>{`Line: ${gamePlayData.odds.details}`}</Row>
-					<Row>{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
-				</div>
+				<>
+					<Row className="mt-3">{`Line: ${gamePlayData.odds.details}`}</Row>
+					<Row className="mb-2">{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
+				</>
 			);
 		}
 		return (
 			<Container>
-				<Row>
+				<Row className="mt-3 mb-2">
 					{venue}
 					{weather}
 				</Row>
