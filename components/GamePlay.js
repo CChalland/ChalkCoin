@@ -16,7 +16,7 @@ class GamePlay extends Component {
 				paddingRight: 0,
 			},
 			row: {
-				marginLeft: 5,
+				marginLeft: 12,
 				marginRight: 0,
 			},
 			col: {
@@ -79,7 +79,7 @@ class GamePlay extends Component {
 						</div>
 					</Col>
 				</Row>
-				<Row>{`LAST PLAY: ${situation.lastPlay.text}`}</Row>
+				{/* <Row>{`LAST PLAY: ${situation.lastPlay.text}`}</Row> */}
 			</Container>
 		);
 	}
@@ -212,14 +212,23 @@ class GamePlay extends Component {
 				}
 			}
 		}
+		let situation = {
+			onFirst: true,
+			onSecond: true,
+			onThrid: false,
+			balls: 2,
+			strikes: 1,
+			outs: 2,
+		};
+		return this.baseballHelper(situation);
 
-		return (
-			<>
-				{scheduled}
-				{lastPlay}
-				{headline}
-			</>
-		);
+		// return (
+		// 	<>
+		// 		{scheduled}
+		// 		{lastPlay}
+		// 		{headline}
+		// 	</>
+		// );
 	}
 
 	render() {
