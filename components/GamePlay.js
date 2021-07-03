@@ -79,7 +79,7 @@ class GamePlay extends Component {
 						</div>
 					</Col>
 				</Row>
-				{/* <Row>{`LAST PLAY: ${situation.lastPlay.text}`}</Row> */}
+				<Row>{`LAST PLAY: ${situation.lastPlay.text}`}</Row>
 			</Container>
 		);
 	}
@@ -212,23 +212,14 @@ class GamePlay extends Component {
 				}
 			}
 		}
-		let situation = {
-			onFirst: true,
-			onSecond: true,
-			onThrid: false,
-			balls: 2,
-			strikes: 1,
-			outs: 2,
-		};
-		return this.baseballHelper(situation);
 
-		// return (
-		// 	<>
-		// 		{scheduled}
-		// 		{lastPlay}
-		// 		{headline}
-		// 	</>
-		// );
+		return (
+			<>
+				{scheduled}
+				{lastPlay}
+				{headline}
+			</>
+		);
 	}
 
 	render() {
