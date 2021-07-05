@@ -91,9 +91,9 @@ class GamePlay extends Component {
 			let conditionId = gamePlayData.weather.conditionId;
 			if (parseInt(conditionId) < 10) conditionId = "0" + conditionId;
 			weather = (
-				<Col>
+				<Col className="mx-4">
 					<Row>
-						<Col sm="auto">
+						<Col sm="auto" className="mx-0 px-0">
 							<Image
 								width={20}
 								height={20}
@@ -107,10 +107,16 @@ class GamePlay extends Component {
 		}
 
 		if (gamePlayData.tickets)
-			tickets = <Row className="py-2 border-top border-bottom">{gamePlayData.tickets.summary}</Row>;
+			tickets = (
+				<Row className="py-2 border-top border-bottom">
+					<a href={gamePlayData.tickets.links[0].href} target="_blank">
+						{gamePlayData.tickets.summary}
+					</a>
+				</Row>
+			);
 
 		venue = (
-			<Col>
+			<Col sm={7}>
 				<Row className="mb-0 h6">{gamePlayData.venue.fullName}</Row>
 				<Row>{`${gamePlayData.venue.address.city}, ${gamePlayData.venue.address.state}`}</Row>
 			</Col>
@@ -119,7 +125,7 @@ class GamePlay extends Component {
 		if (gamePlayData.odds) {
 			odds = (
 				<>
-					<Row className="mt-3">{`Line: ${gamePlayData.odds.details}`}</Row>
+					<Row className="mt-2">{`Line: ${gamePlayData.odds.details}`}</Row>
 					<Row className="mb-2">{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
 				</>
 			);
@@ -137,8 +143,6 @@ class GamePlay extends Component {
 	}
 
 	videoHelper(headlines) {
-		console.log(headlines.video[0]);
-
 		return (
 			<Container fluid>
 				<figure className="mt-3 position-relative" onClick={() => this.setState({ modalShow: true })}>
@@ -173,7 +177,7 @@ class GamePlay extends Component {
 
 	renderGamePlays() {
 		const { gamePlayData, sportName } = this.props;
-		let scheduled, lastPlay, headline, video;
+		let scheduled, lastPlay, headline;
 
 		console.log(gamePlayData, sportName);
 
