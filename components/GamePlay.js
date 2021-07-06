@@ -44,8 +44,8 @@ class GamePlay extends Component {
 
 		return (
 			<Container>
-				<Row>
-					<Col sm="auto">
+				<Row className="my-2 py-2">
+					<Col className="" sm={6}>
 						<Row style={styles.row}>
 							<Col sm="auto" style={styles.col}>
 								<div className={"diamond second-base " + (situation.onSecond ? "active" : null)}></div>
@@ -60,7 +60,7 @@ class GamePlay extends Component {
 							</Col>
 						</Row>
 					</Col>
-					<Col sm="auto">
+					<Col className="" sm={6}>
 						<div className="circleGraphs">
 							<div className="circleGraph  four">
 								<span className="abbrev">B</span>
