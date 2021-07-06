@@ -181,7 +181,11 @@ class GamePlay extends Component {
 
 		console.log(gamePlayData, sportName);
 
-		if (gamePlayData.status.type.name === "STATUS_SCHEDULED") {
+		if (
+			gamePlayData.status.type.name === "STATUS_SCHEDULED" ||
+			gamePlayData.status.type.name === "STATUS_POSTPONED" ||
+			gamePlayData.status.type.name === "STATUS_DELAYED"
+		) {
 			scheduled = this.scheduledHelper(gamePlayData);
 		} else if (gamePlayData.status.type.state === "in") {
 			if (sportName === "NFL") {
