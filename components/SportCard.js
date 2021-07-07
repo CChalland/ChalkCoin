@@ -4,6 +4,7 @@ import { Link } from "../routes";
 import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
+import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/SportCard";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -313,17 +314,17 @@ class SportCard extends Component {
 						<Col sm={4} className="border rounded">
 							<GameScore
 								key={game.uid.toString()}
-								gameScoreCardData={this.gameScoreHelper(game)}
+								gameScoreCardData={GameScoreHelper(game, sportName)}
 								sportName={sportName}
 							/>
 						</Col>
 
 						<Col sm={3} className="border rounded">
-							<GamePlay gamePlayData={this.gamePlayHelper(game, sportName)} sportName={sportName} />
+							<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
 						</Col>
 
 						<Col sm={3} className="border rounded">
-							<GameLeader gameLeadersData={this.gameLeadersHelper(game, sportName)} sportName={sportName} />
+							<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
 						</Col>
 					</Row>
 				</Container>

@@ -8,8 +8,7 @@ function homeAwayHelper(game) {
 	return { homeTeam, awayTeam };
 }
 
-export function gameScoreHelper(game) {
-	const { sportName } = this.props;
+export function GameScoreHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let homePeriods, awayPeriods, homeRecords, awayRecords;
 	let temp = [
@@ -85,7 +84,7 @@ export function gameScoreHelper(game) {
 	};
 }
 
-export function gamePlayHelper(game) {
+export function GamePlayHelper(game) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
 
@@ -117,7 +116,7 @@ export function gamePlayHelper(game) {
 	return { status, situation, headlines, venue, tickets, weather, odds, lastPlay };
 }
 
-export function gameLeadersHelper(game, sportName) {
+export function GameLeadersHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let athletes = [];
 
