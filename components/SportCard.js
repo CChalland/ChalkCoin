@@ -120,8 +120,8 @@ class SportCard extends Component {
 			if (game.competitions[0].situation.lastPlay.team)
 				team =
 					game.competitions[0].situation.lastPlay.team.id === homeTeam[0].team.id
-						? homeTeam[0].team.abbreviation
-						: awayTeam[0].team.abbreviation;
+						? homeTeam[0].team
+						: awayTeam[0].team;
 			lastPlay = {
 				athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
 				text: game.competitions[0].situation.lastPlay.text,

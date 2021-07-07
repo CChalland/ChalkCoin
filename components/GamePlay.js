@@ -177,7 +177,7 @@ class GamePlay extends Component {
 
 	renderGamePlays() {
 		const { gamePlayData, sportName } = this.props;
-		let scheduled, lastPlay, headline;
+		let scheduled, lastPlay, headline, athletePic;
 
 		console.log(gamePlayData, sportName);
 
@@ -193,14 +193,20 @@ class GamePlay extends Component {
 			} else if (sportName === "MLB") {
 				lastPlay = this.baseballHelper(gamePlayData.situation);
 			} else {
+				athletePic = gamePlayData.lastPlay.athletes
+					? gamePlayData.lastPlay.athletes[0].headshot
+					: gamePlayData.lastPlay.team.logo;
 				lastPlay = (
 					<div>
 						<Row>
 							<h6>{"Last Play"}</h6>
 						</Row>
-						<Row>
-							<Col md="auto">
-								<Image width={45} height={40} src={null} roundedCircle />
+						<Row className="mb-3 align-items-center">
+							<Col sm={3}>
+								<Image width={45} height={40} src={athletePic} roundedCircle />
+							</Col>
+							<Col sm={9} className="px-0">
+								{`${gamePlayData.lastPlay.team.abbreviation} - ${gamePlayData.lastPlay.text}`}
 							</Col>
 						</Row>
 					</div>
