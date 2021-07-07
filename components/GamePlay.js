@@ -79,7 +79,7 @@ class GamePlay extends Component {
 						</div>
 					</Col>
 				</Row>
-				<Row>{`LAST PLAY: ${situation.lastPlay.text}`}</Row>
+				<Row className="mt-4">{`LAST PLAY: ${situation.lastPlay.text}`}</Row>
 			</Container>
 		);
 	}

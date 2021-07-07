@@ -177,7 +177,7 @@ class GameScore extends Component {
 			<>
 				<Row className="py-2 h6 align-items-center border">{title}</Row>
 
-				<Row className={`mb-3 align-items-center ${awayFinalStyle}`}>
+				<Row className={`my-3 align-items-center ${awayFinalStyle}`}>
 					<Col md={2} className="px-4">
 						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 					</Col>
@@ -196,7 +196,7 @@ class GameScore extends Component {
 					<span className={awayFinalStyle}></span>
 				</Row>
 
-				<Row className={`my-3 align-items-center ${homeFinalStyle}`}>
+				<Row className={`mt-4 mb-3 align-items-center ${homeFinalStyle}`}>
 					<Col md={2} className="px-4">
 						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 					</Col>
