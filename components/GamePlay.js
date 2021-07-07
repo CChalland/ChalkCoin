@@ -16,7 +16,7 @@ class GamePlay extends Component {
 				paddingRight: 0,
 			},
 			row: {
-				marginLeft: 5,
+				marginLeft: 12,
 				marginRight: 0,
 			},
 			col: {
@@ -44,8 +44,8 @@ class GamePlay extends Component {
 
 		return (
 			<Container>
-				<Row>
-					<Col sm="auto">
+				<Row className="my-2 py-2">
+					<Col className="px-4" sm={6}>
 						<Row style={styles.row}>
 							<Col sm="auto" style={styles.col}>
 								<div className={"diamond second-base " + (situation.onSecond ? "active" : null)}></div>
@@ -60,7 +60,7 @@ class GamePlay extends Component {
 							</Col>
 						</Row>
 					</Col>
-					<Col sm="auto">
+					<Col className="" sm={6}>
 						<div className="circleGraphs">
 							<div className="circleGraph  four">
 								<span className="abbrev">B</span>
@@ -79,7 +79,7 @@ class GamePlay extends Component {
 						</div>
 					</Col>
 				</Row>
-				<Row>{`LAST PLAY: ${situation.lastPlay.text}`}</Row>
+				<Row className="mt-4">{`LAST PLAY: ${situation.lastPlay.text}`}</Row>
 			</Container>
 		);
 	}
@@ -91,9 +91,9 @@ class GamePlay extends Component {
 			let conditionId = gamePlayData.weather.conditionId;
 			if (parseInt(conditionId) < 10) conditionId = "0" + conditionId;
 			weather = (
-				<Col>
+				<Col className="mx-4">
 					<Row>
-						<Col sm="auto">
+						<Col sm="auto" className="mx-0 px-0">
 							<Image
 								width={20}
 								height={20}
@@ -106,26 +106,33 @@ class GamePlay extends Component {
 			);
 		}
 
-		if (gamePlayData.tickets) tickets = <Row>{gamePlayData.tickets.summary}</Row>;
+		if (gamePlayData.tickets)
+			tickets = (
+				<Row className="py-2 border-top border-bottom">
+					<a href={gamePlayData.tickets.links[0].href} target="_blank">
+						{gamePlayData.tickets.summary}
+					</a>
+				</Row>
+			);
 
 		venue = (
-			<Col>
-				<Row>{gamePlayData.venue.fullName}</Row>
+			<Col sm={7}>
+				<Row className="mb-0 h6">{gamePlayData.venue.fullName}</Row>
 				<Row>{`${gamePlayData.venue.address.city}, ${gamePlayData.venue.address.state}`}</Row>
 			</Col>
 		);
 
 		if (gamePlayData.odds) {
 			odds = (
-				<div>
-					<Row>{`Line: ${gamePlayData.odds.details}`}</Row>
-					<Row>{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
-				</div>
+				<>
+					<Row className="mt-2">{`Line: ${gamePlayData.odds.details}`}</Row>
+					<Row className="mb-2">{`O/U: ${gamePlayData.odds.overUnder}`}</Row>
+				</>
 			);
 		}
 		return (
 			<Container>
-				<Row>
+				<Row className="mt-3 mb-2">
 					{venue}
 					{weather}
 				</Row>
@@ -136,11 +143,9 @@ class GamePlay extends Component {
 	}
 
 	videoHelper(headlines) {
-		console.log(headlines.video[0]);
-
 		return (
-			<Container>
-				<div>
+			<Container fluid>
+				<figure className="mt-3 position-relative" onClick={() => this.setState({ modalShow: true })}>
 					<Image
 						width={256}
 						height={144}
@@ -148,7 +153,9 @@ class GamePlay extends Component {
 						onClick={() => this.setState({ modalShow: true })}
 						rounded
 					/>
-				</div>
+					<span class="video-play-button">Play</span>
+					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
+				</figure>
 
 				<Modal
 					size="lg"
@@ -160,7 +167,7 @@ class GamePlay extends Component {
 					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-vcenter">{headlines.video[0].headline}</Modal.Title>
 					</Modal.Header>
-					<Modal.Body>
+					<Modal.Body className="m-0 p-0">
 						<video controls src={headlines.video[0].links.source.href} autoPlay />
 					</Modal.Body>
 				</Modal>
@@ -170,11 +177,13 @@ class GamePlay extends Component {
 
 	renderGamePlays() {
 		const { gamePlayData, sportName } = this.props;
-		let scheduled, lastPlay, headline, video;
+		let scheduled, lastPlay, headline, athletePic;
 
-		console.log(gamePlayData, sportName);
-
-		if (gamePlayData.status.type.name === "STATUS_SCHEDULED") {
+		if (
+			gamePlayData.status.type.name === "STATUS_SCHEDULED" ||
+			gamePlayData.status.type.name === "STATUS_POSTPONED" ||
+			gamePlayData.status.type.name === "STATUS_DELAYED"
+		) {
 			scheduled = this.scheduledHelper(gamePlayData);
 		} else if (gamePlayData.status.type.state === "in") {
 			if (sportName === "NFL") {
@@ -182,38 +191,48 @@ class GamePlay extends Component {
 			} else if (sportName === "MLB") {
 				lastPlay = this.baseballHelper(gamePlayData.situation);
 			} else {
+				athletePic = gamePlayData.lastPlay.athletes
+					? gamePlayData.lastPlay.athletes[0].headshot
+					: gamePlayData.lastPlay.team.logo;
 				lastPlay = (
 					<div>
-						<Row>
+						<Row className="my-3">
 							<h6>{"Last Play"}</h6>
 						</Row>
-						<Row>
-							<Col md="auto">
-								<Image width={45} height={40} src={null} roundedCircle />
+						<Row className="mb-3 align-items-center">
+							<Col sm={3}>
+								<Image width={45} height={40} src={athletePic} roundedCircle />
+							</Col>
+							<Col sm={9} className="px-0">
+								{`${gamePlayData.lastPlay.team.abbreviation} - ${gamePlayData.lastPlay.text}`}
 							</Col>
 						</Row>
 					</div>
 				);
 			}
 		} else if (gamePlayData.status.type.completed) {
-			if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines) {
-				headline = this.videoHelper(gamePlayData.headlines);
-			} else if (gamePlayData.headlines) {
-				headline = (
-					<Row>
-						<div>{gamePlayData.headlines.shortLinkText}</div>
-						<div>{gamePlayData.headlines.description}</div>
-					</Row>
-				);
+			if (gamePlayData.headlines) {
+				if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines.video) {
+					headline = this.videoHelper(gamePlayData.headlines);
+				} else {
+					headline = (
+						<Row className="my-3">
+							<a className="my-0 h6 text-dark" href={gamePlayData.headlines.link[0].href} target="_blank">
+								{gamePlayData.headlines.shortLinkText}
+							</a>
+							<div>{gamePlayData.headlines.description}</div>
+						</Row>
+					);
+				}
 			}
 		}
 
 		return (
-			<div>
+			<>
 				{scheduled}
 				{lastPlay}
 				{headline}
-			</div>
+			</>
 		);
 	}
 

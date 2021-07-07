@@ -1,6 +1,6 @@
 div.diamond.second-base {
-  border: 13px solid transparent;
-  border-bottom: 13px solid #CBCCCE;
+  border: 19.5px solid transparent;
+  border-bottom: 19.5px solid #CBCCCE;
   box-sizing: border-box;
   clear: both;
   color: #6C6D6F;
@@ -18,25 +18,25 @@ div.diamond.second-base {
   margin: 0 auto;
   padding: 0;
   position: relative;
-  top: -2px;
+  top: -3px;
   vertical-align: baseline;
   width: 0;
 }
 
 div.diamond.second-base:after {
-  border: 13px solid transparent;
-  border-top: 13px solid #CBCCCE;
+  border: 19.5px solid transparent;
+  border-top: 19.5px solid #CBCCCE;
   content: "";
   height: 0;
-  left: -13px;
+  left: -19.5px;
   position: absolute;
-  top: 13px;
+  top: 19.5px;
   width: 0;
 }
 
 div.diamond.second-base.active {
-  border: 13px solid transparent;
-  border-bottom: 13px solid #0066CC;
+  border: 19.5px solid transparent;
+  border-bottom: 19.5px solid #0066CC;
   box-sizing: border-box;
   clear: both;
   color: #6C6D6F;
@@ -54,25 +54,25 @@ div.diamond.second-base.active {
   margin: 0 auto;
   padding: 0;
   position: relative;
-  top: -2px;
+  top: -3px;
   vertical-align: baseline;
   width: 0;
 }
 
 div.diamond.second-base.active:after {
-  border: 13px solid transparent;
-  border-top: 13px solid #0066CC;
+  border: 19.5px solid transparent;
+  border-top: 19.5px solid #0066CC;
   content: "";
   height: 0;
-  left: -13px;
+  left: -19.5px;
   position: absolute;
-  top: 13px;
+  top: 19.5px;
   width: 0;
 }
 
 div.diamond.third-base {
-  border: 13px solid transparent;
-  border-bottom: 13px solid #CBCCCE;
+  border: 19.5px solid transparent;
+  border-bottom: 19.5px solid #CBCCCE;
   box-sizing: border-box;
   color: #6C6D6F;
   float: left;
@@ -87,28 +87,28 @@ div.diamond.third-base {
   font-weight: inherit;
   height: 0;
   line-height: inherit;
-  margin: 0 4px 0 0;
+  margin: 0 6px 0 0;
   padding: 0;
   position: relative;
-  top: -13px;
+  top: -19.5px;
   vertical-align: baseline;
   width: 0;
 }
 
 div.diamond.third-base:after {
-  border: 13px solid transparent;
-  border-top: 13px solid #CBCCCE;
+  border: 19.5px solid transparent;
+  border-top: 19.5px solid #CBCCCE;
   content: "";
   height: 0;
-  left: -13px;
+  left: -19.5px;
   position: absolute;
-  top: 13px;
+  top: 19.5px;
   width: 0;
 }
 
 div.diamond.third-base.active {
-  border: 13px solid transparent;
-  border-bottom: 13px solid #0066CC;
+  border: 19.5px solid transparent;
+  border-bottom: 19.5px solid #0066CC;
   box-sizing: border-box;
   color: #6C6D6F;
   float: left;
@@ -123,28 +123,28 @@ div.diamond.third-base.active {
   font-weight: inherit;
   height: 0;
   line-height: inherit;
-  margin: 0 4px 0 0;
+  margin: 0 6px 0 0;
   padding: 0;
   position: relative;
-  top: -13px;
+  top: -19.5px;
   vertical-align: baseline;
   width: 0;
 }
 
 div.diamond.third-base.active:after {
-  border: 13px solid transparent;
-  border-top: 13px solid #0066CC;
+  border: 19.5px solid transparent;
+  border-top: 19.5px solid #0066CC;
   content: "";
   height: 0;
-  left: -13px;
+  left: -19.5px;
   position: absolute;
-  top: 13px;
+  top: 19.5px;
   width: 0;
 }
 
 div.diamond.first-base {
-  border: 13px solid transparent;
-  border-bottom: 13px solid #CBCCCE;
+  border: 19.5px solid transparent;
+  border-bottom: 19.5px solid #CBCCCE;
   box-sizing: border-box;
   color: #6C6D6F;
   float: right;
@@ -162,25 +162,25 @@ div.diamond.first-base {
   margin: 0;
   padding: 0;
   position: relative;
-  top: -13px;
+  top: -19.5px;
   vertical-align: baseline;
   width: 0;
 }
 
 div.diamond.first-base:after {
-  border: 13px solid transparent;
-  border-top: 13px solid #CBCCCE;
+  border: 19.5px solid transparent;
+  border-top: 19.5px solid #CBCCCE;
   content: "";
   height: 0;
-  left: -13px;
+  left: -19.5px;
   position: absolute;
-  top: 13px;
+  top: 19.5px;
   width: 0;
 }
 
 div.diamond.first-base.active {
-  border: 13px solid transparent;
-  border-bottom: 13px solid #0066CC;
+  border: 19.5px solid transparent;
+  border-bottom: 19.5px solid #0066CC;
   box-sizing: border-box;
   color: #6C6D6F;
   float: right;
@@ -198,22 +198,21 @@ div.diamond.first-base.active {
   margin: 0;
   padding: 0;
   position: relative;
-  top: -13px;
+  top: -19.5px;
   vertical-align: baseline;
   width: 0;
 }
 
 div.diamond.first-base.active:after {
-  border: 13px solid transparent;
-  border-top: 13px solid #0066CC;
+  border: 19.5px solid transparent;
+  border-top: 19.5px solid #0066CC;
   content: "";
   height: 0;
-  left: -13px;
+  left: -19.5px;
   position: absolute;
-  top: 13px;
+  top: 19.5px;
   width: 0;
 }
-
 
 
 
@@ -234,7 +233,7 @@ div.circleGraphs {
   line-height: inherit;
   margin: 0;
   overflow: hidden;
-  padding: 2px 0 5px;
+  padding: 3px 0 7.5px;
   vertical-align: baseline;
   width: auto;
 }
@@ -245,7 +244,7 @@ div.circleGraph.four {
   color: #6C6D6F;
   float: none;
   font-family: inherit;
-  font-size: 10px;
+  font-size: 15px;
   font-stretch: inherit;
   font-style: inherit;
   font-variant-caps: inherit;
@@ -253,12 +252,12 @@ div.circleGraph.four {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  line-height: 11px;
-  margin: 0 6px 5px 0;
+  line-height: 16.5px;
+  margin: 0 9px 7.5px 0;
   overflow: hidden;
   padding: 0;
   vertical-align: baseline;
-  width: 64px;
+  width: 96px;
 }
 
 span.abbrev {
@@ -277,13 +276,13 @@ span.abbrev {
   font-variant-numeric: inherit;
   font-weight: inherit;
   line-height: inherit;
-  margin: 0 5px 0 0;
+  margin: 0 7.5px 0 0;
   padding: 0;
 }
 
 span.circle.balls.active {
   background-color: #009944;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -298,16 +297,16 @@ span.circle.balls.active {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 span.circle.balls {
   background-color: #CBCCCE;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -322,11 +321,11 @@ span.circle.balls {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 div.circleGraph {
@@ -335,7 +334,7 @@ div.circleGraph {
   color: #6C6D6F;
   float: none;
   font-family: inherit;
-  font-size: 10px;
+  font-size: 15px;
   font-stretch: inherit;
   font-style: inherit;
   font-variant-caps: inherit;
@@ -343,8 +342,8 @@ div.circleGraph {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  line-height: 11px;
-  margin: 0 6px 5px 0;
+  line-height: 16.5px;
+  margin: 0 9px 7.5px 0;
   overflow: hidden;
   padding: 0;
   vertical-align: baseline;
@@ -353,7 +352,7 @@ div.circleGraph {
 
 span.circle.strikes.active {
   background-color: #DD0000;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -368,16 +367,16 @@ span.circle.strikes.active {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 span.circle.strikes {
   background-color: #CBCCCE;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -392,16 +391,16 @@ span.circle.strikes {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 span.circle.outs.active {
   background-color: #DD0000;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -416,16 +415,16 @@ span.circle.outs.active {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
 }
 
 span.circle.outs {
   background-color: #CBCCCE;
-  border-radius: 10px;
+  border-radius: 15px;
   border-width: 0;
   box-sizing: border-box;
   color: #6C6D6F;
@@ -440,9 +439,103 @@ span.circle.outs {
   font-variant-ligatures: inherit;
   font-variant-numeric: inherit;
   font-weight: inherit;
-  height: 10px;
+  height: 15px;
   line-height: inherit;
-  margin: 0 3px 0 0;
+  margin: 0 4.5px 0 0;
   padding: 0;
-  width: 10px;
+  width: 15px;
+}
+
+
+span.winIndicator {
+  width: 0;
+  height: 0;
+  margin-right: 0;
+  margin-bottom: 7px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 15px solid black;
+}
+
+span.winIndicatorMLB {
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  margin-right: 0;
+  margin-bottom: 7px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 15px solid black;
+}
+
+figcaption.highlightVideoText {
+  position: absolute;
+  bottom: 1rem;
+  margin: 0 1rem;
+  color: white;
+  font-size: .9em;
+}
+
+span.video-play-button {
+  border-width: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  color: #48494A;
+  cursor: pointer;
+  font-family: -apple-system, system-ui, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0;
+  font-weight: 600;
+  left: 0;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: scale(1);
+  transition: transform .1s ease-in-out;
+  vertical-align: baseline;
+}
+
+span.video-play-button:before {
+  backface-visibility: hidden;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  content: "";
+  font-size: 0;
+  height: 32px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) scale(1) translateZ(0);
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+  transition: transform .2s;
+  width: 32px;
+}
+
+span.video-play-button:after {
+  background-color: initial;
+  background-image: url(https://a.espncdn.com/redesign/assets/img/icons/controls__play.svg);
+  background-position: center center;
+  background-repeat: no-repeat no-repeat;
+  color: #48494A;
+  content: "";
+  height: 15px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: -2px;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%) scale(1) translateZ(0);
+  transform-origin: 50% 0%;
+  transition: transform .2s;
+  width: 15px;
+}
+
+span.video-play-button:hover {
+  transform: scale(1.1);
 }

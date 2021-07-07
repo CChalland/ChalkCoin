@@ -35,8 +35,28 @@ class SportCard extends Component {
 		];
 
 		if (sportName === "MLB") {
-			awayPeriods = awayTeam[0].statistics;
-			homePeriods = homeTeam[0].statistics;
+			let runs, hits, errors;
+			runs = awayTeam[0].statistics.filter((stat) => {
+				return stat.name === "runs";
+			});
+			hits = awayTeam[0].statistics.filter((stat) => {
+				return stat.name === "hits";
+			});
+			errors = awayTeam[0].statistics.filter((stat) => {
+				return stat.name === "errors";
+			});
+			awayPeriods = [runs[0], hits[0], errors[0]];
+
+			runs = homeTeam[0].statistics.filter((stat) => {
+				return stat.name === "runs";
+			});
+			hits = homeTeam[0].statistics.filter((stat) => {
+				return stat.name === "hits";
+			});
+			errors = homeTeam[0].statistics.filter((stat) => {
+				return stat.name === "errors";
+			});
+			homePeriods = [runs[0], hits[0], errors[0]];
 		} else if (
 			game.status.type.description === "In Progress" ||
 			game.status.type.description === "End of Period" ||
@@ -82,11 +102,9 @@ class SportCard extends Component {
 		};
 	}
 
-	gamePlayHelper(game, sportName) {
+	gamePlayHelper(game) {
 		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
 		let status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
-
-		console.log(game);
 
 		if (game.weather) weather = game.weather;
 		if (game.competitions[0].situation) situation = game.competitions[0].situation;
@@ -96,12 +114,17 @@ class SportCard extends Component {
 		status = game.competitions[0].status;
 		venue = game.competitions[0].venue;
 
+		if (headlines)
+			headlines.link = game.links.filter((link) => {
+				return link.text === headlines.type;
+			});
+
 		if (game.status.type.state === "in") {
 			if (game.competitions[0].situation.lastPlay.team)
 				team =
 					game.competitions[0].situation.lastPlay.team.id === homeTeam[0].team.id
-						? homeTeam[0].team.abbreviation
-						: awayTeam[0].team.abbreviation;
+						? homeTeam[0].team
+						: awayTeam[0].team;
 			lastPlay = {
 				athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
 				text: game.competitions[0].situation.lastPlay.text,
@@ -265,7 +288,10 @@ class SportCard extends Component {
 					};
 				});
 			} else {
+				awayAthlete.title = "TOP PERFORMERS";
 				awayAthlete.type = "completed";
+
+				homeAthlete.title = "TOP PERFORMERS";
 				homeAthlete.type = "completed";
 				athletes.push(awayAthlete, homeAthlete);
 			}
@@ -280,11 +306,11 @@ class SportCard extends Component {
 		const { sportData, sportName } = this.props;
 
 		let gameItems = sportData.data.events.map((game) => {
-			// console.log(game);
+			console.log(game);
 			return (
 				<Container>
-					<Row>
-						<Col>
+					<Row className="mt-3 mb-3">
+						<Col sm={4} className="border rounded">
 							<GameScore
 								key={game.uid.toString()}
 								gameScoreCardData={this.gameScoreHelper(game)}
@@ -292,11 +318,11 @@ class SportCard extends Component {
 							/>
 						</Col>
 
-						<Col>
+						<Col sm={3} className="border rounded">
 							<GamePlay gamePlayData={this.gamePlayHelper(game, sportName)} sportName={sportName} />
 						</Col>
 
-						<Col>
+						<Col sm={3} className="border rounded">
 							<GameLeader gameLeadersData={this.gameLeadersHelper(game, sportName)} sportName={sportName} />
 						</Col>
 					</Row>
