@@ -179,8 +179,6 @@ class GamePlay extends Component {
 		const { gamePlayData, sportName } = this.props;
 		let scheduled, lastPlay, headline, athletePic;
 
-		console.log(gamePlayData, sportName);
-
 		if (
 			gamePlayData.status.type.name === "STATUS_SCHEDULED" ||
 			gamePlayData.status.type.name === "STATUS_POSTPONED" ||
@@ -198,7 +196,7 @@ class GamePlay extends Component {
 					: gamePlayData.lastPlay.team.logo;
 				lastPlay = (
 					<div>
-						<Row>
+						<Row className="my-3">
 							<h6>{"Last Play"}</h6>
 						</Row>
 						<Row className="mb-3 align-items-center">
@@ -218,8 +216,10 @@ class GamePlay extends Component {
 					headline = this.videoHelper(gamePlayData.headlines);
 				} else {
 					headline = (
-						<Row>
-							<div>{gamePlayData.headlines.shortLinkText}</div>
+						<Row className="my-3">
+							<a className="my-0 h6 text-dark" href={gamePlayData.headlines.link[0].href} target="_blank">
+								{gamePlayData.headlines.shortLinkText}
+							</a>
 							<div>{gamePlayData.headlines.description}</div>
 						</Row>
 					);

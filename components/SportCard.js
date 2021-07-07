@@ -102,11 +102,9 @@ class SportCard extends Component {
 		};
 	}
 
-	gamePlayHelper(game, sportName) {
+	gamePlayHelper(game) {
 		const { homeTeam, awayTeam } = this.homeAwayHelper(game);
 		let status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
-
-		console.log(game);
 
 		if (game.weather) weather = game.weather;
 		if (game.competitions[0].situation) situation = game.competitions[0].situation;
@@ -115,6 +113,11 @@ class SportCard extends Component {
 		if (game.competitions[0].tickets) tickets = game.competitions[0].tickets[0];
 		status = game.competitions[0].status;
 		venue = game.competitions[0].venue;
+
+		if (headlines)
+			headlines.link = game.links.filter((link) => {
+				return link.text === headlines.type;
+			});
 
 		if (game.status.type.state === "in") {
 			if (game.competitions[0].situation.lastPlay.team)
