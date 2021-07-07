@@ -45,7 +45,7 @@ class GamePlay extends Component {
 		return (
 			<Container>
 				<Row className="my-2 py-2">
-					<Col className="" sm={6}>
+					<Col className="px-4" sm={6}>
 						<Row style={styles.row}>
 							<Col sm="auto" style={styles.col}>
 								<div className={"diamond second-base " + (situation.onSecond ? "active" : null)}></div>
