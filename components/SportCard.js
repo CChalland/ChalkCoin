@@ -12,14 +12,19 @@ class SportCard extends Component {
 		this.state = {
 			index: 0,
 			activeIndex: 0,
-			gameScoreCard: {},
+			sportData: this.props.sportData.data.events,
+			sportName: this.props.sportName,
 		};
 	}
 
-	renderGamesCards(sportId) {
-		const { sportData, sportName } = this.props;
+	async componentDidMount() {
+		console.log(this.state.sportData);
+	}
 
-		let gameItems = sportData.data.events.map((game) => {
+	renderGamesCards(sportId) {
+		const { sportData, sportName } = this.state;
+
+		let gameItems = sportData.map((game) => {
 			console.log(game);
 			return (
 				<Container>
