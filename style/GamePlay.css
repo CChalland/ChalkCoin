@@ -446,6 +446,22 @@ span.circle.outs {
   width: 15px;
 }
 
+span.Athlete__Star {
+  -webkit-tap-highlight-color: transparent;
+  background-color: initial;
+  background-image: url(https://a.espncdn.com/redesign/assets/img/svg/Star.svg);
+  background-repeat: no-repeat no-repeat;
+  background-size: contain;
+  color: #151617;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+  height: 12px;
+  line-height: 18.4px;
+  text-indent: -9999px;
+  width: 12px;
+}
+
 
 span.winIndicator {
   width: 0;
