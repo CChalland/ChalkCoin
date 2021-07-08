@@ -5,6 +5,7 @@ import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/SportCard";
+import axios from "axios";
 
 class SportCard extends Component {
 	constructor(props) {
@@ -14,12 +15,59 @@ class SportCard extends Component {
 			activeIndex: 0,
 			sportData: this.props.sportData.data.events,
 			sportName: this.props.sportName,
+			reloadData: false,
 		};
 	}
 
 	async componentDidMount() {
-		console.log(this.state.sportData);
+		const { sportData } = this.state;
+		let fetchedSportData,
+			reloadData = false;
+
+		fetchedSportData = sportData.filter((game) => {
+			reloadData = true;
+			return game.status.type.state === "in";
+		});
+		fetchedSportData.push(
+			sportData.filter((game) => {
+				if (fetchedSportData.length === 0) reloadData = false;
+				return game.status.type.state === "post";
+			})
+		);
+		fetchedSportData.push(
+			sportData.filter((game) => {
+				return game.status.type.state === "pre";
+			})
+		);
+
+		// await axios({
+		// 	method: "GET",
+		// 	url: `http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`,
+		// }).then(
+		// 	function (response) {
+		// 		fetchedSportData = response.data.events.filter((game) => {
+		// 			reloadData = true;
+		// 			return game.status.type.state === "in";
+		// 		});
+		// 		fetchedSportData.push(
+		// 			response.data.events.filter((game) => {
+		// 				if (fetchedSportData.length === 0) reloadData = false;
+		// 				return game.status.type.state === "post";
+		// 			})
+		// 		);
+		// 		fetchedSportData.push(
+		// 			response.data.events.filter((game) => {
+		// 				return game.status.type.state === "pre";
+		// 			})
+		// 		);
+		// 	}.bind(this)
+		// );
+
+		this.setState({ sportData: fetchedSportData.flat(), reloadData });
+		console.log(this.state.reloadData);
 	}
+
+	async componentDidUpdate() {}
 
 	renderGamesCards(sportId) {
 		const { sportData, sportName } = this.state;
