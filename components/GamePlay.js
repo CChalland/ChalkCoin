@@ -158,7 +158,7 @@ class GamePlay extends Component {
 						onClick={() => this.setState({ modalShow: true })}
 						rounded
 					/>
-					<span class="video-play-button">Play</span>
+					<span className="video-play-button">Play</span>
 					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
 				</figure>
 

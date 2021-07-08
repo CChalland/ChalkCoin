@@ -72,6 +72,8 @@ class SportCard extends Component {
 					this.setState({ sportData: fetchedSportData.flat(), reloadData });
 				}, 15000);
 			});
+
+		console.log(this.state.sportData, this.state.reloadData);
 	}
 
 	renderGamesCards(sportId) {

@@ -152,18 +152,18 @@ class GameLeader extends Component {
 				);
 			} else if (athlete.type === "completed") {
 				const stars = {
-					first: <span class="Athlete__Star"></span>,
+					first: <span className="Athlete__Star"></span>,
 					second: (
 						<>
-							<span class="Athlete__Star"></span>
-							<span class="Athlete__Star"></span>
+							<span className="Athlete__Star"></span>
+							<span className="Athlete__Star"></span>
 						</>
 					),
 					third: (
 						<>
-							<span class="Athlete__Star"></span>
-							<span class="Athlete__Star"></span>
-							<span class="Athlete__Star"></span>
+							<span className="Athlete__Star"></span>
+							<span className="Athlete__Star"></span>
+							<span className="Athlete__Star"></span>
 						</>
 					),
 				};
