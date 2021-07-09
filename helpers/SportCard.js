@@ -120,7 +120,6 @@ export function GameLeadersHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let athletes = [];
 	let awayAthlete, homeAthlete;
-
 	// let awayAthlete = awayTeam[0].leaders ? awayTeam[0].leaders.pop() : awayTeam[0].leaders;
 	// let homeAthlete = homeTeam[0].leaders ? homeTeam[0].leaders.pop() : homeTeam[0].leaders;
 
@@ -135,7 +134,7 @@ export function GameLeadersHelper(game, sportName) {
 			displayValue: athlete.leaders[0].displayValue,
 			type: "pre",
 		};
-	} else awayAthlete = awayTeam[0].leaders;
+	}
 
 	if (homeTeam[0].leaders) {
 		let athlete = homeTeam[0].leaders[homeTeam[0].leaders.length - 1];
@@ -148,7 +147,7 @@ export function GameLeadersHelper(game, sportName) {
 			displayValue: athlete.leaders[0].displayValue,
 			type: "pre",
 		};
-	} else homeAthlete = homeTeam[0].leaders;
+	}
 
 	if (
 		(game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
