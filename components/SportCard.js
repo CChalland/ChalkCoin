@@ -19,7 +19,7 @@ class SportCard extends Component {
 		};
 	}
 
-	async componentDidMount() {
+	componentDidMount() {
 		const { sportData } = this.props;
 		let fetchedSportData,
 			reloadData = false;
@@ -79,7 +79,13 @@ class SportCard extends Component {
 	}
 
 	renderGamesCards(sportId) {
-		const { sportData, sportName } = this.state;
+		const { sportName, reloadData } = this.state;
+		let sportData;
+		if (reloadData) {
+			sportData = this.state.sportData;
+		} else {
+			sportData = this.props.sportData.data.events;
+		}
 
 		let gameItems = sportData.map((game) => {
 			// console.log(game);

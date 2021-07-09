@@ -119,31 +119,36 @@ export function GamePlayHelper(game) {
 export function GameLeadersHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let athletes = [];
+	let awayAthlete, homeAthlete;
 
-	let awayAthlete = awayTeam[0].leaders ? awayTeam[0].leaders.pop() : awayTeam[0].leaders;
-	let homeAthlete = homeTeam[0].leaders ? homeTeam[0].leaders.pop() : homeTeam[0].leaders;
-	if (awayAthlete) {
+	// let awayAthlete = awayTeam[0].leaders ? awayTeam[0].leaders.pop() : awayTeam[0].leaders;
+	// let homeAthlete = homeTeam[0].leaders ? homeTeam[0].leaders.pop() : homeTeam[0].leaders;
+
+	if (awayTeam[0].leaders) {
+		let athlete = awayTeam[0].leaders[awayTeam[0].leaders.length - 1];
 		awayAthlete = {
 			title: "PLAYERS TO WATCH",
-			headshot: awayAthlete.leaders[0].athlete.headshot,
-			displayName: awayAthlete.leaders[0].athlete.displayName,
+			headshot: athlete.leaders[0].athlete.headshot,
+			displayName: athlete.leaders[0].athlete.displayName,
 			team: awayTeam[0].team.abbreviation,
-			position: awayAthlete.leaders[0].athlete.position.abbreviation,
-			displayValue: awayAthlete.leaders[0].displayValue,
+			position: athlete.leaders[0].athlete.position.abbreviation,
+			displayValue: athlete.leaders[0].displayValue,
 			type: "pre",
 		};
-	}
-	if (homeAthlete) {
+	} else awayAthlete = awayTeam[0].leaders;
+
+	if (homeTeam[0].leaders) {
+		let athlete = homeTeam[0].leaders[homeTeam[0].leaders.length - 1];
 		homeAthlete = {
 			title: "PLAYERS TO WATCH",
-			headshot: homeAthlete.leaders[0].athlete.headshot,
-			displayName: homeAthlete.leaders[0].athlete.displayName,
+			headshot: athlete.leaders[0].athlete.headshot,
+			displayName: athlete.leaders[0].athlete.displayName,
 			team: homeTeam[0].team.abbreviation,
-			position: homeAthlete.leaders[0].athlete.position.abbreviation,
-			displayValue: homeAthlete.leaders[0].displayValue,
+			position: athlete.leaders[0].athlete.position.abbreviation,
+			displayValue: athlete.leaders[0].displayValue,
 			type: "pre",
 		};
-	}
+	} else homeAthlete = homeTeam[0].leaders;
 
 	if (
 		(game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
