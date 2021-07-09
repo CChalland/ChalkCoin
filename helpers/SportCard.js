@@ -120,8 +120,6 @@ export function GameLeadersHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let athletes = [];
 	let awayAthlete, homeAthlete;
-	// let awayAthlete = awayTeam[0].leaders ? awayTeam[0].leaders.pop() : awayTeam[0].leaders;
-	// let homeAthlete = homeTeam[0].leaders ? homeTeam[0].leaders.pop() : homeTeam[0].leaders;
 
 	if (awayTeam[0].leaders) {
 		let athlete = awayTeam[0].leaders[awayTeam[0].leaders.length - 1];
