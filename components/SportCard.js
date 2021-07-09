@@ -41,6 +41,7 @@ class SportCard extends Component {
 		);
 
 		this.setState({ sportData: fetchedSportData.flat(), reloadData });
+		console.log("setState in DidMount");
 	}
 
 	async componentDidUpdate() {

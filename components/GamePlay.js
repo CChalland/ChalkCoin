@@ -196,24 +196,28 @@ class GamePlay extends Component {
 			} else if (sportName === "MLB") {
 				lastPlay = this.baseballHelper(gamePlayData.situation);
 			} else {
-				athletePic = gamePlayData.lastPlay.athletes
-					? gamePlayData.lastPlay.athletes[0].headshot
-					: gamePlayData.lastPlay.team.logo;
-				lastPlay = (
-					<div>
-						<Row className="my-3">
-							<h6>{"Last Play"}</h6>
-						</Row>
-						<Row className="mb-3 align-items-center">
-							<Col sm={3}>
-								<Image width={45} height={40} src={athletePic} roundedCircle />
-							</Col>
-							<Col sm={9} className="px-0">
-								{`${gamePlayData.lastPlay.team.abbreviation} - ${gamePlayData.lastPlay.text}`}
-							</Col>
-						</Row>
-					</div>
-				);
+				if (gamePlayData.situation.lastPlay.type.text === "End Period") {
+					lastPlay = <Row className="my-3 align-items-center h6">{gamePlayData.situation.lastPlay.text}</Row>;
+				} else {
+					athletePic = gamePlayData.lastPlay.athletes
+						? gamePlayData.lastPlay.athletes[0].headshot
+						: gamePlayData.lastPlay.team.logo;
+					lastPlay = (
+						<div>
+							<Row className="my-3">
+								<h6>{"Last Play"}</h6>
+							</Row>
+							<Row className="mb-3 align-items-center">
+								<Col sm={3}>
+									<Image width={45} height={40} src={athletePic} roundedCircle />
+								</Col>
+								<Col sm={9} className="px-0">
+									{`${gamePlayData.lastPlay.team.abbreviation} - ${gamePlayData.lastPlay.text}`}
+								</Col>
+							</Row>
+						</div>
+					);
+				}
 			}
 		} else if (gamePlayData.status.type.completed) {
 			if (gamePlayData.headlines) {
