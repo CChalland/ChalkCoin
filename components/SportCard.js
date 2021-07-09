@@ -45,35 +45,37 @@ class SportCard extends Component {
 
 	async componentDidUpdate() {
 		const { sportData } = this.props;
-		let fetchedSportData,
-			reloadData = false;
+		let reloadData = this.state.reloadData;
+		let fetchedSportData;
 
-		await axios
-			.get(
-				`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
-			)
-			.then((response) => {
-				fetchedSportData = response.data.events.filter((game) => {
-					reloadData = true;
-					return game.status.type.state === "in";
+		if (reloadData) {
+			await axios
+				.get(
+					`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
+				)
+				.then((response) => {
+					fetchedSportData = response.data.events.filter((game) => {
+						reloadData = true;
+						return game.status.type.state === "in";
+					});
+					fetchedSportData.push(
+						response.data.events.filter((game) => {
+							if (fetchedSportData.length < 1) reloadData = false;
+							return game.status.type.state === "post";
+						})
+					);
+					fetchedSportData.push(
+						response.data.events.filter((game) => {
+							return game.status.type.state === "pre";
+						})
+					);
+					setTimeout(() => {
+						this.setState({ sportData: fetchedSportData.flat(), reloadData });
+					}, 15000);
+
+					console.log(fetchedSportData.flat());
 				});
-				fetchedSportData.push(
-					response.data.events.filter((game) => {
-						if (fetchedSportData.length === 0) reloadData = false;
-						return game.status.type.state === "post";
-					})
-				);
-				fetchedSportData.push(
-					response.data.events.filter((game) => {
-						return game.status.type.state === "pre";
-					})
-				);
-				setTimeout(() => {
-					this.setState({ sportData: fetchedSportData.flat(), reloadData });
-				}, 15000);
-			});
-
-		console.log(this.state.sportData, this.state.reloadData);
+		}
 	}
 
 	renderGamesCards(sportId) {
