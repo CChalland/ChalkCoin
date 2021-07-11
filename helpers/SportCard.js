@@ -110,6 +110,7 @@ export function GamePlayHelper(game) {
 		lastPlay = {
 			athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
 			text: game.competitions[0].situation.lastPlay.text,
+			type: game.competitions[0].situation.lastPlay.type,
 			team,
 		};
 	}

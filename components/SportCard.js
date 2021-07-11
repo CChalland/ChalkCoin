@@ -41,16 +41,15 @@ class SportCard extends Component {
 		);
 
 		this.setState({ sportData: fetchedSportData.flat(), reloadData });
-		console.log("setState in DidMount");
 	}
 
-	async componentDidUpdate() {
+	componentDidUpdate() {
 		const { sportData } = this.props;
 		let reloadData = this.state.reloadData;
 		let fetchedSportData;
 
 		if (reloadData) {
-			await axios
+			axios
 				.get(
 					`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
 				)

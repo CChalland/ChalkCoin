@@ -196,9 +196,14 @@ class GamePlay extends Component {
 			} else if (sportName === "MLB") {
 				lastPlay = this.baseballHelper(gamePlayData.situation);
 			} else {
-				if (gamePlayData.situation.lastPlay.type.text === "End Period") {
-					lastPlay = <Row className="my-3 align-items-center h6">{gamePlayData.situation.lastPlay.text}</Row>;
+				if (
+					gamePlayData.lastPlay.type.text === "End Period" ||
+					gamePlayData.lastPlay.type.text === "No Foul"
+				) {
+					lastPlay = <Row className="my-3 align-items-center h6">{gamePlayData.lastPlay.text}</Row>;
+					console.log("End Period - gamePlayData.lastPlay", gamePlayData.lastPlay);
 				} else {
+					console.log("else- gamePlayData.lastPlay", gamePlayData.lastPlay);
 					athletePic = gamePlayData.lastPlay.athletes
 						? gamePlayData.lastPlay.athletes[0].headshot
 						: gamePlayData.lastPlay.team.logo;
