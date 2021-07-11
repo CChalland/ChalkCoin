@@ -79,13 +79,7 @@ class SportCard extends Component {
 	}
 
 	renderGamesCards(sportId) {
-		const { sportName, reloadData } = this.state;
-		let sportData;
-		if (reloadData) {
-			sportData = this.state.sportData;
-		} else {
-			sportData = this.props.sportData.data.events;
-		}
+		const { sportData, sportName, reloadData } = this.state;
 
 		let gameItems = sportData.map((game) => {
 			// console.log(game);
