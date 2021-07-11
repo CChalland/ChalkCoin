@@ -198,6 +198,7 @@ class GamePlay extends Component {
 			} else {
 				if (
 					gamePlayData.lastPlay.type.text === "End Period" ||
+					gamePlayData.lastPlay.type.text === "Official Timeout" ||
 					gamePlayData.lastPlay.type.text === "No Foul"
 				) {
 					lastPlay = <Row className="my-3 align-items-center h6">{gamePlayData.lastPlay.text}</Row>;
