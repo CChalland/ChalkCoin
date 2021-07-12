@@ -79,7 +79,12 @@ class GamePlay extends Component {
 						</div>
 					</Col>
 				</Row>
-				<Row className="mt-4">{`LAST PLAY: ${situation.lastPlay.text}`}</Row>
+				<Row className="mt-4 list-inline-item">
+					<p>
+						<strong className="h6">LAST PLAY</strong>
+						{`: ${situation.lastPlay.text}`}
+					</p>
+				</Row>
 			</Container>
 		);
 	}
@@ -153,7 +158,7 @@ class GamePlay extends Component {
 						onClick={() => this.setState({ modalShow: true })}
 						rounded
 					/>
-					<span class="video-play-button">Play</span>
+					<span className="video-play-button">Play</span>
 					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
 				</figure>
 
@@ -191,24 +196,34 @@ class GamePlay extends Component {
 			} else if (sportName === "MLB") {
 				lastPlay = this.baseballHelper(gamePlayData.situation);
 			} else {
-				athletePic = gamePlayData.lastPlay.athletes
-					? gamePlayData.lastPlay.athletes[0].headshot
-					: gamePlayData.lastPlay.team.logo;
-				lastPlay = (
-					<div>
-						<Row className="my-3">
-							<h6>{"Last Play"}</h6>
-						</Row>
-						<Row className="mb-3 align-items-center">
-							<Col sm={3}>
-								<Image width={45} height={40} src={athletePic} roundedCircle />
-							</Col>
-							<Col sm={9} className="px-0">
-								{`${gamePlayData.lastPlay.team.abbreviation} - ${gamePlayData.lastPlay.text}`}
-							</Col>
-						</Row>
-					</div>
-				);
+				if (
+					gamePlayData.lastPlay.type.text === "End Period" ||
+					gamePlayData.lastPlay.type.text === "Official Timeout" ||
+					gamePlayData.lastPlay.type.text === "No Foul"
+				) {
+					lastPlay = <Row className="my-3 align-items-center h6">{gamePlayData.lastPlay.text}</Row>;
+					console.log("End Period - gamePlayData.lastPlay", gamePlayData.lastPlay);
+				} else {
+					console.log("else- gamePlayData.lastPlay", gamePlayData.lastPlay);
+					athletePic = gamePlayData.lastPlay.athletes
+						? gamePlayData.lastPlay.athletes[0].headshot
+						: gamePlayData.lastPlay.team.logo;
+					lastPlay = (
+						<div>
+							<Row className="my-3">
+								<h6>{"Last Play"}</h6>
+							</Row>
+							<Row className="mb-3 align-items-center">
+								<Col sm={3}>
+									<Image width={45} height={40} src={athletePic} roundedCircle />
+								</Col>
+								<Col sm={9} className="px-0">
+									{`${gamePlayData.lastPlay.team.abbreviation} - ${gamePlayData.lastPlay.text}`}
+								</Col>
+							</Row>
+						</div>
+					);
+				}
 			}
 		} else if (gamePlayData.status.type.completed) {
 			if (gamePlayData.headlines) {
