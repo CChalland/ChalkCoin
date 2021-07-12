@@ -88,7 +88,10 @@ export function GamePlayHelper(game) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
 
-	if (game.weather) weather = game.weather;
+	if (game.weather) {
+		weather = game.weather;
+		if (!weather.temperature) weather.temperature = weather.highTemperature;
+	}
 	if (game.competitions[0].situation) situation = game.competitions[0].situation;
 	if (game.competitions[0].headlines) headlines = game.competitions[0].headlines[0];
 	if (game.competitions[0].odds) odds = game.competitions[0].odds[0];

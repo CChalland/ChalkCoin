@@ -82,7 +82,9 @@ class SportCard extends Component {
 		const { sportData, sportName, reloadData } = this.state;
 
 		let gameItems = sportData.map((game) => {
-			// console.log(game);
+			console.log("gameScoreCardData", GameScoreHelper(game, sportName));
+			console.log("gamePlayData", GamePlayHelper(game, sportName));
+			console.log("gameLeaderData", GameLeadersHelper(game, sportName));
 			return (
 				<Container>
 					<Row className="mt-3 mb-3">
