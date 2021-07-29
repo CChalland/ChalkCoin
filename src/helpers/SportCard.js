@@ -71,14 +71,14 @@ export function GameScoreHelper(game, sportName) {
 			logo: awayTeam[0].team.logo,
 			name: awayTeam[0].team.name,
 			records: awayRecords,
-			score: awayTeam[0].score,
+			score: parseInt(awayTeam[0].score),
 			periods: awayPeriods,
 		},
 		home: {
 			logo: homeTeam[0].team.logo,
 			name: homeTeam[0].team.name,
 			records: homeRecords,
-			score: homeTeam[0].score,
+			score: parseInt(homeTeam[0].score),
 			periods: homePeriods,
 		},
 	};
