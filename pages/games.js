@@ -9,8 +9,6 @@ function Games(props) {
 		return sport.abbrv === props.sport.toUpperCase();
 	});
 
-	console.log(sportData);
-
 	return (
 		<Container fluid>
 			<h1>{sportData[0].display_name}</h1>
