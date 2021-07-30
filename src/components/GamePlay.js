@@ -1,22 +1,17 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
 
-class GamePlay extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			modalShow: false,
-		};
-	}
+function GamePlay(props) {
+	const [modalShow, setModalShow] = useState(false);
 
-	baseballHelper(situation) {
+	const baseballHelper = (situation) => {
 		const styles = {
 			grid: {
 				paddingLeft: 0,
 				paddingRight: 0,
 			},
 			row: {
-				marginLeft: 12,
+				marginLeft: 8,
 				marginRight: 0,
 			},
 			col: {
@@ -87,9 +82,9 @@ class GamePlay extends Component {
 				</Row>
 			</Container>
 		);
-	}
+	};
 
-	scheduledHelper(gamePlayData) {
+	const scheduledHelper = (gamePlayData) => {
 		let weather, tickets, venue, odds;
 
 		if (gamePlayData.weather) {
@@ -145,17 +140,17 @@ class GamePlay extends Component {
 				{odds}
 			</Container>
 		);
-	}
+	};
 
-	videoHelper(headlines) {
+	const videoHelper = (headlines) => {
 		return (
 			<Container fluid>
-				<figure className="mt-3 position-relative" onClick={() => this.setState({ modalShow: true })}>
+				<figure className="mt-3 position-relative" onClick={() => setModalShow(true)}>
 					<Image
 						width={256}
 						height={144}
 						src={headlines.video[0].thumbnail}
-						onClick={() => this.setState({ modalShow: true })}
+						onClick={() => setModalShow(true)}
 						rounded
 					/>
 					<span className="video-play-button">Play</span>
@@ -166,8 +161,8 @@ class GamePlay extends Component {
 					size="lg"
 					aria-labelledby="contained-modal-title-vcenter"
 					centered
-					show={this.state.modalShow}
-					onHide={() => this.setState({ modalShow: false })}
+					show={modalShow}
+					onHide={() => setModalShow(false)}
 				>
 					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-vcenter">{headlines.video[0].headline}</Modal.Title>
@@ -178,82 +173,76 @@ class GamePlay extends Component {
 				</Modal>
 			</Container>
 		);
-	}
+	};
 
-	renderGamePlays() {
-		const { gamePlayData, sportName } = this.props;
-		let scheduled, lastPlay, headline, athletePic;
+	const { gamePlayData, sportName } = props;
+	let scheduled, lastPlay, headline, athletePic;
 
-		if (
-			gamePlayData.status.type.name === "STATUS_SCHEDULED" ||
-			gamePlayData.status.type.name === "STATUS_POSTPONED" ||
-			gamePlayData.status.type.name === "STATUS_DELAYED"
-		) {
-			scheduled = this.scheduledHelper(gamePlayData);
-		} else if (gamePlayData.status.type.state === "in") {
-			if (sportName === "NFL") {
-			} else if (sportName === "NHL") {
-			} else if (sportName === "MLB") {
-				lastPlay = this.baseballHelper(gamePlayData.situation);
+	if (
+		gamePlayData.status.type.name === "STATUS_SCHEDULED" ||
+		gamePlayData.status.type.name === "STATUS_POSTPONED" ||
+		gamePlayData.status.type.name === "STATUS_DELAYED"
+	) {
+		scheduled = scheduledHelper(gamePlayData);
+	} else if (gamePlayData.status.type.state === "in") {
+		if (sportName === "NFL") {
+		} else if (sportName === "NHL") {
+		} else if (sportName === "MLB") {
+			lastPlay = baseballHelper(gamePlayData.situation);
+		} else {
+			if (
+				gamePlayData.lastPlay.type.text === "End Period" ||
+				gamePlayData.lastPlay.type.text === "Official Timeout" ||
+				gamePlayData.lastPlay.type.text === "No Foul"
+			) {
+				lastPlay = <Row className="my-3 align-items-center h6">{gamePlayData.lastPlay.text}</Row>;
+				console.log("End Period - gamePlayData.lastPlay", gamePlayData.lastPlay);
 			} else {
-				if (
-					gamePlayData.lastPlay.type.text === "End Period" ||
-					gamePlayData.lastPlay.type.text === "Official Timeout" ||
-					gamePlayData.lastPlay.type.text === "No Foul"
-				) {
-					lastPlay = <Row className="my-3 align-items-center h6">{gamePlayData.lastPlay.text}</Row>;
-					console.log("End Period - gamePlayData.lastPlay", gamePlayData.lastPlay);
-				} else {
-					console.log("else- gamePlayData.lastPlay", gamePlayData.lastPlay);
-					athletePic = gamePlayData.lastPlay.athletes
-						? gamePlayData.lastPlay.athletes[0].headshot
-						: gamePlayData.lastPlay.team.logo;
-					lastPlay = (
-						<div>
-							<Row className="my-3">
-								<h6>{"Last Play"}</h6>
-							</Row>
-							<Row className="mb-3 align-items-center">
-								<Col sm={3}>
-									<Image width={45} height={40} src={athletePic} roundedCircle />
-								</Col>
-								<Col sm={9} className="px-0">
-									{`${gamePlayData.lastPlay.team.abbreviation} - ${gamePlayData.lastPlay.text}`}
-								</Col>
-							</Row>
-						</div>
-					);
-				}
-			}
-		} else if (gamePlayData.status.type.completed) {
-			if (gamePlayData.headlines) {
-				if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines.video) {
-					headline = this.videoHelper(gamePlayData.headlines);
-				} else {
-					headline = (
+				console.log("else- gamePlayData.lastPlay", gamePlayData.lastPlay);
+				athletePic = gamePlayData.lastPlay.athletes
+					? gamePlayData.lastPlay.athletes[0].headshot
+					: gamePlayData.lastPlay.team.logo;
+				lastPlay = (
+					<div>
 						<Row className="my-3">
-							<a className="my-0 h6 text-dark" href={gamePlayData.headlines.link[0].href} target="_blank">
-								{gamePlayData.headlines.shortLinkText}
-							</a>
-							<div>{gamePlayData.headlines.description}</div>
+							<h6>{"Last Play"}</h6>
 						</Row>
-					);
-				}
+						<Row className="mb-3 align-items-center">
+							<Col sm={3}>
+								<Image width={45} height={40} src={athletePic} roundedCircle />
+							</Col>
+							<Col sm={9} className="px-0">
+								{`${gamePlayData.lastPlay.team.abbreviation} - ${gamePlayData.lastPlay.text}`}
+							</Col>
+						</Row>
+					</div>
+				);
 			}
 		}
-
-		return (
-			<>
-				{scheduled}
-				{lastPlay}
-				{headline}
-			</>
-		);
+	} else if (gamePlayData.status.type.completed) {
+		if (gamePlayData.headlines) {
+			if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines.video) {
+				headline = videoHelper(gamePlayData.headlines);
+			} else {
+				headline = (
+					<Row className="my-3">
+						<a className="my-0 h6 text-dark" href={gamePlayData.headlines.link[0].href} target="_blank">
+							{gamePlayData.headlines.shortLinkText}
+						</a>
+						<div>{gamePlayData.headlines.description}</div>
+					</Row>
+				);
+			}
+		}
 	}
 
-	render() {
-		return this.renderGamePlays();
-	}
+	return (
+		<>
+			{scheduled}
+			{lastPlay}
+			{headline}
+		</>
+	);
 }
 
 export default GamePlay;

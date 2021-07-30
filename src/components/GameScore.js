@@ -1,13 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 
-class GameScore extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-	}
-
-	scoreTableHelper(gameScoreCardData, sportName) {
+function GameScore(props) {
+	const scoreTableHelper = (gameScoreCardData, sportName) => {
 		let title, awayPeriods, awayScore, homePeriods, homeScore, awayFinalStyle, homeFinalStyle;
 		const titleStyle = gameScoreCardData.status.type.state === "in" ? "text-danger" : "";
 
@@ -166,61 +161,55 @@ class GameScore extends Component {
 		}
 
 		return { title, awayPeriods, homePeriods, awayScore, homeScore, awayFinalStyle, homeFinalStyle };
-	}
+	};
 
-	renderScoreTable() {
-		const { gameScoreCardData, sportName } = this.props;
-		const { title, awayPeriods, awayScore, homePeriods, homeScore, awayFinalStyle, homeFinalStyle } =
-			this.scoreTableHelper(gameScoreCardData, sportName);
+	const { gameScoreCardData, sportName } = props;
+	const { title, awayPeriods, awayScore, homePeriods, homeScore, awayFinalStyle, homeFinalStyle } =
+		scoreTableHelper(gameScoreCardData, sportName);
 
-		return (
-			<>
-				<Row className="py-2 h6 align-items-center border">{title}</Row>
+	return (
+		<>
+			<Row className="py-2 h6 align-items-center border">{title}</Row>
 
-				<Row className={`my-3 align-items-center ${awayFinalStyle}`}>
-					<Col md={2} className="px-4">
-						<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
-					</Col>
-					<Col md={4}>
-						<Row className="mb-0 h5">{gameScoreCardData.away.name}</Row>
-						<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
-							{"(" +
-								gameScoreCardData.away.records[0].summary +
-								", " +
-								gameScoreCardData.away.records[1].summary +
-								" Away)"}
-						</Row>
-					</Col>
-					{awayPeriods}
-					{awayScore}
-					<span className={awayFinalStyle}></span>
-				</Row>
+			<Row className={`my-3 align-items-center ${awayFinalStyle}`}>
+				<Col md={2} className="px-4">
+					<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
+				</Col>
+				<Col md={4}>
+					<Row className="mb-0 h5">{gameScoreCardData.away.name}</Row>
+					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
+						{"(" +
+							gameScoreCardData.away.records[0].summary +
+							", " +
+							gameScoreCardData.away.records[1].summary +
+							" Away)"}
+					</Row>
+				</Col>
+				{awayPeriods}
+				{awayScore}
+				<span className={awayFinalStyle}></span>
+			</Row>
 
-				<Row className={`mt-4 mb-3 align-items-center ${homeFinalStyle}`}>
-					<Col md={2} className="px-4">
-						<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
-					</Col>
-					<Col md={4}>
-						<Row className="mb-0 h5">{gameScoreCardData.home.name}</Row>
-						<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
-							{"(" +
-								gameScoreCardData.home.records[0].summary +
-								", " +
-								gameScoreCardData.home.records[1].summary +
-								" Home)"}
-						</Row>
-					</Col>
-					{homePeriods}
-					{homeScore}
-					<span className={homeFinalStyle}></span>
-				</Row>
-			</>
-		);
-	}
-
-	render() {
-		return this.renderScoreTable();
-	}
+			<Row className={`mt-4 mb-3 align-items-center ${homeFinalStyle}`}>
+				<Col md={2} className="px-4">
+					<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
+				</Col>
+				<Col md={4}>
+					<Row className="mb-0 h5">{gameScoreCardData.home.name}</Row>
+					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
+						{"(" +
+							gameScoreCardData.home.records[0].summary +
+							", " +
+							gameScoreCardData.home.records[1].summary +
+							" Home)"}
+					</Row>
+				</Col>
+				{homePeriods}
+				{homeScore}
+				<span className={homeFinalStyle}></span>
+			</Row>
+		</>
+	);
 }
 
 export default GameScore;

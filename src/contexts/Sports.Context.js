@@ -1,75 +1,101 @@
-import React, { Component, createContext } from "react";
+import React, { createContext, useReducer, useEffect, useState } from "react";
 import axios from "axios";
+import sportsReducer from "../reducers/Sports.Reducer";
 
 export const SportContext = createContext();
+export const SportDispatch = createContext();
 
-export class SportProvider extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			sportsData: [
-				// { sport_id: 1, sport: "football", sport_name: "NCAA Football", league_name: "college-football", data: {} },
-				{ sport_id: 2, sport: "football", sport_name: "NFL", league_name: "nfl", data: {} },
-				{ sport_id: 3, sport: "baseball", sport_name: "MLB", league_name: "mlb", data: {} },
-				{ sport_id: 4, sport: "basketball", sport_name: "NBA", league_name: "nba", data: {} },
-				{
-					sport_id: 5,
-					sport: "basketball",
-					sport_name: "NCAA Men's Basketball",
-					league_name: "mens-college-basketball",
-					data: {},
-				},
-				{ sport_id: 6, sport: "hockey", sport_name: "NHL", league_name: "nhl", data: {} },
-				{ sport_id: 8, sport: "basketball", sport_name: "WNBA", league_name: "wnba", data: {} },
-				// { sport_id: 10, sport: "soccer", sport_name: "MLS", league_name: "MLS", data: {} },
-			],
-			blockchain: {},
-			fetchedSportData: false,
-		};
-	}
+export function SportProvider(props) {
+	let initialSportsData = [
+		// { id: 1, abbrv: "NCAAF", sport: "football", display_name: "NCAA Football", league_name: "college-football", data: {} },
+		{ id: 2, abbrv: "NFL", sport: "football", display_name: "NFL", league_name: "nfl", data: {} },
+		{ id: 3, abbrv: "MLB", sport: "baseball", display_name: "MLB", league_name: "mlb", data: {} },
+		{ id: 4, abbrv: "NBA", sport: "basketball", display_name: "NBA", league_name: "nba", data: {} },
+		{
+			id: 5,
+			abbrv: "NCAAM",
+			sport: "basketball",
+			display_name: "NCAA Men's Basketball",
+			league_name: "mens-college-basketball",
+			data: {},
+		},
+		{ id: 6, abbrv: "NHL", sport: "hockey", display_name: "NHL", league_name: "nhl", data: {} },
+		{ id: 8, abbrv: "WNBA", sport: "basketball", display_name: "WNBA", league_name: "wnba", data: {} },
+		// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {} },
+	];
+	// const [sportsData, setSportsData] = useState(initialSportsData);
+	const [sportsData, dispatch] = useReducer(sportsReducer, initialSportsData);
+	const [blockchain, setBlockchain] = useState({});
+	const [fetchedSportData, setFetchedSportData] = useState(false);
 
-	async componentDidMount() {
-		let removeSportsData = [];
-		let sportsData = this.state.sportsData;
+	useEffect(() => {
+		async function getSportsData() {
+			let removeSportsData = [];
+			let sportData = sportsData;
 
-		const getNode1 = `http://localhost:3001/blockchain`;
-		let response = await axios.get(getNode1);
-		const blockchain = response.data;
+			const getNode1 = `http://localhost:3001/blockchain`;
+			let response = await axios.get(getNode1);
+			const blockchainData = response.data;
 
-		try {
-			sportsData = await Promise.all(
-				sportsData.map(async (league) => {
-					let leagueData;
+			try {
+				sportData = await Promise.all(
+					sportData.map(async (league) => {
+						let leagueData, sortedGames, reloadData;
 
-					response = await axios({
-						method: "GET",
-						url: `http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard`,
-					}).then(
-						function (response) {
-							if (response.data.events.length === 0) {
-								removeSportsData.push(league);
-							} else {
-								leagueData = response.data;
-							}
-						}.bind(this)
-					);
-					return {
-						sport_id: league.sport_id,
-						sport: league.sport,
-						sport_name: league.sport_name,
-						league_name: league.league_name,
-						data: leagueData,
-					};
-				})
-			);
-		} catch (err) {
-			console.log(err.message);
+						response = await axios({
+							method: "GET",
+							url: `http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard`,
+						}).then(
+							function (response) {
+								if (response.data.events.length === 0) {
+									removeSportsData.push(league);
+								} else {
+									leagueData = response.data;
+									sortedGames = response.data.events.filter((game) => {
+										reloadData = true;
+										return game.status.type.state === "in";
+									});
+									sortedGames.push(
+										response.data.events.filter((game) => {
+											if (sortedGames.length === 0) reloadData = false;
+											return game.status.type.state === "post";
+										})
+									);
+									sortedGames.push(
+										response.data.events.filter((game) => {
+											return game.status.type.state === "pre";
+										})
+									);
+									leagueData.events = sortedGames.flat();
+								}
+							}.bind(this)
+						);
+						return {
+							id: league.id,
+							abbrv: league.abbrv,
+							sport: league.sport,
+							display_name: league.display_name,
+							league_name: league.league_name,
+							data: leagueData,
+							reload: reloadData,
+						};
+					})
+				);
+			} catch (err) {
+				console.log(err.message);
+			}
+
+			dispatch({ type: "ALL", data: sportData });
+			// setFetchedSportData(true);
+			// setBlockchain(blockchainData);
 		}
 
-		this.setState({ sportsData, blockchain, fetchedSportData: true });
-	}
+		getSportsData();
+	}, [fetchedSportData]);
 
-	render() {
-		return <SportContext.Provider value={{ ...this.state }}>{this.props.children}</SportContext.Provider>;
-	}
+	return (
+		<SportContext.Provider value={{ sportsData, blockchain, fetchedSportData }}>
+			<SportDispatch.Provider value={dispatch}>{props.children}</SportDispatch.Provider>
+		</SportContext.Provider>
+	);
 }

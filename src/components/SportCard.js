@@ -1,120 +1,84 @@
-import React, { Component } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "../routes";
 import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/SportCard";
 import axios from "axios";
+import { SportDispatch } from "../contexts/Sports.Context";
 
-class SportCard extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			index: 0,
-			activeIndex: 0,
-			sportData: this.props.sportData.data.events,
-			sportName: this.props.sportName,
-			reloadData: false,
-		};
-	}
+function SportCard(props) {
+	const dispatch = useContext(SportDispatch);
+	const { sportData, sportName } = props;
+	const [reloadData, setReloadData] = useState(props.sportData.reload);
 
-	componentDidMount() {
-		const { sportData } = this.props;
-		let fetchedSportData,
-			reloadData = false;
+	useEffect(() => {
+		async function getData() {
+			let sortedGames, leagueData;
 
-		fetchedSportData = sportData.data.events.filter((game) => {
-			reloadData = true;
-			return game.status.type.state === "in";
-		});
-		fetchedSportData.push(
-			sportData.data.events.filter((game) => {
-				if (fetchedSportData.length === 0) reloadData = false;
-				return game.status.type.state === "post";
-			})
-		);
-		fetchedSportData.push(
-			sportData.data.events.filter((game) => {
-				return game.status.type.state === "pre";
-			})
-		);
+			if (reloadData) {
+				axios
+					.get(
+						`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
+					)
+					.then((response) => {
+						leagueData = response.data;
+						sortedGames = response.data.events.filter((game) => {
+							setReloadData(true);
+							return game.status.type.state === "in";
+						});
+						sortedGames.push(
+							response.data.events.filter((game) => {
+								if (sortedGames.length === 0) setReloadData(false);
+								return game.status.type.state === "post";
+							})
+						);
+						sortedGames.push(
+							response.data.events.filter((game) => {
+								return game.status.type.state === "pre";
+							})
+						);
+						leagueData.events = sortedGames.flat();
+						dispatch({ type: sportName, data: leagueData });
 
-		this.setState({ sportData: fetchedSportData.flat(), reloadData });
-	}
-
-	componentDidUpdate() {
-		const { sportData } = this.props;
-		let reloadData = this.state.reloadData;
-		let fetchedSportData;
-
-		if (reloadData) {
-			axios
-				.get(
-					`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
-				)
-				.then((response) => {
-					fetchedSportData = response.data.events.filter((game) => {
-						reloadData = true;
-						return game.status.type.state === "in";
+						console.log(sortedGames.flat());
 					});
-					fetchedSportData.push(
-						response.data.events.filter((game) => {
-							if (fetchedSportData.length < 1) reloadData = false;
-							return game.status.type.state === "post";
-						})
-					);
-					fetchedSportData.push(
-						response.data.events.filter((game) => {
-							return game.status.type.state === "pre";
-						})
-					);
-					setTimeout(() => {
-						this.setState({ sportData: fetchedSportData.flat(), reloadData });
-					}, 15000);
-
-					console.log(fetchedSportData.flat());
-				});
+			}
 		}
-	}
+		setTimeout(() => {
+			getData();
+		}, 15000);
+	});
 
-	renderGamesCards(sportId) {
-		const { sportData, sportName, reloadData } = this.state;
+	let gameItems = sportData.data.events.map((game) => {
+		console.log("game data", game);
+		console.log("gameScoreCardData", GameScoreHelper(game, sportName));
+		console.log("gamePlayData", GamePlayHelper(game, sportName));
+		console.log("gameLeaderData", GameLeadersHelper(game, sportName));
+		return (
+			<Container fluid>
+				<Row className="mt-3 mb-3">
+					<Col sm={4} className="border rounded">
+						<GameScore
+							key={game.uid.toString()}
+							gameScoreCardData={GameScoreHelper(game, sportName)}
+							sportName={sportName}
+						/>
+					</Col>
 
-		let gameItems = sportData.map((game) => {
-			console.log("game data", game);
-			console.log("gameScoreCardData", GameScoreHelper(game, sportName));
-			console.log("gamePlayData", GamePlayHelper(game, sportName));
-			console.log("gameLeaderData", GameLeadersHelper(game, sportName));
-			return (
-				<Container>
-					<Row className="mt-3 mb-3">
-						<Col sm={4} className="border rounded">
-							<GameScore
-								key={game.uid.toString()}
-								gameScoreCardData={GameScoreHelper(game, sportName)}
-								sportName={sportName}
-							/>
-						</Col>
+					<Col sm={3} className="border rounded">
+						<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
+					</Col>
 
-						<Col sm={3} className="border rounded">
-							<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
-						</Col>
+					<Col sm={3} className="border rounded">
+						<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
+					</Col>
+				</Row>
+			</Container>
+		);
+	});
 
-						<Col sm={3} className="border rounded">
-							<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
-						</Col>
-					</Row>
-				</Container>
-			);
-		});
-
-		return gameItems;
-	}
-
-	render() {
-		return this.renderGamesCards(this.props.sportIndex);
-	}
+	return gameItems;
 }
 
 export default SportCard;

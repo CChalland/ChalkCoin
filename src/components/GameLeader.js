@@ -1,13 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 
-class GameLeader extends Component {
-	constructor(props) {
-		super(props);
-		this.state;
-	}
-
-	leadersHelper(athlete, sportName) {
+function GameLeader(props) {
+	const leadersHelper = (athlete, sportName) => {
 		let title, player;
 
 		if (sportName === "MLB") {
@@ -208,31 +203,25 @@ class GameLeader extends Component {
 			}
 		}
 		return { title, player };
-	}
+	};
 
-	renderGameLeaders() {
-		const { gameLeadersData, sportName } = this.props;
-		let gameTitle;
+	const { gameLeadersData, sportName } = props;
+	let gameTitle;
 
-		let athletes = gameLeadersData.athletes.map((athlete) => {
-			// console.log(athlete);
-			const { title, player } = this.leadersHelper(athlete, sportName);
-			gameTitle = title;
+	let athletes = gameLeadersData.athletes.map((athlete) => {
+		// console.log(athlete);
+		const { title, player } = leadersHelper(athlete, sportName);
+		gameTitle = title;
 
-			return player;
-		});
+		return player;
+	});
 
-		return (
-			<Container>
-				{gameTitle}
-				{athletes}
-			</Container>
-		);
-	}
-
-	render() {
-		return this.renderGameLeaders();
-	}
+	return (
+		<Container>
+			{gameTitle}
+			{athletes}
+		</Container>
+	);
 }
 
 export default GameLeader;

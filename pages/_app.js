@@ -1,8 +1,12 @@
 import React from "react";
 import App from "next/app";
-import { SportProvider } from "../contexts/SportContext";
+import { SportProvider } from "../src/contexts/Sports.Context";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../style/GamePlay.css";
+import "../src/assets/scss/light-bootstrap-dashboard-pro-react.scss?v=2.0.0";
+import "../src/assets/css/demo.css";
+import "../src/assets/css/GamePlay.css";
+import Admin from "../src/layouts/Admin"
 
 class MyApp extends App {
 	// Only uncomment this method if you have blocking data requirements for
@@ -21,7 +25,9 @@ class MyApp extends App {
 		const { Component, pageProps } = this.props;
 		return (
 			<SportProvider>
-				<Component {...pageProps} />
+				<Admin>
+          <Component {...pageProps} />
+        </Admin>
 			</SportProvider>
 		);
 	}
