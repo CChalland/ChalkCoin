@@ -42,7 +42,7 @@ export function SportProvider(props) {
 					sportData.map(async (league) => {
 						let leagueData, sortedGames, reloadData;
 
-						response = await axios({
+						await axios({
 							method: "GET",
 							url: `http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard`,
 						}).then(

@@ -11,7 +11,7 @@ function GamePlay(props) {
 				paddingRight: 0,
 			},
 			row: {
-				marginLeft: 8,
+				marginLeft: 10,
 				marginRight: 0,
 			},
 			col: {

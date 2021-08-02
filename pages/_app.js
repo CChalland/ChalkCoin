@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../src/assets/scss/light-bootstrap-dashboard-pro-react.scss?v=2.0.0";
 import "../src/assets/css/demo.css";
 import "../src/assets/css/GamePlay.css";
-import Admin from "../src/layouts/Admin"
+import Admin from "../src/layouts/Admin";
 
 class MyApp extends App {
 	// Only uncomment this method if you have blocking data requirements for
@@ -26,8 +26,8 @@ class MyApp extends App {
 		return (
 			<SportProvider>
 				<Admin>
-          <Component {...pageProps} />
-        </Admin>
+					<Component {...pageProps} />
+				</Admin>
 			</SportProvider>
 		);
 	}

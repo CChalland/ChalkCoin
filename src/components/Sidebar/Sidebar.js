@@ -18,6 +18,7 @@ import {
 	Container,
 	Row,
 	Col,
+	Image,
 } from "react-bootstrap";
 
 function Sidebar({ routes, image, background, pathname }) {
@@ -85,7 +86,7 @@ function Sidebar({ routes, image, background, pathname }) {
 								{prop.name} <b className="caret"></b>
 							</p>
 						</Nav.Link>
-						<Collapse in={state[prop.state]}>
+						<Collapse in={prop.path === "/games" ? !state[prop.state] : state[prop.state]}>
 							<div>
 								<Nav as="ul">{createLinks(prop.views)}</Nav>
 							</div>
@@ -96,23 +97,41 @@ function Sidebar({ routes, image, background, pathname }) {
 			return (
 				<Nav.Item className={activeRoute(prop.path)} key={key} as="li">
 					<Link href={prop.path} passHref>
-						<Nav.Link>
-							{prop.icon ? (
-								<>
-									<i className={prop.icon} />
-									<p>{prop.name}</p>
-								</>
-							) : (
-								<>
-									<span className="sidebar-mini">{prop.mini}</span>
-									<span className="sidebar-normal">{prop.name}</span>
-								</>
-							)}
-						</Nav.Link>
+						<Nav.Link>{navLinkTitle(prop)}</Nav.Link>
 					</Link>
 				</Nav.Item>
 			);
 		});
+	};
+	const navLinkTitle = (prop) => {
+		if (prop.path.includes("/games?")) {
+			return (
+				<Container fluid>
+					<Row className="align-items-center">
+						<Col xs={4}>
+							<Image src={prop.icon} fluid />
+						</Col>
+						<Col>
+							<p>{prop.name}</p>
+						</Col>
+					</Row>
+				</Container>
+			);
+		} else if (prop.icon) {
+			return (
+				<>
+					<i className={prop.icon} />
+					<p>{prop.name}</p>
+				</>
+			);
+		} else {
+			return (
+				<>
+					<span className="sidebar-mini">{prop.mini}</span>
+					<span className="sidebar-normal">{prop.name}</span>
+				</>
+			);
+		}
 	};
 	// verifies if routeName is the one active (in browser input)
 	const activeRoute = (routeName) => {

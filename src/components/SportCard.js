@@ -50,35 +50,46 @@ function SportCard(props) {
 		}, 15000);
 	});
 
-	let gameItems = sportData.data.events.map((game) => {
-		console.log("game data", game);
-		console.log("gameScoreCardData", GameScoreHelper(game, sportName));
-		console.log("gamePlayData", GamePlayHelper(game, sportName));
-		console.log("gameLeaderData", GameLeadersHelper(game, sportName));
-		return (
-			<Container fluid>
-				<Row className="mt-3 mb-3">
-					<Col sm={4} className="border rounded">
-						<GameScore
-							key={game.uid.toString()}
-							gameScoreCardData={GameScoreHelper(game, sportName)}
-							sportName={sportName}
-						/>
-					</Col>
+	// console.log(sportData);
 
-					<Col sm={3} className="border rounded">
-						<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
-					</Col>
+	let gameItems;
+	if (sportData.data.events) {
+		gameItems = sportData.data.events.map((game) => {
+			console.log("game data", game);
+			console.log("gameScoreCardData", GameScoreHelper(game, sportName));
+			console.log("gamePlayData", GamePlayHelper(game, sportName));
+			console.log("gameLeaderData", GameLeadersHelper(game, sportName));
+			return (
+				<Container fluid>
+					<Row className="mt-3 mb-3">
+						<Col sm={4} className="border rounded">
+							<GameScore
+								key={game.uid.toString()}
+								gameScoreCardData={GameScoreHelper(game, sportName)}
+								sportName={sportName}
+							/>
+						</Col>
 
-					<Col sm={3} className="border rounded">
-						<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
-					</Col>
-				</Row>
-			</Container>
-		);
-	});
+						<Col sm={3} className="border rounded">
+							<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
+						</Col>
+
+						<Col sm={3} className="border rounded">
+							<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
+						</Col>
+					</Row>
+				</Container>
+			);
+		});
+	} else {
+		gameItems = <h1>Loading</h1>;
+	}
 
 	return gameItems;
 }
+
+SportCard.getInitialProps = async ({ sportData }) => {
+	console.log(sportData);
+};
 
 export default SportCard;
