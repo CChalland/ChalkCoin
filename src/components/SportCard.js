@@ -10,11 +10,11 @@ import { SportDispatch } from "../contexts/Sports.Context";
 function SportCard(props) {
 	const dispatch = useContext(SportDispatch);
 	const { sportData, sportName } = props;
-	const [reloadData, setReloadData] = useState(props.sportData.reload);
 
 	useEffect(() => {
 		async function getData() {
 			let sortedGames, leagueData;
+			let reloadData = props.sportData.reload;
 
 			if (reloadData) {
 				axios
@@ -24,12 +24,12 @@ function SportCard(props) {
 					.then((response) => {
 						leagueData = response.data;
 						sortedGames = response.data.events.filter((game) => {
-							setReloadData(true);
+							reloadData = true;
 							return game.status.type.state === "in";
 						});
 						sortedGames.push(
 							response.data.events.filter((game) => {
-								if (sortedGames.length === 0) setReloadData(false);
+								if (sortedGames.length === 0) reloadData = false;
 								return game.status.type.state === "post";
 							})
 						);
@@ -49,8 +49,6 @@ function SportCard(props) {
 			getData();
 		}, 15000);
 	});
-
-	// console.log(sportData);
 
 	let gameItems;
 	if (sportData.data.events) {
@@ -87,9 +85,5 @@ function SportCard(props) {
 
 	return gameItems;
 }
-
-SportCard.getInitialProps = async ({ sportData }) => {
-	console.log(sportData);
-};
 
 export default SportCard;

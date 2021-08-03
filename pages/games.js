@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Container } from "react-bootstrap";
 import { SportContext } from "../src/contexts/Sports.Context";
 import SportCard from "../src/components/SportCard";
-import axios from "axios";
 
 function Games(props) {
 	const { sportsData } = useContext(SportContext);

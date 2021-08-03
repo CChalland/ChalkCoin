@@ -7,10 +7,34 @@ export const SportDispatch = createContext();
 
 export function SportProvider(props) {
 	let initialSportsData = [
-		// { id: 1, abbrv: "NCAAF", sport: "football", display_name: "NCAA Football", league_name: "college-football", data: {} },
-		{ id: 2, abbrv: "NFL", sport: "football", display_name: "NFL", league_name: "nfl", data: {} },
-		{ id: 3, abbrv: "MLB", sport: "baseball", display_name: "MLB", league_name: "mlb", data: {} },
-		{ id: 4, abbrv: "NBA", sport: "basketball", display_name: "NBA", league_name: "nba", data: {} },
+		// { id: 1, abbrv: "NCAAF", sport: "football", display_name: "NCAA Football", league_name: "college-football", data: {}, reload: false },
+		{
+			id: 2,
+			abbrv: "NFL",
+			sport: "football",
+			display_name: "NFL",
+			league_name: "nfl",
+			data: {},
+			reload: false,
+		},
+		{
+			id: 3,
+			abbrv: "MLB",
+			sport: "baseball",
+			display_name: "MLB",
+			league_name: "mlb",
+			data: {},
+			reload: false,
+		},
+		{
+			id: 4,
+			abbrv: "NBA",
+			sport: "basketball",
+			display_name: "NBA",
+			league_name: "nba",
+			data: {},
+			reload: false,
+		},
 		{
 			id: 5,
 			abbrv: "NCAAM",
@@ -18,10 +42,27 @@ export function SportProvider(props) {
 			display_name: "NCAA Men's Basketball",
 			league_name: "mens-college-basketball",
 			data: {},
+			reload: false,
 		},
-		{ id: 6, abbrv: "NHL", sport: "hockey", display_name: "NHL", league_name: "nhl", data: {} },
-		{ id: 8, abbrv: "WNBA", sport: "basketball", display_name: "WNBA", league_name: "wnba", data: {} },
-		// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {} },
+		{
+			id: 6,
+			abbrv: "NHL",
+			sport: "hockey",
+			display_name: "NHL",
+			league_name: "nhl",
+			data: {},
+			reload: false,
+		},
+		{
+			id: 8,
+			abbrv: "WNBA",
+			sport: "basketball",
+			display_name: "WNBA",
+			league_name: "wnba",
+			data: {},
+			reload: false,
+		},
+		// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {}, reload: false },
 	];
 	// const [sportsData, setSportsData] = useState(initialSportsData);
 	const [sportsData, dispatch] = useReducer(sportsReducer, initialSportsData);
