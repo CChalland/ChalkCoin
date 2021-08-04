@@ -13,8 +13,14 @@ function SportCard(props) {
 
 	useEffect(() => {
 		async function getData() {
-			let sortedGames, leagueData;
+			let preGames,
+				inGames,
+				postGames,
+				leagueData,
+				sortedGames = [];
 			let reloadData = props.sportData.reload;
+
+			console.log("reloadData: ", reloadData);
 
 			if (reloadData) {
 				axios
@@ -23,21 +29,19 @@ function SportCard(props) {
 					)
 					.then((response) => {
 						leagueData = response.data;
-						sortedGames = response.data.events.filter((game) => {
+						inGames = response.data.events.filter((game) => {
 							reloadData = true;
 							return game.status.type.state === "in";
 						});
-						sortedGames.push(
-							response.data.events.filter((game) => {
-								if (sortedGames.length === 0) reloadData = false;
-								return game.status.type.state === "post";
-							})
-						);
-						sortedGames.push(
-							response.data.events.filter((game) => {
-								return game.status.type.state === "pre";
-							})
-						);
+						postGames = response.data.events.filter((game) => {
+							return game.status.type.state === "post";
+						});
+						preGames = response.data.events.filter((game) => {
+							return game.status.type.state === "pre";
+						});
+
+						if (inGames.length === 0) reloadData = false;
+						sortedGames.push(inGames, postGames, preGames);
 						leagueData.events = sortedGames.flat();
 						dispatch({ type: sportName, data: leagueData });
 
