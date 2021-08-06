@@ -54,17 +54,14 @@ function SportCard(props) {
 
 	let gameItems;
 	if (sportData.data.events) {
-		gameItems = sportData.data.events.map((game) => {
-			let gameScoreCardData = GameScoreHelper(game, sportName);
-			console.log(`${gameScoreCardData.away.name} periods length: `, gameScoreCardData.away.periods.length);
-			console.log(`${gameScoreCardData.home.name} periods length: `, gameScoreCardData.home.periods.length);
-			// console.log("game data", game);
-			// console.log("gameScoreCardData", GameScoreHelper(game, sportName));
-			// console.log("gamePlayData", GamePlayHelper(game, sportName));
-			// console.log("gameLeaderData", GameLeadersHelper(game, sportName));
+		gameItems = sportData.data.events.map((game, key) => {
+			console.log("game data", game);
+			console.log("gameScoreCardData", GameScoreHelper(game, sportName));
+			console.log("gamePlayData", GamePlayHelper(game, sportName));
+			console.log("gameLeaderData", GameLeadersHelper(game, sportName));
 
 			return (
-				<Container fluid>
+				<Container key={key} fluid>
 					<Row className="mt-3 mb-3">
 						<Col sm={4} className="border rounded">
 							<GameScore
