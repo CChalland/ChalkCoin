@@ -2,8 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
@@ -11,8 +12,30 @@ generator client {
 }
 
 model User {
-  id       String @id @default(cuid())
-  username String
-  email    String
-  password String
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  avatar    String?
+  paypal    String?
+  balance   Float    @default(0.00)
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  requester Bet[]    @relation("requester")
+  accepter  Bet[]    @relation("accepter")
+
+  @@map(name: "users")
+}
+
+model Bet {
+  id          Int      @id @default(autoincrement())
+  amount      Float
+  details     String
+  accepted    Boolean  @default(false)
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+  requester   User     @relation("requester", fields: [requesterId], references: [id])
+  requesterId Int
+  accepter    User?    @relation("accepter", fields: [accepterId], references: [id])
+  accepterId  Int
 }

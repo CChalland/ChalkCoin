@@ -10,6 +10,7 @@ import { SportDispatch } from "../contexts/Sports.Context";
 function SportCard(props) {
 	const dispatch = useContext(SportDispatch);
 	const { sportData, sportName } = props;
+	let reloadData = props.sportData.reload;
 
 	useEffect(() => {
 		async function getData() {
@@ -18,9 +19,6 @@ function SportCard(props) {
 				postGames,
 				leagueData,
 				sortedGames = [];
-			let reloadData = props.sportData.reload;
-
-			console.log("reloadData: ", reloadData);
 
 			if (reloadData) {
 				axios
@@ -43,7 +41,7 @@ function SportCard(props) {
 						if (inGames.length === 0) reloadData = false;
 						sortedGames.push(inGames, postGames, preGames);
 						leagueData.events = sortedGames.flat();
-						dispatch({ type: sportName, data: leagueData });
+						dispatch({ type: sportName, data: leagueData, reload: reloadData });
 
 						console.log(sortedGames.flat());
 					});
@@ -57,10 +55,14 @@ function SportCard(props) {
 	let gameItems;
 	if (sportData.data.events) {
 		gameItems = sportData.data.events.map((game) => {
-			console.log("game data", game);
-			console.log("gameScoreCardData", GameScoreHelper(game, sportName));
-			console.log("gamePlayData", GamePlayHelper(game, sportName));
-			console.log("gameLeaderData", GameLeadersHelper(game, sportName));
+			let gameScoreCardData = GameScoreHelper(game, sportName);
+			console.log(`${gameScoreCardData.away.name} periods length: `, gameScoreCardData.away.periods.length);
+			console.log(`${gameScoreCardData.home.name} periods length: `, gameScoreCardData.home.periods.length);
+			// console.log("game data", game);
+			// console.log("gameScoreCardData", GameScoreHelper(game, sportName));
+			// console.log("gamePlayData", GamePlayHelper(game, sportName));
+			// console.log("gameLeaderData", GameLeadersHelper(game, sportName));
+
 			return (
 				<Container fluid>
 					<Row className="mt-3 mb-3">

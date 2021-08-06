@@ -56,50 +56,55 @@ function GameScore(props) {
 					</Col>
 				</>
 			);
-			awayPeriods = gameScoreCardData.away.periods.map((period) => {
-				if (period.name === "runs") {
-					awayRuns = period.displayValue;
-					return (
-						<Col md={1} className="mx-2 px-5 list-inline-item h5">
-							{period.displayValue}
-						</Col>
-					);
-				} else if (period.name === "errors") {
-					return (
-						<Col md={1} className="mx-0 px-2 list-inline-item h6">
-							{period.displayValue}
-						</Col>
-					);
-				} else {
-					return (
-						<Col md={1} className="mx-1 px-0 list-inline-item h6">
-							{period.displayValue}
-						</Col>
-					);
-				}
-			});
-			homePeriods = gameScoreCardData.home.periods.map((period) => {
-				if (period.name === "runs") {
-					homeRuns = period.displayValue;
-					return (
-						<Col md={1} className="mx-2 px-5 list-inline-item h5">
-							{period.displayValue}
-						</Col>
-					);
-				} else if (period.name === "errors") {
-					return (
-						<Col md={1} className="mx-0 px-2 list-inline-item h6">
-							{period.displayValue}
-						</Col>
-					);
-				} else {
-					return (
-						<Col md={1} className="mx-1 px-0 list-inline-item h6">
-							{period.displayValue}
-						</Col>
-					);
-				}
-			});
+
+			if (gameScoreCardData.away.periods.length !== 0) {
+				awayPeriods = gameScoreCardData.away.periods.map((period) => {
+					if (period.name === "runs") {
+						awayRuns = period.displayValue;
+						return (
+							<Col md={1} className="mx-2 px-5 list-inline-item h5">
+								{period.displayValue}
+							</Col>
+						);
+					} else if (period.name === "errors") {
+						return (
+							<Col md={1} className="mx-0 px-2 list-inline-item h6">
+								{period.displayValue}
+							</Col>
+						);
+					} else {
+						return (
+							<Col md={1} className="mx-1 px-0 list-inline-item h6">
+								{period.displayValue}
+							</Col>
+						);
+					}
+				});
+			}
+			if (gameScoreCardData.home.periods.length !== 0) {
+				homePeriods = gameScoreCardData.home.periods.map((period) => {
+					if (period.name === "runs") {
+						homeRuns = period.displayValue;
+						return (
+							<Col md={1} className="mx-2 px-5 list-inline-item h5">
+								{period.displayValue}
+							</Col>
+						);
+					} else if (period.name === "errors") {
+						return (
+							<Col md={1} className="mx-0 px-2 list-inline-item h6">
+								{period.displayValue}
+							</Col>
+						);
+					} else {
+						return (
+							<Col md={1} className="mx-1 px-0 list-inline-item h6">
+								{period.displayValue}
+							</Col>
+						);
+					}
+				});
+			}
 
 			if (gameScoreCardData.status.type.state === "post") {
 				awayFinalStyle = awayRuns > homeRuns ? "winIndicatorMLB" : "text-secondary";
