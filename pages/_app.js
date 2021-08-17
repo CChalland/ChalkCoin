@@ -1,12 +1,13 @@
 import React from "react";
 import App from "next/app";
-import { SportProvider } from "../src/contexts/Sports.Context";
+import { Provider } from "next-auth/client";
+import { SportProvider } from "../contexts/Sports.Context";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../src/assets/scss/light-bootstrap-dashboard-pro-react.scss?v=2.0.0";
-import "../src/assets/css/demo.css";
-import "../src/assets/css/GamePlay.css";
-import Admin from "../src/layouts/Admin";
+import "assets/scss/light-bootstrap-dashboard-pro-react.scss?v=2.0.0";
+import "assets/css/demo.css";
+import "assets/css/GamePlay.css";
+import Admin from "../layouts/Admin";
 
 class MyApp extends App {
 	// Only uncomment this method if you have blocking data requirements for
@@ -24,11 +25,13 @@ class MyApp extends App {
 	render() {
 		const { Component, pageProps } = this.props;
 		return (
-			<SportProvider>
-				<Admin>
-					<Component {...pageProps} />
-				</Admin>
-			</SportProvider>
+			<Provider session={pageProps.session}>
+				<SportProvider>
+					<Admin>
+						<Component {...pageProps} />
+					</Admin>
+				</SportProvider>
+			</Provider>
 		);
 	}
 }
