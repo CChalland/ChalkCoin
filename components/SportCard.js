@@ -56,7 +56,7 @@ function SportCard(props) {
 	if (sportData.data.events) {
 		gameItems = sportData.data.events.map((game, key) => {
 			console.log("game data", game);
-			console.log("gameScoreCardData", GameScoreHelper(game, sportName));
+			// console.log("gameScoreCardData", GameScoreHelper(game, sportName));
 			console.log("gamePlayData", GamePlayHelper(game, sportName));
 			console.log("gameLeaderData", GameLeadersHelper(game, sportName));
 
