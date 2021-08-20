@@ -1,5 +1,0 @@
-# GOOGLE CUSTOM SEARCH API KEYS
-## Use this key in your application by passing it with the key=API_KEY parameter.
-
-API_KEY1=AIzaSyC2Tid1Myrb-RmwpaGaagthntZvziHkbI4
-API_KEY2=AIzaSyB6uD0lnTzznNjOFlg-Tbt4ZYeA3jY1tXs
