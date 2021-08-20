@@ -1,11 +1,29 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "../../prisma/prisma";
+import { getSession } from "next-auth/client";
 
 export default async (req, res) => {
-	if (req.method !== "POST") {
-		return res.status(405).json({ message: "Method not allowed" });
+	const session = await getSession({ req });
+
+	if (req.method === "GET") {
+		const user = await prisma.user.findUnique({
+			where: {
+				email: session.user.email,
+			},
+			include: {
+				requester: true,
+				accepter: true,
+			},
+		});
+		return res.json(user);
+	} else if (req.method === "POST") {
+		const user = JSON.parse(req.body);
+
+		const updatedUser = await prisma.user.update({
+			where: {
+				email: session.user.email,
+			},
+			data: user,
+		});
+		return res.json(updatedUser);
 	}
-
-	const userData = JSON.parse(req.body);
-
-	res.json({ message: "hello world" });
 };
