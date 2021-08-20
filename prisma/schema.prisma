@@ -75,6 +75,7 @@ model Bet {
   amount      Float
   details     String
   accepted    Boolean  @default(false)
+  blockHash   String?
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @updatedAt @map(name: "updated_at")
   requester   User     @relation("requester", fields: [requesterId], references: [id])

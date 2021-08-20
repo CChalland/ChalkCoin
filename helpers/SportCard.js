@@ -264,7 +264,7 @@ export function GameLeadersHelper(game, sportName) {
 			});
 		} else if (sportName === "MLB") {
 			console.log(game.competitions[0].status);
-			if (game.competitions[0].status.featuredAthletes.length !== 0) {
+			if (game.competitions[0].status.featuredAthletes?.length !== 0) {
 				athletes = game.competitions[0].status.featuredAthletes.map((athlete) => {
 					return {
 						title: athlete.shortDisplayName,

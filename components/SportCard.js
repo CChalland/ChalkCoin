@@ -63,7 +63,7 @@ function SportCard(props) {
 			return (
 				<Container key={key} fluid>
 					<Row className="mt-3 mb-3">
-						<Col sm={4} className="border rounded">
+						<Col md={6} xl={5} className="border rounded">
 							<GameScore
 								key={game.uid.toString()}
 								gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -71,11 +71,11 @@ function SportCard(props) {
 							/>
 						</Col>
 
-						<Col sm={3} className="border rounded">
+						<Col className="border rounded">
 							<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
 						</Col>
 
-						<Col sm={3} className="border rounded">
+						<Col className="border rounded">
 							<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
 						</Col>
 					</Row>
