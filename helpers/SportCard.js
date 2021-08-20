@@ -10,7 +10,7 @@ function homeAwayHelper(game) {
 
 export function GameScoreHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
-	let homePeriods, awayPeriods, homeRecords, awayRecords;
+	let homeName, awayName, homePeriods, awayPeriods, homeRecords, awayRecords;
 	let temp = [
 		{ name: "Home", type: "home", summary: 0 },
 		{ name: "Away", type: "away", summary: 0 },
@@ -69,14 +69,14 @@ export function GameScoreHelper(game, sportName) {
 		detail: game.competitions[0].status.type.detail,
 		away: {
 			logo: awayTeam[0].team.logo,
-			name: awayTeam[0].team.name,
+			name: awayTeam[0].team.displayName.split(" ").pop(),
 			records: awayRecords,
 			score: parseInt(awayTeam[0].score),
 			periods: awayPeriods,
 		},
 		home: {
 			logo: homeTeam[0].team.logo,
-			name: homeTeam[0].team.name,
+			name: homeTeam[0].team.displayName.split(" ").pop(),
 			records: homeRecords,
 			score: parseInt(homeTeam[0].score),
 			periods: homePeriods,
