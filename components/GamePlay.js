@@ -241,19 +241,31 @@ function GamePlay(props) {
 		} else {
 			headline = (
 				<Container fluid>
-					<Row>{"TEAM INFORMATION"}</Row>
-					<Row>{gamePlayData.away.name}</Row>
-					<Row>
-						<Col>{"Roster"}</Col>
-						<Col>{"Statistics"}</Col>
-						<Col>{"Schedule"}</Col>
+					<Row className="my-2 py-1 text-secondary">{"TEAM INFORMATION"}</Row>
+					<Row className="mb-1 h6">{gamePlayData.away.name}</Row>
+					<Row className="mt-1 mb-2">
+						{gamePlayData.away.links.map((link, key) => {
+							return (
+								<Col key={key}>
+									<a href={link.href} target="_blank">
+										{link.text}
+									</a>
+								</Col>
+							);
+						})}
 					</Row>
 					<Row className="border"></Row>
-					<Row>{gamePlayData.home.name}</Row>
-					<Row>
-						<Col>{"Roster"}</Col>
-						<Col>{"Statistics"}</Col>
-						<Col>{"Schedule"}</Col>
+					<Row className="mt-3 mb-1 h6">{gamePlayData.home.name}</Row>
+					<Row className="mt-1 mb-2">
+						{gamePlayData.home.links.map((link, key) => {
+							return (
+								<Col key={key}>
+									<a href={link.href} target="_blank">
+										{link.text}
+									</a>
+								</Col>
+							);
+						})}
 					</Row>
 				</Container>
 			);

@@ -24,15 +24,15 @@ function GameLeader(props) {
 				title = <Row className="mt-2 py-1 text-secondary h6">{"PROBABLE PITCHERS"}</Row>;
 				player = (
 					<Row className="mb-3 align-items-center">
-						<Col md="auto">
+						<Col xs="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
-						<Col md="auto">
+						<Col xs="auto">
 							<Row className="mb-0">
-								<Col md="auto" className="px-0">
+								<Col xs="auto" className="px-0">
 									{athlete.displayName}
 								</Col>
-								<Col md="auto" className="px-2 text-secondary">
+								<Col xs="auto" className="px-2 text-secondary">
 									{athlete.team}
 								</Col>
 							</Row>
@@ -46,10 +46,10 @@ function GameLeader(props) {
 				);
 				player = (
 					<Row className="mb-2 align-items-center">
-						<Col md="auto">
+						<Col xs="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
-						<Col md="auto">
+						<Col xs="auto">
 							<Row className="mb-0 h6">{athlete.displayName}</Row>
 							<Row className="mb-0 text-secondary">{athlete.displayValue}</Row>
 						</Col>
@@ -60,10 +60,10 @@ function GameLeader(props) {
 					<>
 						<Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>
 						<Row className="mb-0 align-items-center">
-							<Col md="auto">
+							<Col xs="auto">
 								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 							</Col>
-							<Col md="auto">
+							<Col xs="auto">
 								<Row className="mb-0 h6">{athlete.displayName}</Row>
 								<Row className="mb-0 text-secondary">{athlete.displayValue}</Row>
 							</Col>
@@ -185,16 +185,18 @@ function GameLeader(props) {
 				);
 			}
 		} else if (athlete && sportName === "NFL") {
+			if (athlete.type === "pre") {
+			}
 		} else if (athlete) {
 			if (athlete.type === "pre" || athlete.type === "in" || athlete.type === "completed") {
 				let playerStats = athlete.displayValue.split(",");
 				title = <Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>;
 				player = (
 					<Row className="mb-2 align-items-center">
-						<Col md="auto">
+						<Col xs="auto">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
-						<Col md="auto">
+						<Col xs="auto">
 							<Row className="mb-0 h6">{athlete.displayName}</Row>
 							<Row className="mb-0 text-secondary">{`${athlete.team} - ${athlete.position}`}</Row>
 							<Row className="mb-0 text-secondary">{`${playerStats[0]},${playerStats[1]},${playerStats[2]}`}</Row>
