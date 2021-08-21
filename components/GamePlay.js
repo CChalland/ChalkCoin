@@ -11,7 +11,7 @@ function GamePlay(props) {
 				paddingRight: 0,
 			},
 			row: {
-				marginLeft: 10,
+				marginLeft: 8,
 				marginRight: 0,
 			},
 			col: {
@@ -38,24 +38,24 @@ function GamePlay(props) {
 		}
 
 		return (
-			<Container>
+			<Container fluid>
 				<Row className="my-2 py-2">
-					<Col className="px-4" sm={6}>
+					<Col className="" xs={6}>
 						<Row style={styles.row}>
-							<Col sm="auto" style={styles.col}>
+							<Col xs="auto" style={styles.col}>
 								<div className={"diamond second-base " + (situation.onSecond ? "active" : null)}></div>
 							</Col>
 						</Row>
 						<Row style={styles.col}>
-							<Col sm="auto" style={styles.center}>
+							<Col xs="auto" style={styles.center}>
 								<div className={"diamond third-base " + (situation.onThird ? "active" : null)}></div>
 							</Col>
-							<Col sm="auto" style={styles.col}>
+							<Col xs="auto" style={styles.col}>
 								<div className={"diamond first-base " + (situation.onFirst ? "active" : null)}></div>
 							</Col>
 						</Row>
 					</Col>
-					<Col className="" sm={6}>
+					<Col className="" xs={6}>
 						<div className="circleGraphs">
 							<div className="circleGraph  four">
 								<span className="abbrev">B</span>
@@ -221,7 +221,7 @@ function GamePlay(props) {
 		}
 	} else if (gamePlayData.status.type.completed) {
 		if (gamePlayData.headlines) {
-			if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines.video) {
+			if (sportName !== "WNBA" && gamePlayData.headlines.video) {
 				headline = videoHelper(gamePlayData.headlines);
 			} else {
 				headline = (
