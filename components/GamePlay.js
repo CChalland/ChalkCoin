@@ -40,7 +40,7 @@ function GamePlay(props) {
 		return (
 			<Container fluid>
 				<Row className="my-2 py-2">
-					<Col className="" xs={6}>
+					<Col className="" xs={6} md={8}>
 						<Row style={styles.row}>
 							<Col xs="auto" style={styles.col}>
 								<div className={"diamond second-base " + (situation.onSecond ? "active" : null)}></div>
@@ -55,7 +55,7 @@ function GamePlay(props) {
 							</Col>
 						</Row>
 					</Col>
-					<Col className="" xs={6}>
+					<Col className="" xs={6} md={4}>
 						<div className="circleGraphs">
 							<div className="circleGraph  four">
 								<span className="abbrev">B</span>
@@ -144,15 +144,9 @@ function GamePlay(props) {
 
 	const videoHelper = (headlines) => {
 		return (
-			<Container fluid>
-				<figure className="mt-3 position-relative" onClick={() => setModalShow(true)}>
-					<Image
-						width={256}
-						height={144}
-						src={headlines.video[0].thumbnail}
-						onClick={() => setModalShow(true)}
-						rounded
-					/>
+			<>
+				<figure className="mx-0 my-3 position-relative" onClick={() => setModalShow(true)}>
+					<Image fluid src={headlines.video[0].thumbnail} onClick={() => setModalShow(true)} rounded />
 					<span className="video-play-button">Play</span>
 					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
 				</figure>
@@ -168,10 +162,10 @@ function GamePlay(props) {
 						<Modal.Title id="contained-modal-title-vcenter">{headlines.video[0].headline}</Modal.Title>
 					</Modal.Header>
 					<Modal.Body className="m-0 p-0">
-						<video controls src={headlines.video[0].links.source.href} autoPlay />
+						<video width="100%" controls src={headlines.video[0].links.source.href} autoPlay />
 					</Modal.Body>
 				</Modal>
-			</Container>
+			</>
 		);
 	};
 
