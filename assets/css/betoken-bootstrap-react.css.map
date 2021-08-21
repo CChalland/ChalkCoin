@@ -1,8 +1,8 @@
 {
 	"version": 3,
-	"file": "light-bootstrap-dashboard-pro-react.css",
+	"file": "betoken-bootstrap-react.css",
 	"sources": [
-		"../scss/light-bootstrap-dashboard-pro-react.scss",
+		"../scss/betoken-bootstrap-react.scss",
 		"../scss/lbd/_variables.scss",
 		"../scss/lbd/_mixins.scss",
 		"../scss/lbd/mixins/_transparency.scss",

@@ -84,6 +84,14 @@ function GamePlay(props) {
 		);
 	};
 
+	const footballHelper = (situation) => {
+		return (
+			<Container fluid>
+				<div>{"TEST"}</div>
+			</Container>
+		);
+	};
+
 	const scheduledHelper = (gamePlayData) => {
 		let weather, tickets, venue, odds;
 
@@ -91,16 +99,16 @@ function GamePlay(props) {
 			let conditionId = gamePlayData.weather.conditionId;
 			if (parseInt(conditionId) < 10) conditionId = "0" + conditionId;
 			weather = (
-				<Col className="mx-4">
+				<Col className="ml-auto">
 					<Row>
-						<Col sm="auto" className="mx-0 px-0">
+						<Col xs={3} className="px-0">
 							<Image
 								width={20}
 								height={20}
 								src={`https://a.espncdn.com/redesign/assets/img/icons/accuWeather/${conditionId}.png`}
 							/>
 						</Col>
-						<Col sm="auto">{`${gamePlayData.weather.temperature} °F`}</Col>
+						<Col xs={9}>{`${gamePlayData.weather.temperature} °F`}</Col>
 					</Row>
 				</Col>
 			);
@@ -116,7 +124,7 @@ function GamePlay(props) {
 			);
 
 		venue = (
-			<Col sm={7}>
+			<Col xs={8} className="mr-auto">
 				<Row className="mb-0 h6">{gamePlayData.venue.fullName}</Row>
 				<Row>{`${gamePlayData.venue.address.city}, ${gamePlayData.venue.address.state}`}</Row>
 			</Col>
@@ -180,6 +188,7 @@ function GamePlay(props) {
 		scheduled = scheduledHelper(gamePlayData);
 	} else if (gamePlayData.status.type.state === "in") {
 		if (sportName === "NFL") {
+			lastPlay = footballHelper(gamePlayData.situation);
 		} else if (sportName === "NHL") {
 		} else if (sportName === "MLB") {
 			lastPlay = baseballHelper(gamePlayData.situation);
@@ -215,16 +224,37 @@ function GamePlay(props) {
 		}
 	} else if (gamePlayData.status.type.completed) {
 		if (gamePlayData.headlines) {
-			if (sportName !== "WNBA" && gamePlayData.headlines.video) {
+			if (sportName && gamePlayData.headlines.video) {
 				headline = videoHelper(gamePlayData.headlines);
+			} else if (gamePlayData.headlines) {
+				headline = (
+					<Container fluid>
+						<Row className="my-3">
+							<a className="my-0 h6 text-dark" href={gamePlayData.headlines.link[0].href} target="_blank">
+								{gamePlayData.headlines.shortLinkText}
+							</a>
+							<div>{gamePlayData.headlines.description}</div>
+						</Row>
+					</Container>
+				);
 			} else {
 				headline = (
-					<Row className="my-3">
-						<a className="my-0 h6 text-dark" href={gamePlayData.headlines.link[0].href} target="_blank">
-							{gamePlayData.headlines.shortLinkText}
-						</a>
-						<div>{gamePlayData.headlines.description}</div>
-					</Row>
+					<Container fluid>
+						<Row>{"TEAM INFORMATION"}</Row>
+						<Row>{gamePlayData.away.name}</Row>
+						<Row>
+							<Col>{"Roster"}</Col>
+							<Col>{"Statistics"}</Col>
+							<Col>{"Schedule"}</Col>
+						</Row>
+						<Row className="border"></Row>
+						<Row>{gamePlayData.home.name}</Row>
+						<Row>
+							<Col>{"Roster"}</Col>
+							<Col>{"Statistics"}</Col>
+							<Col>{"Schedule"}</Col>
+						</Row>
+					</Container>
 				);
 			}
 		}
