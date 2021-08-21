@@ -194,6 +194,34 @@ export function GameLeadersHelper(game, sportName) {
 		} else homeAthlete = null;
 		athletes.push(awayAthlete, homeAthlete);
 	} else if (
+		(game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
+			game.competitions[0].status.type.name === "STATUS_POSTPONED") &&
+		sportName === "NFL"
+	) {
+		awayAthlete = {
+			title: "TEAM INFORMATION",
+			type: "pre",
+			team: {
+				name: awayTeam[0].team.displayName.split(" ").pop(),
+				side: "away",
+				links: awayTeam[0].team.links.filter((link) => {
+					return link.text === "Roster" || link.text === "Statistics" || link.text === "Schedule";
+				}),
+			},
+		};
+		homeAthlete = {
+			title: "TEAM INFORMATION",
+			type: "pre",
+			team: {
+				name: homeTeam[0].team.displayName.split(" ").pop(),
+				side: "home",
+				links: homeTeam[0].team.links.filter((link) => {
+					return link.text === "Roster" || link.text === "Statistics" || link.text === "Schedule";
+				}),
+			},
+		};
+		athletes.push(awayAthlete, homeAthlete);
+	} else if (
 		game.competitions[0].status.type.name === "STATUS_SCHEDULED" ||
 		game.competitions[0].status.type.name === "STATUS_POSTPONED"
 	) {
@@ -245,6 +273,20 @@ export function GameLeadersHelper(game, sportName) {
 				type: "in",
 			};
 			athletes.push(pitcher, batter);
+		} else if (sportName === "NFL") {
+			// athletes = game.competitions[0].leaders.map((athlete) => {
+			// 	return {
+			// 		title: athlete.shortDisplayName,
+			// 		headshot: athlete.leaders[0].athlete.headshot,
+			// 		displayName: athlete.leaders[0].athlete.displayName,
+			// 		team:
+			// 			athlete.leaders[0].team.id === homeTeam[0].team.id
+			// 				? homeTeam[0].team.abbreviation
+			// 				: awayTeam[0].team.abbreviation,
+			// 		displayValue: athlete.leaders[0].displayValue,
+			// 		type: "completed",
+			// 	};
+			// });
 		} else {
 			if (awayAthlete) awayAthlete.type = "in";
 			if (homeAthlete) homeAthlete.type = "in";
@@ -292,14 +334,14 @@ export function GameLeadersHelper(game, sportName) {
 		} else if (sportName === "NFL") {
 			athletes = game.competitions[0].leaders.map((athlete) => {
 				return {
-					title: athlete.shortDisplayName,
+					title: "TOP PERFORMERS",
+					position: athlete.shortDisplayName,
 					headshot: athlete.leaders[0].athlete.headshot,
 					displayName: athlete.leaders[0].athlete.displayName,
 					team:
-						athlete.leaders[0].athlete.team.id === homeTeam[0].team.id
+						athlete.leaders[0].team.id === homeTeam[0].team.id
 							? homeTeam[0].team.abbreviation
 							: awayTeam[0].team.abbreviation,
-					position: athlete.leaders[0].athlete.position.abbreviation,
 					displayValue: athlete.leaders[0].displayValue,
 					type: "completed",
 				};
