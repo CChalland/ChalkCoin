@@ -203,6 +203,7 @@ export function GameLeadersHelper(game, sportName) {
 			type: "pre",
 			team: {
 				name: awayTeam[0].team.displayName.split(" ").pop(),
+				side: "away",
 				links: awayTeam[0].team.links.filter((link) => {
 					return link.text === "Roster" || link.text === "Statistics" || link.text === "Schedule";
 				}),
@@ -213,6 +214,7 @@ export function GameLeadersHelper(game, sportName) {
 			type: "pre",
 			team: {
 				name: homeTeam[0].team.displayName.split(" ").pop(),
+				side: "home",
 				links: homeTeam[0].team.links.filter((link) => {
 					return link.text === "Roster" || link.text === "Statistics" || link.text === "Schedule";
 				}),
@@ -332,7 +334,8 @@ export function GameLeadersHelper(game, sportName) {
 		} else if (sportName === "NFL") {
 			athletes = game.competitions[0].leaders.map((athlete) => {
 				return {
-					title: athlete.shortDisplayName,
+					title: "TOP PERFORMERS",
+					position: athlete.shortDisplayName,
 					headshot: athlete.leaders[0].athlete.headshot,
 					displayName: athlete.leaders[0].athlete.displayName,
 					team:

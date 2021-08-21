@@ -71,7 +71,7 @@ function SportCard(props) {
 							/>
 						</Col>
 
-						<Col sm={6} md={5} lg={4} xl={3} className="border rounded">
+						<Col sm={6} md={5} lg={4} xl={4} className="border rounded">
 							<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
 						</Col>
 

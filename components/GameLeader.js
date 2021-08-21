@@ -186,6 +186,47 @@ function GameLeader(props) {
 			}
 		} else if (athlete && sportName === "NFL") {
 			if (athlete.type === "pre") {
+				const divider = athlete.team.side === "away" ? <Row className="border"></Row> : null;
+				title = <Row className="mt-2 text-secondary">{athlete.title}</Row>;
+				player = (
+					<>
+						<Row className="mt-3 mb-1 h6">{athlete.team.name}</Row>
+						<Row className="mt-1 mb-2">
+							{athlete.team.links.map((link, key) => {
+								return (
+									<Col xs="auto" key={key}>
+										<a href={link.href} target="_blank">
+											{link.text}
+										</a>
+									</Col>
+								);
+							})}
+						</Row>
+						{divider}
+					</>
+				);
+			} else {
+				title = <Row className="mt-2 text-secondary">{athlete.title}</Row>;
+				player = (
+					<Row className="my-3 align-items-center">
+						<Col xs={3} className="text-secondary">
+							{athlete.position}
+						</Col>
+						<Col xs={9} className="border-left">
+							<Row>
+								<Col xs="auto" className="mx-0 font-weight-bold">
+									{athlete.displayName}
+								</Col>
+								<Col xs="auto" className="px-0 text-secondary">
+									{athlete.team}
+								</Col>
+							</Row>
+							<Row>
+								<Col className="text-secondary">{athlete.displayValue}</Col>
+							</Row>
+						</Col>
+					</Row>
+				);
 			}
 		} else if (athlete) {
 			if (athlete.type === "pre" || athlete.type === "in" || athlete.type === "completed") {
