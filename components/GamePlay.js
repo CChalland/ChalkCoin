@@ -226,7 +226,7 @@ function GamePlay(props) {
 		if (gamePlayData.headlines) {
 			if (sportName && gamePlayData.headlines.video) {
 				headline = videoHelper(gamePlayData.headlines);
-			} else if (gamePlayData.headlines) {
+			} else {
 				headline = (
 					<Container fluid>
 						<Row className="my-3">
@@ -237,26 +237,26 @@ function GamePlay(props) {
 						</Row>
 					</Container>
 				);
-			} else {
-				headline = (
-					<Container fluid>
-						<Row>{"TEAM INFORMATION"}</Row>
-						<Row>{gamePlayData.away.name}</Row>
-						<Row>
-							<Col>{"Roster"}</Col>
-							<Col>{"Statistics"}</Col>
-							<Col>{"Schedule"}</Col>
-						</Row>
-						<Row className="border"></Row>
-						<Row>{gamePlayData.home.name}</Row>
-						<Row>
-							<Col>{"Roster"}</Col>
-							<Col>{"Statistics"}</Col>
-							<Col>{"Schedule"}</Col>
-						</Row>
-					</Container>
-				);
 			}
+		} else {
+			headline = (
+				<Container fluid>
+					<Row>{"TEAM INFORMATION"}</Row>
+					<Row>{gamePlayData.away.name}</Row>
+					<Row>
+						<Col>{"Roster"}</Col>
+						<Col>{"Statistics"}</Col>
+						<Col>{"Schedule"}</Col>
+					</Row>
+					<Row className="border"></Row>
+					<Row>{gamePlayData.home.name}</Row>
+					<Row>
+						<Col>{"Roster"}</Col>
+						<Col>{"Statistics"}</Col>
+						<Col>{"Schedule"}</Col>
+					</Row>
+				</Container>
+			);
 		}
 	}
 
