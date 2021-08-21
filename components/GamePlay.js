@@ -11,7 +11,7 @@ function GamePlay(props) {
 				paddingRight: 0,
 			},
 			row: {
-				marginLeft: 10,
+				marginLeft: 8,
 				marginRight: 0,
 			},
 			col: {
@@ -38,24 +38,24 @@ function GamePlay(props) {
 		}
 
 		return (
-			<Container>
+			<Container fluid>
 				<Row className="my-2 py-2">
-					<Col className="px-4" sm={6}>
+					<Col className="" xs={6} md={8}>
 						<Row style={styles.row}>
-							<Col sm="auto" style={styles.col}>
+							<Col xs="auto" style={styles.col}>
 								<div className={"diamond second-base " + (situation.onSecond ? "active" : null)}></div>
 							</Col>
 						</Row>
 						<Row style={styles.col}>
-							<Col sm="auto" style={styles.center}>
+							<Col xs="auto" style={styles.center}>
 								<div className={"diamond third-base " + (situation.onThird ? "active" : null)}></div>
 							</Col>
-							<Col sm="auto" style={styles.col}>
+							<Col xs="auto" style={styles.col}>
 								<div className={"diamond first-base " + (situation.onFirst ? "active" : null)}></div>
 							</Col>
 						</Row>
 					</Col>
-					<Col className="" sm={6}>
+					<Col className="" xs={6} md={4}>
 						<div className="circleGraphs">
 							<div className="circleGraph  four">
 								<span className="abbrev">B</span>
@@ -84,6 +84,14 @@ function GamePlay(props) {
 		);
 	};
 
+	const footballHelper = (situation) => {
+		return (
+			<Container fluid>
+				<div>{"TEST"}</div>
+			</Container>
+		);
+	};
+
 	const scheduledHelper = (gamePlayData) => {
 		let weather, tickets, venue, odds;
 
@@ -91,16 +99,16 @@ function GamePlay(props) {
 			let conditionId = gamePlayData.weather.conditionId;
 			if (parseInt(conditionId) < 10) conditionId = "0" + conditionId;
 			weather = (
-				<Col className="mx-4">
+				<Col className="ml-auto">
 					<Row>
-						<Col sm="auto" className="mx-0 px-0">
+						<Col xs={3} className="px-0">
 							<Image
 								width={20}
 								height={20}
 								src={`https://a.espncdn.com/redesign/assets/img/icons/accuWeather/${conditionId}.png`}
 							/>
 						</Col>
-						<Col sm="auto">{`${gamePlayData.weather.temperature} °F`}</Col>
+						<Col xs={9}>{`${gamePlayData.weather.temperature} °F`}</Col>
 					</Row>
 				</Col>
 			);
@@ -116,7 +124,7 @@ function GamePlay(props) {
 			);
 
 		venue = (
-			<Col sm={7}>
+			<Col xs={8} className="mr-auto">
 				<Row className="mb-0 h6">{gamePlayData.venue.fullName}</Row>
 				<Row>{`${gamePlayData.venue.address.city}, ${gamePlayData.venue.address.state}`}</Row>
 			</Col>
@@ -144,15 +152,9 @@ function GamePlay(props) {
 
 	const videoHelper = (headlines) => {
 		return (
-			<Container fluid>
-				<figure className="mt-3 position-relative" onClick={() => setModalShow(true)}>
-					<Image
-						width={256}
-						height={144}
-						src={headlines.video[0].thumbnail}
-						onClick={() => setModalShow(true)}
-						rounded
-					/>
+			<>
+				<figure className="mx-0 my-3 position-relative" onClick={() => setModalShow(true)}>
+					<Image fluid src={headlines.video[0].thumbnail} onClick={() => setModalShow(true)} rounded />
 					<span className="video-play-button">Play</span>
 					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
 				</figure>
@@ -168,10 +170,10 @@ function GamePlay(props) {
 						<Modal.Title id="contained-modal-title-vcenter">{headlines.video[0].headline}</Modal.Title>
 					</Modal.Header>
 					<Modal.Body className="m-0 p-0">
-						<video controls src={headlines.video[0].links.source.href} autoPlay />
+						<video width="100%" controls src={headlines.video[0].links.source.href} autoPlay />
 					</Modal.Body>
 				</Modal>
-			</Container>
+			</>
 		);
 	};
 
@@ -186,6 +188,7 @@ function GamePlay(props) {
 		scheduled = scheduledHelper(gamePlayData);
 	} else if (gamePlayData.status.type.state === "in") {
 		if (sportName === "NFL") {
+			lastPlay = footballHelper(gamePlayData.situation);
 		} else if (sportName === "NHL") {
 		} else if (sportName === "MLB") {
 			lastPlay = baseballHelper(gamePlayData.situation);
@@ -221,18 +224,39 @@ function GamePlay(props) {
 		}
 	} else if (gamePlayData.status.type.completed) {
 		if (gamePlayData.headlines) {
-			if (sportName !== "NFL" && sportName !== "WNBA" && gamePlayData.headlines.video) {
+			if (sportName && gamePlayData.headlines.video) {
 				headline = videoHelper(gamePlayData.headlines);
 			} else {
 				headline = (
-					<Row className="my-3">
-						<a className="my-0 h6 text-dark" href={gamePlayData.headlines.link[0].href} target="_blank">
-							{gamePlayData.headlines.shortLinkText}
-						</a>
-						<div>{gamePlayData.headlines.description}</div>
-					</Row>
+					<Container fluid>
+						<Row className="my-3">
+							<a className="my-0 h6 text-dark" href={gamePlayData.headlines.link[0].href} target="_blank">
+								{gamePlayData.headlines.shortLinkText}
+							</a>
+							<div>{gamePlayData.headlines.description}</div>
+						</Row>
+					</Container>
 				);
 			}
+		} else {
+			headline = (
+				<Container fluid>
+					<Row>{"TEAM INFORMATION"}</Row>
+					<Row>{gamePlayData.away.name}</Row>
+					<Row>
+						<Col>{"Roster"}</Col>
+						<Col>{"Statistics"}</Col>
+						<Col>{"Schedule"}</Col>
+					</Row>
+					<Row className="border"></Row>
+					<Row>{gamePlayData.home.name}</Row>
+					<Row>
+						<Col>{"Roster"}</Col>
+						<Col>{"Statistics"}</Col>
+						<Col>{"Schedule"}</Col>
+					</Row>
+				</Container>
+			);
 		}
 	}
 

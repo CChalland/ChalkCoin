@@ -73,10 +73,10 @@ function GameLeader(props) {
 			} else if (athlete && athlete.type === "completed") {
 				player = (
 					<Row className="mt-2 mb-1 align-items-center">
-						<Col md="auto">
+						<Col xs={3} className="pl-0">
 							<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 						</Col>
-						<Col md={6}>
+						<Col xs={6} className="pl-0">
 							<Row className="mb-0 text-secondary">{athlete.title}</Row>
 							<Row className="mb-0 h6">{athlete.displayName}</Row>
 						</Col>

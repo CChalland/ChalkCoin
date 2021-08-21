@@ -10,7 +10,7 @@ function homeAwayHelper(game) {
 
 export function GameScoreHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
-	let homePeriods, awayPeriods, homeRecords, awayRecords;
+	let homeName, awayName, homePeriods, awayPeriods, homeRecords, awayRecords;
 	let temp = [
 		{ name: "Home", type: "home", summary: 0 },
 		{ name: "Away", type: "away", summary: 0 },
@@ -69,14 +69,14 @@ export function GameScoreHelper(game, sportName) {
 		detail: game.competitions[0].status.type.detail,
 		away: {
 			logo: awayTeam[0].team.logo,
-			name: awayTeam[0].team.name,
+			name: awayTeam[0].team.displayName.split(" ").pop(),
 			records: awayRecords,
 			score: parseInt(awayTeam[0].score),
 			periods: awayPeriods,
 		},
 		home: {
 			logo: homeTeam[0].team.logo,
-			name: homeTeam[0].team.name,
+			name: homeTeam[0].team.displayName.split(" ").pop(),
 			records: homeRecords,
 			score: parseInt(homeTeam[0].score),
 			periods: homePeriods,
@@ -86,7 +86,9 @@ export function GameScoreHelper(game, sportName) {
 
 export function GamePlayHelper(game) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
-	let status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
+	let away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
+	away = { name: awayTeam[0].team.displayName.split(" ").pop(), links: [] };
+	home = { name: homeTeam[0].team.displayName.split(" ").pop(), links: [] };
 
 	if (game.weather) {
 		weather = game.weather;
@@ -98,6 +100,12 @@ export function GamePlayHelper(game) {
 	if (game.competitions[0].tickets) tickets = game.competitions[0].tickets[0];
 	status = game.competitions[0].status;
 	venue = game.competitions[0].venue;
+	away.links = awayTeam[0].team.links.filter((link) => {
+		return link.text === "Roster" || link.text === "Statistics" || link.text === "Schedule";
+	});
+	home.links = homeTeam[0].team.links.filter((link) => {
+		return link.text === "Roster" || link.text === "Statistics" || link.text === "Schedule";
+	});
 
 	if (headlines)
 		headlines.link = game.links.filter((link) => {
@@ -117,7 +125,7 @@ export function GamePlayHelper(game) {
 			team,
 		};
 	}
-	return { status, situation, headlines, venue, tickets, weather, odds, lastPlay };
+	return { away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay };
 }
 
 export function GameLeadersHelper(game, sportName) {

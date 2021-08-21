@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 
 function GameScore(props) {
 	const scoreTableHelper = (gameScoreCardData, sportName) => {
@@ -36,7 +36,7 @@ function GameScore(props) {
 			gameScoreCardData.status.type.name === "STATUS_POSTPONED" ||
 			gameScoreCardData.status.type.name === "STATUS_DELAYED"
 		) {
-			title = <Col className="mx-0 pl-0">{gameScoreCardData.shortDetail}</Col>;
+			title = <Col className="">{gameScoreCardData.shortDetail}</Col>;
 		} else if (sportName === "MLB") {
 			let awayRuns, homeRuns;
 
@@ -175,7 +175,7 @@ function GameScore(props) {
 			<Row className="py-2 align-items-center border">{title}</Row>
 
 			<Row className={`my-3 align-items-center ${awayFinalStyle}`}>
-				<Col xs={2} className="">
+				<Col xs={2} className="text-right">
 					<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 				</Col>
 				<Col xs={4} className="">
@@ -194,7 +194,7 @@ function GameScore(props) {
 			</Row>
 
 			<Row className={`mt-4 mb-3 align-items-center ${homeFinalStyle}`}>
-				<Col xs={2} className="">
+				<Col xs={2} className="text-right">
 					<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 				</Col>
 				<Col xs={4} className="">
