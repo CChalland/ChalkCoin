@@ -85,9 +85,69 @@ function GamePlay(props) {
 	};
 
 	const footballHelper = (situation) => {
+		// let driveContent = document.querySelector(".sb-detail");
+		// let sbDetailWidth = driveContent?.clientWidth;
+		// let markerListWidth = 17.5 * (sbDetailWidth / 210);
+		// let markerWidth = 3.5 * (sbDetailWidth / 210);
+		// let progressBar = document.querySelector(".progress");
+		// let progressBarWidth = progressBar?.clientWidth;
+
 		return (
 			<Container fluid>
-				<div>{"TEST"}</div>
+				<section className="sb-detail">
+					<div className="football-drivechart play-by-play players">
+						<div className="drivechart">
+							<span className="football-bar"></span>
+							<div className="football-progress-wrap">
+								<span className="football-progress" style={{ left: "1%", right: "1%" }}></span>
+								<div className="football-logo-wrap away" style={{ left: "55%" }}>
+									<div className="football-logo">
+										<div className="football-front">
+											<img
+												className="focus-image scoreboard-logo-home imageLoaded"
+												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/chi.png&amp;w=35&amp;h=35"
+											/>
+											<div className="football-logo-placeholder">CHI</div>
+										</div>
+										<div className="football-back">
+											<img
+												className="focus-image scoreboard-logo-away imageLoaded"
+												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/buf.png&amp;w=35&amp;h=35"
+											/>
+											<div className="football-logo-placeholder">BUF</div>
+										</div>
+									</div>
+									<span className="football-arrow left"></span>
+								</div>
+							</div>
+
+							<ul className="markers">
+								<li className="marker-list">BUF</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list red-zone-away">20</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list">50</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list red-zone-home">20</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list">CHI</li>
+							</ul>
+						</div>
+
+						<div className="down" style={{ display: "block" }}>
+							1st &amp; 10 at CHI 45
+						</div>
+
+						<p className="last-play" style={{ display: "block" }}>
+							<span className="title">Last Play:</span>
+							<span className="text">
+								(8:34) (Shotgun) J.Fields pass short middle to D.Newsome to CHI 45 for 7 yards (M.Lee).
+							</span>
+						</p>
+					</div>
+				</section>
 			</Container>
 		);
 	};
@@ -223,6 +283,9 @@ function GamePlay(props) {
 			}
 		}
 	} else if (gamePlayData.status.type.completed) {
+		// if (sportName === "NFL") {
+		// 	lastPlay = footballHelper(gamePlayData.situation);
+		// } else
 		if (gamePlayData.headlines) {
 			if (sportName && gamePlayData.headlines.video) {
 				headline = videoHelper(gamePlayData.headlines);

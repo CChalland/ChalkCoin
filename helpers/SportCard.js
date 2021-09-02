@@ -274,19 +274,20 @@ export function GameLeadersHelper(game, sportName) {
 			};
 			athletes.push(pitcher, batter);
 		} else if (sportName === "NFL") {
-			// athletes = game.competitions[0].leaders.map((athlete) => {
-			// 	return {
-			// 		title: athlete.shortDisplayName,
-			// 		headshot: athlete.leaders[0].athlete.headshot,
-			// 		displayName: athlete.leaders[0].athlete.displayName,
-			// 		team:
-			// 			athlete.leaders[0].team.id === homeTeam[0].team.id
-			// 				? homeTeam[0].team.abbreviation
-			// 				: awayTeam[0].team.abbreviation,
-			// 		displayValue: athlete.leaders[0].displayValue,
-			// 		type: "completed",
-			// 	};
-			// });
+			athletes = game.competitions[0].leaders?.map((athlete) => {
+				return {
+					title: "TOP PERFORMERS",
+					position: athlete.shortDisplayName,
+					headshot: athlete.leaders[0].athlete.headshot,
+					displayName: athlete.leaders[0].athlete.displayName,
+					team:
+						athlete.leaders[0].team.id === homeTeam[0].team.id
+							? homeTeam[0].team.abbreviation
+							: awayTeam[0].team.abbreviation,
+					displayValue: athlete.leaders[0].displayValue,
+					type: "completed",
+				};
+			});
 		} else {
 			if (awayAthlete) awayAthlete.type = "in";
 			if (homeAthlete) homeAthlete.type = "in";
@@ -332,7 +333,7 @@ export function GameLeadersHelper(game, sportName) {
 				});
 			}
 		} else if (sportName === "NFL") {
-			athletes = game.competitions[0].leaders.map((athlete) => {
+			athletes = game.competitions[0].leaders?.map((athlete) => {
 				return {
 					title: "TOP PERFORMERS",
 					position: athlete.shortDisplayName,
@@ -357,6 +358,6 @@ export function GameLeadersHelper(game, sportName) {
 	}
 
 	return {
-		athletes: athletes.flat(),
+		athletes: athletes?.flat(),
 	};
 }

@@ -194,7 +194,7 @@ function GameLeader(props) {
 						<Row className="mt-1 mb-2">
 							{athlete.team.links.map((link, key) => {
 								return (
-									<Col xs="auto" key={key}>
+									<Col xs="auto" key={key} className="mx-0 px-1 text-center">
 										<a href={link.href} target="_blank">
 											{link.text}
 										</a>
@@ -208,7 +208,7 @@ function GameLeader(props) {
 			} else {
 				title = <Row className="mt-2 text-secondary">{athlete.title}</Row>;
 				player = (
-					<Row className="my-3 align-items-center">
+					<Row className="my-1 align-items-center">
 						<Col xs={3} className="text-secondary">
 							{athlete.position}
 						</Col>
@@ -252,7 +252,7 @@ function GameLeader(props) {
 	const { gameLeadersData, sportName } = props;
 	let gameTitle;
 
-	let athletes = gameLeadersData.athletes.map((athlete) => {
+	let athletes = gameLeadersData.athletes?.map((athlete) => {
 		// console.log(athlete);
 		const { title, player } = leadersHelper(athlete, sportName);
 		gameTitle = title;

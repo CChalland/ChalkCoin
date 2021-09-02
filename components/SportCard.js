@@ -62,23 +62,101 @@ function SportCard(props) {
 
 			return (
 				<Container key={key} fluid>
-					<Row className="mt-3 mb-3">
-						<Col md={6} xl={4} className="border rounded">
-							<GameScore
-								key={game.uid.toString()}
-								gameScoreCardData={GameScoreHelper(game, sportName)}
-								sportName={sportName}
-							/>
-						</Col>
+					{/* For lage screen */}
+					<Col className="mx-0 px-0 d-none d-lg-block">
+						<Row className="mt-3 mb-3 ">
+							<Col lg={5} xxl={4} className="border rounded">
+								<GameScore
+									key={game.uid.toString()}
+									gameScoreCardData={GameScoreHelper(game, sportName)}
+									sportName={sportName}
+								/>
+							</Col>
 
-						<Col sm={6} md={5} lg={4} xl={4} className="border rounded">
-							<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
-						</Col>
+							<Col lg={3} xxl={2} className="border rounded">
+								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
+							</Col>
 
-						<Col sm={6} lg={6} xl={4} className="border rounded">
-							<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
-						</Col>
-					</Row>
+							<Col lg={3} xxl={2} className="border rounded">
+								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
+							</Col>
+							<Col lg={1}>
+								<p>BET Button</p>
+							</Col>
+						</Row>
+					</Col>
+
+					{/* For medium screen */}
+					<Col className="mx-0 px-0 d-none d-md-block d-lg-none">
+						<Row className="mt-3 mb-3 ">
+							<Col md={6} className="border rounded">
+								<GameScore
+									key={game.uid.toString()}
+									gameScoreCardData={GameScoreHelper(game, sportName)}
+									sportName={sportName}
+								/>
+							</Col>
+
+							<Col md={6} className="border rounded">
+								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
+							</Col>
+
+							<Col md={6} className="border rounded">
+								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
+							</Col>
+							<Col md={1}>
+								<p>BET Button</p>
+							</Col>
+						</Row>
+					</Col>
+
+					{/* For small screen */}
+					<Col className="mx-0 px-0 d-none d-sm-block d-md-none">
+						<Row className="mt-3 mb-3 ">
+							<Col sm={6} className="border rounded">
+								<GameScore
+									key={game.uid.toString()}
+									gameScoreCardData={GameScoreHelper(game, sportName)}
+									sportName={sportName}
+								/>
+							</Col>
+
+							<Col sm={6} className="border rounded">
+								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
+							</Col>
+
+							<Col sm={6} className="border rounded">
+								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
+							</Col>
+							<Col md={1}>
+								<p>BET Button</p>
+							</Col>
+						</Row>
+					</Col>
+
+					{/* For xs screen */}
+					<Col className="mx-0 px-0 d-block d-sm-none">
+						<Row className="mt-3 mb-3 ">
+							<Col md={6} className="border rounded">
+								<GameScore
+									key={game.uid.toString()}
+									gameScoreCardData={GameScoreHelper(game, sportName)}
+									sportName={sportName}
+								/>
+							</Col>
+
+							<Col sm={6} className="border rounded">
+								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
+							</Col>
+
+							<Col sm={6} className="border rounded">
+								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
+							</Col>
+							<Col md={1}>
+								<p>BET Button</p>
+							</Col>
+						</Row>
+					</Col>
 				</Container>
 			);
 		});
