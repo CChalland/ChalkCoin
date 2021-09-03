@@ -97,7 +97,7 @@ function SportCard(props) {
 					{/* For medium screen */}
 					<Col className="mx-0 px-0 d-none d-md-block d-lg-none">
 						<Row className="mt-3 mb-3 border rounded">
-							<Col md={6} className="border-right">
+							<Col md={7} className="border-bottom border-right">
 								<GameScore
 									key={game.uid.toString()}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -105,15 +105,30 @@ function SportCard(props) {
 								/>
 							</Col>
 
-							<Col md={6} className="">
+							<Col md={5} className="border-bottom">
 								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
 							</Col>
 
-							<Col md={6} className="">
-								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
-							</Col>
-							<Col md={1}>
-								<p>BET Button</p>
+							<Col md={12} className="text-center">
+								<div className="accordions" id="accordion">
+									<span className="mx-4">BET Button</span>
+									<a
+										data-toggle="collapse"
+										aria-expanded={multipleExpandablePanels.includes(key)}
+										href="#pablo"
+										onClick={(e) => toggleMultipleExpandablePanels(e, key)}
+									>
+										{"Button Title"} <b className="caret"></b>
+									</a>
+									<Collapse className="collapse" id="collapseOne" in={multipleExpandablePanels.includes(key)}>
+										<Col md={12} className="">
+											<GameLeader
+												gameLeadersData={GameLeadersHelper(game, sportName)}
+												sportName={sportName}
+											/>
+										</Col>
+									</Collapse>
+								</div>
 							</Col>
 						</Row>
 					</Col>
