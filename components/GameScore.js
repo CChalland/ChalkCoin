@@ -175,10 +175,10 @@ function GameScore(props) {
 			<Row className="py-2 align-items-center border">{title}</Row>
 
 			<Row className={`my-3 align-items-center ${awayFinalStyle}`}>
-				<Col xs={2} sm={3} md={2} lg={3} xl={2} className="text-right">
+				<Col xs={2} md={2} lg={3} xl={2} className="text-right">
 					<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 				</Col>
-				<Col xs={4} sm={3} md={4} lg={3} xl={4} className="">
+				<Col xs={4} md={4} lg={3} xl={4} className="">
 					<Row className="mb-0 h5">{gameScoreCardData.away.name}</Row>
 					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 						{"(" +
@@ -194,10 +194,10 @@ function GameScore(props) {
 			</Row>
 
 			<Row className={`mt-4 mb-3 align-items-center ${homeFinalStyle}`}>
-				<Col xs={2} sm={3} md={2} lg={3} xl={2} className="text-right">
+				<Col xs={2} md={2} lg={3} xl={2} className="text-right">
 					<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 				</Col>
-				<Col xs={4} sm={3} md={4} lg={3} xl={4} className="">
+				<Col xs={4} md={4} lg={3} xl={4} className="">
 					<Row className="mb-0 h5">{gameScoreCardData.home.name}</Row>
 					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 						{"(" +

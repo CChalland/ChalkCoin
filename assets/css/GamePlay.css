@@ -1,3 +1,13 @@
+.carousel-control-next,
+.carousel-control-prev {
+  filter: invert(100%);
+}
+
+.carousel-indicators {
+  filter: invert(100%);
+  bottom: -22px;
+}
+
 div.diamond.second-base {
   border: 19.5px solid transparent;
   border-bottom: 19.5px solid #CBCCCE;

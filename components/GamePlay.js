@@ -40,7 +40,7 @@ function GamePlay(props) {
 		return (
 			<Container fluid>
 				<Row className="my-2 py-2 justify-content-center">
-					<Col className="" xs={4} sm={6} md={4} lg={"auto"}>
+					<Col className="" xs={5} sm={5} md={4} lg={"auto"}>
 						<Row style={styles.row}>
 							<Col xs="auto" style={styles.col}>
 								<div className={"diamond second-base " + (situation.onSecond ? "active" : null)}></div>
@@ -55,7 +55,7 @@ function GamePlay(props) {
 							</Col>
 						</Row>
 					</Col>
-					<Col className="mt-2" xs={4} sm={6} md={4} lg={"auto"}>
+					<Col className="mt-2" xs={5} sm={5} md={4} lg={"auto"}>
 						<div className="circleGraphs">
 							<div className="circleGraph  four">
 								<span className="abbrev">B</span>
@@ -74,7 +74,7 @@ function GamePlay(props) {
 						</div>
 					</Col>
 				</Row>
-				<Row className="mt-2 list-inline-item justify-content-center">
+				<Row className="mt-2 mb-3 list-inline-item justify-content-center">
 					<p>
 						<strong className="h6">LAST PLAY</strong>
 						{`: ${situation.lastPlay.text}`}

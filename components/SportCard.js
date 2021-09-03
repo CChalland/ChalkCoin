@@ -1,16 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Collapse, Carousel } from "react-bootstrap";
+import axios from "axios";
 import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/SportCard";
-import axios from "axios";
 import { SportDispatch } from "../contexts/Sports.Context";
 
 function SportCard(props) {
 	const dispatch = useContext(SportDispatch);
 	const { sportData, sportName } = props;
 	let reloadData = props.sportData.reload;
+	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
+	const toggleMultipleExpandablePanels = (event, value) => {
+		if (multipleExpandablePanels.includes(value)) {
+			setMultipleExpandablePanels(multipleExpandablePanels.filter((prop) => prop !== value));
+		} else {
+			setMultipleExpandablePanels([...multipleExpandablePanels, value]);
+		}
+	};
 
 	useEffect(() => {
 		async function getData() {
@@ -64,8 +72,8 @@ function SportCard(props) {
 				<Container key={key} fluid>
 					{/* For lage screen */}
 					<Col className="mx-0 px-0 d-none d-lg-block">
-						<Row className="mt-3 mb-3 ">
-							<Col lg={5} xxl={4} className="border rounded">
+						<Row className="mt-3 mb-3 border rounded">
+							<Col lg={5} xxl={4} className="border-right">
 								<GameScore
 									key={game.uid.toString()}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -73,11 +81,11 @@ function SportCard(props) {
 								/>
 							</Col>
 
-							<Col lg={3} xxl={2} className="border rounded">
+							<Col lg={3} xxl={2} className="border-right">
 								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
 							</Col>
 
-							<Col lg={3} xxl={2} className="border rounded">
+							<Col lg={3} xxl={2} className="">
 								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
 							</Col>
 							<Col lg={1}>
@@ -88,8 +96,8 @@ function SportCard(props) {
 
 					{/* For medium screen */}
 					<Col className="mx-0 px-0 d-none d-md-block d-lg-none">
-						<Row className="mt-3 mb-3 ">
-							<Col md={6} className="border rounded">
+						<Row className="mt-3 mb-3 border rounded">
+							<Col md={6} className="border-right">
 								<GameScore
 									key={game.uid.toString()}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -97,11 +105,11 @@ function SportCard(props) {
 								/>
 							</Col>
 
-							<Col md={6} className="border rounded">
+							<Col md={6} className="">
 								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
 							</Col>
 
-							<Col md={6} className="border rounded">
+							<Col md={6} className="">
 								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
 							</Col>
 							<Col md={1}>
@@ -112,8 +120,8 @@ function SportCard(props) {
 
 					{/* For small screen */}
 					<Col className="mx-0 px-0 d-none d-sm-block d-md-none">
-						<Row className="mt-3 mb-3 ">
-							<Col sm={6} className="border rounded">
+						<Row className="mt-3 mb-3 border rounded">
+							<Col sm={12} className="border-bottom">
 								<GameScore
 									key={game.uid.toString()}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -121,23 +129,47 @@ function SportCard(props) {
 								/>
 							</Col>
 
-							<Col sm={6} className="border rounded">
-								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
-							</Col>
-
-							<Col sm={6} className="border rounded">
-								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
-							</Col>
-							<Col md={1}>
-								<p>BET Button</p>
+							<Col sm={12} className="text-center">
+								<div className="accordions" id="accordion">
+									<span className="mx-4">BET Button</span>
+									<a
+										data-toggle="collapse"
+										aria-expanded={multipleExpandablePanels.includes(key)}
+										href="#pablo"
+										onClick={(e) => toggleMultipleExpandablePanels(e, key)}
+									>
+										{"Button Title"} <b className="caret"></b>
+									</a>
+									<Collapse className="collapse" id="collapseOne" in={multipleExpandablePanels.includes(key)}>
+										<Carousel fade>
+											<Carousel.Item>
+												<Row className="justify-content-center">
+													<Col sm={9} className="">
+														<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
+													</Col>
+												</Row>
+											</Carousel.Item>
+											<Carousel.Item>
+												<Row className="justify-content-center">
+													<Col sm={9} className="">
+														<GameLeader
+															gameLeadersData={GameLeadersHelper(game, sportName)}
+															sportName={sportName}
+														/>
+													</Col>
+												</Row>
+											</Carousel.Item>
+										</Carousel>
+									</Collapse>
+								</div>
 							</Col>
 						</Row>
 					</Col>
 
 					{/* For xs screen */}
 					<Col className="mx-0 px-0 d-block d-sm-none">
-						<Row className="mt-3 mb-3 ">
-							<Col md={6} className="border rounded">
+						<Row className="mt-3 mb-3 border rounded">
+							<Col xs={12} className="border-bottom">
 								<GameScore
 									key={game.uid.toString()}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -145,15 +177,39 @@ function SportCard(props) {
 								/>
 							</Col>
 
-							<Col sm={6} className="border rounded">
-								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
-							</Col>
-
-							<Col sm={6} className="border rounded">
-								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
-							</Col>
-							<Col md={1}>
-								<p>BET Button</p>
+							<Col xs={12} className="text-center">
+								<div className="accordions" id="accordion">
+									<span className="mx-4">BET Button</span>
+									<a
+										data-toggle="collapse"
+										aria-expanded={multipleExpandablePanels.includes(key)}
+										href="#pablo"
+										onClick={(e) => toggleMultipleExpandablePanels(e, key)}
+									>
+										{"Button Title"} <b className="caret"></b>
+									</a>
+									<Collapse className="collapse" id="collapseOne" in={multipleExpandablePanels.includes(key)}>
+										<Carousel fade>
+											<Carousel.Item>
+												<Row className="justify-content-center">
+													<Col xs={9} className="">
+														<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
+													</Col>
+												</Row>
+											</Carousel.Item>
+											<Carousel.Item>
+												<Row className="justify-content-center">
+													<Col xs={9} className="">
+														<GameLeader
+															gameLeadersData={GameLeadersHelper(game, sportName)}
+															sportName={sportName}
+														/>
+													</Col>
+												</Row>
+											</Carousel.Item>
+										</Carousel>
+									</Collapse>
+								</div>
 							</Col>
 						</Row>
 					</Col>
