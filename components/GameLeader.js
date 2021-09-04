@@ -22,7 +22,7 @@ function GameLeader(props) {
 			if (athlete && athlete.type === "pre") {
 				title = <Row className="mt-2 py-1 text-secondary h6">{"PROBABLE PITCHERS"}</Row>;
 				player = (
-					<Col xs={12} md={6} lg={12} xl={12}>
+					<Col xs={12} md={6} xl={12}>
 						<Row className="mb-3 align-items-center">
 							<Col xs="auto">
 								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
@@ -46,7 +46,7 @@ function GameLeader(props) {
 					<Row className="mt-2 py-1 text-secondary h6">{`DUE UP FOR ${athlete.team.toUpperCase()}`}</Row>
 				);
 				player = (
-					<Col xs={12} md={4} lg={12} xl={12}>
+					<Col xs={12} md={4} xl={12}>
 						<Row className="mb-2 align-items-center">
 							<Col xs="auto">
 								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
@@ -60,7 +60,7 @@ function GameLeader(props) {
 				);
 			} else if (athlete && athlete.type === "in") {
 				player = (
-					<Col xs={12} md={6} lg={12} xl={12}>
+					<Col xs={12} md={6} xl={12}>
 						<Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>
 						<Row className="mb-2 align-items-center">
 							<Col xs="auto">
@@ -75,7 +75,7 @@ function GameLeader(props) {
 				);
 			} else if (athlete && athlete.type === "completed") {
 				player = (
-					<Col xs={12} md={6} lg={12} xl={12}>
+					<Col xs={12} md={6} xl={12}>
 						<Row className="mt-2 mb-1 align-items-center">
 							<Col xs={3} className="pl-0">
 								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
@@ -91,7 +91,7 @@ function GameLeader(props) {
 			} else {
 				title = <Row className="mt-2 py-1 text-secondary h6">{"PROBABLE PITCHERS"}</Row>;
 				player = (
-					<Col xs={12} md={6} lg={12} xl={12}>
+					<Col xs={12} md={6} xl={12}>
 						<Row className="mb-3 align-items-center">
 							<Col md="auto">
 								<Image width={45} height={40} src={null} roundedCircle />
@@ -138,7 +138,7 @@ function GameLeader(props) {
 				const filler = athlete.type === "pre" ? "PTS" : null;
 				title = <Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>;
 				player = (
-					<Col xs={12} md={6} lg={12} xl={12}>
+					<Col xs={12} md={6} xl={12}>
 						<Row className="mb-3 align-items-center">
 							<Col md="auto">
 								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
@@ -177,7 +177,7 @@ function GameLeader(props) {
 				};
 
 				player = (
-					<Col xs={12} md={6} lg={12} xl={12}>
+					<Col xs={12} md={6} xl={12}>
 						<Row className="my-3 align-items-center">
 							<Col className="mx-0 px-0" sm="auto">
 								{stars[athlete.title.split(" ")[0].toLowerCase()]}
@@ -212,7 +212,7 @@ function GameLeader(props) {
 				title = <Row className="mt-2 text-secondary">{athlete.title}</Row>;
 				player = (
 					<>
-						<Col xs={12} md="auto" lg={12} xl={12} className="mx-auto">
+						<Col xs={12} md="auto" xl={12} className="mx-auto">
 							<Row className="mt-3 mb-1 h6">{athlete.team.name}</Row>
 							<Row className="mt-1 mb-2">
 								{athlete.team.links.map((link, key) => {
@@ -235,7 +235,7 @@ function GameLeader(props) {
 				title = <Row className="mt-2 text-secondary">{athlete.title}</Row>;
 
 				player = (
-					<Col xs={12} md={4} lg={12} xl={12}>
+					<Col xs={12} md={4} xl={12}>
 						<Row className="my-1 align-items-center">
 							<Col xs={3} className="text-secondary">
 								{athlete.position}
@@ -263,7 +263,7 @@ function GameLeader(props) {
 				title = <Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>;
 
 				player = (
-					<Col xs={12} md={6} lg={12} xl={12}>
+					<Col xs={12} md={6} xl={12}>
 						<Row className="mb-2 align-items-center">
 							<Col xs="auto">
 								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
