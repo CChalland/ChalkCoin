@@ -86,7 +86,11 @@ function SportCard(props) {
 							</Col>
 
 							<Col lg={3} xxl={2} className="">
-								<GameLeader gameLeadersData={GameLeadersHelper(game, sportName)} sportName={sportName} />
+								<GameLeader
+									gameLeadersData={GameLeadersHelper(game, sportName)}
+									sportName={sportName}
+									screenSize={"lg"}
+								/>
 							</Col>
 							<Col lg={1}>
 								<p>BET Button</p>
@@ -125,6 +129,7 @@ function SportCard(props) {
 											<GameLeader
 												gameLeadersData={GameLeadersHelper(game, sportName)}
 												sportName={sportName}
+												screenSize={"md"}
 											/>
 										</Col>
 									</Collapse>
@@ -170,6 +175,7 @@ function SportCard(props) {
 														<GameLeader
 															gameLeadersData={GameLeadersHelper(game, sportName)}
 															sportName={sportName}
+															screenSize={"sm"}
 														/>
 													</Col>
 												</Row>
@@ -218,6 +224,7 @@ function SportCard(props) {
 														<GameLeader
 															gameLeadersData={GameLeadersHelper(game, sportName)}
 															sportName={sportName}
+															screenSize={"xs"}
 														/>
 													</Col>
 												</Row>
