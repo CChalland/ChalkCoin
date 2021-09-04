@@ -11,7 +11,7 @@ function GamePlay(props) {
 				paddingRight: 0,
 			},
 			row: {
-				marginLeft: 8,
+				marginLeft: 7,
 				marginRight: 0,
 			},
 			col: {
@@ -39,8 +39,8 @@ function GamePlay(props) {
 
 		return (
 			<Container fluid>
-				<Row className="my-2 py-2">
-					<Col className="" xs={6} md={8}>
+				<Row className="my-2 py-2 justify-content-center">
+					<Col className="" xs={5} md={6} lg={"auto"}>
 						<Row style={styles.row}>
 							<Col xs="auto" style={styles.col}>
 								<div className={"diamond second-base " + (situation.onSecond ? "active" : null)}></div>
@@ -55,7 +55,7 @@ function GamePlay(props) {
 							</Col>
 						</Row>
 					</Col>
-					<Col className="" xs={6} md={4}>
+					<Col className="mt-2" xs={5} md={6} lg={"auto"}>
 						<div className="circleGraphs">
 							<div className="circleGraph  four">
 								<span className="abbrev">B</span>
@@ -74,7 +74,7 @@ function GamePlay(props) {
 						</div>
 					</Col>
 				</Row>
-				<Row className="mt-4 list-inline-item">
+				<Row className="mt-2 mb-3 list-inline-item justify-content-center">
 					<p>
 						<strong className="h6">LAST PLAY</strong>
 						{`: ${situation.lastPlay.text}`}
@@ -85,9 +85,69 @@ function GamePlay(props) {
 	};
 
 	const footballHelper = (situation) => {
+		// let driveContent = document.querySelector(".sb-detail");
+		// let sbDetailWidth = driveContent?.clientWidth;
+		// let markerListWidth = 17.5 * (sbDetailWidth / 210);
+		// let markerWidth = 3.5 * (sbDetailWidth / 210);
+		// let progressBar = document.querySelector(".progress");
+		// let progressBarWidth = progressBar?.clientWidth;
+
 		return (
 			<Container fluid>
-				<div>{"TEST"}</div>
+				<section className="sb-detail">
+					<div className="football-drivechart play-by-play players">
+						<div className="drivechart">
+							<span className="football-bar"></span>
+							<div className="football-progress-wrap">
+								<span className="football-progress" style={{ left: "1%", right: "1%" }}></span>
+								<div className="football-logo-wrap away" style={{ left: "55%" }}>
+									<div className="football-logo">
+										<div className="football-front">
+											<img
+												className="focus-image scoreboard-logo-home imageLoaded"
+												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/chi.png&amp;w=35&amp;h=35"
+											/>
+											<div className="football-logo-placeholder">CHI</div>
+										</div>
+										<div className="football-back">
+											<img
+												className="focus-image scoreboard-logo-away imageLoaded"
+												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/buf.png&amp;w=35&amp;h=35"
+											/>
+											<div className="football-logo-placeholder">BUF</div>
+										</div>
+									</div>
+									<span className="football-arrow left"></span>
+								</div>
+							</div>
+
+							<ul className="markers">
+								<li className="marker-list">BUF</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list red-zone-away">20</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list">50</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list red-zone-home">20</li>
+								<li className="marker-list">&nbsp;</li>
+								<li className="marker-list">CHI</li>
+							</ul>
+						</div>
+
+						<div className="down" style={{ display: "block" }}>
+							1st &amp; 10 at CHI 45
+						</div>
+
+						<p className="last-play" style={{ display: "block" }}>
+							<span className="title">Last Play:</span>
+							<span className="text">
+								(8:34) (Shotgun) J.Fields pass short middle to D.Newsome to CHI 45 for 7 yards (M.Lee).
+							</span>
+						</p>
+					</div>
+				</section>
 			</Container>
 		);
 	};
@@ -223,6 +283,9 @@ function GamePlay(props) {
 			}
 		}
 	} else if (gamePlayData.status.type.completed) {
+		// if (sportName === "NFL") {
+		// 	lastPlay = footballHelper(gamePlayData.situation);
+		// } else
 		if (gamePlayData.headlines) {
 			if (sportName && gamePlayData.headlines.video) {
 				headline = videoHelper(gamePlayData.headlines);
@@ -246,7 +309,7 @@ function GamePlay(props) {
 					<Row className="mt-1 mb-2">
 						{gamePlayData.away.links.map((link, key) => {
 							return (
-								<Col key={key}>
+								<Col xs={4} key={key} className="text-center">
 									<a href={link.href} target="_blank">
 										{link.text}
 									</a>
@@ -259,7 +322,7 @@ function GamePlay(props) {
 					<Row className="mt-1 mb-2">
 						{gamePlayData.home.links.map((link, key) => {
 							return (
-								<Col key={key}>
+								<Col xs={4} key={key} className="text-center">
 									<a href={link.href} target="_blank">
 										{link.text}
 									</a>

@@ -66,7 +66,7 @@ function GameScore(props) {
 								{period?.displayValue}
 							</Col>
 						);
-					} else if (period.name === "errors") {
+					} else if (period?.name === "errors") {
 						return (
 							<Col xs={1} className="mr-auto text-center">
 								{period?.displayValue}
@@ -83,23 +83,23 @@ function GameScore(props) {
 			}
 			if (gameScoreCardData.home.periods.length !== 0) {
 				homePeriods = gameScoreCardData.home.periods.map((period) => {
-					if (period.name === "runs") {
+					if (period?.name === "runs") {
 						homeRuns = period.displayValue;
 						return (
 							<Col xs={3} className="font-weight-bold text-right">
-								{period.displayValue}
+								{period?.displayValue}
 							</Col>
 						);
-					} else if (period.name === "errors") {
+					} else if (period?.name === "errors") {
 						return (
 							<Col xs={1} className="mr-auto text-center">
-								{period.displayValue}
+								{period?.displayValue}
 							</Col>
 						);
 					} else {
 						return (
 							<Col xs={1} className="text-center">
-								{period.displayValue}
+								{period?.displayValue}
 							</Col>
 						);
 					}
@@ -175,10 +175,10 @@ function GameScore(props) {
 			<Row className="py-2 align-items-center border">{title}</Row>
 
 			<Row className={`my-3 align-items-center ${awayFinalStyle}`}>
-				<Col xs={2} className="text-right">
+				<Col xs={2} md={2} lg={3} xl={2} className="text-right">
 					<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 				</Col>
-				<Col xs={4} className="">
+				<Col xs={4} md={4} lg={3} xl={4} className="">
 					<Row className="mb-0 h5">{gameScoreCardData.away.name}</Row>
 					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 						{"(" +
@@ -194,10 +194,10 @@ function GameScore(props) {
 			</Row>
 
 			<Row className={`mt-4 mb-3 align-items-center ${homeFinalStyle}`}>
-				<Col xs={2} className="text-right">
+				<Col xs={2} md={2} lg={3} xl={2} className="text-right">
 					<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 				</Col>
-				<Col xs={4} className="">
+				<Col xs={4} md={4} lg={3} xl={4} className="">
 					<Row className="mb-0 h5">{gameScoreCardData.home.name}</Row>
 					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 						{"(" +
