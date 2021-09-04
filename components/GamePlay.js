@@ -309,7 +309,7 @@ function GamePlay(props) {
 					<Row className="mt-1 mb-2">
 						{gamePlayData.away.links.map((link, key) => {
 							return (
-								<Col key={key}>
+								<Col xs={4} key={key} className="text-center">
 									<a href={link.href} target="_blank">
 										{link.text}
 									</a>
@@ -322,7 +322,7 @@ function GamePlay(props) {
 					<Row className="mt-1 mb-2">
 						{gamePlayData.home.links.map((link, key) => {
 							return (
-								<Col key={key}>
+								<Col xs={4} key={key} className="text-center">
 									<a href={link.href} target="_blank">
 										{link.text}
 									</a>

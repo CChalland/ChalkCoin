@@ -46,7 +46,7 @@ function GameLeader(props) {
 					<Row className="mt-2 py-1 text-secondary h6">{`DUE UP FOR ${athlete.team.toUpperCase()}`}</Row>
 				);
 				player = (
-					<Col xs={12} md={6} lg={12} xl={12}>
+					<Col xs={12} md={4} lg={12} xl={12}>
 						<Row className="mb-2 align-items-center">
 							<Col xs="auto">
 								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
@@ -203,25 +203,31 @@ function GameLeader(props) {
 			}
 		} else if (athlete && sportName === "NFL") {
 			if (athlete.type === "pre") {
-				const divider = athlete.team.side === "away" ? <Row className="border"></Row> : null;
+				const horizontalDivider =
+					athlete.team.side === "away" ? <Row className="border d-md-none d-xl-block"></Row> : null;
+				const verticalDivider =
+					athlete.team.side === "away" ? (
+						<Col className="border-right d-none d-md-block d-xl-none"></Col>
+					) : null;
 				title = <Row className="mt-2 text-secondary">{athlete.title}</Row>;
 				player = (
 					<>
-						<Col>
+						<Col xs={12} md={6} lg={12} xl={12}>
 							<Row className="mt-3 mb-1 h6">{athlete.team.name}</Row>
 							<Row className="mt-1 mb-2">
 								{athlete.team.links.map((link, key) => {
 									return (
-										<Col xs="auto" key={key} className="mx-0 px-1 text-center">
+										<Col xs="auto" key={key} className="text-center">
 											<a href={link.href} target="_blank">
 												{link.text}
 											</a>
 										</Col>
 									);
 								})}
+								{verticalDivider}
 							</Row>
+							{horizontalDivider}
 						</Col>
-						{divider}
 					</>
 				);
 			} else {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Collapse, Carousel } from "react-bootstrap";
 import axios from "axios";
 import GameScore from "./GameScore";
@@ -20,44 +20,49 @@ function SportCard(props) {
 		}
 	};
 
-	useEffect(() => {
-		async function getData() {
-			let preGames,
-				inGames,
-				postGames,
-				leagueData,
-				sortedGames = [];
+	const getData = useCallback(async () => {
+		let preGames,
+			inGames,
+			postGames,
+			leagueData,
+			sortedGames = [];
 
-			if (reloadData) {
-				axios
-					.get(
-						`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
-					)
-					.then((response) => {
-						leagueData = response.data;
-						inGames = response.data.events.filter((game) => {
-							reloadData = true;
-							return game.status.type.state === "in";
-						});
-						postGames = response.data.events.filter((game) => {
-							return game.status.type.state === "post";
-						});
-						preGames = response.data.events.filter((game) => {
-							return game.status.type.state === "pre";
-						});
-
-						if (inGames.length === 0) reloadData = false;
-						sortedGames.push(inGames, postGames, preGames);
-						leagueData.events = sortedGames.flat();
-						dispatch({ type: sportName, data: leagueData, reload: reloadData });
-
-						console.log(sortedGames.flat());
+		if (reloadData) {
+			axios
+				.get(
+					`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
+				)
+				.then((response) => {
+					leagueData = response.data;
+					inGames = response.data.events.filter((game) => {
+						reloadData = true;
+						return game.status.type.state === "in";
 					});
-			}
+					postGames = response.data.events.filter((game) => {
+						return game.status.type.state === "post";
+					});
+					preGames = response.data.events.filter((game) => {
+						return game.status.type.state === "pre";
+					});
+
+					if (inGames.length === 0) reloadData = false;
+					sortedGames.push(inGames, postGames, preGames);
+					leagueData.events = sortedGames.flat();
+					dispatch({ type: sportName, data: leagueData, reload: reloadData });
+
+					console.log(sortedGames.flat());
+				});
 		}
-		setTimeout(() => {
+	});
+
+	useEffect(() => {
+		const timeOut = setTimeout(() => {
 			getData();
 		}, 15000);
+
+		return () => {
+			clearTimeout(timeOut);
+		};
 	});
 
 	let gameItems;
