@@ -62,7 +62,7 @@ function GameLeader(props) {
 				player = (
 					<Col xs={12} md={6} lg={12} xl={12}>
 						<Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>
-						<Row className="mb-0 align-items-center">
+						<Row className="mb-2 align-items-center">
 							<Col xs="auto">
 								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 							</Col>
@@ -207,12 +207,12 @@ function GameLeader(props) {
 					athlete.team.side === "away" ? <Row className="border d-md-none d-xl-block"></Row> : null;
 				const verticalDivider =
 					athlete.team.side === "away" ? (
-						<Col className="border-right d-none d-md-block d-xl-none"></Col>
+						<Col sm="auto" className="mx-auto border-right d-none d-md-block d-xl-none"></Col>
 					) : null;
 				title = <Row className="mt-2 text-secondary">{athlete.title}</Row>;
 				player = (
 					<>
-						<Col xs={12} md={6} lg={12} xl={12}>
+						<Col xs={12} md="auto" lg={12} xl={12} className="mx-auto">
 							<Row className="mt-3 mb-1 h6">{athlete.team.name}</Row>
 							<Row className="mt-1 mb-2">
 								{athlete.team.links.map((link, key) => {
@@ -224,17 +224,18 @@ function GameLeader(props) {
 										</Col>
 									);
 								})}
-								{verticalDivider}
 							</Row>
+
 							{horizontalDivider}
 						</Col>
+						{verticalDivider}
 					</>
 				);
 			} else {
 				title = <Row className="mt-2 text-secondary">{athlete.title}</Row>;
 
 				player = (
-					<Col xs={12} md={6} lg={12} xl={12}>
+					<Col xs={12} md={4} lg={12} xl={12}>
 						<Row className="my-1 align-items-center">
 							<Col xs={3} className="text-secondary">
 								{athlete.position}
