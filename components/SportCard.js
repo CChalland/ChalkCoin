@@ -1,5 +1,5 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
-import { Container, Row, Col, Collapse, Carousel } from "react-bootstrap";
+import { Container, Row, Col, Button, Collapse, Carousel } from "react-bootstrap";
 import axios from "axios";
 import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
@@ -75,7 +75,7 @@ function SportCard(props) {
 
 			return (
 				<Container key={key} fluid>
-					{/* For lage screen */}
+					{/* For extra lage screen */}
 					<Col className="mx-0 px-0 d-none d-xl-block">
 						<Row className="mt-3 mb-3 border rounded">
 							<Col lg={5} xxl={4} className="border-right">
@@ -97,8 +97,18 @@ function SportCard(props) {
 									screenSize={"lg"}
 								/>
 							</Col>
-							<Col lg={1}>
-								<p>BET Button</p>
+							<Col lg={1} className="mr-0 pr-0">
+								<Button
+									className="btn-wd"
+									type="button"
+									variant="success"
+									style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
+								>
+									<span className="btn-label">
+										<i className="fas fa-check"></i>
+									</span>
+									Place Bet
+								</Button>
 							</Col>
 						</Row>
 					</Col>
@@ -106,7 +116,7 @@ function SportCard(props) {
 					{/* For large screen */}
 					<Col className="mx-0 px-0 d-none d-lg-block d-xl-none">
 						<Row className="mt-3 mb-3 border rounded">
-							<Col md={7} className="border-bottom border-right">
+							<Col md={7} className=" border-right">
 								<GameScore
 									key={game.uid.toString()}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -114,21 +124,37 @@ function SportCard(props) {
 								/>
 							</Col>
 
-							<Col md={5} className="border-bottom">
+							<Col md={5} className="">
 								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
 							</Col>
 
 							<Col md={12} className="text-center">
 								<div className="accordions" id="accordion">
-									<span className="mx-4">BET Button</span>
-									<a
+									<Button
+										className="btn-round btn-wd"
+										type="button"
+										variant="success"
+										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
+									>
+										<span className="btn-label">
+											<i className="fas fa-check"></i>
+										</span>
+										Place Bet
+									</Button>
+									<Button
+										className="btn-round btn-wd btn-outline mr-1"
+										type="button"
+										variant="info"
+										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
 										data-toggle="collapse"
 										aria-expanded={multipleExpandablePanels.includes(key)}
-										href="#pablo"
 										onClick={(e) => toggleMultipleExpandablePanels(e, key)}
 									>
-										{"Button Title"} <b className="caret"></b>
-									</a>
+										<span className="btn-label">
+											<i className="fas fa-exclamation"></i>
+										</span>
+										Info
+									</Button>
 									<Collapse className="collapse" id="collapseOne" in={multipleExpandablePanels.includes(key)}>
 										<Col md={12} className="">
 											<GameLeader
@@ -146,7 +172,7 @@ function SportCard(props) {
 					{/* For medium screen */}
 					<Col className="mx-0 px-0 d-none d-md-block d-lg-none">
 						<Row className="mt-3 mb-3 border rounded">
-							<Col md={7} className="border-bottom border-right">
+							<Col md={7} className=" border-right">
 								<GameScore
 									key={game.uid.toString()}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -154,21 +180,37 @@ function SportCard(props) {
 								/>
 							</Col>
 
-							<Col md={5} className="border-bottom">
+							<Col md={5} className="">
 								<GamePlay gamePlayData={GamePlayHelper(game, sportName)} sportName={sportName} />
 							</Col>
 
 							<Col md={12} className="text-center">
 								<div className="accordions" id="accordion">
-									<span className="mx-4">BET Button</span>
-									<a
+									<Button
+										className="btn-round btn-wd"
+										type="button"
+										variant="success"
+										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
+									>
+										<span className="btn-label">
+											<i className="fas fa-check"></i>
+										</span>
+										Place Bet
+									</Button>
+									<Button
+										className="btn-round btn-wd btn-outline mr-1"
+										type="button"
+										variant="info"
+										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
 										data-toggle="collapse"
 										aria-expanded={multipleExpandablePanels.includes(key)}
-										href="#pablo"
 										onClick={(e) => toggleMultipleExpandablePanels(e, key)}
 									>
-										{"Button Title"} <b className="caret"></b>
-									</a>
+										<span className="btn-label">
+											<i className="fas fa-exclamation"></i>
+										</span>
+										Info
+									</Button>
 									<Collapse className="collapse" id="collapseOne" in={multipleExpandablePanels.includes(key)}>
 										<Col md={12} className="">
 											<GameLeader
@@ -186,7 +228,7 @@ function SportCard(props) {
 					{/* For small screen */}
 					<Col className="mx-0 px-0 d-none d-sm-block d-md-none">
 						<Row className="mt-3 mb-3 border rounded">
-							<Col sm={12} className="border-bottom">
+							<Col sm={12} className="">
 								<GameScore
 									key={game.uid.toString()}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -196,15 +238,31 @@ function SportCard(props) {
 
 							<Col sm={12} className="text-center">
 								<div className="accordions" id="accordion">
-									<span className="mx-4">BET Button</span>
-									<a
+									<Button
+										className="btn-round btn-wd"
+										type="button"
+										variant="success"
+										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
+									>
+										<span className="btn-label">
+											<i className="fas fa-check"></i>
+										</span>
+										Place Bet
+									</Button>
+									<Button
+										className="btn-round btn-wd btn-outline mr-1"
+										type="button"
+										variant="info"
+										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
 										data-toggle="collapse"
 										aria-expanded={multipleExpandablePanels.includes(key)}
-										href="#pablo"
 										onClick={(e) => toggleMultipleExpandablePanels(e, key)}
 									>
-										{"Button Title"} <b className="caret"></b>
-									</a>
+										<span className="btn-label">
+											<i className="fas fa-exclamation"></i>
+										</span>
+										Info
+									</Button>
 									<Collapse className="collapse" id="collapseOne" in={multipleExpandablePanels.includes(key)}>
 										<Carousel fade>
 											<Carousel.Item>
@@ -235,7 +293,7 @@ function SportCard(props) {
 					{/* For xs screen */}
 					<Col className="mx-0 px-0 d-block d-sm-none">
 						<Row className="mt-3 mb-3 border rounded">
-							<Col xs={12} className="border-bottom">
+							<Col xs={12} className="">
 								<GameScore
 									key={game.uid.toString()}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
@@ -245,15 +303,31 @@ function SportCard(props) {
 
 							<Col xs={12} className="text-center">
 								<div className="accordions" id="accordion">
-									<span className="mx-4">BET Button</span>
-									<a
+									<Button
+										className="btn-round btn-wd"
+										type="button"
+										variant="success"
+										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
+									>
+										<span className="btn-label">
+											<i className="fas fa-check"></i>
+										</span>
+										Place Bet
+									</Button>
+									<Button
+										className="btn-round btn-wd btn-outline mr-1"
+										type="button"
+										variant="info"
+										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
 										data-toggle="collapse"
 										aria-expanded={multipleExpandablePanels.includes(key)}
-										href="#pablo"
 										onClick={(e) => toggleMultipleExpandablePanels(e, key)}
 									>
-										{"Button Title"} <b className="caret"></b>
-									</a>
+										<span className="btn-label">
+											<i className="fas fa-exclamation"></i>
+										</span>
+										Info
+									</Button>
 									<Collapse className="collapse" id="collapseOne" in={multipleExpandablePanels.includes(key)}>
 										<Carousel fade>
 											<Carousel.Item>
