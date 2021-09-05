@@ -10,7 +10,7 @@ function homeAwayHelper(game) {
 
 export function GameScoreHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
-	let homeName, awayName, homePeriods, awayPeriods, homeRecords, awayRecords;
+	let homePeriods, awayPeriods, homeRecords, awayRecords;
 	let temp = [
 		{ name: "Home", type: "home", summary: 0 },
 		{ name: "Away", type: "away", summary: 0 },
@@ -64,6 +64,7 @@ export function GameScoreHelper(game, sportName) {
 	}
 
 	return {
+		sportName: sportName,
 		status: game.status,
 		shortDetail: game.competitions[0].status.type.shortDetail,
 		detail: game.competitions[0].status.type.detail,

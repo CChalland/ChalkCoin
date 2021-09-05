@@ -2,21 +2,21 @@ import React from "react";
 import { Row, Col, Image } from "react-bootstrap";
 
 function GameScore(props) {
-	const scoreTableHelper = (gameScoreCardData, sportName) => {
+	const scoreTableHelper = (gameScoreCardData) => {
 		let title, awayPeriods, awayScore, homePeriods, homeScore, awayFinalStyle, homeFinalStyle;
 		const titleStyle = gameScoreCardData.status.type.state === "in" ? "text-danger" : "";
 
 		let index = 0;
 		const linescoresHeader = gameScoreCardData.away.periods.map((period) => {
 			index++;
-			if ((sportName == "NHL" && index == 4) || index == 5) {
+			if ((gameScoreCardData.sportName == "NHL" && index == 4) || index == 5) {
 				return (
 					<Col xs={1} className="text-center">
 						{"OT"}
 					</Col>
 				);
-			} else if ((sportName == "NHL" && index > 4) || index > 5) {
-				let numberOT = sportName == "NHL" ? (index - 4).toString() : (index - 5).toString();
+			} else if ((gameScoreCardData.sportName == "NHL" && index > 4) || index > 5) {
+				let numberOT = gameScoreCardData.sportName == "NHL" ? (index - 4).toString() : (index - 5).toString();
 				return (
 					<Col xs={1} className="text-center">
 						{numberOT + "OT"}
@@ -37,7 +37,7 @@ function GameScore(props) {
 			gameScoreCardData.status.type.name === "STATUS_DELAYED"
 		) {
 			title = <Col className="">{gameScoreCardData.shortDetail}</Col>;
-		} else if (sportName === "MLB") {
+		} else if (gameScoreCardData.sportName === "MLB") {
 			let awayRuns, homeRuns;
 
 			title = (
@@ -166,9 +166,9 @@ function GameScore(props) {
 		return { title, awayPeriods, homePeriods, awayScore, homeScore, awayFinalStyle, homeFinalStyle };
 	};
 
-	const { gameScoreCardData, sportName } = props;
+	const { gameScoreCardData } = props;
 	const { title, awayPeriods, awayScore, homePeriods, homeScore, awayFinalStyle, homeFinalStyle } =
-		scoreTableHelper(gameScoreCardData, sportName);
+		scoreTableHelper(gameScoreCardData);
 
 	return (
 		<>

@@ -4,6 +4,7 @@ import axios from "axios";
 import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
+import BetModal from "./BetModal";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/SportCard";
 import { SportDispatch } from "../contexts/Sports.Context";
 
@@ -69,9 +70,10 @@ function SportCard(props) {
 	if (sportData.data.events) {
 		gameItems = sportData.data.events.map((game, key) => {
 			console.log("game data", game);
-			console.log("gameScoreCardData", GameScoreHelper(game, sportName));
-			console.log("gamePlayData", GamePlayHelper(game, sportName));
-			console.log("gameLeaderData", GameLeadersHelper(game, sportName));
+			console.log(game.competitions[0].odds);
+			// console.log("gameScoreCardData", GameScoreHelper(game, sportName));
+			// console.log("gamePlayData", GamePlayHelper(game, sportName));
+			// console.log("gameLeaderData", GameLeadersHelper(game, sportName));
 
 			return (
 				<Container key={key} fluid>
@@ -79,11 +81,7 @@ function SportCard(props) {
 					<Col className="mx-0 px-0 d-none d-xl-block">
 						<Row className="mt-3 mb-3 border rounded">
 							<Col lg={5} xxl={4} className="border-right">
-								<GameScore
-									key={game.uid.toString()}
-									gameScoreCardData={GameScoreHelper(game, sportName)}
-									sportName={sportName}
-								/>
+								<GameScore key={game.uid.toString()} gameScoreCardData={GameScoreHelper(game, sportName)} />
 							</Col>
 
 							<Col lg={3} xxl={2} className="border-right">
@@ -94,21 +92,15 @@ function SportCard(props) {
 								<GameLeader
 									gameLeadersData={GameLeadersHelper(game, sportName)}
 									sportName={sportName}
-									screenSize={"lg"}
+									screenSize={"xl"}
 								/>
 							</Col>
 							<Col lg={1} className="mr-0 pr-0">
-								<Button
-									className="btn-wd"
-									type="button"
-									variant="success"
-									style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
-								>
-									<span className="btn-label">
-										<i className="fas fa-check"></i>
-									</span>
-									Place Bet
-								</Button>
+								<BetModal
+									buttonClassName={"btn-wd"}
+									betModalData={game.competitions[0].odds}
+									gameScoreCardData={GameScoreHelper(game, sportName)}
+								/>
 							</Col>
 						</Row>
 					</Col>
@@ -117,11 +109,7 @@ function SportCard(props) {
 					<Col className="mx-0 px-0 d-none d-lg-block d-xl-none">
 						<Row className="mt-3 mb-3 border rounded">
 							<Col md={7} className=" border-right">
-								<GameScore
-									key={game.uid.toString()}
-									gameScoreCardData={GameScoreHelper(game, sportName)}
-									sportName={sportName}
-								/>
+								<GameScore key={game.uid.toString()} gameScoreCardData={GameScoreHelper(game, sportName)} />
 							</Col>
 
 							<Col md={5} className="">
@@ -130,17 +118,12 @@ function SportCard(props) {
 
 							<Col md={12} className="text-center">
 								<div className="accordions" id="accordion">
-									<Button
-										className="btn-round btn-wd"
-										type="button"
-										variant="success"
-										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
-									>
-										<span className="btn-label">
-											<i className="fas fa-check"></i>
-										</span>
-										Place Bet
-									</Button>
+									<BetModal
+										buttonClassName={"btn-round btn-wd"}
+										betModalData={game.competitions[0].odds}
+										gameScoreCardData={GameScoreHelper(game, sportName)}
+									/>
+
 									<Button
 										className="btn-round btn-wd btn-outline mr-1"
 										type="button"
@@ -160,7 +143,7 @@ function SportCard(props) {
 											<GameLeader
 												gameLeadersData={GameLeadersHelper(game, sportName)}
 												sportName={sportName}
-												screenSize={"md"}
+												screenSize={"lg"}
 											/>
 										</Col>
 									</Collapse>
@@ -173,11 +156,7 @@ function SportCard(props) {
 					<Col className="mx-0 px-0 d-none d-md-block d-lg-none">
 						<Row className="mt-3 mb-3 border rounded">
 							<Col md={7} className=" border-right">
-								<GameScore
-									key={game.uid.toString()}
-									gameScoreCardData={GameScoreHelper(game, sportName)}
-									sportName={sportName}
-								/>
+								<GameScore key={game.uid.toString()} gameScoreCardData={GameScoreHelper(game, sportName)} />
 							</Col>
 
 							<Col md={5} className="">
@@ -186,17 +165,11 @@ function SportCard(props) {
 
 							<Col md={12} className="text-center">
 								<div className="accordions" id="accordion">
-									<Button
-										className="btn-round btn-wd"
-										type="button"
-										variant="success"
-										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
-									>
-										<span className="btn-label">
-											<i className="fas fa-check"></i>
-										</span>
-										Place Bet
-									</Button>
+									<BetModal
+										buttonClassName={"btn-round btn-wd"}
+										betModalData={game.competitions[0].odds}
+										gameScoreCardData={GameScoreHelper(game, sportName)}
+									/>
 									<Button
 										className="btn-round btn-wd btn-outline mr-1"
 										type="button"
@@ -229,26 +202,16 @@ function SportCard(props) {
 					<Col className="mx-0 px-0 d-none d-sm-block d-md-none">
 						<Row className="mt-3 mb-3 border rounded">
 							<Col sm={12} className="">
-								<GameScore
-									key={game.uid.toString()}
-									gameScoreCardData={GameScoreHelper(game, sportName)}
-									sportName={sportName}
-								/>
+								<GameScore key={game.uid.toString()} gameScoreCardData={GameScoreHelper(game, sportName)} />
 							</Col>
 
 							<Col sm={12} className="text-center">
 								<div className="accordions" id="accordion">
-									<Button
-										className="btn-round btn-wd"
-										type="button"
-										variant="success"
-										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
-									>
-										<span className="btn-label">
-											<i className="fas fa-check"></i>
-										</span>
-										Place Bet
-									</Button>
+									<BetModal
+										buttonClassName={"btn-round btn-wd"}
+										betModalData={game.competitions[0].odds}
+										gameScoreCardData={GameScoreHelper(game, sportName)}
+									/>
 									<Button
 										className="btn-round btn-wd btn-outline mr-1"
 										type="button"
@@ -294,26 +257,16 @@ function SportCard(props) {
 					<Col className="mx-0 px-0 d-block d-sm-none">
 						<Row className="mt-3 mb-3 border rounded">
 							<Col xs={12} className="">
-								<GameScore
-									key={game.uid.toString()}
-									gameScoreCardData={GameScoreHelper(game, sportName)}
-									sportName={sportName}
-								/>
+								<GameScore key={game.uid.toString()} gameScoreCardData={GameScoreHelper(game, sportName)} />
 							</Col>
 
 							<Col xs={12} className="text-center">
 								<div className="accordions" id="accordion">
-									<Button
-										className="btn-round btn-wd"
-										type="button"
-										variant="success"
-										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
-									>
-										<span className="btn-label">
-											<i className="fas fa-check"></i>
-										</span>
-										Place Bet
-									</Button>
+									<BetModal
+										buttonClassName={"btn-round btn-wd"}
+										betModalData={game.competitions[0].odds}
+										gameScoreCardData={GameScoreHelper(game, sportName)}
+									/>
 									<Button
 										className="btn-round btn-wd btn-outline mr-1"
 										type="button"
