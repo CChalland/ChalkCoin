@@ -75,6 +75,10 @@ function SportCard(props) {
 			// console.log("gamePlayData", GamePlayHelper(game, sportName));
 			// console.log("gameLeaderData", GameLeadersHelper(game, sportName));
 
+			let infoButtonClass = multipleExpandablePanels.includes(key)
+				? "btn-round btn-wd btn-outline"
+				: "btn-round btn-wd";
+
 			return (
 				<Container key={key} fluid>
 					{/* For extra lage screen */}
@@ -125,7 +129,7 @@ function SportCard(props) {
 									/>
 
 									<Button
-										className="btn-round btn-wd btn-outline mr-1"
+										className={infoButtonClass}
 										type="button"
 										variant="info"
 										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
@@ -171,7 +175,7 @@ function SportCard(props) {
 										gameScoreCardData={GameScoreHelper(game, sportName)}
 									/>
 									<Button
-										className="btn-round btn-wd btn-outline mr-1"
+										className={infoButtonClass}
 										type="button"
 										variant="info"
 										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
@@ -213,7 +217,7 @@ function SportCard(props) {
 										gameScoreCardData={GameScoreHelper(game, sportName)}
 									/>
 									<Button
-										className="btn-round btn-wd btn-outline mr-1"
+										className={infoButtonClass}
 										type="button"
 										variant="info"
 										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
@@ -268,7 +272,7 @@ function SportCard(props) {
 										gameScoreCardData={GameScoreHelper(game, sportName)}
 									/>
 									<Button
-										className="btn-round btn-wd btn-outline mr-1"
+										className={infoButtonClass}
 										type="button"
 										variant="info"
 										style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
