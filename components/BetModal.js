@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Col, Row, Button, Modal, Carousel, Tab, Nav } from "react-bootstrap";
+import { Container, Col, Row, Button, Modal, Carousel, Tab, Nav, Collapse } from "react-bootstrap";
 import GameScore from "./GameScore";
 
 function BetModal(props) {
@@ -48,6 +48,7 @@ function BetModal(props) {
 
 				<Modal.Body className="text-center">
 					<p>Infavor to win</p>
+
 					<Tab.Container id="bet-modal-currency" defaultActiveKey="betoken-currency-tab">
 						<div className="nav-container">
 							<Nav role="tablist" variant="tabs" className="justify-content-center border-0 nav-icons">
@@ -76,6 +77,8 @@ function BetModal(props) {
 							</Tab.Pane>
 						</Tab.Content>
 					</Tab.Container>
+
+					<p>Recipient (Collapse?)</p>
 				</Modal.Body>
 
 				<div className="modal-footer">
