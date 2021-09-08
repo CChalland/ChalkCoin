@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import { getSession, useSession } from "next-auth/client";
 // react-bootstrap components
 import { Badge, Button, Card, Form, InputGroup, Navbar, Nav, Container, Row, Col } from "react-bootstrap";
-import prisma from "../contexts/prisma";
+import { PrismaClient } from "@prisma/client";
 
-async function saveUser(user) {
-	const response = await fetch("/api/users", {
-		method: "POST",
-		body: JSON.stringify(user),
-	});
-	if (!response.ok) {
-		throw new Error(response.statusText);
-	}
+// async function saveUser(user) {
+// 	const response = await fetch("/api/users", {
+// 		method: "POST",
+// 		body: JSON.stringify(user),
+// 	});
+// 	if (!response.ok) {
+// 		throw new Error(response.statusText);
+// 	}
 
-	return await response.json();
-}
+// 	return await response.json();
+// }
 
 const emailValidation = (value) =>
 	/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value);
@@ -44,25 +44,25 @@ function UserPage(props) {
 	const [imageURL, setImageURL] = useState(user?.image);
 	const [imageURLState, setImageURLState] = useState(true);
 
-	const updateUser = async (event) => {
-		event.preventDefault();
+	// const updateUser = async (event) => {
+	// 	event.preventDefault();
 
-		const res = await fetch("http://localhost:4000/api/users", {
-			body: JSON.stringify({
-				name,
-				email,
-				password,
-				imageURL,
-			}),
-			headers: {
-				"Content-Type": "application/json",
-			},
-			method: "POST",
-		});
+	// 	const res = await fetch("http://localhost:4000/api/users", {
+	// 		body: JSON.stringify({
+	// 			name,
+	// 			email,
+	// 			password,
+	// 			imageURL,
+	// 		}),
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 		},
+	// 		method: "POST",
+	// 	});
 
-		user = await res.json();
-		// result.user => 'Ada Lovelace'
-	};
+	// 	user = await res.json();
+	// 	// result.user => 'Ada Lovelace'
+	// };
 
 	return (
 		<>
@@ -262,6 +262,10 @@ export async function getServerSideProps(context) {
 		user = await prisma.user.findUnique({
 			where: { email: session.user.email },
 		});
+
+		user.emailVerified = JSON.stringify(user.emailVerified);
+		user.createdAt = JSON.stringify(user.createdAt);
+		user.updatedAt = JSON.stringify(user.updatedAt);
 	}
 
 	return {
