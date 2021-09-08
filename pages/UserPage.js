@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { getSession, useSession } from "next-auth/client";
 // react-bootstrap components
 import { Badge, Button, Card, Form, InputGroup, Navbar, Nav, Container, Row, Col } from "react-bootstrap";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../contexts/prisma";
 
 async function saveUser(user) {
 	const response = await fetch("/api/users", {
@@ -179,11 +179,7 @@ function UserPage(props) {
 									<Card.Body>
 										<div className="author">
 											<a href="#pablo" onClick={(e) => e.preventDefault()}>
-												<img
-													alt="..."
-													className="avatar border-gray"
-													src={require("../assets/img/default-avatar.png")}
-												></img>
+												<img alt="..." className="avatar border-gray" src=""></img>
 												<Card.Title as="h5">Tania Keatley</Card.Title>
 											</a>
 											<p className="card-description">michael24</p>
@@ -232,29 +228,43 @@ function UserPage(props) {
 	);
 }
 
-UserPage.getInitialProps = async (ctx) => {
-	// const session = await getSession(ctx);
-	// const prisma = new PrismaClient();
-	// if (session) {
-	// 	const user = await prisma.user.findUnique({
-	// 		where: {
-	// 			email: session.user.email,
-	// 		},
-	// 		include: { requester: true, accepter: true },
-	// 	});
-	// }
+// UserPage.getInitialProps = async (ctx) => {
+// 	// const session = await getSession(ctx);
+// 	// const prisma = new PrismaClient();
+// 	// if (session) {
+// 	// 	const user = await prisma.user.findUnique({
+// 	// 		where: {
+// 	// 			email: session.user.email,
+// 	// 		},
+// 	// 		include: { requester: true, accepter: true },
+// 	// 	});
+// 	// }
 
-	const response = await fetch("http://localhost:4000/api/users", {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			cookie: ctx.req.headers.cookie,
-		},
-	});
-	if (!response.ok) {
-		throw new Error(response.statusText);
-	}
-	return await response.json();
-};
+// 	const response = await fetch("http://localhost:4000/api/user", {
+// 		method: "GET",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 			cookie: ctx.req.headers.cookie,
+// 		},
+// 	});
+// 	if (!response.ok) {
+// 		throw new Error(response.statusText);
+// 	}
+// 	return await response.json();
+// };
 
 export default UserPage;
+
+export async function getServerSideProps(context) {
+	const session = await getSession(context);
+	let user = {};
+	if (session?.user.email) {
+		user = await prisma.user.findUnique({
+			where: { email: session.user.email },
+		});
+	}
+
+	return {
+		props: { user },
+	};
+}

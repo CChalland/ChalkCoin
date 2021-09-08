@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import Adapters from "next-auth/adapters";
-import prisma from "../../../prisma/prisma";
+import prisma from "../../../contexts/prisma";
 
 const authHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;
@@ -51,13 +51,16 @@ const options = {
 			return token;
 		},
 		async session(session, token) {
-			session.accessToken = token.accessToken;
-			return session;
+			delete token.password;
+			session.user = token;
+
+			return await session;
 		},
 	},
 	pages: {
 		signIn: "/LoginRegister",
-		newUser: "/UserPage",
+		verifyRequest: "/VerifyRequest",
+		newUser: "/NewUser",
 	},
 	// @ts-ignore
 	adapter: Adapters.Prisma.Adapter({

@@ -227,7 +227,9 @@ function GamePlay(props) {
 					onHide={() => setModalShow(false)}
 				>
 					<Modal.Header closeButton>
-						<Modal.Title id="contained-modal-title-vcenter">{headlines.video[0].headline}</Modal.Title>
+						<Modal.Title id="contained-modal-title-vcenter" className="mt-0">
+							{headlines.video[0].headline}
+						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body className="m-0 p-0">
 						<video width="100%" controls src={headlines.video[0].links.source.href} autoPlay />

@@ -315,23 +315,21 @@ export function GameLeadersHelper(game, sportName) {
 				};
 			});
 		} else if (sportName === "MLB") {
-			if (game.competitions[0].status.featuredAthletes?.length !== 0) {
-				athletes = game.competitions[0].status.featuredAthletes.map((athlete) => {
-					return {
-						title: athlete.shortDisplayName,
-						headshot: athlete.athlete.headshot,
-						displayName: athlete.athlete.displayName,
-						team:
-							athlete.athlete.team.id === homeTeam[0].team.id
-								? homeTeam[0].team.abbreviation
-								: awayTeam[0].team.abbreviation,
-						position: athlete.athlete.position,
-						statistics: athlete.statistics,
-						displayValue: null,
-						type: "completed",
-					};
-				});
-			}
+			athletes = game.competitions[0].status.featuredAthletes?.map((athlete) => {
+				return {
+					title: athlete.shortDisplayName,
+					headshot: athlete.athlete.headshot,
+					displayName: athlete.athlete.displayName,
+					team:
+						athlete.athlete.team.id === homeTeam[0].team.id
+							? homeTeam[0].team.abbreviation
+							: awayTeam[0].team.abbreviation,
+					position: athlete.athlete.position,
+					statistics: athlete.statistics,
+					displayValue: null,
+					type: "completed",
+				};
+			});
 		} else if (sportName === "NFL") {
 			athletes = game.competitions[0].leaders?.map((athlete) => {
 				return {

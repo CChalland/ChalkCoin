@@ -1,10 +1,38 @@
 import React, { useState } from "react";
-import { Container, Col, Row, Button, Modal, Carousel, Tab, Nav, Collapse } from "react-bootstrap";
+import {
+	Container,
+	Col,
+	Row,
+	Button,
+	Modal,
+	Carousel,
+	Tab,
+	Nav,
+	Form,
+	InputGroup,
+	Collapse,
+} from "react-bootstrap";
 import GameScore from "./GameScore";
 
 function BetModal(props) {
-	const [modal, setModal] = useState(false);
 	const { gameScoreCardData, betModalData } = props;
+	const [modal, setModal] = useState(false);
+	const [currency, setCurrency] = useState("");
+	const [amount, setAmount] = useState("");
+	const [amountState, setAmountState] = useState(true);
+	const [openButtonState, setOpenButtonState] = useState(false);
+	const [recipientButtonState, setRecipientButtonState] = useState(false);
+	const [betType, setBetType] = useState("");
+	const [recipient, setRecipient] = useState("");
+	const [recipientState, setRecipientState] = useState(true);
+
+	let betokenButtonClass = currency === "BEToken" ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
+	let bitcoinButtonClass = currency === "Bitcoin" ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
+	let openButtonClass = openButtonState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
+	let friendButtonClass = recipientButtonState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
+
+	const minValue = (value, min) => min < value;
+	// const recipientFind = ();
 
 	let carouselItem = betModalData?.map((betOdds, key) => {
 		return (
@@ -47,38 +75,147 @@ function BetModal(props) {
 				</Modal.Header>
 
 				<Modal.Body className="text-center">
-					<p>Infavor to win</p>
+					<Container fluid>
+						<Form action="" className="form-horizontal" id="RangeValidation" method="">
+							<p>Infavor to win</p>
 
-					<Tab.Container id="bet-modal-currency" defaultActiveKey="betoken-currency-tab">
-						<div className="nav-container">
-							<Nav role="tablist" variant="tabs" className="justify-content-center border-0 nav-icons">
-								<Nav.Item>
-									<Nav.Link eventKey="betoken-currency-tab" className="border-0 bg-transparent">
-										<Button className="btn-outline btn-round btn-wd mr-1" variant="default">
-											BEToken
-										</Button>
-									</Nav.Link>
-								</Nav.Item>
-								<Nav.Item>
-									<Nav.Link eventKey="bitcoin-currency-tab" className="border-0 bg-transparent">
-										<Button className="btn-outline btn-round btn-wd mr-1" variant="default">
-											Bitcoin
-										</Button>
-									</Nav.Link>
-								</Nav.Item>
-							</Nav>
-						</div>
-						<Tab.Content>
-							<Tab.Pane eventKey="betoken-currency-tab">
-								<h6>Amount (BEToken)</h6>ValueBox
-							</Tab.Pane>
-							<Tab.Pane eventKey="bitcoin-currency-tab">
-								<h6>Amount (Bitcoin)</h6>ValueBox
-							</Tab.Pane>
-						</Tab.Content>
-					</Tab.Container>
+							<Tab.Container id="bet-modal-currency" defaultActiveKey="">
+								<div className="nav-container">
+									<Nav role="tablist" variant="tabs" className="border-0 nav-icons">
+										<h5 className="mt-2 mr-5">Currency: </h5>
+										<Nav.Item>
+											<Nav.Link eventKey="amount-tab" className="border-0 bg-transparent">
+												<Button
+													className={betokenButtonClass}
+													variant="default"
+													onClick={() => setCurrency("BEToken")}
+												>
+													BEToken
+												</Button>
+											</Nav.Link>
+										</Nav.Item>
+										<Nav.Item>
+											<Nav.Link eventKey="amount-tab" className="border-0 bg-transparent">
+												<Button
+													className={bitcoinButtonClass}
+													variant="default"
+													onClick={() => setCurrency("Bitcoin")}
+												>
+													Bitcoin
+												</Button>
+											</Nav.Link>
+										</Nav.Item>
+									</Nav>
+								</div>
+								<Tab.Content>
+									<Tab.Pane eventKey="amount-tab">
+										<Row>
+											<Form.Label column sm="2">
+												Amount: ({currency})
+											</Form.Label>
+											<Col sm="7">
+												<Form.Group className={amountState ? "has-success" : "has-error"}>
+													<InputGroup>
+														<Form.Control name="curreny" type="hidden" value={currency} />
+														<InputGroup.Text>$</InputGroup.Text>
+														<InputGroup.Text>{"0.00"}</InputGroup.Text>
+														<Form.Control
+															name="amount"
+															type="text"
+															value={amount}
+															onChange={(e) => {
+																setAmount(e.target.value);
+																if (minValue(e.target.value, 0)) {
+																	setAmountState(true);
+																} else {
+																	setAmountState(false);
+																}
+															}}
+															placeholder="Amount"
+														/>
+													</InputGroup>
+													{amountState ? null : <label className="error">Bet must be over value of 0.</label>}
+												</Form.Group>
+											</Col>
+										</Row>
+									</Tab.Pane>
+								</Tab.Content>
+							</Tab.Container>
 
-					<p>Recipient (Collapse?)</p>
+							<Tab.Container id="bet-modal-recipient" defaultActiveKey="">
+								<div className="nav-container">
+									<Nav role="tablist" variant="tabs" className="border-0 nav-icons">
+										<h5 className="mt-2 mr-4">Type of Bet: </h5>
+										<Nav.Item>
+											<Nav.Link eventKey="" className="border-0 bg-transparent">
+												<Button
+													className={openButtonClass}
+													variant="default"
+													onClick={() => {
+														setRecipientButtonState(false);
+														setOpenButtonState(true);
+														setBetType("open");
+													}}
+												>
+													Open Bet
+												</Button>
+											</Nav.Link>
+										</Nav.Item>
+										<Nav.Item>
+											<Nav.Link eventKey="find-user-tab" className="border-0 bg-transparent">
+												<Button
+													className={friendButtonClass}
+													variant="default"
+													onClick={() => {
+														setRecipientButtonState(true);
+														setOpenButtonState(false);
+														setBetType("recipient");
+													}}
+												>
+													Bet w/ Friend
+												</Button>
+											</Nav.Link>
+										</Nav.Item>
+									</Nav>
+								</div>
+								<Tab.Content>
+									<Tab.Pane eventKey="find-user-tab">
+										<Row>
+											<Form.Label column sm="2">
+												Recipient:
+											</Form.Label>
+											<Col sm="7">
+												<Form.Group className={recipientState ? "has-success" : "has-error"}>
+													<Form.Control name="type" type="hidden" value={betType} />
+													<InputGroup>
+														<InputGroup.Prepend>
+															<InputGroup.Text>
+																<i className="nc-icon nc-zoom-split"></i>
+															</InputGroup.Text>
+														</InputGroup.Prepend>
+														<Form.Control
+															name="recipient"
+															value={recipient}
+															type="text"
+															onChange={(e) => {
+																setRecipient(e.target.value);
+																if (maxLength(e.target.value, 5)) {
+																	setRecipientState(true);
+																} else {
+																	setRecipientState(false);
+																}
+															}}
+															placeholder="Search here.."
+														/>
+													</InputGroup>
+												</Form.Group>
+											</Col>
+										</Row>
+									</Tab.Pane>
+								</Tab.Content>
+							</Tab.Container>
+						</Form>
+					</Container>
 				</Modal.Body>
 
 				<div className="modal-footer">

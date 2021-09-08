@@ -56,9 +56,11 @@ model VerificationRequest {
 
 model User {
   id            Int       @id @default(autoincrement())
-  name          String?
+  username      String?   @unique
   email         String?   @unique
   emailVerified DateTime? @map(name: "email_verified")
+  password      String?
+  name          String?
   image         String?
   paypal        String?
   balance       Float     @default(0.00)
