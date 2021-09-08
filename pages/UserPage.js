@@ -21,8 +21,8 @@ const minLength = (value, length) => value.length >= length;
 const maxLength = (value, length) => value.length <= length && value !== "";
 
 function UserPage(props) {
-	const user = props.user;
-	console.log(user);
+	const user = props.session.user;
+
 	const [username, setUsername] = useState(user?.username);
 	const [usernameState, setUsernameState] = useState(true);
 	const [name, setName] = useState(user?.name);
@@ -35,6 +35,8 @@ function UserPage(props) {
 	const [passwordState, setPasswordState] = useState(true);
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [confirmPasswordState, setConfirmPasswordState] = useState(true);
+
+	console.log("props user", user);
 
 	return (
 		<Container>
@@ -255,14 +257,8 @@ export default UserPage;
 
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
-	let user = await prisma.user.findUnique({
-		where: { id: session.user.id },
-	});
-	user.emailVerified = JSON.stringify(user.emailVerified);
-	user.createdAt = JSON.stringify(user.createdAt);
-	user.updatedAt = JSON.stringify(user.updatedAt);
 
 	return {
-		props: { user },
+		props: { session },
 	};
 }
