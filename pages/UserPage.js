@@ -228,45 +228,16 @@ function UserPage(props) {
 	);
 }
 
-// UserPage.getInitialProps = async (ctx) => {
-// 	// const session = await getSession(ctx);
-// 	// const prisma = new PrismaClient();
-// 	// if (session) {
-// 	// 	const user = await prisma.user.findUnique({
-// 	// 		where: {
-// 	// 			email: session.user.email,
-// 	// 		},
-// 	// 		include: { requester: true, accepter: true },
-// 	// 	});
-// 	// }
-
-// 	const response = await fetch("http://localhost:4000/api/user", {
-// 		method: "GET",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			cookie: ctx.req.headers.cookie,
-// 		},
-// 	});
-// 	if (!response.ok) {
-// 		throw new Error(response.statusText);
-// 	}
-// 	return await response.json();
-// };
-
 export default UserPage;
 
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
-	let user = {};
-	if (session?.user.email) {
-		user = await prisma.user.findUnique({
-			where: { email: session.user.email },
-		});
-
-		user.emailVerified = JSON.stringify(user.emailVerified);
-		user.createdAt = JSON.stringify(user.createdAt);
-		user.updatedAt = JSON.stringify(user.updatedAt);
-	}
+	let user = await prisma.user.findUnique({
+		where: { id: session.user.id },
+	});
+	user.emailVerified = JSON.stringify(user.emailVerified);
+	user.createdAt = JSON.stringify(user.createdAt);
+	user.updatedAt = JSON.stringify(user.updatedAt);
 
 	return {
 		props: { user },
