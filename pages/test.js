@@ -89,10 +89,11 @@ export default Test;
 export async function getServerSideProps(context) {
 	let users = await prisma.user.findMany();
 	users = users.map((user) => {
-		return {
-			username: user.name,
-			image: user.image,
-		};
+		delete user.emailVerified;
+		delete user.createdAt;
+		delete user.updatedAt;
+
+		return user;
 	});
 
 	return {

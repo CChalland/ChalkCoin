@@ -3,7 +3,7 @@ import { signIn, signOut, useSession } from "next-auth/client";
 const IndexPage = () => {
 	const [session, loading] = useSession();
 
-	console.log(session);
+	// console.log(session);
 
 	if (loading) {
 		return <div>Loading...</div>;
