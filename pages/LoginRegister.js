@@ -247,7 +247,7 @@ export async function getServerSideProps(context) {
 	if (session && res && session.accessToken) {
 		res.writeHead(302, { Location: "/" });
 		res.end();
-		return;
+		return { props: {} };
 	}
 	return {
 		props: {
