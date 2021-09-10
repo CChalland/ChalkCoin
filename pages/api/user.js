@@ -1,5 +1,6 @@
 import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
+import { hashSync } from "bcrypt";
 
 export default async (req, res) => {
 	const session = await getSession({ req });
@@ -7,7 +8,7 @@ export default async (req, res) => {
 	if (req.method === "GET") {
 		const user = await prisma.user.findUnique({
 			where: {
-				email: session.user.email,
+				id: session.user.id,
 			},
 			include: {
 				requester: true,
@@ -16,11 +17,11 @@ export default async (req, res) => {
 		});
 		return res.json(user);
 	} else if (req.method === "POST") {
-		const user = JSON.parse(req.body);
-
+		const user = req.body;
+		user.password = hashSync(user.password, 10);
 		const updatedUser = await prisma.user.update({
 			where: {
-				email: session.user.email,
+				id: session.user.id,
 			},
 			data: user,
 		});

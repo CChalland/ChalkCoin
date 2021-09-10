@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { getSession, useSession } from "next-auth/client";
+import { getSession } from "next-auth/client";
+import axios from "axios";
 import { Badge, Button, Card, Form, InputGroup, Navbar, Nav, Container, Row, Col } from "react-bootstrap";
 
 const emailValidation = (value) =>
@@ -21,7 +22,15 @@ const minLength = (value, length) => value.length >= length;
 const maxLength = (value, length) => value.length <= length && value !== "";
 
 function UserPage(props) {
-	const user = props.session.user;
+	let user = {
+		username: "",
+		name: "",
+		email: "",
+		imageUrl: "",
+	};
+	if (props.session) {
+		user = props.session.user;
+	}
 
 	const [username, setUsername] = useState(user?.username);
 	const [usernameState, setUsernameState] = useState(true);
@@ -38,11 +47,44 @@ function UserPage(props) {
 
 	console.log("props user", user);
 
+	const updateProfile = () => {
+		if (!usernameState || !isRequired(username)) {
+			setUsernameState(false);
+		} else {
+			setUsernameState(true);
+		}
+		if (!emailState || !emailValidation(email)) {
+			setEmailState(false);
+		} else {
+			setEmailState(true);
+		}
+		if (!passwordState || !minLength(password, 1)) {
+			setPasswordState(false);
+		} else {
+			setPasswordState(true);
+		}
+		if (!confirmPasswordState || !minLength(confirmPassword, 1) || !equalTo(confirmPassword, password)) {
+			setConfirmPasswordState(false);
+		} else {
+			setConfirmPasswordState(true);
+		}
+
+		if (usernameState && emailState && passwordState && confirmPasswordState) {
+			let updatedUser = {
+				username,
+				name,
+				email,
+				password,
+			};
+			axios.post("http://localhost:4000/api/user", updatedUser);
+		}
+	};
+
 	return (
 		<Container>
 			<Row>
 				<Col md="8" sm="6">
-					<Form action="" className="form" method="">
+					<Form onSubmit={updateProfile}>
 						<Card>
 							<Card.Header>
 								<Card.Header>
@@ -258,7 +300,13 @@ export default UserPage;
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
 
-	return {
-		props: { session },
-	};
+	if (session) {
+		return {
+			props: { session },
+		};
+	} else {
+		return {
+			props: { session: false },
+		};
+	}
 }

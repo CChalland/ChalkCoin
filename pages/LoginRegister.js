@@ -49,6 +49,12 @@ function LoginRegister({ providers, csrfToken }) {
 		);
 	});
 
+	// const handleSubmit = (event) => {
+	// 	signIn("credentials", {
+	// 		loginEmail,
+	// 		loginPassword,
+	// 	});
+	// };
 	return (
 		<>
 			<Container fluid>
@@ -82,7 +88,7 @@ function LoginRegister({ providers, csrfToken }) {
 									<Card.Body>
 										<Col className="mx-auto" md="6">
 											<Row>
-												<Form action="" id="LoginValidation" method="">
+												<Form id="LoginValidation" method="post" action="/api/auth/callback/credentials">
 													<Card>
 														<Card.Header>
 															<Card.Title as="h4" className="text-center">
@@ -93,6 +99,7 @@ function LoginRegister({ providers, csrfToken }) {
 															<Form.Group
 																className={"has-label " + (loginEmailState ? "has-success" : "has-error")}
 															>
+																<Form.Control name="csrfToken" type="hidden" defaultValue={csrfToken} />
 																<label>
 																	Email Address <span className="star">*</span>
 																</label>
@@ -145,18 +152,19 @@ function LoginRegister({ providers, csrfToken }) {
 															<Button
 																className="btn-fill btn-wd"
 																variant="info"
-																onClick={() => {
-																	if (!loginEmailState || !emailValidation(loginEmail)) {
-																		setLoginEmailState(false);
-																	} else {
-																		setLoginEmailState(true);
-																	}
-																	if (!loginPasswordState || !minLength(loginPassword, 1)) {
-																		setLoginPasswordState(false);
-																	} else {
-																		setLoginPasswordState(true);
-																	}
-																}}
+																type="submit"
+																// onClick={() => {
+																// 	if (!loginEmailState || !emailValidation(loginEmail)) {
+																// 		setLoginEmailState(false);
+																// 	} else {
+																// 		setLoginEmailState(true);
+																// 	}
+																// 	if (!loginPasswordState || !minLength(loginPassword, 1)) {
+																// 		setLoginPasswordState(false);
+																// 	} else {
+																// 		setLoginPasswordState(true);
+																// 	}
+																// }}
 															>
 																Login
 															</Button>

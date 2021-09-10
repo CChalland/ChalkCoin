@@ -68,6 +68,7 @@ model User {
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
   requester     Bet[]     @relation("requester")
   accepter      Bet[]     @relation("accepter")
+  recipient     Bet[]     @relation("recipient")
 
   @@map(name: "users")
 }
@@ -84,4 +85,6 @@ model Bet {
   requesterId Int
   accepter    User?    @relation("accepter", fields: [accepterId], references: [id])
   accepterId  Int
+  recipient   User     @relation("recipient", fields: [recipientId], references: [id])
+  recipientId Int
 }
