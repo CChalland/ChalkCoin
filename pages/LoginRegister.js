@@ -40,201 +40,203 @@ function LoginRegister({ providers, csrfToken }) {
 	let signInButtons = Object.values(providers).map((provider) => {
 		if (provider.name === "Email" || provider.name === "Login") return;
 		return (
-			<Button className="btn-social" variant={provider.id} onClick={() => signIn(provider.id)}>
-				<>
-					Sign In with <i className={`fab fa-${provider.id}`}></i>
-					{provider.name}
-				</>
-			</Button>
+			<Row>
+				<Col className="text-center">
+					<Button className="btn-social" variant={provider.id} onClick={() => signIn(provider.id)}>
+						<>
+							Sign In with <i className={`fab fa-${provider.id}`}></i>
+							{provider.name}
+						</>
+					</Button>
+				</Col>
+			</Row>
 		);
 	});
 
 	return (
-		<>
-			<Container fluid>
-				<Col className="ml-auto mr-auto" md="8">
-					<Tab.Container id="page-subcategories-tabs-example" defaultActiveKey="login-page">
-						<div className="nav-container">
-							<Nav role="tablist" variant="tabs" className="justify-content-center border-0 nav-icons">
-								<Nav.Item>
-									<Nav.Link eventKey="login-page" className="border-0 bg-transparent">
-										<i className="nc-icon nc-notes"></i>
-										<br></br>
-										Login
-									</Nav.Link>
-								</Nav.Item>
-								<Nav.Item>
-									<Nav.Link eventKey="register-page" className="border-0 bg-transparent">
-										<i className="nc-icon nc-pin-3"></i>
-										<br></br>
-										Register
-									</Nav.Link>
-								</Nav.Item>
-							</Nav>
-						</div>
-						<Tab.Content>
-							<Tab.Pane eventKey="login-page">
-								<Card>
-									<Card.Header className="text-center">
-										<Card.Title as="h4">Login</Card.Title>
-										<p className="card-category">More information here</p>
-									</Card.Header>
-									<Card.Body>
-										<Col className="mx-auto" md="6">
-											<Row>
-												<Form id="LoginValidation" method="post" action="/api/auth/callback/credentials">
-													<Card>
-														<Card.Header>
-															<Card.Title as="h4" className="text-center">
-																Login Form
-															</Card.Title>
-														</Card.Header>
-														<Card.Body>
-															<Form.Group
-																className={"has-label " + (loginEmailState ? "has-success" : "has-error")}
-															>
-																<Form.Control name="csrfToken" type="hidden" defaultValue={csrfToken} />
-																<label>
-																	Email Address <span className="star">*</span>
-																</label>
-																<Form.Control
-																	name="email"
-																	type="text"
-																	value={loginEmail}
-																	onChange={(e) => {
-																		setLoginEmail(e.target.value);
-																		if (emailValidation(e.target.value)) {
-																			setLoginEmailState(true);
-																		} else {
-																			setLoginEmailState(false);
-																		}
-																	}}
-																></Form.Control>
-																{loginEmailState ? null : (
-																	<label className="error">This field is required.</label>
-																)}
-															</Form.Group>
-															<Form.Group
-																className={"has-label " + (loginPasswordState ? "has-success" : "has-error")}
-															>
-																<label>
-																	Password <span className="star">*</span>
-																</label>
-																<Form.Control
-																	name="password"
-																	type="password"
-																	value={loginPassword}
-																	onChange={(e) => {
-																		setLoginPassword(e.target.value);
-																		if (minLength(e.target.value, 1)) {
-																			setLoginPasswordState(true);
-																		} else {
-																			setLoginPasswordState(false);
-																		}
-																	}}
-																></Form.Control>
-																{loginPasswordState ? null : (
-																	<label className="error">This field is required.</label>
-																)}
-															</Form.Group>
-															<div className="card-category form-category">
-																<span className="star">*</span>
-																Required fields
-															</div>
-														</Card.Body>
-														<Card.Footer className="text-center">
-															<Button
-																className="btn-fill btn-wd"
-																variant="info"
-																type="submit"
-																// onClick={() => {
-																// 	if (!loginEmailState || !emailValidation(loginEmail)) {
-																// 		setLoginEmailState(false);
-																// 	} else {
-																// 		setLoginEmailState(true);
-																// 	}
-																// 	if (!loginPasswordState || !minLength(loginPassword, 1)) {
-																// 		setLoginPasswordState(false);
-																// 	} else {
-																// 		setLoginPasswordState(true);
-																// 	}
-																// }}
-															>
-																Login
-															</Button>
-														</Card.Footer>
-													</Card>
-												</Form>
-											</Row>
-											<Row>{signInButtons}</Row>
+		<Container fluid>
+			<Col className="ml-auto mr-auto" md="8">
+				<Tab.Container id="page-subcategories-tabs-example" defaultActiveKey="login-page">
+					<div className="nav-container">
+						<Nav role="tablist" variant="tabs" className="justify-content-center border-0 nav-icons">
+							<Nav.Item>
+								<Nav.Link eventKey="login-page" className="border-0 bg-transparent">
+									<i className="nc-icon nc-notes"></i>
+									<br></br>
+									Login
+								</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="register-page" className="border-0 bg-transparent">
+									<i className="nc-icon nc-pin-3"></i>
+									<br></br>
+									Register
+								</Nav.Link>
+							</Nav.Item>
+						</Nav>
+					</div>
+					<Tab.Content>
+						<Tab.Pane eventKey="login-page">
+							<Card>
+								<Card.Header className="text-center">
+									<Card.Title as="h4">Login</Card.Title>
+									<p className="card-category">More information here</p>
+								</Card.Header>
+								<Card.Body>
+									<Row>
+										<Col className="mx-auto" xl={8}>
+											<Form id="LoginValidation" method="post" action="/api/auth/callback/credentials">
+												<Card>
+													<Card.Header>
+														<Card.Title as="h4" className="text-center">
+															Login Form
+														</Card.Title>
+													</Card.Header>
+													<Card.Body>
+														<Form.Group
+															className={"has-label " + (loginEmailState ? "has-success" : "has-error")}
+														>
+															<Form.Control name="csrfToken" type="hidden" defaultValue={csrfToken} />
+															<label>
+																Email Address <span className="star">*</span>
+															</label>
+															<Form.Control
+																name="email"
+																type="text"
+																value={loginEmail}
+																onChange={(e) => {
+																	setLoginEmail(e.target.value);
+																	if (emailValidation(e.target.value)) {
+																		setLoginEmailState(true);
+																	} else {
+																		setLoginEmailState(false);
+																	}
+																}}
+															></Form.Control>
+															{loginEmailState ? null : (
+																<label className="error">This field is required.</label>
+															)}
+														</Form.Group>
+														<Form.Group
+															className={"has-label " + (loginPasswordState ? "has-success" : "has-error")}
+														>
+															<label>
+																Password <span className="star">*</span>
+															</label>
+															<Form.Control
+																name="password"
+																type="password"
+																value={loginPassword}
+																onChange={(e) => {
+																	setLoginPassword(e.target.value);
+																	if (minLength(e.target.value, 1)) {
+																		setLoginPasswordState(true);
+																	} else {
+																		setLoginPasswordState(false);
+																	}
+																}}
+															></Form.Control>
+															{loginPasswordState ? null : (
+																<label className="error">This field is required.</label>
+															)}
+														</Form.Group>
+														<div className="card-category form-category">
+															<span className="star">*</span>
+															Required fields
+														</div>
+													</Card.Body>
+													<Card.Footer className="text-center">
+														<Button
+															className="btn-fill btn-wd"
+															variant="info"
+															type="submit"
+															// onClick={() => {
+															// 	if (!loginEmailState || !emailValidation(loginEmail)) {
+															// 		setLoginEmailState(false);
+															// 	} else {
+															// 		setLoginEmailState(true);
+															// 	}
+															// 	if (!loginPasswordState || !minLength(loginPassword, 1)) {
+															// 		setLoginPasswordState(false);
+															// 	} else {
+															// 		setLoginPasswordState(true);
+															// 	}
+															// }}
+														>
+															Login
+														</Button>
+													</Card.Footer>
+												</Card>
+											</Form>
+											{signInButtons}
 										</Col>
-									</Card.Body>
-								</Card>
-							</Tab.Pane>
-							<Tab.Pane eventKey="register-page">
-								<Card>
-									<Card.Header className="text-center">
-										<Card.Title as="h4">Register</Card.Title>
-										<p className="category">Here is some text</p>
-									</Card.Header>
-									<Card.Body>
-										<Col className="mx-auto" md="6">
-											<Row>
-												<Form action="/api/auth/signin/email" id="RegisterValidation" method="post">
-													<Card>
-														<Card.Header className="text-center">
-															<Card.Title as="h4">Register Form</Card.Title>
-														</Card.Header>
-														<Card.Body>
-															<Form.Group
-																className={"has-label " + (registerEmailState ? "has-success" : "has-error")}
-															>
-																<Form.Control name="csrfToken" type="hidden" defaultValue={csrfToken} />
-																<label>
-																	Email Address <span className="star">*</span>
-																</label>
-																<Form.Control
-																	name="email"
-																	type="email"
-																	value={registerEmail}
-																	onChange={(e) => {
-																		setRegisterEmail(e.target.value);
-																		if (emailValidation(e.target.value)) {
-																			setRegisterEmailState(true);
-																		} else {
-																			setRegisterEmailState(false);
-																		}
-																	}}
-																></Form.Control>
-																{registerEmailState ? null : (
-																	<label className="error">This field is required.</label>
-																)}
-															</Form.Group>
-															<div className="card-category form-category">
-																<span className="star">*</span>
-																Required fields
-															</div>
-														</Card.Body>
-														<Card.Footer className="text-center">
-															<Button className="btn-fill pull-right" variant="info" type="submit">
-																Register with Email
-															</Button>
-															<div className="clearfix"></div>
-														</Card.Footer>
-													</Card>
-												</Form>
-											</Row>
-											<Row>{signInButtons}</Row>
+									</Row>
+								</Card.Body>
+							</Card>
+						</Tab.Pane>
+						<Tab.Pane eventKey="register-page">
+							<Card>
+								<Card.Header className="text-center">
+									<Card.Title as="h4">Register</Card.Title>
+									<p className="category">Here is some text</p>
+								</Card.Header>
+								<Card.Body>
+									<Row>
+										<Col className="mx-auto">
+											<Form id="RegisterValidation" method="post" action="/api/auth/signin/email">
+												<Card>
+													<Card.Header className="text-center">
+														<Card.Title as="h4">Register Form</Card.Title>
+													</Card.Header>
+													<Card.Body>
+														<Form.Group
+															className={"has-label " + (registerEmailState ? "has-success" : "has-error")}
+														>
+															<Form.Control name="csrfToken" type="hidden" defaultValue={csrfToken} />
+															<label>
+																Email Address <span className="star">*</span>
+															</label>
+															<Form.Control
+																name="email"
+																type="email"
+																value={registerEmail}
+																onChange={(e) => {
+																	setRegisterEmail(e.target.value);
+																	if (emailValidation(e.target.value)) {
+																		setRegisterEmailState(true);
+																	} else {
+																		setRegisterEmailState(false);
+																	}
+																}}
+															></Form.Control>
+															{registerEmailState ? null : (
+																<label className="error">This field is required.</label>
+															)}
+														</Form.Group>
+														<div className="card-category form-category">
+															<span className="star">*</span>
+															Required fields
+														</div>
+													</Card.Body>
+													<Card.Footer className="text-center">
+														<Button className="btn-fill pull-right" variant="info" type="submit">
+															Register with Email
+														</Button>
+														<div className="clearfix"></div>
+													</Card.Footer>
+												</Card>
+											</Form>
+											{signInButtons}
 										</Col>
-									</Card.Body>
-								</Card>
-							</Tab.Pane>
-						</Tab.Content>
-					</Tab.Container>
-				</Col>
-				{/* end col-md-8 */}
-			</Container>
-		</>
+									</Row>
+								</Card.Body>
+							</Card>
+						</Tab.Pane>
+					</Tab.Content>
+				</Tab.Container>
+			</Col>
+			{/* end col-md-8 */}
+		</Container>
 	);
 }
 
