@@ -24,7 +24,9 @@ const options = {
 					},
 				});
 				const passwordTrue = await compareSync(credentials.password, user.password);
+
 				if (user && passwordTrue) {
+					delete user.password;
 					return user;
 				} else {
 					return null;
@@ -68,7 +70,6 @@ const options = {
 				token.accessToken = account.access_token;
 			}
 			if (user) {
-				delete user.password;
 				token.user = user;
 			}
 			return token;

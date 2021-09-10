@@ -49,12 +49,6 @@ function LoginRegister({ providers, csrfToken }) {
 		);
 	});
 
-	// const handleSubmit = (event) => {
-	// 	signIn("credentials", {
-	// 		loginEmail,
-	// 		loginPassword,
-	// 	});
-	// };
 	return (
 		<>
 			<Container fluid>
@@ -244,7 +238,9 @@ function LoginRegister({ providers, csrfToken }) {
 	);
 }
 
-LoginRegister.getInitialProps = async (context) => {
+export default LoginRegister;
+
+export async function getServerSideProps(context) {
 	const { req, res } = context;
 	const session = await getSession({ req });
 
@@ -254,10 +250,9 @@ LoginRegister.getInitialProps = async (context) => {
 		return;
 	}
 	return {
-		session: undefined,
-		providers: await providers(context),
-		csrfToken: await csrfToken(context),
+		props: {
+			providers: await providers(context),
+			csrfToken: await csrfToken(context),
+		},
 	};
-};
-
-export default LoginRegister;
+}
