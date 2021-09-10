@@ -63,38 +63,20 @@ const options = {
 	},
 	callbacks: {
 		async jwt(token, user, account, profile, isNewUser) {
-			console.log("jwt token", token);
-			console.log("jwt user", user);
-			console.log("jwt account", account);
-			console.log("jwt profile", profile);
-			console.log("jwt isNewUser", isNewUser);
-
 			// Persist the OAuth access_token to the token right after signin
 			if (account) {
 				token.accessToken = account.access_token;
 			}
 			if (user) {
+				delete user.password;
 				token.user = user;
-				// token.username = user.username;
-				// token.email = user.email;
-				// token.password = user.password;
-				// token.name = user.name;
-				// token.picture = user.image;
-				// token.paypal = user.paypal
 			}
 			return token;
 		},
 		async session(session, token, user) {
-			console.log("session session", session);
-			console.log("session user", user);
-			console.log("session token", token);
-
 			// Send properties to the client, like an access_token from a provider.
 			session.accessToken = token.accessToken;
 			session.user = token.user;
-
-			// delete token.password;
-			// session.user = token;
 
 			return session;
 		},
