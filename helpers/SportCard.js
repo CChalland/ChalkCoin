@@ -10,7 +10,7 @@ function homeAwayHelper(game) {
 
 export function GameScoreHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
-	let homeName, awayName, homePeriods, awayPeriods, homeRecords, awayRecords;
+	let homePeriods, awayPeriods, homeRecords, awayRecords;
 	let temp = [
 		{ name: "Home", type: "home", summary: 0 },
 		{ name: "Away", type: "away", summary: 0 },
@@ -64,6 +64,7 @@ export function GameScoreHelper(game, sportName) {
 	}
 
 	return {
+		sportName: sportName,
 		status: game.status,
 		shortDetail: game.competitions[0].status.type.shortDetail,
 		detail: game.competitions[0].status.type.detail,
@@ -314,23 +315,21 @@ export function GameLeadersHelper(game, sportName) {
 				};
 			});
 		} else if (sportName === "MLB") {
-			if (game.competitions[0].status.featuredAthletes?.length !== 0) {
-				athletes = game.competitions[0].status.featuredAthletes.map((athlete) => {
-					return {
-						title: athlete.shortDisplayName,
-						headshot: athlete.athlete.headshot,
-						displayName: athlete.athlete.displayName,
-						team:
-							athlete.athlete.team.id === homeTeam[0].team.id
-								? homeTeam[0].team.abbreviation
-								: awayTeam[0].team.abbreviation,
-						position: athlete.athlete.position,
-						statistics: athlete.statistics,
-						displayValue: null,
-						type: "completed",
-					};
-				});
-			}
+			athletes = game.competitions[0].status.featuredAthletes?.map((athlete) => {
+				return {
+					title: athlete.shortDisplayName,
+					headshot: athlete.athlete.headshot,
+					displayName: athlete.athlete.displayName,
+					team:
+						athlete.athlete.team.id === homeTeam[0].team.id
+							? homeTeam[0].team.abbreviation
+							: awayTeam[0].team.abbreviation,
+					position: athlete.athlete.position,
+					statistics: athlete.statistics,
+					displayValue: null,
+					type: "completed",
+				};
+			});
 		} else if (sportName === "NFL") {
 			athletes = game.competitions[0].leaders?.map((athlete) => {
 				return {
