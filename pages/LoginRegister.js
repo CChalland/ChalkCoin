@@ -19,10 +19,10 @@ function LoginRegister({ providers, csrfToken }) {
 	const [loginErrorState, setLoginErrorState] = useState(false);
 	const router = useRouter();
 
-	let signInButtons = Object.values(providers).map((provider) => {
+	let signInButtons = Object.values(providers).map((provider, key) => {
 		if (provider.name === "Email" || provider.name === "Login") return;
 		return (
-			<Row>
+			<Row key={key}>
 				<Col className="text-center">
 					<Button className="btn-social" variant={provider.id} onClick={() => signIn(provider.id)}>
 						<>
