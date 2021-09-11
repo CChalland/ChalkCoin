@@ -298,15 +298,16 @@ function UserPage(props) {
 export default UserPage;
 
 export async function getServerSideProps(context) {
-	const session = await getSession(context);
+	const { req, res } = context;
+	const session = await getSession({ req });
 
-	if (session) {
+	if (session && res && session.accessToken) {
 		return {
 			props: { session },
 		};
 	} else {
-		return {
-			props: { session: false },
-		};
+		res.writeHead(302, { Location: "/" });
+		res.end();
+		return { props: {} };
 	}
 }

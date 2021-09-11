@@ -1,41 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { providers, signIn, getSession, csrfToken } from "next-auth/client";
-import { Button, Card, Tab, Form, Nav, Container, Row, Col } from "react-bootstrap";
+import { Button, Card, Tab, Form, Nav, Container, Row, Col, Alert } from "react-bootstrap";
 
 // validators
 const emailValidation = (value) =>
 	/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value);
-const urlValidation = (value) => {
-	let returnValue = true;
-	try {
-		new URL(value);
-	} catch (e) {
-		returnValue = false;
-	} finally {
-		return returnValue;
-	}
-	return false;
-};
-const equalTo = (value1, value2) => value1 === value2;
-const isRequired = (value) => value !== null && value !== "" && value;
-const isNumber = (value) => !isNaN(value) && value !== "";
 const minLength = (value, length) => value.length >= length;
-const maxLength = (value, length) => value.length <= length && value !== "";
-const range = (value, min, max) => min <= value && value <= max;
-const minValue = (value, min) => min <= value;
-const maxValue = (value, max) => max >= value;
 
 function LoginRegister({ providers, csrfToken }) {
-	const [registerEmail, setRegisterEmail] = React.useState("");
-	const [registerEmailState, setRegisterEmailState] = React.useState(true);
-	const [registerPassword, setRegisterPassword] = React.useState("");
-	const [registerPasswordState, setRegisterPasswordState] = React.useState(true);
-	const [registerConfirmPassword, setRegisterConfirmPassword] = React.useState("");
-	const [registerConfirmPasswordState, setRegisterConfirmPasswordState] = React.useState(true);
-	const [loginEmail, setLoginEmail] = React.useState("");
-	const [loginEmailState, setLoginEmailState] = React.useState(true);
-	const [loginPassword, setLoginPassword] = React.useState("");
-	const [loginPasswordState, setLoginPasswordState] = React.useState(true);
+	const [registerEmail, setRegisterEmail] = useState("");
+	const [registerEmailState, setRegisterEmailState] = useState(true);
+	const [loginEmail, setLoginEmail] = useState("");
+	const [loginEmailState, setLoginEmailState] = useState(true);
+	const [loginPassword, setLoginPassword] = useState("");
+	const [loginPasswordState, setLoginPasswordState] = useState(true);
+	const [loginError, setLoginError] = useState("");
+	const [loginErrorState, setLoginErrorState] = useState(false);
+	const router = useRouter();
 
 	let signInButtons = Object.values(providers).map((provider) => {
 		if (provider.name === "Email" || provider.name === "Login") return;
@@ -52,6 +34,51 @@ function LoginRegister({ providers, csrfToken }) {
 			</Row>
 		);
 	});
+
+	let loginButton, registerButton, loginAlert;
+	if (loginEmail && loginEmailState && loginPassword && loginPasswordState) {
+		loginButton = false;
+	} else {
+		loginButton = true;
+	}
+	if (registerEmail && registerEmailState) {
+		registerButton = false;
+	} else {
+		registerButton = true;
+	}
+
+	if (loginErrorState) {
+		loginAlert = (
+			<Alert className="alert-with-icon" variant="danger">
+				<button
+					aria-hidden={true}
+					className="close"
+					data-dismiss="alert"
+					type="button"
+					onClick={() => {
+						setLoginErrorState(false);
+					}}
+				>
+					<i className="nc-icon nc-simple-remove"></i>
+				</button>
+				<span data-notify="icon" className="nc-icon nc-bell-55"></span>
+				<span data-notify="message">{loginError}</span>
+			</Alert>
+		);
+	}
+
+	useEffect(() => {
+		if (router.query.error === "invalidEmail") {
+			setLoginErrorState(true);
+			setLoginError("Can't find entered email");
+		} else if (router.query.error === "incorrectPassword") {
+			setLoginErrorState(true);
+			setLoginError("Incorrect password entered");
+		} else if (router.query.error) {
+			setLoginErrorState(true);
+			setLoginError(router.query.error);
+		}
+	}, [router]);
 
 	return (
 		<Container fluid>
@@ -80,7 +107,8 @@ function LoginRegister({ providers, csrfToken }) {
 							<Card>
 								<Card.Header className="text-center">
 									<Card.Title as="h4">Login</Card.Title>
-									<p className="card-category">More information here</p>
+									<br />
+									{loginAlert}
 								</Card.Header>
 								<Card.Body>
 									<Row>
@@ -114,7 +142,7 @@ function LoginRegister({ providers, csrfToken }) {
 																}}
 															></Form.Control>
 															{loginEmailState ? null : (
-																<label className="error">This field is required.</label>
+																<label className="error">Please enter a email.</label>
 															)}
 														</Form.Group>
 														<Form.Group
@@ -150,18 +178,7 @@ function LoginRegister({ providers, csrfToken }) {
 															className="btn-fill btn-wd"
 															variant="info"
 															type="submit"
-															// onClick={() => {
-															// 	if (!loginEmailState || !emailValidation(loginEmail)) {
-															// 		setLoginEmailState(false);
-															// 	} else {
-															// 		setLoginEmailState(true);
-															// 	}
-															// 	if (!loginPasswordState || !minLength(loginPassword, 1)) {
-															// 		setLoginPasswordState(false);
-															// 	} else {
-															// 		setLoginPasswordState(true);
-															// 	}
-															// }}
+															disabled={loginButton}
 														>
 															Login
 														</Button>
@@ -178,11 +195,10 @@ function LoginRegister({ providers, csrfToken }) {
 							<Card>
 								<Card.Header className="text-center">
 									<Card.Title as="h4">Register</Card.Title>
-									<p className="category">Here is some text</p>
 								</Card.Header>
 								<Card.Body>
 									<Row>
-										<Col className="mx-auto">
+										<Col className="mx-auto" xl={8}>
 											<Form id="RegisterValidation" method="post" action="/api/auth/signin/email">
 												<Card>
 													<Card.Header className="text-center">
@@ -219,7 +235,12 @@ function LoginRegister({ providers, csrfToken }) {
 														</div>
 													</Card.Body>
 													<Card.Footer className="text-center">
-														<Button className="btn-fill pull-right" variant="info" type="submit">
+														<Button
+															className="btn-fill pull-right"
+															variant="info"
+															type="submit"
+															disabled={registerButton}
+														>
 															Register with Email
 														</Button>
 														<div className="clearfix"></div>
@@ -235,7 +256,6 @@ function LoginRegister({ providers, csrfToken }) {
 					</Tab.Content>
 				</Tab.Container>
 			</Col>
-			{/* end col-md-8 */}
 		</Container>
 	);
 }
