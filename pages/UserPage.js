@@ -21,28 +21,33 @@ const urlValidation = (value) => {
 const isRequired = (value) => value !== null && value !== "" && value;
 const equalTo = (value1, value2) => value1 === value2;
 const minLength = (value, length) => value.length >= length;
-const maxLength = (value, length) => value.length <= length && value !== "";
 
 function UserPage(props) {
-	let user = props.session.user;
-	const router = useRouter();
+	let initialUser = {
+		username: props.session.user.username ? props.session.user.username : "",
+		name: props.session.user.name ? props.session.user.name : "",
+		email: props.session.user.email ? props.session.user.email : "",
+		image: props.session.user.image ? props.session.user.image : "../static/img/faces/face-0.jpg",
+	};
+	const [user, setUser] = useState(initialUser);
 	const [newUserState, setNewUserState] = useState(false);
 	const [updateSuccessState, setUpdateSuccessState] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [updateErrorState, setUpdateErrorState] = useState(false);
-	const [username, setUsername] = useState(user?.username);
+	const [username, setUsername] = useState(user.username);
 	const [usernameState, setUsernameState] = useState(true);
-	const [name, setName] = useState(user?.name);
+	const [name, setName] = useState(user.name);
 	const [nameState, setNameState] = useState(true);
-	const [email, setEmail] = useState(user?.email);
+	const [email, setEmail] = useState(user.email);
 	const [emailState, setEmailState] = useState(true);
-	const [imageURL, setImageURL] = useState(user?.image);
+	const [imageURL, setImageURL] = useState(user.image);
 	const [imageURLState, setImageURLState] = useState(true);
 	const [password, setPassword] = useState("");
 	const [passwordState, setPasswordState] = useState(true);
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [confirmPasswordState, setConfirmPasswordState] = useState(true);
 	const [multipleExpandablePanels, setMultipleExpandablePanels] = React.useState([]);
+	const router = useRouter();
 	const toggleMultipleExpandablePanels = (event, value) => {
 		if (multipleExpandablePanels.includes(value)) {
 			setMultipleExpandablePanels(multipleExpandablePanels.filter((prop) => prop !== value));
@@ -50,8 +55,6 @@ function UserPage(props) {
 			setMultipleExpandablePanels([...multipleExpandablePanels, value]);
 		}
 	};
-
-	console.log("user page", user);
 
 	let newUserAlert, updateSuccessAlert, updateErrorAlert;
 	if (newUserState) {
@@ -131,10 +134,11 @@ function UserPage(props) {
 			let response = await axios.post("http://localhost:4000/api/currentUser", updatedUser);
 			console.log(response);
 			if (response.data.id) {
-				user = response.data;
+				setUser(response.data);
 				setUpdateSuccessState(true);
 				setNewUserState(false);
 				setUpdateErrorState(false);
+				router.replace("/UserPage", undefined, { shallow: true });
 			} else if (response.data.error) {
 				setErrorMessage(response.data.error);
 				setUpdateErrorState(true);
@@ -388,7 +392,7 @@ function UserPage(props) {
 						</Card.Header>
 						<Card.Body>
 							<div className="author">
-								<img alt="..." className="avatar border-gray" src={"../static/img/faces/face-0.jpg"}></img>
+								<img alt="..." className="avatar border-gray" src={user.image}></img>
 								<Card.Title as="h5">{user.name}</Card.Title>
 								<p className="card-description">{user.username}</p>
 							</div>
@@ -444,6 +448,7 @@ export async function getServerSideProps(context) {
 			include: {
 				requester: true,
 				accepter: true,
+				recipient: true,
 			},
 		});
 		delete user.password;

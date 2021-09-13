@@ -13,6 +13,7 @@ export default async (req, res) => {
 			include: {
 				requester: true,
 				accepter: true,
+				recipient: true,
 			},
 		});
 		return res.json(user);
@@ -28,6 +29,7 @@ export default async (req, res) => {
 				},
 				data: user,
 			});
+			delete updatedUser.password;
 			return res.json(updatedUser);
 		} catch (e) {
 			console.log(e.meta.target);
