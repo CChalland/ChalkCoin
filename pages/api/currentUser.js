@@ -18,13 +18,23 @@ export default async (req, res) => {
 		return res.json(user);
 	} else if (req.method === "POST") {
 		const user = req.body;
-		user.password = hashSync(user.password, 10);
-		const updatedUser = await prisma.user.update({
-			where: {
-				id: session.user.id,
-			},
-			data: user,
-		});
-		return res.json(updatedUser);
+		delete user.balance;
+		if (user.password) user.password = hashSync(user.password, 10);
+
+		try {
+			const updatedUser = await prisma.user.update({
+				where: {
+					id: session.user.id,
+				},
+				data: user,
+			});
+			return res.json(updatedUser);
+		} catch (e) {
+			console.log(e.meta.target);
+			if (e.code === "P2002") {
+				return res.json({ error: `There's already an account with that ${e.meta.target[0]}` });
+			}
+			// throw e;
+		}
 	}
 };

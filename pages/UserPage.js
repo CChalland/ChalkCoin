@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getSession } from "next-auth/client";
+import { useRouter } from "next/router";
 import axios from "axios";
-import { Badge, Button, Card, Form, InputGroup, Navbar, Nav, Container, Row, Col } from "react-bootstrap";
+import { Alert, Button, Card, Form, Collapse, Nav, Container, Row, Col } from "react-bootstrap";
+import prisma from "../contexts/prisma";
 
 const emailValidation = (value) =>
 	/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value);
@@ -22,16 +24,12 @@ const minLength = (value, length) => value.length >= length;
 const maxLength = (value, length) => value.length <= length && value !== "";
 
 function UserPage(props) {
-	let user = {
-		username: "",
-		name: "",
-		email: "",
-		imageUrl: "",
-	};
-	if (props.session) {
-		user = props.session.user;
-	}
-
+	let user = props.session.user;
+	const router = useRouter();
+	const [newUserState, setNewUserState] = useState(false);
+	const [updateSuccessState, setUpdateSuccessState] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
+	const [updateErrorState, setUpdateErrorState] = useState(false);
 	const [username, setUsername] = useState(user?.username);
 	const [usernameState, setUsernameState] = useState(true);
 	const [name, setName] = useState(user?.name);
@@ -44,207 +42,344 @@ function UserPage(props) {
 	const [passwordState, setPasswordState] = useState(true);
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [confirmPasswordState, setConfirmPasswordState] = useState(true);
-
-	console.log("props user", user);
-
-	const updateProfile = () => {
-		if (!usernameState || !isRequired(username)) {
-			setUsernameState(false);
+	const [multipleExpandablePanels, setMultipleExpandablePanels] = React.useState([]);
+	const toggleMultipleExpandablePanels = (event, value) => {
+		if (multipleExpandablePanels.includes(value)) {
+			setMultipleExpandablePanels(multipleExpandablePanels.filter((prop) => prop !== value));
 		} else {
-			setUsernameState(true);
-		}
-		if (!emailState || !emailValidation(email)) {
-			setEmailState(false);
-		} else {
-			setEmailState(true);
-		}
-		if (!passwordState || !minLength(password, 1)) {
-			setPasswordState(false);
-		} else {
-			setPasswordState(true);
-		}
-		if (!confirmPasswordState || !minLength(confirmPassword, 1) || !equalTo(confirmPassword, password)) {
-			setConfirmPasswordState(false);
-		} else {
-			setConfirmPasswordState(true);
-		}
-
-		if (usernameState && emailState && passwordState && confirmPasswordState) {
-			let updatedUser = {
-				username,
-				name,
-				email,
-				password,
-			};
-			axios.post("http://localhost:4000/api/user", updatedUser);
+			setMultipleExpandablePanels([...multipleExpandablePanels, value]);
 		}
 	};
+
+	console.log("user page", user);
+
+	let newUserAlert, updateSuccessAlert, updateErrorAlert;
+	if (newUserState) {
+		newUserAlert = (
+			<Alert className="alert-with-icon" variant="danger">
+				<button
+					aria-hidden={true}
+					className="close"
+					data-dismiss="alert"
+					type="button"
+					onClick={() => {
+						setNewUserState(false);
+					}}
+				>
+					<i className="nc-icon nc-simple-remove"></i>
+				</button>
+				<span data-notify="icon" className="nc-icon nc-bell-55"></span>
+				<span data-notify="message">Please fill in the required fields to complete registration</span>
+			</Alert>
+		);
+	}
+	if (updateSuccessState) {
+		updateSuccessAlert = (
+			<Alert className="alert-with-icon" variant="info">
+				<button
+					aria-hidden={true}
+					className="close"
+					data-dismiss="alert"
+					type="button"
+					onClick={() => {
+						setUpdateSuccessState(false);
+					}}
+				>
+					<i className="nc-icon nc-simple-remove"></i>
+				</button>
+				<span data-notify="icon" className="nc-icon nc-bell-55"></span>
+				<span data-notify="message">Updated your settings</span>
+			</Alert>
+		);
+	}
+	if (updateErrorState) {
+		updateErrorAlert = (
+			<Alert className="alert-with-icon" variant="danger">
+				<button
+					aria-hidden={true}
+					className="close"
+					data-dismiss="alert"
+					type="button"
+					onClick={() => {
+						setUpdateErrorState(false);
+					}}
+				>
+					<i className="nc-icon nc-simple-remove"></i>
+				</button>
+				<span data-notify="icon" className="nc-icon nc-bell-55"></span>
+				<span data-notify="message">
+					{errorMessage ? errorMessage : "Please correct the highlighted fields"}
+				</span>
+			</Alert>
+		);
+	}
+
+	const updateProfile = async () => {
+		let updatedUser = {};
+		if (username && (usernameState || isRequired(username))) updatedUser.username = username;
+		if (name) updatedUser.name = name;
+		if (email && (emailState || emailValidation(email))) updatedUser.email = email;
+		if (imageURL && (imageURLState || urlValidation(imageURL))) updatedUser.image = imageURL;
+		if (
+			password &&
+			confirmPassword &&
+			(confirmPasswordState || minLength(confirmPassword, 1) || equalTo(confirmPassword, password))
+		)
+			updatedUser.password = confirmPassword;
+
+		if (usernameState && emailState && passwordState && confirmPasswordState) {
+			let response = await axios.post("http://localhost:4000/api/currentUser", updatedUser);
+			console.log(response);
+			if (response.data.id) {
+				user = response.data;
+				setUpdateSuccessState(true);
+				setNewUserState(false);
+				setUpdateErrorState(false);
+			} else if (response.data.error) {
+				setErrorMessage(response.data.error);
+				setUpdateErrorState(true);
+			}
+		} else {
+			setUpdateErrorState(true);
+		}
+	};
+
+	useEffect(() => {
+		if (router.query.newUser) {
+			toggleMultipleExpandablePanels("e", 1);
+			setNewUserState(true);
+			if (!user.username) setUsernameState(false);
+			if (!user.email) setEmailState(false);
+			setPasswordState(false);
+			setConfirmPasswordState(false);
+		}
+	}, [router]);
 
 	return (
 		<Container>
 			<Row>
-				<Col md="8" sm="6">
-					<Form onSubmit={updateProfile}>
-						<Card>
-							<Card.Header>
-								<Card.Header>
-									<Card.Title as="h4">Edit Profile</Card.Title>
-								</Card.Header>
-							</Card.Header>
-							<Card.Body>
-								<Row>
-									<Col className="pr-1">
-										<Form.Group className={"has-label " + (usernameState ? "has-success" : "has-error")}>
-											<label>
-												Username <span className="star">*</span>
-											</label>
-											<Form.Control
-												placeholder="Username"
-												name="username"
-												type="text"
-												value={username}
-												onChange={(e) => {
-													setUsername(e.target.value);
-													if (isRequired(e.target.value)) {
-														setUsernameState(true);
-													} else {
-														setUsernameState(false);
-													}
+				<Col xs={{ span: 12, order: 2 }} md={{ span: 8, order: 1 }}>
+					<Row>
+						<Col xs={12}>
+							<Form>
+								<Card>
+									<Card.Header>
+										<Card.Header>
+											<Nav>
+												<Nav.Item as="h4" className="my-0 py-0">
+													<Nav.Link
+														data-toggle="collapse"
+														aria-expanded={multipleExpandablePanels.includes(1)}
+														onClick={(e) => toggleMultipleExpandablePanels(e, 1)}
+													>
+														<i className="nc-icon nc-preferences-circle-rotate"></i> Edit Profile
+													</Nav.Link>
+												</Nav.Item>
+											</Nav>
+											<br />
+											{newUserAlert}
+											{updateErrorAlert}
+											{updateSuccessAlert}
+										</Card.Header>
+									</Card.Header>
+									<Collapse className="collapse" id="collapseOne" in={multipleExpandablePanels.includes(1)}>
+										<Card.Body>
+											<Row>
+												<Col className="pr-1">
+													<Form.Group
+														className={"has-label " + (usernameState ? "has-success" : "has-error")}
+													>
+														<label>
+															Username <span className="star">*</span>
+														</label>
+														<Form.Control
+															placeholder="Username"
+															name="username"
+															type="text"
+															value={username}
+															onChange={(e) => {
+																setUsername(e.target.value);
+																if (isRequired(e.target.value)) {
+																	setUsernameState(true);
+																} else {
+																	setUsernameState(false);
+																}
+															}}
+														></Form.Control>
+														{usernameState ? null : <label className="error">This field is required.</label>}
+													</Form.Group>
+												</Col>
+												<Col className="pl-1">
+													<Form.Group className={"has-label " + (nameState ? "has-success" : "has-error")}>
+														<label>Name</label>
+														<Form.Control
+															placeholder="Name"
+															name="name"
+															type="text"
+															value={name}
+															onChange={(e) => {
+																setName(e.target.value);
+																// if (isRequired(e.target.value)) {
+																// 	setNameState(true);
+																// } else {
+																// 	setNameState(false);
+																// }
+															}}
+														></Form.Control>
+													</Form.Group>
+												</Col>
+											</Row>
+											<Row>
+												<Col className="pr-1">
+													<Form.Group className={"has-label " + (emailState ? "has-success" : "has-error")}>
+														<label>
+															Email Address <span className="star">*</span>
+														</label>
+														<Form.Control
+															placeholder="Email"
+															name="email"
+															type="text"
+															value={email}
+															onChange={(e) => {
+																setEmail(e.target.value);
+																if (emailValidation(e.target.value)) {
+																	setEmailState(true);
+																} else {
+																	setEmailState(false);
+																}
+															}}
+														></Form.Control>
+														{emailState ? null : <label className="error">This field is required.</label>}
+													</Form.Group>
+												</Col>
+												<Col className="pl-1">
+													<Form.Group
+														className={"has-label " + (imageURLState ? "has-success" : "has-error")}
+													>
+														<label>Image</label>
+														<Form.Control
+															placeholder="URL"
+															name="image"
+															type="text"
+															value={imageURL}
+															onChange={(e) => {
+																setImageURL(e.target.value);
+																if (urlValidation(e.target.value)) {
+																	setImageURLState(true);
+																} else {
+																	setImageURLState(false);
+																}
+															}}
+														></Form.Control>
+														{imageURLState ? null : (
+															<label className="error">This field has to be URL address.</label>
+														)}
+													</Form.Group>
+												</Col>
+											</Row>
+											<Row>
+												<Col className="pr-1">
+													<Form.Group
+														className={"has-label " + (passwordState ? "has-success" : "has-error")}
+													>
+														<label>
+															Password <span className="star">*</span>
+														</label>
+														<Form.Control
+															placeholder="Password"
+															name="password"
+															type="password"
+															value={password}
+															onChange={(e) => {
+																setPassword(e.target.value);
+																if (minLength(e.target.value, 1)) {
+																	setPasswordState(true);
+																} else {
+																	setPasswordState(false);
+																}
+															}}
+														></Form.Control>
+														{passwordState ? null : <label className="error">This field is required.</label>}
+													</Form.Group>
+												</Col>
+												<Col className="pl-1">
+													<Form.Group
+														className={"has-label " + (confirmPasswordState ? "has-success" : "has-error")}
+													>
+														<label>
+															Confirm Password <span className="star">*</span>
+														</label>
+														<Form.Control
+															placeholder="Password"
+															name="confirmPassword"
+															type="password"
+															value={confirmPassword}
+															onChange={(e) => {
+																setConfirmPassword(e.target.value);
+																if (equalTo(e.target.value, password)) {
+																	setConfirmPasswordState(true);
+																} else {
+																	setConfirmPasswordState(false);
+																}
+															}}
+														></Form.Control>
+														{confirmPasswordState ? null : (
+															<label className="error">
+																This field is required and needs to be equal with your entered password.
+															</label>
+														)}
+													</Form.Group>
+												</Col>
+											</Row>
+											<div className="card-category form-category">
+												<span className="star">*</span>
+												Required fields
+											</div>
+											<br />
+											<Button
+												className="btn-fill pull-right"
+												variant="info"
+												onClick={() => {
+													updateProfile();
 												}}
-											></Form.Control>
-											{usernameState ? null : <label className="error">This field is required.</label>}
-										</Form.Group>
-									</Col>
-									<Col className="p1-1">
-										<Form.Group className={"has-label " + (nameState ? "has-success" : "has-error")}>
-											<label>Name</label>
-											<Form.Control
-												placeholder="Name"
-												name="name"
-												type="text"
-												value={name}
-												onChange={(e) => {
-													setName(e.target.value);
-													// if (isRequired(e.target.value)) {
-													// 	setNameState(true);
-													// } else {
-													// 	setNameState(false);
-													// }
-												}}
-											></Form.Control>
-										</Form.Group>
-									</Col>
-								</Row>
-								<Row>
-									<Col className="pr-1">
-										<Form.Group className={"has-label " + (emailState ? "has-success" : "has-error")}>
-											<label>
-												Email Address <span className="star">*</span>
-											</label>
-											<Form.Control
-												placeholder="Email"
-												name="email"
-												type="text"
-												value={email}
-												onChange={(e) => {
-													setEmail(e.target.value);
-													if (emailValidation(e.target.value)) {
-														setEmailState(true);
-													} else {
-														setEmailState(false);
-													}
-												}}
-											></Form.Control>
-											{emailState ? null : <label className="error">This field is required.</label>}
-										</Form.Group>
-									</Col>
-									<Col className="pl-1">
-										<Form.Group className={"has-label " + (imageURLState ? "has-success" : "has-error")}>
-											<label>Image</label>
-											<Form.Control
-												placeholder="URL"
-												name="image"
-												type="text"
-												value={imageURL}
-												onChange={(e) => {
-													setImageURL(e.target.value);
-													if (urlValidation(e.target.value)) {
-														setImageURLState(true);
-													} else {
-														setImageURLState(false);
-													}
-												}}
-											></Form.Control>
-										</Form.Group>
-									</Col>
-								</Row>
-								<Row>
-									<Col className="pr-1">
-										<Form.Group className={"has-label " + (passwordState ? "has-success" : "has-error")}>
-											<label>
-												Password <span className="star">*</span>
-											</label>
-											<Form.Control
-												placeholder="Password"
-												name="password"
-												type="password"
-												value={password}
-												onChange={(e) => {
-													setPassword(e.target.value);
-													if (minLength(e.target.value, 1)) {
-														setPasswordState(true);
-													} else {
-														setPasswordState(false);
-													}
-												}}
-											></Form.Control>
-											{passwordState ? null : <label className="error">This field is required.</label>}
-										</Form.Group>
-									</Col>
-									<Col className="p1-1">
-										<Form.Group
-											className={"has-label " + (confirmPasswordState ? "has-success" : "has-error")}
-										>
-											<label>
-												Confirm Password <span className="star">*</span>
-											</label>
-											<Form.Control
-												placeholder="Password"
-												name="confirmPassword"
-												type="password"
-												value={confirmPassword}
-												onChange={(e) => {
-													setConfirmPassword(e.target.value);
-													if (equalTo(e.target.value, password)) {
-														setConfirmPasswordState(true);
-													} else {
-														setConfirmPasswordState(false);
-													}
-												}}
-											></Form.Control>
-											{confirmPasswordState ? null : (
-												<label className="error">
-													This field is required and needs to be equal with your entered password.
-												</label>
-											)}
-										</Form.Group>
-									</Col>
-								</Row>
-								<div className="card-category form-category">
-									<span className="star">*</span>
-									Required fields
-								</div>
-							</Card.Body>
-							<Card.Footer>
-								<Button className="btn-fill pull-right" type="submit" variant="info">
-									Update Profile
-								</Button>
-								<div className="clearfix"></div>
-							</Card.Footer>
-						</Card>
-					</Form>
+											>
+												Update Profile
+											</Button>
+										</Card.Body>
+									</Collapse>
+								</Card>
+							</Form>
+						</Col>
+					</Row>
+					<Row>
+						<Col xs={12}>
+							<Form>
+								<Card>
+									<Card.Header>
+										<Card.Header>
+											<Nav>
+												<Nav.Item as="h4" className="my-0 py-0">
+													<Nav.Link
+														data-toggle="collapse"
+														aria-expanded={multipleExpandablePanels.includes(2)}
+														onClick={(e) => toggleMultipleExpandablePanels(e, 2)}
+													>
+														<i className="nc-icon nc-paper-2"></i> Your Bets
+													</Nav.Link>
+												</Nav.Item>
+											</Nav>
+											<br />
+										</Card.Header>
+									</Card.Header>
+									<Collapse className="collapse" id="collapseTwo" in={multipleExpandablePanels.includes(2)}>
+										<Card.Body>Testing</Card.Body>
+									</Collapse>
+								</Card>
+							</Form>
+						</Col>
+					</Row>
 				</Col>
-				<Col md="4">
+				<Col xs={{ span: 12, order: 1 }} md={{ span: 4, order: 2 }}>
 					<Card className="card-user">
 						<Card.Header className="no-padding">
 							<div className="card-image">
@@ -299,9 +434,23 @@ export default UserPage;
 
 export async function getServerSideProps(context) {
 	const { req, res } = context;
-	const session = await getSession({ req });
+	let session = await getSession({ req });
 
-	if (session && res && session.accessToken) {
+	if (session) {
+		const user = await prisma.user.findUnique({
+			where: {
+				id: session.user.id,
+			},
+			include: {
+				requester: true,
+				accepter: true,
+			},
+		});
+		delete user.password;
+		user.emailVerified = JSON.stringify(user.emailVerified);
+		user.createdAt = JSON.stringify(user.createdAt);
+		user.updatedAt = JSON.stringify(user.updatedAt);
+		session.user = user;
 		return {
 			props: { session },
 		};

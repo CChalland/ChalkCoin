@@ -78,8 +78,8 @@ const options = {
 	pages: {
 		signIn: "/LoginRegister",
 		error: "/LoginRegister",
-		verifyRequest: "/LoginRegister?VerifyRequest=true",
-		newUser: "/NewUser",
+		verifyRequest: "/LoginRegister?verifyRequest=true",
+		newUser: "/UserPage?newUser=true",
 	},
 	// @ts-ignore
 	adapter: Adapters.Prisma.Adapter({

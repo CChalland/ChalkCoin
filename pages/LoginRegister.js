@@ -11,12 +11,15 @@ const minLength = (value, length) => value.length >= length;
 function LoginRegister({ providers, csrfToken }) {
 	const [registerEmail, setRegisterEmail] = useState("");
 	const [registerEmailState, setRegisterEmailState] = useState(true);
+	const [registerMessage, setRegisterMessage] = useState("");
+	const [registerMessageState, setRegisterMessageState] = useState(false);
 	const [loginEmail, setLoginEmail] = useState("");
 	const [loginEmailState, setLoginEmailState] = useState(true);
 	const [loginPassword, setLoginPassword] = useState("");
 	const [loginPasswordState, setLoginPasswordState] = useState(true);
 	const [loginError, setLoginError] = useState("");
 	const [loginErrorState, setLoginErrorState] = useState(false);
+	const [currentPage, setCurrentPage] = useState("login-page");
 	const router = useRouter();
 
 	let signInButtons = Object.values(providers).map((provider, key) => {
@@ -35,7 +38,7 @@ function LoginRegister({ providers, csrfToken }) {
 		);
 	});
 
-	let loginButton, registerButton, loginAlert;
+	let loginButton, registerButton, loginAlert, registerAlert;
 	if (loginEmail && loginEmailState && loginPassword && loginPasswordState) {
 		loginButton = false;
 	} else {
@@ -67,6 +70,26 @@ function LoginRegister({ providers, csrfToken }) {
 		);
 	}
 
+	if (registerMessageState) {
+		registerAlert = (
+			<Alert className="alert-with-icon" variant="info">
+				<button
+					aria-hidden={true}
+					className="close"
+					data-dismiss="alert"
+					type="button"
+					onClick={() => {
+						setRegisterMessageState(false);
+					}}
+				>
+					<i className="nc-icon nc-simple-remove"></i>
+				</button>
+				<span data-notify="icon" className="nc-icon nc-bell-55"></span>
+				<span data-notify="message">{registerMessage}</span>
+			</Alert>
+		);
+	}
+
 	useEffect(() => {
 		if (router.query.error === "invalidEmail") {
 			setLoginErrorState(true);
@@ -77,13 +100,21 @@ function LoginRegister({ providers, csrfToken }) {
 		} else if (router.query.error) {
 			setLoginErrorState(true);
 			setLoginError(router.query.error);
+		} else if (router.query.verifyRequest) {
+			setCurrentPage("register-page");
+			setRegisterMessageState(true);
+			setRegisterMessage("Please check your email to login");
 		}
 	}, [router]);
 
 	return (
 		<Container fluid>
 			<Col className="ml-auto mr-auto" md="8">
-				<Tab.Container id="page-subcategories-tabs-example" defaultActiveKey="login-page">
+				<Tab.Container
+					id="page-subcategories-tabs-example"
+					activeKey={currentPage}
+					onSelect={(k) => setCurrentPage(k)}
+				>
 					<div className="nav-container">
 						<Nav role="tablist" variant="tabs" className="justify-content-center border-0 nav-icons">
 							<Nav.Item>
@@ -195,6 +226,8 @@ function LoginRegister({ providers, csrfToken }) {
 							<Card>
 								<Card.Header className="text-center">
 									<Card.Title as="h4">Register</Card.Title>
+									<br />
+									{registerAlert}
 								</Card.Header>
 								<Card.Body>
 									<Row>
@@ -266,7 +299,7 @@ export async function getServerSideProps(context) {
 	const { req, res } = context;
 	const session = await getSession({ req });
 
-	if (session && res && session.accessToken) {
+	if (session) {
 		res.writeHead(302, { Location: "/" });
 		res.end();
 		return { props: {} };
