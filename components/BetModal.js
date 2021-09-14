@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Container,
 	Col,
@@ -10,39 +10,104 @@ import {
 	Nav,
 	Form,
 	InputGroup,
-	Collapse,
+	Image,
 } from "react-bootstrap";
+import Select, { components } from "react-select";
 import GameScore from "./GameScore";
 
 function BetModal(props) {
-	const { gameScoreCardData, betModalData } = props;
+	const { gameScoreCardData, betModalData, users } = props;
 	const [modal, setModal] = useState(false);
+	const [infavorToWin, setInfavorToWin] = useState("");
+	const [infavorToWinState, setInfavorToWinState] = useState(false);
 	const [currency, setCurrency] = useState("");
-	const [amount, setAmount] = useState("");
+	const [amount, setAmount] = useState(0);
 	const [amountState, setAmountState] = useState(true);
 	const [openButtonState, setOpenButtonState] = useState(false);
 	const [recipientButtonState, setRecipientButtonState] = useState(false);
 	const [betType, setBetType] = useState("");
 	const [recipient, setRecipient] = useState("");
-	const [recipientState, setRecipientState] = useState(true);
+	const [recipientState, setRecipientState] = useState(false);
+	const [submitBetState, setSubmitBetState] = useState(false);
+
+	const minValue = (value, min) => min < value;
+	const optionsTeams = [
+		{
+			value: "away",
+			image: gameScoreCardData.away.logo,
+			label: gameScoreCardData.away.name,
+			record: `(${gameScoreCardData.away.records[0].summary}, ${gameScoreCardData.away.records[1].summary} Away)`,
+		},
+		{
+			value: "home",
+			image: gameScoreCardData.home.logo,
+			label: gameScoreCardData.home.name,
+			record: `(${gameScoreCardData.home.records[0].summary}, ${gameScoreCardData.home.records[1].summary} Home)`,
+		},
+	];
+	const optionsUsers = users.map((user) => {
+		return {
+			value: user.username,
+			image: user.image,
+			label: user.name,
+		};
+	});
+	const ToWinOption = (props) => (
+		<components.Option {...props}>
+			<Row className="align-items-center">
+				<Col xs="auto">
+					<Image width={35} height={35} src={props.data.image} rounded />
+				</Col>
+				<Col>
+					<Row>{props.data.label}</Row>
+					<Row className="text-muted">
+						<small>{props.data.record}</small>
+					</Row>
+				</Col>
+			</Row>
+		</components.Option>
+	);
+	const UserOption = (props) => (
+		<components.Option {...props}>
+			<Row className="align-items-center">
+				<Col xs="auto">
+					<Image width={35} height={35} src={props.data.image} roundedCircle />
+				</Col>
+				<Col>
+					<Row>{props.data.value}</Row>
+					<Row className="text-muted">
+						<small>{props.data.label}</small>
+					</Row>
+				</Col>
+			</Row>
+		</components.Option>
+	);
 
 	let betokenButtonClass = currency === "BEToken" ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
 	let bitcoinButtonClass = currency === "Bitcoin" ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
 	let openButtonClass = openButtonState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
 	let friendButtonClass = recipientButtonState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
-
-	const minValue = (value, min) => min < value;
-	// const recipientFind = ();
-
+	let sumbitButtonClass = submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
 	let carouselItem = betModalData?.map((betOdds, key) => {
+		console.log(betOdds);
 		return (
-			<Carousel.Item>
+			<Carousel.Item key={key}>
 				<Row className="justify-content-center">
 					<p>TESTING</p>
 				</Row>
 			</Carousel.Item>
 		);
 	});
+
+	useEffect(() => {
+		if (infavorToWin && amount && amountState && recipient && recipientState) {
+			setSubmitBetState(true);
+		} else if (infavorToWin && amount && amountState && openButtonState) {
+			setSubmitBetState(true);
+		} else {
+			setSubmitBetState(false);
+		}
+	}, [infavorToWinState, amountState, openButtonState, recipientState]);
 
 	return (
 		<>
@@ -74,10 +139,38 @@ function BetModal(props) {
 					</Container>
 				</Modal.Header>
 
-				<Modal.Body className="text-center">
+				<Modal.Body className="">
 					<Container fluid>
 						<Form action="" className="form-horizontal" id="RangeValidation" method="">
-							<p>Infavor to win</p>
+							<Row>
+								<h5 className="mt-2 mx-3">Select Winner: </h5>
+								<Col>
+									<Form.Group className={infavorToWinState ? "has-success" : "has-error"}>
+										<InputGroup>
+											<InputGroup.Prepend>
+												<InputGroup.Text>
+													<i className="nc-icon nc-zoom-split"></i>
+												</InputGroup.Text>
+											</InputGroup.Prepend>
+											<Col xs={6} className="mx-0 px-0">
+												<Select
+													className="react-select primary"
+													classNamePrefix="react-select"
+													name="infavorToWin"
+													value={infavorToWin}
+													onChange={(value) => {
+														setInfavorToWin(value);
+														setInfavorToWinState(true);
+													}}
+													options={optionsTeams}
+													placeholder="Search Team"
+													components={{ Option: ToWinOption }}
+												/>
+											</Col>
+										</InputGroup>
+									</Form.Group>
+								</Col>
+							</Row>
 
 							<Tab.Container id="bet-modal-currency" defaultActiveKey="">
 								<div className="nav-container">
@@ -110,10 +203,10 @@ function BetModal(props) {
 								<Tab.Content>
 									<Tab.Pane eventKey="amount-tab">
 										<Row>
-											<Form.Label column sm="2">
-												Amount: ({currency})
-											</Form.Label>
-											<Col sm="7">
+											<Col sm="2" className="mr-3">
+												<h5 className="pl-5">Amount: ({currency}) </h5>
+											</Col>
+											<Col sm="6">
 												<Form.Group className={amountState ? "has-success" : "has-error"}>
 													<InputGroup>
 														<Form.Control name="curreny" type="hidden" value={currency} />
@@ -155,6 +248,7 @@ function BetModal(props) {
 														setRecipientButtonState(false);
 														setOpenButtonState(true);
 														setBetType("open");
+														setRecipient("");
 													}}
 												>
 													Open Bet
@@ -181,32 +275,33 @@ function BetModal(props) {
 								<Tab.Content>
 									<Tab.Pane eventKey="find-user-tab">
 										<Row>
-											<Form.Label column sm="2">
-												Recipient:
-											</Form.Label>
-											<Col sm="7">
+											<Col sm="2" className="mr-3">
+												<h5 className="mt-2 pl-5">Recipient: </h5>
+											</Col>
+											<Col>
 												<Form.Group className={recipientState ? "has-success" : "has-error"}>
 													<Form.Control name="type" type="hidden" value={betType} />
 													<InputGroup>
 														<InputGroup.Prepend>
 															<InputGroup.Text>
-																<i className="nc-icon nc-zoom-split"></i>
+																<i className="nc-icon nc-single-02"></i>
 															</InputGroup.Text>
 														</InputGroup.Prepend>
-														<Form.Control
-															name="recipient"
-															value={recipient}
-															type="text"
-															onChange={(e) => {
-																setRecipient(e.target.value);
-																if (maxLength(e.target.value, 5)) {
+														<Col xs={6} className="mx-0 px-0">
+															<Select
+																className="react-select primary"
+																classNamePrefix="react-select"
+																name="recipient"
+																value={recipient}
+																onChange={(value) => {
+																	setRecipient(value);
 																	setRecipientState(true);
-																} else {
-																	setRecipientState(false);
-																}
-															}}
-															placeholder="Search here.."
-														/>
+																}}
+																options={optionsUsers}
+																placeholder="Search Username"
+																components={{ Option: UserOption }}
+															/>
+														</Col>
 													</InputGroup>
 												</Form.Group>
 											</Col>
@@ -219,8 +314,13 @@ function BetModal(props) {
 				</Modal.Body>
 
 				<div className="modal-footer">
-					<Button className="btn-simple" onClick={() => setModal(!modal)} variant="link">
-						Back
+					<Button
+						className={sumbitButtonClass}
+						variant="success"
+						disabled={!submitBetState}
+						onClick={() => setModal(!modal)}
+					>
+						Send Bet
 					</Button>
 					<Button className="btn-simple" onClick={() => setModal(!modal)} variant="link">
 						Close

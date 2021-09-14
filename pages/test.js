@@ -1,84 +1,47 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Container, Col, Row, Button, Modal, Carousel, Tab, Nav, Card } from "react-bootstrap";
-import Select from "react-select";
+import { Container, Col, Row, Image, Button, Modal, Carousel, Tab, Nav, Card } from "react-bootstrap";
+import Select, { components } from "react-select";
 import prisma from "../contexts/prisma";
 
 function Test(props) {
-	const options = [
-		"Inside Out",
-		"John Wick",
-		"Jurassic World",
-		"The Lord of the Rings",
-		"Pacific Rim",
-		"Pirates of the Caribbean",
-		"Planet of the Apes",
-		"Saw",
-		"Sicario",
-		"Zombies",
-	];
+	const [singleSelect, setSingleSelect] = useState("");
+	const IconOption = (props) => (
+		<components.Option {...props}>
+			<Row className="align-items-center">
+				<Col xs="auto">
+					<Image width={35} height={35} src={props.data.image} roundedCircle />
+				</Col>
+				<Col>
+					<Row>{props.data.value}</Row>
+					<Row className="text-muted">
+						<small>{props.data.label}</small>
+					</Row>
+				</Col>
+			</Row>
+		</components.Option>
+	);
 
-	const [results, setResults] = useState(options);
-	const [dropdownVisible, setDropdownVisible] = useState(false);
-	const [singleSelect, setSingleSelect] = React.useState("");
-
-	const filterMethod = (options, query) => {
-		return options.filter((option) => option.toLowerCase().includes(query.toLowerCase()));
-	};
-
-	const searchList = (event) => {
-		const results = filterMethod(options, event.target.value);
-		setResults(results);
-	};
-
-	const showDropdown = () => {
-		setDropdownVisible(true);
-	};
-
-	const hideDropdown = () => {
-		setDropdownVisible(false);
-	};
+	const optionsUsers = props.users.map((user) => {
+		return {
+			value: user.username,
+			image: user.image,
+			label: user.name,
+		};
+	});
 
 	console.log(props.users);
 	return (
 		<Container>
-			<div className="autocomplete">
-				<input
-					type="text"
-					placeholder="Type to search list"
-					onChange={searchList}
-					onFocus={() => showDropdown()}
-					onBlur={() => hideDropdown()}
-				/>
-				{dropdownVisible && (
-					<div className="autocomplete-dropdown">
-						<ul className="autocomplete-search-results-list">
-							{results.map((result) => (
-								<li className="autocomplete-search-result" key={result}>
-									{result}
-								</li>
-							))}
-						</ul>
-					</div>
-				)}
-			</div>
-
 			<Select
 				className="react-select primary"
 				classNamePrefix="react-select"
 				name="singleSelect"
 				value={singleSelect}
 				onChange={(value) => setSingleSelect(value)}
-				options={[
-					{
-						value: "",
-						label: "Single Option",
-						isDisabled: true,
-					},
-					{ value: "2", label: "Foobar" },
-					{ value: "3", label: "Is great" },
-				]}
+				options={optionsUsers}
 				placeholder="Search Username"
+				components={{ Option: IconOption }}
 			/>
 		</Container>
 	);
