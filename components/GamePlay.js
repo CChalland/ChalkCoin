@@ -185,8 +185,8 @@ function GamePlay(props) {
 
 		venue = (
 			<Col xs={8} className="mr-auto">
-				<Row className="mb-0 h6">{gamePlayData.venue.fullName}</Row>
-				<Row>{`${gamePlayData.venue.address.city}, ${gamePlayData.venue.address.state}`}</Row>
+				<Row className="mb-0 h6">{gamePlayData.venue?.fullName}</Row>
+				<Row>{`${gamePlayData.venue?.address.city}, ${gamePlayData.venue?.address.state}`}</Row>
 			</Col>
 		);
 

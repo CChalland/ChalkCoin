@@ -42,7 +42,7 @@ function GameScore(props) {
 
 			title = (
 				<>
-					<Col xs={6} className={` ${titleStyle}`}>
+					<Col xs={6} lg={5} className={` ${titleStyle}`}>
 						{gameScoreCardData.detail}
 					</Col>
 					<Col xs={3} className="font-weight-bold text-right">

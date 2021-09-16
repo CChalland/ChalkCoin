@@ -69,6 +69,9 @@ export function GameScoreHelper(game, sportName) {
 		shortDetail: game.competitions[0].status.type.shortDetail,
 		detail: game.competitions[0].status.type.detail,
 		away: {
+			abbreviation: awayTeam[0].team.abbreviation,
+			alternateColor: awayTeam[0].team.alternateColor,
+			color: awayTeam[0].team.color,
 			logo: awayTeam[0].team.logo,
 			name: awayTeam[0].team.displayName.split(" ").pop(),
 			records: awayRecords,
@@ -76,6 +79,9 @@ export function GameScoreHelper(game, sportName) {
 			periods: awayPeriods,
 		},
 		home: {
+			abbreviation: homeTeam[0].team.abbreviation,
+			alternateColor: homeTeam[0].team.alternateColor,
+			color: homeTeam[0].team.color,
 			logo: homeTeam[0].team.logo,
 			name: homeTeam[0].team.displayName.split(" ").pop(),
 			records: homeRecords,

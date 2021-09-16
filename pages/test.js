@@ -1,48 +1,51 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import { Container, Col, Row, Image, Button, Modal, Carousel, Tab, Nav, Card } from "react-bootstrap";
-import Select, { components } from "react-select";
+import { SportContext } from "../contexts/Sports.Context";
+import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/SportCard";
 import prisma from "../contexts/prisma";
+import { Doughnut } from "react-chartjs-2";
 
 function Test(props) {
-	const [singleSelect, setSingleSelect] = useState("");
-	const IconOption = (props) => (
-		<components.Option {...props}>
-			<Row className="align-items-center">
-				<Col xs="auto">
-					<Image width={35} height={35} src={props.data.image} roundedCircle />
-				</Col>
-				<Col>
-					<Row>{props.data.value}</Row>
-					<Row className="text-muted">
-						<small>{props.data.label}</small>
-					</Row>
-				</Col>
-			</Row>
-		</components.Option>
-	);
-
-	const optionsUsers = props.users.map((user) => {
-		return {
-			value: user.username,
-			image: user.image,
-			label: user.name,
-		};
+	const { sportsData } = useContext(SportContext);
+	let sportName = "NFL";
+	let sportData = sportsData.filter((sport) => {
+		return sport.abbrv === sportName;
 	});
 
-	console.log(props.users);
+	let gameData, gameScoreData;
+	if (sportData.data?.events) {
+		gameData = sportData[0].data?.events[0];
+		gameScoreData = GameScoreHelper(gameData, sportName);
+	}
+
+	console.log(gameScoreData);
+
+	const data = {
+		datasets: [
+			{
+				data: [34.7, 65.0],
+				backgroundColor: ["rgb(101, 4, 21)", "rgb(5, 37, 112)"],
+			},
+		],
+	};
+
 	return (
-		<Container>
-			<Select
-				className="react-select primary"
-				classNamePrefix="react-select"
-				name="singleSelect"
-				value={singleSelect}
-				onChange={(value) => setSingleSelect(value)}
-				options={optionsUsers}
-				placeholder="Search Username"
-				components={{ Option: IconOption }}
-			/>
+		<Container fluid>
+			<Row>
+				<Col xs={4}>
+					<div className="chart-relative">
+						<Doughnut data={data} height={100} width={100} options={{ cutoutPercentage: 80 }} />
+						<div className="chart-absolute-center chart-text-center">
+							<div className="data-chart">
+								<div class="inner-circle">
+									<span class="home-team">MIN</span>
+									<span class="away-team">ARI</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</Col>
+			</Row>
 		</Container>
 	);
 }
