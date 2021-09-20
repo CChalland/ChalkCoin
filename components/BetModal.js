@@ -15,14 +15,15 @@ import {
 import Select, { components } from "react-select";
 import { Doughnut } from "react-chartjs-2";
 import GameScore from "./GameScore";
+import axios from "axios";
 
 function BetModal(props) {
-	const { gameScoreCardData, betModalData, users } = props;
+	const { gameScoreCardData, betModalData, users, currentUser, gameId, gameName, gameDate } = props;
 	const [modal, setModal] = useState(false);
 	const [selectedWinner, setSelectedWinner] = useState("");
 	const [selectedWinnerState, setSelectedWinnerState] = useState(false);
 	const [currency, setCurrency] = useState("");
-	const [amount, setAmount] = useState(0);
+	const [amount, setAmount] = useState("");
 	const [amountState, setAmountState] = useState(false);
 	const [openButtonState, setOpenButtonState] = useState(false);
 	const [recipientButtonState, setRecipientButtonState] = useState(false);
@@ -32,6 +33,14 @@ function BetModal(props) {
 	const [submitBetState, setSubmitBetState] = useState(false);
 
 	const minValue = (value, min) => min < value;
+	const data = {
+		datasets: [
+			{
+				data: [34.7, 65.0],
+				backgroundColor: [`#${gameScoreCardData.away.color}`, `#${gameScoreCardData.home.color}`],
+			},
+		],
+	};
 	const optionsTeams = [
 		{
 			value: "away",
@@ -48,6 +57,7 @@ function BetModal(props) {
 	];
 	const optionsUsers = users.map((user) => {
 		return {
+			id: user.id,
 			value: user.username,
 			image: user.image,
 			label: user.name,
@@ -90,15 +100,48 @@ function BetModal(props) {
 	let friendButtonClass = recipientButtonState ? "btn-round" : "btn-round btn-outline";
 	let sumbitButtonClass = submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
 	let carouselItem = betModalData?.map((betOdds, key) => {
-		console.log(betOdds);
 		return (
 			<Carousel.Item key={key}>
 				<Row className="justify-content-center">
-					<p>TESTING</p>
+					<Col xs={4}>{"Details: "}</Col>
+					<Col>{betOdds.details}</Col>
 				</Row>
+				<Row className="justify-content-center">
+					<Col xs={4}>{"O/U: "}</Col>
+					<Col>{betOdds.overUnder}</Col>
+				</Row>
+				<Row className="justify-content-center">
+					<Col xs={4}>
+						<small>{"Provider: "}</small>
+					</Col>
+					<Col>
+						<small>{betOdds.provider.name}</small>
+					</Col>
+				</Row>
+				<br />
 			</Carousel.Item>
 		);
 	});
+
+	const submitBet = async () => {
+		if (submitBetState) {
+			let submitBet = {
+				amount,
+				details: {
+					id: gameId,
+					date: gameDate,
+					game: gameName,
+					sportName: gameScoreCardData.name,
+					winner: selectedWinner.label,
+				},
+				currency,
+				requesterId: currentUser.id,
+			};
+			if (betType === "recipient") submitBet.recipientId = recipient.id;
+			let response = await axios.post("http://localhost:4000/api/createBet", submitBet);
+			console.log("in response", response);
+		}
+	};
 
 	useEffect(() => {
 		if (selectedWinner && amount && amountState && recipient && recipientState) {
@@ -109,15 +152,6 @@ function BetModal(props) {
 			setSubmitBetState(false);
 		}
 	}, [selectedWinnerState, amountState, openButtonState, recipientState]);
-
-	const data = {
-		datasets: [
-			{
-				data: [34.7, 65.0],
-				backgroundColor: ["rgb(101, 4, 21)", "rgb(5, 37, 112)"],
-			},
-		],
-	};
 
 	return (
 		<>
@@ -138,37 +172,48 @@ function BetModal(props) {
 			<Modal centered size="lg" onHide={() => setModal(!modal)} show={modal}>
 				<Modal.Header closeButton>
 					<Container>
-						<Row>
+						<Row className="justify-content-md-center">
 							<Col xs={12} lg={8} className="border">
 								<GameScore gameScoreCardData={gameScoreCardData} />
 							</Col>
-							<Col lg={4} className="d-none d-lg-block">
-								{carouselItem ? <Carousel fade>{carouselItem}</Carousel> : <h6>NO ODDS ON RECORD</h6>}
-							</Col>
+							{carouselItem ? (
+								<Col lg={4} className="d-none d-lg-block">
+									<Carousel controls={false} fade>
+										{carouselItem}
+									</Carousel>
+								</Col>
+							) : null}
 						</Row>
 					</Container>
 				</Modal.Header>
 
 				<Modal.Body className="">
 					<Container fluid>
-						<Row className="d-lg-none">
-							<Col xs={5} className="">
+						<Row className="d-lg-none justify-content-md-center">
+							{carouselItem ? (
+								<Col className="">
+									<Carousel controls={false} fade>
+										{carouselItem}
+									</Carousel>
+								</Col>
+							) : null}
+							{/* <Col xs={5} className="">
 								<div className="chart-relative">
 									<Doughnut data={data} height={100} width={100} options={{ cutoutPercentage: 80 }} />
 									<div className="chart-absolute-center chart-text-center">
 										<div className="data-chart">
-											<div class="inner-circle">
-												<span class="home-team">MIN</span>
-												<span class="away-team">ARI</span>
+											<div className="inner-circle">
+												<span className="home-team">{gameScoreCardData.home.abbreviation}</span>
+												<span className="away-team">{gameScoreCardData.away.abbreviation}</span>
 											</div>
 										</div>
 									</div>
 								</div>
-							</Col>
+							</Col> */}
 						</Row>
-						<Row>
+						<Row className="justify-content-md-center">
 							<Col xs={12} lg={8}>
-								<Form action="" className="form-horizontal" id="RangeValidation" method="">
+								<Form className="form-horizontal" id="RangeValidation">
 									<Row>
 										<h5 className="mt-2 mx-3">Select Winner: </h5>
 										<Col>
@@ -217,6 +262,7 @@ function BetModal(props) {
 														className={bitcoinButtonClass}
 														variant="default"
 														onClick={() => setCurrency("Bitcoin")}
+														disabled
 													>
 														Bitcoin
 													</Button>
@@ -263,7 +309,7 @@ function BetModal(props) {
 									<Tab.Container id="bet-modal-recipient" defaultActiveKey="">
 										<div className="nav-container">
 											<Nav role="tablist" variant="tabs" className="border-0 nav-icons">
-												<h5 className="mt-2 mr-4">Type of Bet: </h5>
+												<h5 className="mt-2 mr-3">Type of Bet: </h5>
 												<Nav.Item>
 													<Nav.Link eventKey="" className="border-0 bg-transparent">
 														<Button
@@ -336,23 +382,23 @@ function BetModal(props) {
 									</Tab.Container>
 								</Form>
 							</Col>
-							<Col lg={3} className="d-none d-lg-block">
+							{/* <Col lg={3} className="d-none d-lg-block">
 								<Row>
 									<Col>
 										<div className="chart-relative">
 											<Doughnut data={data} height={100} width={100} options={{ cutoutPercentage: 80 }} />
 											<div className="chart-absolute-center chart-text-center">
 												<div className="data-chart">
-													<div class="inner-circle">
-														<span class="home-team">MIN</span>
-														<span class="away-team">ARI</span>
+													<div className="inner-circle">
+														<span className="home-team">{gameScoreCardData.home.abbreviation}</span>
+														<span className="away-team">{gameScoreCardData.away.abbreviation}</span>
 													</div>
 												</div>
 											</div>
 										</div>
 									</Col>
 								</Row>
-							</Col>
+							</Col> */}
 						</Row>
 					</Container>
 				</Modal.Body>
@@ -362,7 +408,10 @@ function BetModal(props) {
 						className={sumbitButtonClass}
 						variant="success"
 						disabled={!submitBetState}
-						onClick={() => setModal(!modal)}
+						onClick={() => {
+							setModal(!modal);
+							submitBet();
+						}}
 					>
 						Send Bet
 					</Button>

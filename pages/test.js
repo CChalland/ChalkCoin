@@ -3,7 +3,7 @@ import { Container, Col, Row, Image, Button, Modal, Carousel, Tab, Nav, Card } f
 import { SportContext } from "../contexts/Sports.Context";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/SportCard";
 import prisma from "../contexts/prisma";
-import { Doughnut } from "react-chartjs-2";
+import axios from "axios";
 
 function Test(props) {
 	const { sportsData } = useContext(SportContext);
@@ -18,33 +18,12 @@ function Test(props) {
 		gameScoreData = GameScoreHelper(gameData, sportName);
 	}
 
-	console.log(gameScoreData);
-
-	const data = {
-		datasets: [
-			{
-				data: [34.7, 65.0],
-				backgroundColor: ["rgb(101, 4, 21)", "rgb(5, 37, 112)"],
-			},
-		],
-	};
+	// console.log(gameScoreData);
 
 	return (
 		<Container fluid>
 			<Row>
-				<Col xs={4}>
-					<div className="chart-relative">
-						<Doughnut data={data} height={100} width={100} options={{ cutoutPercentage: 80 }} />
-						<div className="chart-absolute-center chart-text-center">
-							<div className="data-chart">
-								<div class="inner-circle">
-									<span class="home-team">MIN</span>
-									<span class="away-team">ARI</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</Col>
+				<Col xs={4}></Col>
 			</Row>
 		</Container>
 	);

@@ -116,6 +116,7 @@ function UserPage(props) {
 			</Alert>
 		);
 	}
+	console.log(props.session);
 
 	const updateProfile = async () => {
 		let updatedUser = {};
@@ -449,12 +450,33 @@ export async function getServerSideProps(context) {
 				requester: true,
 				accepter: true,
 				recipient: true,
+				winner: true,
 			},
 		});
 		delete user.password;
 		user.emailVerified = JSON.stringify(user.emailVerified);
 		user.createdAt = JSON.stringify(user.createdAt);
 		user.updatedAt = JSON.stringify(user.updatedAt);
+		user.requester = user.requester.map((bet) => {
+			bet.createdAt = JSON.stringify(bet.createdAt);
+			bet.updatedAt = JSON.stringify(bet.updatedAt);
+			return bet;
+		});
+		user.accepter = user.accepter?.map((bet) => {
+			bet.createdAt = JSON.stringify(bet.createdAt);
+			bet.updatedAt = JSON.stringify(bet.updatedAt);
+			return bet;
+		});
+		user.recipient = user.recipient?.map((bet) => {
+			bet.createdAt = JSON.stringify(bet.createdAt);
+			bet.updatedAt = JSON.stringify(bet.updatedAt);
+			return bet;
+		});
+		user.winner = user.winner?.map((bet) => {
+			bet.createdAt = JSON.stringify(bet.createdAt);
+			bet.updatedAt = JSON.stringify(bet.updatedAt);
+			return bet;
+		});
 		session.user = user;
 		return {
 			props: { session },

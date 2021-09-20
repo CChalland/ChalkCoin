@@ -69,6 +69,7 @@ model User {
   requester     Bet[]     @relation("requester")
   accepter      Bet[]     @relation("accepter")
   recipient     Bet[]     @relation("recipient")
+  winner        Bet[]     @relation("winner")
 
   @@map(name: "users")
 }
@@ -77,14 +78,19 @@ model Bet {
   id          Int      @id @default(autoincrement())
   amount      Float
   details     String
+  currency    String
   accepted    Boolean  @default(false)
+  completed   Boolean  @default(false)
+  payed       Boolean  @default(false)
   blockHash   String?
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @updatedAt @map(name: "updated_at")
   requester   User     @relation("requester", fields: [requesterId], references: [id])
   requesterId Int
   accepter    User?    @relation("accepter", fields: [accepterId], references: [id])
-  accepterId  Int
-  recipient   User     @relation("recipient", fields: [recipientId], references: [id])
-  recipientId Int
+  accepterId  Int?
+  recipient   User?    @relation("recipient", fields: [recipientId], references: [id])
+  recipientId Int?
+  winner      User?    @relation("winner", fields: [winnerId], references: [id])
+  winnerId    Int?
 }

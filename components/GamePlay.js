@@ -28,13 +28,15 @@ function GamePlay(props) {
 		let outs = new Array(3).fill(<span className="circle outs"></span>);
 
 		for (let i = 0; i < situation.balls; i++) {
-			balls[i] = <span className="circle balls active"></span>;
+			balls[i] = <span key={`${situation.lastPlay.id}-balls-${i}`} className="circle balls active"></span>;
 		}
 		for (let i = 0; i < situation.strikes; i++) {
-			strikes[i] = <span className="circle strikes active"></span>;
+			strikes[i] = (
+				<span key={`${situation.lastPlay.id}-strikes-${i}`} className="circle strikes active"></span>
+			);
 		}
 		for (let i = 0; i < situation.outs; i++) {
-			outs[i] = <span className="circle outs active"></span>;
+			outs[i] = <span key={`${situation.lastPlay.id}-outs-${i}`} className="circle outs active"></span>;
 		}
 
 		return (

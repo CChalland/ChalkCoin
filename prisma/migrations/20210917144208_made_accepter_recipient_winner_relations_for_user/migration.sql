@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Bet" ALTER COLUMN "accepterId" DROP NOT NULL,
+ALTER COLUMN "recipientId" DROP NOT NULL;
