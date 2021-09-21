@@ -9,10 +9,10 @@ function BetCard(props) {
 	console.log("bets Data", betsData);
 	console.log("currentUser", currentUser);
 
-	let betItems = betsData.map((bet) => {
+	let betItems = betsData.map((bet, key) => {
 		if (bet.event) {
 			return (
-				<Container fluid>
+				<Container fluid key={key}>
 					{/* For extra lage screen */}
 					<Col className="mx-0 px-0 d-none d-xl-block">
 						<Row className="mt-3 mb-3 border rounded">
