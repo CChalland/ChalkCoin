@@ -4,24 +4,9 @@ import { SportContext } from "../contexts/Sports.Context";
 import { getSession } from "next-auth/client";
 import BetCard from "../components/BetCard";
 
-async function fetchBetsJSON() {
-	const res = await fetch("http://localhost:4000/api/bets");
-	const bets = await res.json();
-	return bets;
-}
-
 function Bets(props) {
+	const { bets, currentUser } = props;
 	const { sportsData } = useContext(SportContext);
-	const { bets } = props;
-
-	// useEffect(() => {
-	// 	const getData = async () => {
-	// 		fetchBetsJSON().then((bets) => {
-	// 			setBets(bets);
-	// 		});
-	// 	};
-	// 	getData();
-	// }, []);
 
 	const betsData = bets?.map((bet) => {
 		const sport = sportsData.find((sport) => sport.display_name === bet.details.displayName);
@@ -32,7 +17,7 @@ function Bets(props) {
 	return (
 		<Container fluid>
 			<h1>BETS</h1>
-			<BetCard betsData={betsData} currentUser={props.currentUser} />
+			<BetCard betsData={betsData} currentUser={currentUser} />
 		</Container>
 	);
 }
