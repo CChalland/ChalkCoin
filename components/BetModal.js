@@ -18,7 +18,7 @@ import GameScore from "./GameScore";
 import axios from "axios";
 
 function BetModal(props) {
-	const { gameScoreCardData, betModalData, users, currentUser, gameId, gameName, gameDate } = props;
+	const { gameScoreCardData, betData, users, currentUser } = props;
 	const [modal, setModal] = useState(false);
 	const [selectedWinner, setSelectedWinner] = useState("");
 	const [selectedWinnerState, setSelectedWinnerState] = useState(false);
@@ -99,7 +99,7 @@ function BetModal(props) {
 	let openButtonClass = openButtonState ? "btn-round" : "btn-round btn-outline";
 	let friendButtonClass = recipientButtonState ? "btn-round" : "btn-round btn-outline";
 	let sumbitButtonClass = submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
-	let carouselItem = betModalData?.map((betOdds, key) => {
+	let carouselItem = betData?.odds.map((betOdds, key) => {
 		return (
 			<Carousel.Item key={key}>
 				<Row className="justify-content-center">
@@ -128,10 +128,10 @@ function BetModal(props) {
 			let submitBet = {
 				amount,
 				details: {
-					id: gameId,
-					date: gameDate,
-					game: gameName,
-					sportName: gameScoreCardData.name,
+					displayName: betData.displayName,
+					id: betData.id,
+					date: betData.date,
+					game: betData.name,
 					winner: selectedWinner.label,
 				},
 				currency,

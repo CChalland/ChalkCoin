@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { SportContext } from "../contexts/Sports.Context";
-// import prisma from "../contexts/prisma";
+import prisma from "../contexts/prisma";
 import { getSession } from "next-auth/client";
 import axios from "axios";
 
@@ -12,8 +12,11 @@ async function fetchBetsJSON() {
 }
 
 function Bets(props) {
+	const { sportsData } = useContext(SportContext);
 	const [bets, setBets] = useState([]);
+
 	console.log(props);
+	console.log("api bets", bets);
 
 	useEffect(() => {
 		const getData = async () => {
@@ -24,7 +27,6 @@ function Bets(props) {
 		getData();
 	}, []);
 
-	console.log("api bets", bets);
 	return (
 		<Container>
 			<div>BETS</div>
@@ -51,20 +53,20 @@ export async function getServerSideProps(context) {
 		delete currentUser.updatedAt;
 	}
 
-	let bets = await prisma.bet.findMany({
-		where: {
-			accepted: false,
-		},
-	});
-	const betPromises = bets.map(async (bet) => {
-		bet.details = JSON.parse(bet.details);
-		bet.createdAt = JSON.stringify(bet.createdAt);
-		bet.updatedAt = JSON.stringify(bet.updatedAt);
-		return bet;
-	});
-	const betsData = await Promise.all(betPromises);
+	// let bets = await prisma.bet.findMany({
+	// 	where: {
+	// 		accepted: false,
+	// 	},
+	// });
+	// const betPromises = bets.map(async (bet) => {
+	// 	bet.details = JSON.parse(bet.details);
+	// 	bet.createdAt = JSON.stringify(bet.createdAt);
+	// 	bet.updatedAt = JSON.stringify(bet.updatedAt);
+	// 	return bet;
+	// });
+	// const betsData = await Promise.all(betPromises);
 
 	return {
-		props: { currentUser, betsData },
+		props: { currentUser },
 	};
 }

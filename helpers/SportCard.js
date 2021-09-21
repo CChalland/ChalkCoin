@@ -365,3 +365,13 @@ export function GameLeadersHelper(game, sportName) {
 		athletes: athletes?.flat(),
 	};
 }
+
+export function BetDataHelper(game, sportName) {
+	return {
+		id: game.id,
+		date: game.date,
+		game: game.name,
+		odds: game.competitions[0].odds,
+		displayName: sportName,
+	};
+}

@@ -5,7 +5,7 @@ import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
 import BetModal from "./BetModal";
-import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/SportCard";
+import { GameScoreHelper, GamePlayHelper, GameLeadersHelper, BetDataHelper } from "../helpers/SportCard";
 import { SportDispatch } from "../contexts/Sports.Context";
 
 function SportCard(props) {
@@ -102,14 +102,11 @@ function SportCard(props) {
 							</Col>
 							<Col lg={1} className="mr-0 pr-0">
 								<BetModal
-									gameId={game.id}
-									gameDate={game.date}
-									gameName={game.name}
 									currentUser={currentUser}
 									users={users}
 									buttonClassName={"btn-wd"}
-									betModalData={game.competitions[0].odds}
 									gameScoreCardData={GameScoreHelper(game, sportName)}
+									betData={BetDataHelper(game, sportName)}
 								/>
 							</Col>
 						</Row>
@@ -129,14 +126,11 @@ function SportCard(props) {
 							<Col md={12} className="text-center">
 								<div className="accordions" id="accordion">
 									<BetModal
-										gameId={game.id}
-										gameDate={game.date}
-										gameName={game.name}
 										currentUser={currentUser}
 										users={users}
 										buttonClassName={"btn-round btn-wd"}
-										betModalData={game.competitions[0].odds}
 										gameScoreCardData={GameScoreHelper(game, sportName)}
+										betData={BetDataHelper(game, sportName)}
 									/>
 
 									<Button
@@ -181,14 +175,11 @@ function SportCard(props) {
 							<Col md={12} className="text-center">
 								<div className="accordions" id="accordion">
 									<BetModal
-										gameId={game.id}
-										gameDate={game.date}
-										gameName={game.name}
 										currentUser={currentUser}
 										users={users}
 										buttonClassName={"btn-round btn-wd"}
-										betModalData={game.competitions[0].odds}
 										gameScoreCardData={GameScoreHelper(game, sportName)}
+										betData={BetDataHelper(game, sportName)}
 									/>
 									<Button
 										className={infoButtonClass}
@@ -228,14 +219,11 @@ function SportCard(props) {
 							<Col sm={12} className="text-center">
 								<div className="accordions" id="accordion">
 									<BetModal
-										gameId={game.id}
-										gameDate={game.date}
-										gameName={game.name}
 										currentUser={currentUser}
 										users={users}
 										buttonClassName={"btn-round btn-wd"}
-										betModalData={game.competitions[0].odds}
 										gameScoreCardData={GameScoreHelper(game, sportName)}
+										betData={BetDataHelper(game, sportName)}
 									/>
 									<Button
 										className={infoButtonClass}
@@ -288,14 +276,11 @@ function SportCard(props) {
 							<Col xs={12} className="text-center">
 								<div className="accordions" id="accordion">
 									<BetModal
-										gameId={game.id}
-										gameDate={game.date}
-										gameName={game.name}
 										currentUser={currentUser}
 										users={users}
 										buttonClassName={"btn-round btn-wd"}
-										betModalData={game.competitions[0].odds}
 										gameScoreCardData={GameScoreHelper(game, sportName)}
+										betData={BetDataHelper(game, sportName)}
 									/>
 									<Button
 										className={infoButtonClass}
