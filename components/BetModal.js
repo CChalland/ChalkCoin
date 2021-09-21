@@ -99,7 +99,7 @@ function BetModal(props) {
 	let openButtonClass = openButtonState ? "btn-round" : "btn-round btn-outline";
 	let friendButtonClass = recipientButtonState ? "btn-round" : "btn-round btn-outline";
 	let sumbitButtonClass = submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
-	let carouselItem = betData?.odds.map((betOdds, key) => {
+	let carouselItem = betData.odds?.map((betOdds, key) => {
 		return (
 			<Carousel.Item key={key}>
 				<Row className="justify-content-center">
@@ -131,7 +131,7 @@ function BetModal(props) {
 					displayName: betData.displayName,
 					id: betData.id,
 					date: betData.date,
-					game: betData.name,
+					name: betData.name,
 					winner: selectedWinner.label,
 				},
 				currency,

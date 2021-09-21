@@ -69,7 +69,7 @@ function SportCard(props) {
 	let gameItems;
 	if (sportData.data.events) {
 		gameItems = sportData.data.events.map((game, key) => {
-			// console.log("game data", game);
+			console.log("game data", game);
 			// console.log("game odds", game.competitions[0].odds);
 			// console.log("gameScoreCardData", GameScoreHelper(game, sportName));
 			// console.log("current user", currentUser);

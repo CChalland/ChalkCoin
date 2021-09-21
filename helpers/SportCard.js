@@ -73,7 +73,7 @@ export function GameScoreHelper(game, sportName) {
 			alternateColor: awayTeam[0].team.alternateColor,
 			color: awayTeam[0].team.color,
 			logo: awayTeam[0].team.logo,
-			name: awayTeam[0].team.displayName.split(" ").pop(),
+			name: awayTeam[0].team.shortDisplayName,
 			records: awayRecords,
 			score: parseInt(awayTeam[0].score),
 			periods: awayPeriods,
@@ -83,7 +83,7 @@ export function GameScoreHelper(game, sportName) {
 			alternateColor: homeTeam[0].team.alternateColor,
 			color: homeTeam[0].team.color,
 			logo: homeTeam[0].team.logo,
-			name: homeTeam[0].team.displayName.split(" ").pop(),
+			name: homeTeam[0].team.shortDisplayName,
 			records: homeRecords,
 			score: parseInt(homeTeam[0].score),
 			periods: homePeriods,
@@ -370,7 +370,7 @@ export function BetDataHelper(game, sportName) {
 	return {
 		id: game.id,
 		date: game.date,
-		game: game.name,
+		name: game.name,
 		odds: game.competitions[0].odds,
 		displayName: sportName,
 	};

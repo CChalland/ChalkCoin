@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { SportContext } from "../contexts/Sports.Context";
-import prisma from "../contexts/prisma";
 import { getSession } from "next-auth/client";
-import axios from "axios";
+import BetCard from "../components/BetCard";
 
 async function fetchBetsJSON() {
 	const res = await fetch("http://localhost:4000/api/bets");
@@ -13,23 +12,27 @@ async function fetchBetsJSON() {
 
 function Bets(props) {
 	const { sportsData } = useContext(SportContext);
-	const [bets, setBets] = useState([]);
+	const { bets } = props;
 
-	console.log(props);
-	console.log("api bets", bets);
+	// useEffect(() => {
+	// 	const getData = async () => {
+	// 		fetchBetsJSON().then((bets) => {
+	// 			setBets(bets);
+	// 		});
+	// 	};
+	// 	getData();
+	// }, []);
 
-	useEffect(() => {
-		const getData = async () => {
-			fetchBetsJSON().then((bets) => {
-				setBets(bets);
-			});
-		};
-		getData();
-	}, []);
+	const betsData = bets?.map((bet) => {
+		const sport = sportsData.find((sport) => sport.display_name === bet.details.displayName);
+		const event = sport.data.events?.find((event) => event.id === bet.details.id);
+		return { ...bet, event };
+	});
 
 	return (
-		<Container>
-			<div>BETS</div>
+		<Container fluid>
+			<h1>BETS</h1>
+			<BetCard betsData={betsData} currentUser={props.currentUser} />
 		</Container>
 	);
 }
@@ -53,20 +56,20 @@ export async function getServerSideProps(context) {
 		delete currentUser.updatedAt;
 	}
 
-	// let bets = await prisma.bet.findMany({
-	// 	where: {
-	// 		accepted: false,
-	// 	},
-	// });
-	// const betPromises = bets.map(async (bet) => {
-	// 	bet.details = JSON.parse(bet.details);
-	// 	bet.createdAt = JSON.stringify(bet.createdAt);
-	// 	bet.updatedAt = JSON.stringify(bet.updatedAt);
-	// 	return bet;
-	// });
-	// const betsData = await Promise.all(betPromises);
+	let betsData = await prisma.bet.findMany({
+		where: {
+			accepted: false,
+		},
+	});
+	const betPromises = betsData.map(async (bet) => {
+		bet.details = JSON.parse(bet.details);
+		bet.createdAt = JSON.stringify(bet.createdAt);
+		bet.updatedAt = JSON.stringify(bet.updatedAt);
+		return bet;
+	});
+	const bets = await Promise.all(betPromises);
 
 	return {
-		props: { currentUser },
+		props: { currentUser, bets },
 	};
 }
