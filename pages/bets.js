@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col, Card, Form, InputGroup } from "react-bootstrap";
 import { SportContext } from "../contexts/Sports.Context";
 import { getSession } from "next-auth/client";
 import BetCard from "../components/BetCard";
@@ -15,6 +15,8 @@ function Bets(props) {
 	const { betsData, currentUser } = props;
 	const { sportsData } = useContext(SportContext);
 	const [bets, setBets] = useState(betsData);
+	const [search, setSearch] = useState("");
+	const [searchState, setSearchState] = useState(true);
 
 	const betsGames = betsData.map((bet) => {
 		const sport = sportsData.find((sport) => sport.display_name === bet.details.displayName);
@@ -32,9 +34,50 @@ function Bets(props) {
 	// 	getData();
 	// }, []);
 
+	console.log(search);
+
 	return (
-		<Container>
-			<h1>BETS</h1>
+		<Container fluid>
+			<Row>
+				<Col>
+					<Form>
+						<Card>
+							<Card.Header>
+								<Row className="mt-2 align-items-center">
+									<Col xs={"auto"} className="">
+										<h2 className="mt-0 pt-0">{"BETS: "}</h2>
+									</Col>
+									<Col xs={7} className="mx-0 px-0">
+										<Form.Group className={searchState ? "has-success" : "has-error"}>
+											<InputGroup>
+												<InputGroup.Prepend>
+													<InputGroup.Text>
+														<i className="nc-icon nc-single-02"></i>
+													</InputGroup.Text>
+												</InputGroup.Prepend>
+												<Form.Control
+													name="search"
+													type="text"
+													value={search}
+													onChange={(e) => {
+														setSearch(e.target.value);
+														// if (minValue(e.target.value, 0)) {
+														// 	setAmountState(true);
+														// } else {
+														// 	setAmountState(false);
+														// }
+													}}
+													placeholder="Search..."
+												/>
+											</InputGroup>
+										</Form.Group>
+									</Col>
+								</Row>
+							</Card.Header>
+						</Card>
+					</Form>
+				</Col>
+			</Row>
 			<BetCard betsData={bets} currentUser={currentUser} />
 		</Container>
 	);
