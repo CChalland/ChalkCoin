@@ -3,38 +3,38 @@ import { Container, Row, Col, Card, Form, InputGroup } from "react-bootstrap";
 import { SportContext } from "../contexts/Sports.Context";
 import { getSession } from "next-auth/client";
 import BetCard from "../components/BetCard";
-import axios from "axios";
-
-// async function fetchBetsJSON() {
-// 	const res = await fetch("http://localhost:4000/api/bets");
-// 	const bets = await res.json();
-// 	return bets;
-// }
 
 function Bets(props) {
-	const { betsData, currentUser } = props;
+	const { currentUser, nflBets, mlbBets, nbaBets, ncaabBets, nhlBets, wnbaBets } = props;
 	const { sportsData } = useContext(SportContext);
-	const [bets, setBets] = useState(betsData);
+	const [bets, setBets] = useState([]);
 	const [search, setSearch] = useState("");
 	const [searchState, setSearchState] = useState(true);
 
-	const betsGames = betsData.map((bet) => {
+	const betsGames = [...nflBets, ...mlbBets, ...nbaBets, ...ncaabBets, ...nhlBets, ...wnbaBets].map((bet) => {
 		const sport = sportsData.find((sport) => sport.display_name === bet.details.displayName);
 		const event = sport.data.events?.find((event) => event.id === bet.details.id);
 		bet.event = event;
 		return bet;
 	});
 
-	// useEffect(() => {
-	// 	const getData = async () => {
-	// 		fetchBetsJSON().then((bets) => {
-	// 			setBets(bets);
-	// 		});
-	// 	};
-	// 	getData();
-	// }, []);
+	useEffect(() => {
+		console.log("search useEffect", betsGames);
+		const filteredBets = betsGames.filter((bet) => {
+			return (
+				bet.details.displayName.toLowerCase().includes(search.toLowerCase()) ||
+				bet.details.name.toLowerCase().includes(search.toLowerCase())
+			);
+		});
 
-	console.log(search);
+		if (filteredBets.length === 0) {
+			setBets(betsGames);
+			setSearchState(false);
+		} else {
+			setBets(filteredBets);
+			setSearchState(true);
+		}
+	}, [search]);
 
 	return (
 		<Container fluid>
@@ -52,7 +52,7 @@ function Bets(props) {
 											<InputGroup>
 												<InputGroup.Prepend>
 													<InputGroup.Text>
-														<i className="nc-icon nc-single-02"></i>
+														<i className="nc-icon nc-money-coins"></i>
 													</InputGroup.Text>
 												</InputGroup.Prepend>
 												<Form.Control
@@ -61,11 +61,6 @@ function Bets(props) {
 													value={search}
 													onChange={(e) => {
 														setSearch(e.target.value);
-														// if (minValue(e.target.value, 0)) {
-														// 	setAmountState(true);
-														// } else {
-														// 	setAmountState(false);
-														// }
 													}}
 													placeholder="Search..."
 												/>
@@ -74,10 +69,18 @@ function Bets(props) {
 									</Col>
 								</Row>
 							</Card.Header>
+							<Card.Body>
+								<Row className="align-items-center">
+									<Col xs={4}>{"Closing Soon"}</Col>
+									<Col xs={4}>{"Game Starting Soon"}</Col>
+									<Col xs={4}>{"Game Today"}</Col>
+								</Row>
+							</Card.Body>
 						</Card>
 					</Form>
 				</Col>
 			</Row>
+			{searchState ? null : <label className="error">No bets found.</label>}
 			<BetCard betsData={bets} currentUser={currentUser} />
 		</Container>
 	);
@@ -114,8 +117,39 @@ export async function getServerSideProps(context) {
 		return bet;
 	});
 	const betsData = await Promise.all(betPromises);
+	const nflBets = betsData
+		.filter((bet) => bet.details.displayName === "NFL")
+		.sort((a, b) => {
+			new Date(a.details.date) - new Date(b.details.date);
+		});
+
+	const mlbBets = betsData
+		.filter((bet) => bet.details.displayName === "MLB")
+		.sort((a, b) => {
+			return new Date(a.details.date) - new Date(b.details.date);
+		});
+	const nbaBets = betsData
+		.filter((bet) => bet.details.displayName === "NBA")
+		.sort((a, b) => {
+			return new Date(a.details.date) - new Date(b.details.date);
+		});
+	const ncaabBets = betsData
+		.filter((bet) => bet.details.displayName === "NCAA Men's Basketball")
+		.sort((a, b) => {
+			return new Date(a.details.date) - new Date(b.details.date);
+		});
+	const nhlBets = betsData
+		.filter((bet) => bet.details.displayName === "NHL")
+		.sort((a, b) => {
+			return new Date(a.details.date) - new Date(b.details.date);
+		});
+	const wnbaBets = betsData
+		.filter((bet) => bet.details.displayName === "WNBA")
+		.sort((a, b) => {
+			return new Date(a.details.date) - new Date(b.details.date);
+		});
 
 	return {
-		props: { currentUser, betsData },
+		props: { currentUser, nflBets, mlbBets, nbaBets, ncaabBets, nhlBets, wnbaBets },
 	};
 }

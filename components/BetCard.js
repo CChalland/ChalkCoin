@@ -6,8 +6,8 @@ import axios from "axios";
 function BetCard(props) {
 	const { betsData, currentUser } = props;
 
-	console.log("bets Data", betsData);
-	console.log("currentUser", currentUser);
+	// console.log("bets Data", betsData);
+	// console.log("currentUser", currentUser);
 
 	let betItems = betsData.map((bet, key) => {
 		if (bet.event) {
