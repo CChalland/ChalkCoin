@@ -23,7 +23,11 @@ function Test(props) {
 	return (
 		<Container fluid>
 			<Row>
-				<Col xs={4}></Col>
+				<Col xs={4}>
+					<Button className="btn-outline" variant="default">
+						<Image width={30} src={"../static/media/sports-icons/2.png"} rounded />
+					</Button>
+				</Col>
 			</Row>
 		</Container>
 	);
