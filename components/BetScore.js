@@ -1,31 +1,34 @@
 import React from "react";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, Card } from "react-bootstrap";
 
 function BetScores({ betGameScoreData }) {
+	console.log(betGameScoreData);
 	return (
 		<Container fluid>
-			<Row className="">{betGameScoreData.shortDetail}</Row>
+			<Row className="">
+				<Card.Header>{betGameScoreData.shortDetail}</Card.Header>
+			</Row>
 
 			<Row className="">
-				<Col xs={2} md={2} lg={2} xl={2} className="text-right">
-					<Image width={40} height={40} src={betGameScoreData.acceptingTeam.logo} rounded />
+				<Col xs={"auto"} className="">
+					<Image width={40} height={40} src={betGameScoreData.away.logo} rounded />
 				</Col>
 				<Col xs={4} md={4} lg={3} xl={3} className="">
-					<Row className="mb-0 h5">{betGameScoreData.acceptingTeam.name}</Row>
+					<Row className="mb-0 h5">{betGameScoreData.away.name}</Row>
 					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
-						{`(${betGameScoreData.acceptingTeam.records[0].summary}, ${betGameScoreData.acceptingTeam.records[1].summary} ${betGameScoreData.acceptingTeam.homeAway})`}
+						{`(${betGameScoreData.away.records[0].summary}, ${betGameScoreData.away.records[1].summary} ${betGameScoreData.away.homeAway})`}
 					</Row>
 				</Col>
 			</Row>
 
 			<Row className="">
-				<Col xs={2} md={2} lg={2} xl={2} className="text-right">
-					<Image width={40} height={40} src={betGameScoreData.requesterTeam.logo} rounded />
+				<Col xs={"auto"} className="">
+					<Image width={40} height={40} src={betGameScoreData.home.logo} rounded />
 				</Col>
 				<Col xs={4} md={4} lg={3} xl={3} className="">
-					<Row className="mb-0 h5">{betGameScoreData.requesterTeam.name}</Row>
+					<Row className="mb-0 h5">{betGameScoreData.home.name}</Row>
 					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
-						{`(${betGameScoreData.requesterTeam.records[0].summary}, ${betGameScoreData.requesterTeam.records[1].summary} ${betGameScoreData.requesterTeam.homeAway})`}
+						{`(${betGameScoreData.home.records[0].summary}, ${betGameScoreData.home.records[1].summary} ${betGameScoreData.home.homeAway})`}
 					</Row>
 				</Col>
 			</Row>

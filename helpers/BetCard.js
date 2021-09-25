@@ -92,3 +92,5 @@ export function BetGameData(bet) {
 		},
 	};
 }
+
+// export function BetGameData(bets) {}
