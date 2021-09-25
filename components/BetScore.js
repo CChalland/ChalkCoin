@@ -11,11 +11,13 @@ function BetScores({ betGameScoreData }) {
 
 			<Row className="">
 				<Col xs={"auto"} className="">
-					<Image width={40} height={40} src={betGameScoreData.away.logo} rounded />
+					<Image width={35} height={35} src={betGameScoreData.away.logo} rounded />
 				</Col>
 				<Col xs={4} md={4} lg={3} xl={3} className="">
-					<Row className="mb-0 h5">{betGameScoreData.away.name}</Row>
-					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
+					<Row className="mb-0 h5" style={{ fontSize: 16 }}>
+						{betGameScoreData.away.name}
+					</Row>
+					<Row className="mb-0 text-secondary" style={{ fontSize: 11 }}>
 						{`(${betGameScoreData.away.records[0].summary}, ${betGameScoreData.away.records[1].summary} ${betGameScoreData.away.homeAway})`}
 					</Row>
 				</Col>
@@ -23,11 +25,13 @@ function BetScores({ betGameScoreData }) {
 
 			<Row className="">
 				<Col xs={"auto"} className="">
-					<Image width={40} height={40} src={betGameScoreData.home.logo} rounded />
+					<Image width={35} height={35} src={betGameScoreData.home.logo} rounded />
 				</Col>
 				<Col xs={4} md={4} lg={3} xl={3} className="">
-					<Row className="mb-0 h5">{betGameScoreData.home.name}</Row>
-					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
+					<Row className="mb-0 h5" style={{ fontSize: 16 }}>
+						{betGameScoreData.home.name}
+					</Row>
+					<Row className="mb-0 text-secondary" style={{ fontSize: 11 }}>
 						{`(${betGameScoreData.home.records[0].summary}, ${betGameScoreData.home.records[1].summary} ${betGameScoreData.home.homeAway})`}
 					</Row>
 				</Col>
