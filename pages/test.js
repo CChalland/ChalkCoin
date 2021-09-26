@@ -5,6 +5,18 @@ import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/S
 import prisma from "../contexts/prisma";
 import axios from "axios";
 
+const fetchData = async () =>
+	await axios
+		.get(`https://api.the-odds-api.com/v4/sports?apiKey=${process.env.ODDS_API_KEY}`)
+		.then((res) => ({
+			error: false,
+			odds: res.data,
+		}))
+		.catch(() => ({
+			error: true,
+			odds: null,
+		}));
+
 function Test(props) {
 	const { sportsData } = useContext(SportContext);
 	let sportName = "NFL";
@@ -18,7 +30,7 @@ function Test(props) {
 		gameScoreData = GameScoreHelper(gameData, sportName);
 	}
 
-	// console.log(gameScoreData);
+	console.log(props.odds);
 
 	return (
 		<Container fluid>
@@ -36,6 +48,7 @@ function Test(props) {
 export default Test;
 
 export async function getServerSideProps(context) {
+	// const odds = await fetchData();
 	let users = await prisma.user.findMany();
 	users = users.map((user) => {
 		delete user.emailVerified;

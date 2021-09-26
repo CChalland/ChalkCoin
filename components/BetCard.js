@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { BetGameData } from "../helpers/BetCard";
 import BetScore from "./BetScore";
 import BetOdds from "./BetOdds";
+import BetWinner from "./BetWinner";
 import axios from "axios";
 
 function BetCard(props) {
@@ -27,14 +28,17 @@ function BetCard(props) {
 			};
 
 			return (
-				<Container fluid key={key}>
+				<Container key={key} fluid>
 					<Card>
 						<Row className="">
-							<Col className="">
+							<Col xs={"auto"} className="">
 								<BetScore key={bet.event.uid.toString()} betGameScoreData={betGameScoreData} />
 							</Col>
 							<Col>
 								<BetOdds />
+							</Col>
+							<Col>
+								<BetWinner />
 							</Col>
 						</Row>
 					</Card>
