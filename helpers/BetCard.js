@@ -65,6 +65,7 @@ export function BetGameData(bet) {
 	}
 
 	return {
+		date: bet.details.date,
 		sportName: bet.details.displayName,
 		status: bet.event.status,
 		shortDetail: bet.event.competitions[0].status.type.shortDetail,
