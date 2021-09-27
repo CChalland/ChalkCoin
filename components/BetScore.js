@@ -7,13 +7,9 @@ function BetScores({ betGameScoreData }) {
 	const daysUntil = gameTime.diff(new Date(), "days");
 	const [day, date, month, time] = gameTime.format("ddd,Do,MMM,h:mm a").split(",");
 
-	const calendarCardHelper = (gameData) => {
-		let calendarCard, gameTimeCard;
-		if (
-			gameData.status.type.name === "STATUS_SCHEDULED" ||
-			gameData.status.type.name === "STATUS_POSTPONED" ||
-			gameData.status.type.name === "STATUS_DELAYED"
-		) {
+	const betScoreHelper = (gameData) => {
+		let calendarCard, gameTimeCard, awayScore, homeScore;
+		if (gameData.status.type.state === "pre") {
 			if (daysUntil > 6) {
 				calendarCard = (
 					<div>
@@ -45,15 +41,39 @@ function BetScores({ betGameScoreData }) {
 					</div>
 				);
 			}
+		} else if (gameData.status.type.state === "in") {
+			if (betGameScoreData.sportName === "MLB") {
+				const [topBot, inning] = betGameScoreData.detail.split(" ");
+				calendarCard = (
+					<div>
+						<Card border="secondary">
+							<p className="text-center my-1 mx-2">{inning}</p>
+							<p className="text-danger text-center my-1 border-top mx-2">{topBot}</p>
+						</Card>
+					</div>
+				);
+			} else {
+				const [period, time] = betGameScoreData.detail.split(" ");
+				calendarCard = (
+					<div>
+						<Card border="secondary">
+							<p className="text-center my-1 mx-2">{time}</p>
+							<p className="text-danger text-center my-1 border-top mx-2">{period}</p>
+						</Card>
+					</div>
+				);
+			}
+			awayScore = <Col className="font-weight-bold mr-auto">{gameData.away.score}</Col>;
+			homeScore = <Col className="font-weight-bold mr-auto">{gameData.home.score}</Col>;
+		} else if (gameData.status.type.state === "post") {
+			awayScore = <Col className="font-weight-bold mr-auto">{gameData.away.score}</Col>;
+			homeScore = <Col className="font-weight-bold mr-auto">{gameData.home.score}</Col>;
 		}
 
-		return { calendarCard, gameTimeCard };
+		return { calendarCard, gameTimeCard, awayScore, homeScore };
 	};
 
-	console.log("props gameData ", betGameScoreData);
-	console.log(day, date, month, time);
-
-	const { calendarCard, gameTimeCard } = calendarCardHelper(betGameScoreData);
+	const { calendarCard, gameTimeCard, awayScore, homeScore } = betScoreHelper(betGameScoreData);
 	return (
 		<Container fluid>
 			<Row>
@@ -74,6 +94,7 @@ function BetScores({ betGameScoreData }) {
 								{`(${betGameScoreData.away.records[0].summary}, ${betGameScoreData.away.records[1].summary} ${betGameScoreData.away.homeAway})`}
 							</Row>
 						</Col>
+						{awayScore}
 					</Row>
 
 					<Row className="my-2 align-items-center">
@@ -88,6 +109,7 @@ function BetScores({ betGameScoreData }) {
 								{`(${betGameScoreData.home.records[0].summary}, ${betGameScoreData.home.records[1].summary} ${betGameScoreData.home.homeAway})`}
 							</Row>
 						</Col>
+						{homeScore}
 					</Row>
 				</Col>
 			</Row>

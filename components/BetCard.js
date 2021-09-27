@@ -16,9 +16,11 @@ function BetCard(props) {
 		if (bet.event) {
 			const betGameData = BetGameData(bet);
 			const betGameScoreData = {
+				sportName: betGameData.sportName,
 				date: betGameData.date,
 				status: betGameData.status,
 				shortDetail: betGameData.shortDetail,
+				detail: betGameData.detail,
 				away:
 					betGameData.acceptingTeam.homeAway === "Away"
 						? betGameData.acceptingTeam
