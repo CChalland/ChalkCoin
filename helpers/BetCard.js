@@ -36,8 +36,8 @@ export function BetGameData(bet) {
 		detail: bet.event.competitions[0].status.type.detail,
 		acceptingTeam: {
 			abbreviation: acceptingPickTeam[0].team.abbreviation,
-			alternateColor: acceptingPickTeam[0].team.alternateColor,
-			color: acceptingPickTeam[0].team.color,
+			alternateColor: `#${acceptingPickTeam[0].team.alternateColor}`,
+			color: `#${acceptingPickTeam[0].team.color}`,
 			logo: acceptingPickTeam[0].team.logo,
 			name: acceptingPickTeam[0].team.shortDisplayName,
 			records: acceptingPickTeamRecords,
@@ -46,8 +46,8 @@ export function BetGameData(bet) {
 		},
 		requesterTeam: {
 			abbreviation: requesterPickTeam[0].team.abbreviation,
-			alternateColor: requesterPickTeam[0].team.alternateColor,
-			color: requesterPickTeam[0].team.color,
+			alternateColor: `#${requesterPickTeam[0].team.alternateColor}`,
+			color: `#${requesterPickTeam[0].team.color}`,
 			logo: requesterPickTeam[0].team.logo,
 			name: requesterPickTeam[0].team.shortDisplayName,
 			records: requesterPickTeamRecords,

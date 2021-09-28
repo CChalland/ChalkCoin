@@ -39,7 +39,7 @@ function BetCard(props) {
 								<BetScore key={bet.event.uid.toString()} betGameScoreData={betGameScoreData} />
 							</Col>
 							<Col>
-								<BetOdds />
+								<BetOdds betGameOdds={betGameScoreData} />
 							</Col>
 							<Col>
 								<BetWinner />

@@ -588,16 +588,16 @@ div.data-chart {
   font-family: -apple-system, system-ui, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 100%;
   font-weight: 400;
-  height: 150px;
+  height: 80px;
   line-height: normal;
   margin: 0;
-  min-height: 150px;
-  min-width: 150px;
+  min-height: 80px;
+  min-width: 80px;
   padding: 0;
   position: relative;
   text-align: center;
   vertical-align: top;
-  width: 150px;
+  width: 80px;
 }
 
 div.inner-circle {
