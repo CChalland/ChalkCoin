@@ -26,6 +26,7 @@ export default async (req, res) => {
 		{ displayName: "NCAA Men's Basketball", key: "" },
 		{ displayName: "NHL", key: "icehockey_nhl" },
 		{ displayName: "WNBA", key: "" },
+		{ displayName: "MLS", key: "soccer_usa_mls" },
 	];
 
 	if (req.method === "GET") {
