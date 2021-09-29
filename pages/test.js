@@ -6,9 +6,11 @@ import prisma from "../contexts/prisma";
 import axios from "axios";
 import { Doughnut } from "react-chartjs-2";
 
-const fetchData = async () =>
+const fetchData = async (sportKey) =>
 	await axios
-		.get(`https://api.the-odds-api.com/v4/sports?apiKey=${process.env.ODDS_API_KEY}`)
+		.get(
+			`https://api.the-odds-api.com/v4/sports/${sportKey}/odds/?regions=us&oddsFormat=american&apiKey=${process.env.ODDS_API_KEY}`
+		)
 		.then((res) => ({
 			error: false,
 			odds: res.data,
@@ -39,8 +41,6 @@ function Test(props) {
 			},
 		],
 	};
-
-	console.log(props.odds);
 
 	return (
 		<Container fluid>
@@ -77,7 +77,7 @@ function Test(props) {
 export default Test;
 
 export async function getServerSideProps(context) {
-	// const odds = await fetchData();
+	// const odds = await fetchData("americanfootball_nfl");
 	let users = await prisma.user.findMany();
 	users = users.map((user) => {
 		delete user.emailVerified;

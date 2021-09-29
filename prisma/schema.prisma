@@ -83,6 +83,7 @@ model Bet {
   completed   Boolean  @default(false)
   payed       Boolean  @default(false)
   blockHash   String?
+  odds        Json?
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @updatedAt @map(name: "updated_at")
   requester   User     @relation("requester", fields: [requesterId], references: [id])
