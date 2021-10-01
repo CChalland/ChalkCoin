@@ -33,14 +33,14 @@ function BetModal(props) {
 	const [submitBetState, setSubmitBetState] = useState(false);
 
 	const minValue = (value, min) => min < value;
-	const data = {
-		datasets: [
-			{
-				data: [34.7, 65.0],
-				backgroundColor: [`#${gameScoreCardData.away.color}`, `#${gameScoreCardData.home.color}`],
-			},
-		],
-	};
+	// const data = {
+	// 	datasets: [
+	// 		{
+	// 			data: [34.7, 65.0],
+	// 			backgroundColor: [`#${gameScoreCardData.away.color}`, `#${gameScoreCardData.home.color}`],
+	// 		},
+	// 	],
+	// };
 	const optionsTeams = [
 		{
 			value: "away",

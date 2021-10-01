@@ -1,6 +1,6 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { BetGameData } from "../helpers/BetCard";
+import { BetGameData, BetGameOdds } from "../helpers/BetCard";
 import BetScore from "./BetScore";
 import BetOdds from "./BetOdds";
 import BetWinner from "./BetWinner";
@@ -15,6 +15,7 @@ function BetCard(props) {
 	let betItems = betsData.map((bet, key) => {
 		if (bet.event) {
 			const betGameData = BetGameData(bet);
+			const betGameOdds = BetGameOdds(bet);
 			const betGameScoreData = {
 				sportName: betGameData.sportName,
 				date: betGameData.date,
@@ -38,8 +39,8 @@ function BetCard(props) {
 							<Col xs={"auto"} className="">
 								<BetScore key={bet.event.uid.toString()} betGameScoreData={betGameScoreData} />
 							</Col>
-							<Col>
-								<BetOdds betGameOdds={betGameScoreData} />
+							<Col xs={"auto"}>
+								<BetOdds betGameOdds={betGameOdds} />
 							</Col>
 							<Col>
 								<BetWinner />
