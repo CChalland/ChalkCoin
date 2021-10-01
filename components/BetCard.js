@@ -1,6 +1,6 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { BetGameData, BetGameOdds } from "../helpers/BetCard";
+import { BetGameData } from "../helpers/BetCard";
 import BetScore from "./BetScore";
 import BetOdds from "./BetOdds";
 import BetWinner from "./BetWinner";
@@ -15,7 +15,6 @@ function BetCard(props) {
 	let betItems = betsData.map((bet, key) => {
 		if (bet.event) {
 			const betGameData = BetGameData(bet);
-			const betGameOdds = BetGameOdds(bet);
 
 			return (
 				<Container key={key} fluid>
