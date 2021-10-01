@@ -16,31 +16,16 @@ function BetCard(props) {
 		if (bet.event) {
 			const betGameData = BetGameData(bet);
 			const betGameOdds = BetGameOdds(bet);
-			const betGameScoreData = {
-				sportName: betGameData.sportName,
-				date: betGameData.date,
-				status: betGameData.status,
-				shortDetail: betGameData.shortDetail,
-				detail: betGameData.detail,
-				away:
-					betGameData.acceptingTeam.homeAway === "Away"
-						? betGameData.acceptingTeam
-						: betGameData.requesterTeam,
-				home:
-					betGameData.acceptingTeam.homeAway === "Home"
-						? betGameData.acceptingTeam
-						: betGameData.requesterTeam,
-			};
 
 			return (
 				<Container key={key} fluid>
 					<Card>
 						<Row className="">
 							<Col xs={"auto"} className="">
-								<BetScore key={bet.event.uid.toString()} betGameScoreData={betGameScoreData} />
+								<BetScore key={bet.event.uid.toString()} betGameScoreData={betGameData} />
 							</Col>
 							<Col xs={"auto"}>
-								<BetOdds betGameOdds={betGameOdds} />
+								<BetOdds betGameOdds={betGameData} />
 							</Col>
 							<Col>
 								<BetWinner />

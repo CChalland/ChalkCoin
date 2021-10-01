@@ -3,9 +3,16 @@ import { Col, Container, Row } from "react-bootstrap";
 
 function BetWinner(props) {
 	return (
-		<Container>
+		<Container fluid>
 			<Row>
-				<Col>WInner</Col>
+				<Col>
+					<Row>{"Worth"}</Row>
+					<Row>{"$"}</Row>
+				</Col>
+				<Col>
+					<Row>Winner</Row>
+					<Row>{"Team"}</Row>
+				</Col>
 			</Row>
 		</Container>
 	);
