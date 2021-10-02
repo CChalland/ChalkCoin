@@ -15,6 +15,10 @@ function BetCard(props) {
 	let betItems = betsData.map((bet, key) => {
 		if (bet.event) {
 			const betGameData = BetGameData(bet);
+			const betWinnerData = {
+				amount: bet.amount,
+				acceptingTeam: betGameData.away.requesterTeam ? betGameData.home : betGameData.away,
+			};
 
 			return (
 				<Container key={key} fluid>
@@ -27,7 +31,15 @@ function BetCard(props) {
 								<BetOdds betGameOdds={betGameData} />
 							</Col>
 							<Col>
-								<BetWinner />
+								<BetWinner betWinnerData={betWinnerData} />
+							</Col>
+							<Col>
+								<Button className="btn-outline" type="button" variant="success">
+									<span className="btn-label">
+										<i className="fas fa-plus"></i>
+									</span>
+									Accept
+								</Button>
 							</Col>
 						</Row>
 					</Card>

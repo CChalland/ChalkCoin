@@ -163,7 +163,7 @@ function BetModal(props) {
 				style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
 			>
 				<span className="btn-label">
-					<i className="fas fa-check"></i>
+					<i className="fas fa-plus"></i>
 				</span>
 				Place Bet
 			</Button>

@@ -26,7 +26,7 @@ function BetOdds({ betGameOdds }) {
 		],
 	};
 
-	console.log(betGameOdds);
+	// console.log(betGameOdds);
 
 	return (
 		<Container fuild="true">
