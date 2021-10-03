@@ -144,11 +144,11 @@ export function GameLeadersHelper(game, sportName) {
 		let athlete = awayTeam[0].leaders[awayTeam[0].leaders.length - 1];
 		awayAthlete = {
 			title: "PLAYERS TO WATCH",
-			headshot: athlete.leaders[0].athlete.headshot,
-			displayName: athlete.leaders[0].athlete.displayName,
+			headshot: athlete?.leaders[0].athlete.headshot,
+			displayName: athlete?.leaders[0].athlete.displayName,
 			team: awayTeam[0].team.abbreviation,
-			position: athlete.leaders[0].athlete.position?.abbreviation,
-			displayValue: athlete.leaders[0].displayValue,
+			position: athlete?.leaders[0].athlete.position?.abbreviation,
+			displayValue: athlete?.leaders[0].displayValue,
 			type: "pre",
 		};
 	}
@@ -157,11 +157,11 @@ export function GameLeadersHelper(game, sportName) {
 		let athlete = homeTeam[0].leaders[homeTeam[0].leaders.length - 1];
 		homeAthlete = {
 			title: "PLAYERS TO WATCH",
-			headshot: athlete.leaders[0].athlete.headshot,
-			displayName: athlete.leaders[0].athlete.displayName,
+			headshot: athlete?.leaders[0].athlete.headshot,
+			displayName: athlete?.leaders[0].athlete.displayName,
 			team: homeTeam[0].team.abbreviation,
-			position: athlete.leaders[0].athlete.position?.abbreviation,
-			displayValue: athlete.leaders[0].displayValue,
+			position: athlete?.leaders[0].athlete.position?.abbreviation,
+			displayValue: athlete?.leaders[0].displayValue,
 			type: "pre",
 		};
 	}

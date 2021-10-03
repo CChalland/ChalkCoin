@@ -1,8 +1,3 @@
 node_modules
-# Ignoring the API Keys in '.env' file on GitHub
+# Keep environment variables out of version control
 .env
-
-# Ignoring all '.next' files
-.next/
-.mockup/
-.DS_Store

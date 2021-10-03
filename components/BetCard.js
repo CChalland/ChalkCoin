@@ -6,11 +6,15 @@ import BetOdds from "./BetOdds";
 import BetWinner from "./BetWinner";
 import axios from "axios";
 
-function BetCard(props) {
-	const { betsData, currentUser } = props;
-
+function BetCard({ betsData, currentUser }) {
 	console.log("bets Data", betsData);
-	// console.log("currentUser", currentUser);
+	console.log("currentUser", currentUser);
+
+	const handleBet = async (bet) => {
+		const betReqData = { betId: bet.id, currentUserId: currentUser.id };
+		let response = await axios.post("http://localhost:4000/api/acceptBet", betReqData);
+		console.log(response);
+	};
 
 	let betItems = betsData.map((bet, key) => {
 		if (bet.event) {
@@ -34,7 +38,14 @@ function BetCard(props) {
 								<BetWinner betWinnerData={betWinnerData} />
 							</Col>
 							<Col>
-								<Button className="btn-outline" type="button" variant="success">
+								<Button
+									className="btn-round btn-wd"
+									type="button"
+									variant="success"
+									onClick={() => {
+										handleBet(bet);
+									}}
+								>
 									<span className="btn-label">
 										<i className="fas fa-plus"></i>
 									</span>

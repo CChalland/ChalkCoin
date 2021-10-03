@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE "Bet" ADD COLUMN     "winnerId" INTEGER;
-
--- AddForeignKey
-ALTER TABLE "Bet" ADD FOREIGN KEY ("winnerId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -17,11 +17,11 @@ const options = {
 					where: {
 						email: credentials.email,
 					},
-					include: {
-						requester: true,
-						accepter: true,
-						recipient: true,
-					},
+					// include: {
+					// 	requester: true,
+					// 	accepter: true,
+					// 	recipient: true,
+					// },
 				});
 
 				if (user) {
@@ -60,6 +60,11 @@ const options = {
 	},
 	callbacks: {
 		async jwt(token, user, account, profile, isNewUser) {
+			// console.log("jwt token", token);
+			// console.log("jwt user", user);
+			// console.log("jwt account", account);
+			// console.log("jwt profile", profile);
+			// console.log("jwt isNewUser", isNewUser);
 			if (account) {
 				token.accessToken = account.access_token;
 			}
@@ -69,6 +74,9 @@ const options = {
 			return token;
 		},
 		async session(session, token, user) {
+			// console.log("session session", session);
+			// console.log("session user", user);
+			// console.log("session token", token);
 			session.accessToken = token.accessToken;
 			session.user = token.user;
 

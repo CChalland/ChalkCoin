@@ -8,7 +8,7 @@ function BetWinner({ betWinnerData }) {
 			<Row>
 				<Col>
 					<Row>{"Worth"}</Row>
-					<Row>{betWinnerData.amount}</Row>
+					<Row>${betWinnerData.amount}</Row>
 				</Col>
 				<Col>
 					<Row>Winner</Row>

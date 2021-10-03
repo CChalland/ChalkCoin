@@ -10,7 +10,7 @@ function homeAwayHelper(game) {
 }
 function oddsHelper(outcomes, teamPick) {
 	let vigProbability;
-	let odd = outcomes.find((outcome) => outcome.name.includes(teamPick.team.name));
+	let odd = outcomes.find((outcome) => outcome.name.includes(teamPick.team.shortDisplayName));
 	if (odd.price < 0) {
 		vigProbability = (-1 * odd.price) / (-1 * odd.price + 100);
 	} else if (odd.price > 0) {
@@ -40,14 +40,15 @@ export function BetGameData(bet) {
 			market: marketHelper(odd.markets[0], awayTeam[0], homeTeam[0]),
 		};
 	});
+	console.log(bookmakers);
 	const awayAvgProb =
 		(bookmakers?.reduce((total, bookmaker, index, array) => {
 			return (total += bookmaker.market.away.winProbability);
 		}, 0) /
-			bookmakers.length) *
+			bookmakers?.length) *
 		100;
 	const homeAvgProb =
-		(bookmakers.reduce((total, bookmaker, index, array) => {
+		(bookmakers?.reduce((total, bookmaker, index, array) => {
 			return (total += bookmaker.market.home.winProbability);
 		}, 0) /
 			bookmakers?.length) *

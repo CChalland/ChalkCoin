@@ -29,7 +29,7 @@ export default async (req, res) => {
 		{ displayName: "MLS", key: "soccer_usa_mls" },
 	];
 
-	if (req.method === "GET") {
+	if (req.method !== "POST") {
 		return res.status(405).json({ message: "Method not allowed" });
 	} else if (req.method === "POST") {
 		const bet = req.body;
@@ -42,6 +42,7 @@ export default async (req, res) => {
 					(game) => bet.details.name.includes(game.away_team) && bet.details.name.includes(game.home_team)
 				);
 			}
+			console.log(betOdds);
 
 			try {
 				let betData = {
