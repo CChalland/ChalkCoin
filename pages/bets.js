@@ -250,7 +250,7 @@ export async function getServerSideProps(context) {
 		},
 	});
 	const betPromises = bets.map(async (bet) => {
-		bet.details = JSON.parse(bet.details);
+		// bet.details = JSON.parse(bet.details);
 		bet.createdAt = JSON.stringify(bet.createdAt);
 		bet.updatedAt = JSON.stringify(bet.updatedAt);
 		return bet;

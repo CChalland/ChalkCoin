@@ -47,7 +47,7 @@ export default async (req, res) => {
 			try {
 				let betData = {
 					amount: parseFloat(bet.amount),
-					details: JSON.stringify(bet.details),
+					details: bet.details,
 					currency: bet.currency,
 					requester: {
 						connect: {
