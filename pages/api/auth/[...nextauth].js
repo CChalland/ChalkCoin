@@ -17,11 +17,17 @@ const options = {
 					where: {
 						email: credentials.email,
 					},
-					// include: {
-					// 	requester: true,
-					// 	accepter: true,
-					// 	recipient: true,
-					// },
+					include: {
+						requester: {
+							select: { id: true },
+						},
+						accepter: {
+							select: { id: true },
+						},
+						recipient: {
+							select: { id: true },
+						},
+					},
 				});
 
 				if (user) {
@@ -69,7 +75,28 @@ const options = {
 				token.accessToken = account.access_token;
 			}
 			if (user) {
-				token.user = user;
+				if (!("accepter" in user) || !("recipient" in user) || !("requester" in user)) {
+					const currentUser = await prisma.user.findFirst({
+						where: {
+							id: user.id,
+						},
+						include: {
+							requester: {
+								select: { id: true },
+							},
+							accepter: {
+								select: { id: true },
+							},
+							recipient: {
+								select: { id: true },
+							},
+						},
+					});
+					delete currentUser.password;
+					token.user = await currentUser;
+				} else {
+					token.user = user;
+				}
 			}
 			return token;
 		},
