@@ -18,16 +18,28 @@ const options = {
 						email: credentials.email,
 					},
 					include: {
-						requester: true,
-						accepter: true,
-						recipient: true,
+						requester: {
+							select: { id: true },
+						},
+						accepter: {
+							select: { id: true },
+						},
+						recipient: {
+							select: { id: true },
+						},
 					},
 				});
-				const passwordTrue = await compareSync(credentials.password, user.password);
-				if (user && passwordTrue) {
-					return user;
+
+				if (user) {
+					const passwordTrue = await compareSync(credentials.password, user.password);
+					if (passwordTrue) {
+						delete user.password;
+						return user;
+					} else {
+						throw new Error("incorrectPassword");
+					}
 				} else {
-					return null;
+					throw new Error("invalidEmail");
 				}
 			},
 		}),
@@ -48,61 +60,61 @@ const options = {
 		}),
 	],
 	session: {
-		// Use JSON Web Tokens for session instead of database sessions.
-		// This option can be used with or without a database for users/accounts.
-		// Note: `jwt` is automatically set to `true` if no database is specified.
 		jwt: true,
-
-		// Seconds - How long until an idle session expires and is no longer valid.
 		maxAge: 30 * 24 * 60 * 60, // 30 days
-
-		// Seconds - Throttle how frequently to write to database to extend a session.
-		// Use it to limit write operations. Set to 0 to always update the database.
-		// Note: This option is ignored if using JSON Web Tokens
 		updateAge: 24 * 60 * 60, // 24 hours
 	},
 	callbacks: {
 		async jwt(token, user, account, profile, isNewUser) {
-			console.log("jwt token", token);
-			console.log("jwt user", user);
-			console.log("jwt account", account);
-			console.log("jwt profile", profile);
-			console.log("jwt isNewUser", isNewUser);
-
-			// Persist the OAuth access_token to the token right after signin
+			// console.log("jwt token", token);
+			// console.log("jwt user", user);
+			// console.log("jwt account", account);
+			// console.log("jwt profile", profile);
+			// console.log("jwt isNewUser", isNewUser);
 			if (account) {
 				token.accessToken = account.access_token;
 			}
 			if (user) {
-				token.user = user;
-				// token.username = user.username;
-				// token.email = user.email;
-				// token.password = user.password;
-				// token.name = user.name;
-				// token.picture = user.image;
-				// token.paypal = user.paypal
+				if (!("accepter" in user) || !("recipient" in user) || !("requester" in user)) {
+					const currentUser = await prisma.user.findFirst({
+						where: {
+							id: user.id,
+						},
+						include: {
+							requester: {
+								select: { id: true },
+							},
+							accepter: {
+								select: { id: true },
+							},
+							recipient: {
+								select: { id: true },
+							},
+						},
+					});
+					delete currentUser.password;
+					token.user = await currentUser;
+				} else {
+					token.user = user;
+				}
 			}
 			return token;
 		},
 		async session(session, token, user) {
-			console.log("session session", session);
-			console.log("session user", user);
-			console.log("session token", token);
-
-			// Send properties to the client, like an access_token from a provider.
+			// console.log("session session", session);
+			// console.log("session user", user);
+			// console.log("session token", token);
 			session.accessToken = token.accessToken;
 			session.user = token.user;
-
-			// delete token.password;
-			// session.user = token;
 
 			return session;
 		},
 	},
 	pages: {
 		signIn: "/LoginRegister",
-		verifyRequest: "/VerifyRequest",
-		newUser: "/NewUser",
+		error: "/LoginRegister",
+		verifyRequest: "/LoginRegister?verifyRequest=true",
+		newUser: "/UserPage?newUser=true",
 	},
 	// @ts-ignore
 	adapter: Adapters.Prisma.Adapter({

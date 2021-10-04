@@ -1,85 +1,75 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Container, Col, Row, Button, Modal, Carousel, Tab, Nav, Card } from "react-bootstrap";
-import Select from "react-select";
+import React, { useState, useContext } from "react";
+import { Container, Col, Row, Image, Button, Modal, Carousel, Tab, Nav, Card } from "react-bootstrap";
+import { SportContext } from "../contexts/Sports.Context";
+import { GameScoreHelper, GamePlayHelper, GameLeadersHelper } from "../helpers/SportCard";
 import prisma from "../contexts/prisma";
+import axios from "axios";
+import { Doughnut } from "react-chartjs-2";
+
+const fetchData = async (sportKey) =>
+	await axios
+		.get(
+			`https://api.the-odds-api.com/v4/sports/${sportKey}/odds/?regions=us&oddsFormat=american&apiKey=${process.env.ODDS_API_KEY}`
+		)
+		.then((res) => ({
+			error: false,
+			odds: res.data,
+		}))
+		.catch(() => ({
+			error: true,
+			odds: null,
+		}));
 
 function Test(props) {
-	const options = [
-		"Inside Out",
-		"John Wick",
-		"Jurassic World",
-		"The Lord of the Rings",
-		"Pacific Rim",
-		"Pirates of the Caribbean",
-		"Planet of the Apes",
-		"Saw",
-		"Sicario",
-		"Zombies",
-	];
+	const { sportsData } = useContext(SportContext);
+	let sportName = "NFL";
+	let sportData = sportsData.filter((sport) => {
+		return sport.abbrv === sportName;
+	});
 
-	const [results, setResults] = useState(options);
-	const [dropdownVisible, setDropdownVisible] = useState(false);
-	const [singleSelect, setSingleSelect] = React.useState("");
+	let gameData, gameScoreData;
+	if (sportData.data?.events) {
+		gameData = sportData[0].data?.events[0];
+		gameScoreData = GameScoreHelper(gameData, sportName);
+	}
 
-	const filterMethod = (options, query) => {
-		return options.filter((option) => option.toLowerCase().includes(query.toLowerCase()));
+	const data = {
+		datasets: [
+			{
+				data: [34.7, 65.0],
+				backgroundColor: ["rgb(101, 4, 21)", "rgb(5, 37, 112)"],
+			},
+		],
 	};
 
-	const searchList = (event) => {
-		const results = filterMethod(options, event.target.value);
-		setResults(results);
-	};
-
-	const showDropdown = () => {
-		setDropdownVisible(true);
-	};
-
-	const hideDropdown = () => {
-		setDropdownVisible(false);
-	};
-
-	console.log(props.users);
 	return (
-		<Container>
-			<div className="autocomplete">
-				<input
-					type="text"
-					placeholder="Type to search list"
-					onChange={searchList}
-					onFocus={() => showDropdown()}
-					onBlur={() => hideDropdown()}
-				/>
-				{dropdownVisible && (
-					<div className="autocomplete-dropdown">
-						<ul className="autocomplete-search-results-list">
-							{results.map((result) => (
-								<li className="autocomplete-search-result" key={result}>
-									{result}
-								</li>
-							))}
-						</ul>
-					</div>
-				)}
-			</div>
+		<Container fluid>
+			<Row>
+				<Col xs={4}>
+					<Button className="btn-outline" variant="default">
+						<Image width={30} src={"../static/media/sports-icons/2.png"} rounded />
+					</Button>
+				</Col>
+			</Row>
 
-			<Select
-				className="react-select primary"
-				classNamePrefix="react-select"
-				name="singleSelect"
-				value={singleSelect}
-				onChange={(value) => setSingleSelect(value)}
-				options={[
-					{
-						value: "",
-						label: "Single Option",
-						isDisabled: true,
-					},
-					{ value: "2", label: "Foobar" },
-					{ value: "3", label: "Is great" },
-				]}
-				placeholder="Search Username"
-			/>
+			<Row>
+				<Col xs={4}>
+					<div className="chart-relative">
+						<Doughnut
+							data={data}
+							options={{ cutoutPercentage: 80, responsive: true, maintainAspectRatio: true }}
+						/>
+						<div className="chart-absolute-center chart-text-center">
+							<div className="data-chart">
+								<div className="inner-circle">
+									<span className="home-team">MIN</span>
+									<span className="away-team">ARI</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</Col>
+			</Row>
 		</Container>
 	);
 }
@@ -87,6 +77,7 @@ function Test(props) {
 export default Test;
 
 export async function getServerSideProps(context) {
+	// const odds = await fetchData("americanfootball_nfl");
 	let users = await prisma.user.findMany();
 	users = users.map((user) => {
 		delete user.emailVerified;

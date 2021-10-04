@@ -7,24 +7,24 @@ function GameScore(props) {
 		const titleStyle = gameScoreCardData.status.type.state === "in" ? "text-danger" : "";
 
 		let index = 0;
-		const linescoresHeader = gameScoreCardData.away.periods.map((period) => {
+		const linescoresHeader = gameScoreCardData.away.periods.map((period, key) => {
 			index++;
 			if ((gameScoreCardData.sportName == "NHL" && index == 4) || index == 5) {
 				return (
-					<Col xs={1} className="text-center">
+					<Col xs={1} className="text-center" key={key}>
 						{"OT"}
 					</Col>
 				);
 			} else if ((gameScoreCardData.sportName == "NHL" && index > 4) || index > 5) {
 				let numberOT = gameScoreCardData.sportName == "NHL" ? (index - 4).toString() : (index - 5).toString();
 				return (
-					<Col xs={1} className="text-center">
+					<Col xs={1} className="text-center" key={key}>
 						{numberOT + "OT"}
 					</Col>
 				);
 			} else {
 				return (
-					<Col xs={1} className="text-center">
+					<Col xs={1} className="text-center" key={key}>
 						{index}
 					</Col>
 				);
@@ -42,7 +42,7 @@ function GameScore(props) {
 
 			title = (
 				<>
-					<Col xs={6} className={` ${titleStyle}`}>
+					<Col xs={6} lg={5} className={` ${titleStyle}`}>
 						{gameScoreCardData.detail}
 					</Col>
 					<Col xs={3} className="font-weight-bold text-right">
@@ -58,23 +58,23 @@ function GameScore(props) {
 			);
 
 			if (gameScoreCardData.away.periods.length !== 0) {
-				awayPeriods = gameScoreCardData.away.periods.map((period) => {
+				awayPeriods = gameScoreCardData.away.periods.map((period, key) => {
 					if (period?.name === "runs") {
 						awayRuns = period.displayValue;
 						return (
-							<Col xs={3} className="font-weight-bold text-right">
+							<Col xs={3} className="font-weight-bold text-right" key={key}>
 								{period?.displayValue}
 							</Col>
 						);
 					} else if (period?.name === "errors") {
 						return (
-							<Col xs={1} className="mr-auto text-center">
+							<Col xs={1} className="mr-auto text-center" key={key}>
 								{period?.displayValue}
 							</Col>
 						);
 					} else {
 						return (
-							<Col xs={1} className="text-center">
+							<Col xs={1} className="text-center" key={key}>
 								{period?.displayValue}
 							</Col>
 						);
@@ -82,23 +82,23 @@ function GameScore(props) {
 				});
 			}
 			if (gameScoreCardData.home.periods.length !== 0) {
-				homePeriods = gameScoreCardData.home.periods.map((period) => {
+				homePeriods = gameScoreCardData.home.periods.map((period, key) => {
 					if (period?.name === "runs") {
 						homeRuns = period.displayValue;
 						return (
-							<Col xs={3} className="font-weight-bold text-right">
+							<Col xs={3} className="font-weight-bold text-right" key={key}>
 								{period?.displayValue}
 							</Col>
 						);
 					} else if (period?.name === "errors") {
 						return (
-							<Col xs={1} className="mr-auto text-center">
+							<Col xs={1} className="mr-auto text-center" key={key}>
 								{period?.displayValue}
 							</Col>
 						);
 					} else {
 						return (
-							<Col xs={1} className="text-center">
+							<Col xs={1} className="text-center" key={key}>
 								{period?.displayValue}
 							</Col>
 						);
@@ -113,7 +113,7 @@ function GameScore(props) {
 		} else {
 			title = (
 				<>
-					<Col xs={6} className={` ${titleStyle}`}>
+					<Col xs={6} lg={5} className={` ${titleStyle}`}>
 						{gameScoreCardData.shortDetail}
 					</Col>
 					{linescoresHeader}
@@ -124,9 +124,9 @@ function GameScore(props) {
 			);
 			awayPeriods = (
 				<>
-					{gameScoreCardData.away.periods.map((period) => {
+					{gameScoreCardData.away.periods.map((period, key) => {
 						return (
-							<Col xs={1} className="text-center">
+							<Col xs={1} className="text-center" key={key}>
 								{period.value}
 							</Col>
 						);
@@ -135,9 +135,9 @@ function GameScore(props) {
 			);
 			homePeriods = (
 				<>
-					{gameScoreCardData.home.periods.map((period) => {
+					{gameScoreCardData.home.periods.map((period, key) => {
 						return (
-							<Col xs={1} className="text-center">
+							<Col xs={1} className="text-center" key={key}>
 								{period.value}
 							</Col>
 						);
@@ -175,10 +175,10 @@ function GameScore(props) {
 			<Row className="py-2 align-items-center border">{title}</Row>
 
 			<Row className={`my-3 align-items-center ${awayFinalStyle}`}>
-				<Col xs={2} md={2} lg={3} xl={2} className="text-right">
+				<Col xs={2} md={2} lg={2} xl={2} className="text-right">
 					<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
 				</Col>
-				<Col xs={4} md={4} lg={3} xl={4} className="">
+				<Col xs={4} md={4} lg={3} xl={3} className="">
 					<Row className="mb-0 h5">{gameScoreCardData.away.name}</Row>
 					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 						{"(" +
@@ -194,10 +194,10 @@ function GameScore(props) {
 			</Row>
 
 			<Row className={`mt-4 mb-3 align-items-center ${homeFinalStyle}`}>
-				<Col xs={2} md={2} lg={3} xl={2} className="text-right">
+				<Col xs={2} md={2} lg={2} xl={2} className="text-right">
 					<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
 				</Col>
-				<Col xs={4} md={4} lg={3} xl={4} className="">
+				<Col xs={4} md={4} lg={3} xl={3} className="">
 					<Row className="mb-0 h5">{gameScoreCardData.home.name}</Row>
 					<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
 						{"(" +

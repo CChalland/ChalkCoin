@@ -109,7 +109,7 @@ function Sidebar({ routes, image, background, pathname }) {
 				<Container fluid>
 					<Row className="align-items-center">
 						<Col xs={4}>
-							<Image src={prop.icon} fluid />
+							<Image src={prop.image} fluid />
 						</Col>
 						<Col>
 							<p>{prop.name}</p>

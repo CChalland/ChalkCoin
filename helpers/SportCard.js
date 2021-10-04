@@ -69,15 +69,21 @@ export function GameScoreHelper(game, sportName) {
 		shortDetail: game.competitions[0].status.type.shortDetail,
 		detail: game.competitions[0].status.type.detail,
 		away: {
+			abbreviation: awayTeam[0].team.abbreviation,
+			alternateColor: awayTeam[0].team.alternateColor,
+			color: awayTeam[0].team.color,
 			logo: awayTeam[0].team.logo,
-			name: awayTeam[0].team.displayName.split(" ").pop(),
+			name: awayTeam[0].team.shortDisplayName,
 			records: awayRecords,
 			score: parseInt(awayTeam[0].score),
 			periods: awayPeriods,
 		},
 		home: {
+			abbreviation: homeTeam[0].team.abbreviation,
+			alternateColor: homeTeam[0].team.alternateColor,
+			color: homeTeam[0].team.color,
 			logo: homeTeam[0].team.logo,
-			name: homeTeam[0].team.displayName.split(" ").pop(),
+			name: homeTeam[0].team.shortDisplayName,
 			records: homeRecords,
 			score: parseInt(homeTeam[0].score),
 			periods: homePeriods,
@@ -138,11 +144,11 @@ export function GameLeadersHelper(game, sportName) {
 		let athlete = awayTeam[0].leaders[awayTeam[0].leaders.length - 1];
 		awayAthlete = {
 			title: "PLAYERS TO WATCH",
-			headshot: athlete.leaders[0].athlete.headshot,
-			displayName: athlete.leaders[0].athlete.displayName,
+			headshot: athlete?.leaders[0].athlete.headshot,
+			displayName: athlete?.leaders[0].athlete.displayName,
 			team: awayTeam[0].team.abbreviation,
-			position: athlete.leaders[0].athlete.position?.abbreviation,
-			displayValue: athlete.leaders[0].displayValue,
+			position: athlete?.leaders[0].athlete.position?.abbreviation,
+			displayValue: athlete?.leaders[0].displayValue,
 			type: "pre",
 		};
 	}
@@ -151,11 +157,11 @@ export function GameLeadersHelper(game, sportName) {
 		let athlete = homeTeam[0].leaders[homeTeam[0].leaders.length - 1];
 		homeAthlete = {
 			title: "PLAYERS TO WATCH",
-			headshot: athlete.leaders[0].athlete.headshot,
-			displayName: athlete.leaders[0].athlete.displayName,
+			headshot: athlete?.leaders[0].athlete.headshot,
+			displayName: athlete?.leaders[0].athlete.displayName,
 			team: homeTeam[0].team.abbreviation,
-			position: athlete.leaders[0].athlete.position?.abbreviation,
-			displayValue: athlete.leaders[0].displayValue,
+			position: athlete?.leaders[0].athlete.position?.abbreviation,
+			displayValue: athlete?.leaders[0].displayValue,
 			type: "pre",
 		};
 	}
@@ -357,5 +363,15 @@ export function GameLeadersHelper(game, sportName) {
 
 	return {
 		athletes: athletes?.flat(),
+	};
+}
+
+export function BetDataHelper(game, sportName) {
+	return {
+		id: game.id,
+		date: game.date,
+		name: game.name,
+		odds: game.competitions[0].odds,
+		displayName: sportName,
 	};
 }
