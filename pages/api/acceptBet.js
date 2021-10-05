@@ -12,7 +12,19 @@ export default async (req, res) => {
 		console.log(body);
 		if (session) {
 			try {
-				return res.json(session);
+				const currentUserBets = await prisma.bet.findMany({
+					where: {
+						requesterId: session.user.id,
+					},
+				});
+				const betIsUsers = currentUserBets.some((bet) => bet.id === body.betId);
+				let message;
+				if (!betIsUsers) {
+					message = "bet doesn't belong to user";
+				} else {
+					message = "bet belongs to current user";
+				}
+
 				// const acceptedBet = await prisma.bet.update({
 				// 	where: {
 				// 		id: body.betId,
@@ -26,7 +38,7 @@ export default async (req, res) => {
 				// 		},
 				// 	},
 				// });
-				// return res.json(acceptedBet);
+				return res.json({ message });
 			} catch (e) {
 				console.log(e);
 				if (e.code === "P2002") {
