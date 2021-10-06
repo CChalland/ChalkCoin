@@ -2,6 +2,7 @@ import React from "react";
 import App from "next/app";
 import { Provider } from "next-auth/client";
 import { SportProvider } from "../contexts/Sports.Context";
+import { BetProvider } from "../contexts/Bets.Context";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "assets/scss/betoken-bootstrap-react.scss?v=2.0.0";
@@ -26,9 +27,11 @@ class MyApp extends App {
 		return (
 			<Provider session={pageProps.session}>
 				<SportProvider>
-					<Admin>
-						<Component {...pageProps} />
-					</Admin>
+					<BetProvider>
+						<Admin>
+							<Component {...pageProps} />
+						</Admin>
+					</BetProvider>
 				</SportProvider>
 			</Provider>
 		);

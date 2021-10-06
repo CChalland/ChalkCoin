@@ -1,48 +1,46 @@
 import prisma from "../../contexts/prisma";
-import { getSession } from "next-auth/client";
 
 export default async (req, res) => {
-	const session = await getSession({ req });
-
-	if (req.method === "GET") {
-		let bets = await prisma.bet.findMany({
+	if (req.method !== "GET") {
+		return res.status(405).json({ message: "Method not allowed" });
+	} else if (req.method === "GET") {
+		const openBets = await prisma.bet.findMany({
 			where: {
-				accepted: false,
+				AND: [{ accepted: false }, { recipientId: null }],
 			},
 		});
-		const betPromies = bets.map(async (bet) => {
-			bet.details = JSON.parse(bet.details);
-			return bet;
+		const recipientBets = await prisma.bet.findMany({
+			where: {
+				accepted: false,
+				NOT: {
+					recipientId: null,
+				},
+			},
 		});
-		const betsData = await Promise.all(betPromies);
-		return res.status(200).json(betsData);
-	} else if (req.method === "POST") {
-		const bet = req.body;
-		if (session) {
-			try {
-				let betData = {
-					amount: parseFloat(bet.amount),
-					details: JSON.stringify(bet.details),
-					currency: bet.currency,
-					requester: {
-						connect: {
-							id: session.user.id,
-						},
-					},
-				};
-				if (bet.recipientId) betData.recipient = { connect: { id: bet.recipientId } };
-				// const createdBet = await prisma.bet.create({
-				// 	data: betData,
-				// });
-				// return res.json(createdBet);
-				return res.json(betData);
-			} catch (e) {
-				console.log(e);
-				if (e.code === "P2002") {
-					return res.json({ error: `There's already an account with that ${e.meta.target[0]}` });
-				}
-				// throw e;
-			}
+		const acceptedBets = await prisma.bet.findMany({
+			where: {
+				AND: [{ accepted: true }, { completed: false }],
+			},
+		});
+		const completedBets = await prisma.bet.findMany({
+			where: {
+				AND: [{ completed: true }, { blockHash: null }],
+			},
+		});
+		if (req.query.type === "all") {
+			return res.json({
+				pendingBets: { openBets, recipientBets },
+				acceptedBets,
+				completedBets,
+			});
+		} else if (req.query.type === "open") {
+			return res.json(openBets);
+		} else if (req.query.type === "recipient") {
+			return res.json(recipientBets);
+		} else if (req.query.type === "accepted") {
+			return res.json(acceptedBets);
+		} else if (req.query.type === "completed") {
+			return res.json(completedBets);
 		}
 	}
 };

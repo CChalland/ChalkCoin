@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
 	Container,
 	Col,
@@ -14,11 +14,13 @@ import {
 } from "react-bootstrap";
 import Select, { components } from "react-select";
 import { Doughnut } from "react-chartjs-2";
+import { BetDispatch } from "../contexts/Bets.Context";
 import GameScore from "./GameScore";
 import axios from "axios";
 
 function BetModal(props) {
 	const { gameScoreCardData, betData, users, currentUser } = props;
+	const dispatch = useContext(BetDispatch);
 	const [modal, setModal] = useState(false);
 	const [selectedWinner, setSelectedWinner] = useState("");
 	const [selectedWinnerState, setSelectedWinnerState] = useState(false);
@@ -138,8 +140,9 @@ function BetModal(props) {
 				requesterId: currentUser.id,
 			};
 			if (betType === "recipient") submitBet.recipientId = recipient.id;
-			let response = await axios.post("http://localhost:4000/api/createBet", submitBet);
-			console.log("in response", response.data);
+			await axios.post("http://localhost:4000/api/createBet", submitBet).then((res) => {
+				dispatch({ type: "ADD BET", data: res.data, recipient: recipient.id });
+			});
 		}
 	};
 

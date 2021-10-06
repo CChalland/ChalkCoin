@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
-import { SportContext } from "../contexts/Sports.Context";
 import { getSession } from "next-auth/client";
+import { SportContext } from "../contexts/Sports.Context";
+import { BetContext } from "../contexts/Bets.Context";
+import { BetSorter } from "../helpers/BetCard";
 import BetCard from "../components/BetCard";
 
-function Bets(props) {
-	const { currentUser, sportWithBets } = props;
+function Bets({ currentUser, sportWithBets }) {
 	const { sportsData } = useContext(SportContext);
+	// const betsData = useContext(BetContext);
+	// const sortBets = BetSorter(betsData.pendingBets.openBets, sportsData, currentUser.id);
+
 	const [allBets, setAllBets] = useState(
 		sportWithBets
 			.map((sport) => {
@@ -231,10 +235,22 @@ export async function getServerSideProps(context) {
 	const { req, res } = context;
 	const session = await getSession({ req });
 	let currentUser = {};
+	let bets = [];
 	if (session) {
 		currentUser = await prisma.user.findUnique({
 			where: {
 				id: session.user.id,
+			},
+			include: {
+				requester: {
+					select: { id: true },
+				},
+				accepter: {
+					select: { id: true },
+				},
+				recipient: {
+					select: { id: true },
+				},
 			},
 		});
 		delete currentUser.password;
@@ -242,15 +258,24 @@ export async function getServerSideProps(context) {
 		delete currentUser.emailVerified;
 		delete currentUser.createdAt;
 		delete currentUser.updatedAt;
+		bets = await prisma.bet.findMany({
+			where: {
+				AND: [{ accepted: false }, { recipientId: null }],
+				NOT: {
+					requesterId: session.user.id,
+				},
+			},
+		});
+	} else {
+		bets = await prisma.bet.findMany({
+			where: {
+				AND: [{ accepted: false }, { recipientId: null }],
+			},
+		});
 	}
 
-	let bets = await prisma.bet.findMany({
-		where: {
-			accepted: false,
-		},
-	});
 	const betPromises = bets.map(async (bet) => {
-		bet.details = JSON.parse(bet.details);
+		// bet.details = JSON.parse(bet.details);
 		bet.createdAt = JSON.stringify(bet.createdAt);
 		bet.updatedAt = JSON.stringify(bet.updatedAt);
 		return bet;
