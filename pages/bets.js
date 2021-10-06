@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
+import { getSession } from "next-auth/client";
 import { SportContext } from "../contexts/Sports.Context";
 import { BetContext } from "../contexts/Bets.Context";
-import { getSession } from "next-auth/client";
 import { BetSorter } from "../helpers/BetCard";
 import BetCard from "../components/BetCard";
 
