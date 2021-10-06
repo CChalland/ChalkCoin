@@ -16,8 +16,9 @@ function BetCard({ betsData, currentUser }) {
 
 	const handleBet = async (bet) => {
 		const betReqData = { betId: bet.id, currentUserId: currentUser.id };
-		let response = await axios.post("http://localhost:4000/api/acceptBet", betReqData);
-		// console.log(response);
+		await axios.post("http://localhost:4000/api/acceptBet", betReqData).then((res) => {
+			dispatch({ type: "ACCEPTED BET", data: res.data });
+		});
 	};
 
 	let betItems = betsData.map((bet, key) => {
