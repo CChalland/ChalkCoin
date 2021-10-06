@@ -104,35 +104,36 @@ export function BetGameData(bet) {
 	};
 }
 
-export function BetSorter(bets) {
-	console.log(bets);
+export function BetSorter(bets, sportsData, currentUserId) {
 	let sportWithBets = [];
-	const nflBets = bets
+	const allBets = bets.filter((bet) => bet.requesterId !== currentUserId);
+
+	const nflBets = allBets
 		.filter((bet) => bet.details.displayName === "NFL")
 		.sort((a, b) => {
 			new Date(a.details.date) - new Date(b.details.date);
 		});
-	const mlbBets = bets
+	const mlbBets = allBets
 		.filter((bet) => bet.details.displayName === "MLB")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
-	const nbaBets = bets
+	const nbaBets = allBets
 		.filter((bet) => bet.details.displayName === "NBA")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
-	const ncaabBets = bets
+	const ncaabBets = allBets
 		.filter((bet) => bet.details.displayName === "NCAA Men's Basketball")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
-	const nhlBets = bets
+	const nhlBets = allBets
 		.filter((bet) => bet.details.displayName === "NHL")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
-	const wnbaBets = bets
+	const wnbaBets = allBets
 		.filter((bet) => bet.details.displayName === "WNBA")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
@@ -145,5 +146,15 @@ export function BetSorter(bets) {
 		sportWithBets.push({ displayName: "NCAA Men's Basketball", icon: 5, bets: ncaabBets });
 	if (nhlBets.length > 0) sportWithBets.push({ displayName: "NHL", icon: 6, bets: nhlBets });
 	if (wnbaBets.length > 0) sportWithBets.push({ displayName: "WNBA", icon: 8, bets: wnbaBets });
-	return sportWithBets;
+	return sportWithBets
+		.map((sport) => {
+			const bet = sport.bets.map((bet) => {
+				const sportGames = sportsData.find((item) => item.display_name === sport.displayName);
+				const event = sportGames.data.events?.find((event) => event.id === bet.details.id);
+				bet.event = event;
+				return bet;
+			});
+			return bet;
+		})
+		.flat();
 }

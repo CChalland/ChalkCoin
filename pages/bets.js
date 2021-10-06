@@ -6,12 +6,10 @@ import { getSession } from "next-auth/client";
 import { BetSorter } from "../helpers/BetCard";
 import BetCard from "../components/BetCard";
 
-function Bets(props) {
-	const { currentUser, sportWithBets } = props;
+function Bets({ currentUser, sportWithBets }) {
 	const { sportsData } = useContext(SportContext);
-
-	const betsData = useContext(BetContext);
-	const sortBets = BetSorter(betsData.pendingBets.openBets);
+	// const betsData = useContext(BetContext);
+	// const sortBets = BetSorter(betsData.pendingBets.openBets, sportsData, currentUser.id);
 
 	const [allBets, setAllBets] = useState(
 		sportWithBets

@@ -1,7 +1,5 @@
 const betsReducer = (state, action) => {
 	switch (action.type) {
-		case "ALL":
-			return action.data;
 		case "ADD BET":
 			if (action.recipient) {
 				state.pendingBets.recipientBets = [...state.pendingBets.recipientBets, action.data];
@@ -23,6 +21,8 @@ const betsReducer = (state, action) => {
 			state.acceptedBets = state.acceptedBets.filter((bet) => bet.id !== action.data.id);
 			state.completedBets = [...state.completedBets, action.data];
 			return state;
+		case "ALL":
+			return action.data;
 		default:
 			return state;
 	}
