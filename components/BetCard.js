@@ -1,6 +1,5 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { BetContext } from "../contexts/Bets.Context";
 import { BetDispatch } from "../contexts/Bets.Context";
 import { BetGameData } from "../helpers/BetCard";
 import BetScore from "./BetScore";
@@ -9,10 +8,7 @@ import BetWinner from "./BetWinner";
 import axios from "axios";
 
 function BetCard({ betsData, currentUser }) {
-	const bets = useContext(BetContext);
 	const dispatch = useContext(BetDispatch);
-
-	console.log("BetContext", bets);
 
 	const handleBet = async (bet) => {
 		const betReqData = { betId: bet.id, currentUserId: currentUser.id };

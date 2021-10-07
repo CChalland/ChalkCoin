@@ -8,21 +8,10 @@ import BetCard from "../components/BetCard";
 
 function Bets({ currentUser, sportWithBets }) {
 	const { sportsData } = useContext(SportContext);
-	// const betsData = useContext(BetContext);
-	// const sortBets = BetSorter(betsData.pendingBets.openBets, sportsData, currentUser.id);
+	const betsData = useContext(BetContext);
 
 	const [allBets, setAllBets] = useState(
-		sportWithBets
-			.map((sport) => {
-				const bet = sport.bets.map((bet) => {
-					const sportGames = sportsData.find((item) => item.display_name === sport.displayName);
-					const event = sportGames.data.events?.find((event) => event.id === bet.details.id);
-					bet.event = event;
-					return bet;
-				});
-				return bet;
-			})
-			.flat()
+		BetSorter(betsData.pendingBets.openBets, sportsData, currentUser.id)
 	);
 	const [bets, setBets] = useState([]);
 	const [search, setSearch] = useState("");
@@ -33,6 +22,14 @@ function Bets({ currentUser, sportWithBets }) {
 	const [ncaabState, setNCAABState] = useState(false);
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
+
+	console.log("allBets", allBets);
+	console.log("bets", bets);
+
+	useEffect(() => {
+		console.log("betsData effect", betsData);
+		setAllBets(BetSorter(betsData.pendingBets.openBets, sportsData, currentUser.id));
+	}, [betsData]);
 
 	useEffect(() => {
 		let filteredBetsData = [];
@@ -91,7 +88,7 @@ function Bets({ currentUser, sportWithBets }) {
 			setBets(searchedBets);
 			setSearchState(true);
 		}
-	}, [search, nflState, mlbState, nbaState, ncaabState, nhlState, wnbaState]);
+	}, [allBets, search, nflState, mlbState, nbaState, ncaabState, nhlState, wnbaState]);
 
 	const sportButtons = sportWithBets.map((sport, key) => {
 		let buttonClass;
