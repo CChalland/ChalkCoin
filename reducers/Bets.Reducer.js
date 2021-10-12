@@ -22,7 +22,9 @@ const betsReducer = (state, action) => {
 			state.completedBets = [...state.completedBets, action.data];
 			return state;
 		case "ALL":
-			return action.data;
+			return { ...action.data, blockchain: action.blockchain };
+		case "ADD EVENT":
+
 		default:
 			return state;
 	}

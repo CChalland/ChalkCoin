@@ -9,13 +9,18 @@ export function BetProvider(props) {
 		pendingBets: { openBets: [], recipientBets: [] },
 		acceptedBets: [],
 		completedBets: [],
+		blockchain: {},
 	});
 
 	useEffect(() => {
 		async function getBetsData() {
+			const getNode1 = `http://localhost:3001/blockchain`;
+			let response = await axios.get(getNode1);
+			const blockchainData = response.data;
+
 			try {
 				await axios.get("http://localhost:4000/api/bets?type=all").then((res) => {
-					dispatch({ type: "ALL", data: res.data });
+					dispatch({ type: "ALL", data: res.data, blockchain: blockchainData });
 				});
 			} catch (err) {
 				console.log(err.message);

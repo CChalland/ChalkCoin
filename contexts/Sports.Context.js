@@ -65,12 +65,10 @@ export function SportProvider(props) {
 		},
 		// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {}, reload: false },
 	];
-	// const [sportsData, setSportsData] = useState(initialSportsData);
-	const [sportsData, dispatch] = useReducer(sportsReducer, initialSportsData);
-	const [blockchain, setBlockchain] = useState({});
-	const [fetchedSportData, setFetchedSportData] = useState(false);
 	const betsData = useContext(BetContext);
 	const betsDispatch = useContext(BetDispatch);
+	const [sportsData, dispatch] = useReducer(sportsReducer, initialSportsData);
+	const [fetchedSportData, setFetchedSportData] = useState(false);
 
 	useEffect(() => {
 		async function getSportsData() {
@@ -134,7 +132,7 @@ export function SportProvider(props) {
 	}, [fetchedSportData]);
 
 	return (
-		<SportContext.Provider value={{ sportsData, blockchain, fetchedSportData }}>
+		<SportContext.Provider value={{ sportsData, fetchedSportData }}>
 			<SportDispatch.Provider value={dispatch}>{props.children}</SportDispatch.Provider>
 		</SportContext.Provider>
 	);
