@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect, useState } from "react";
 import axios from "axios";
 import sportsReducer from "../reducers/Sports.Reducer";
-import { BetContext, BetDispatch } from "./Bets.Context";
 
 export const SportContext = createContext();
 export const SportDispatch = createContext();
@@ -65,8 +64,6 @@ export function SportProvider(props) {
 		},
 		// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {}, reload: false },
 	];
-	const betsData = useContext(BetContext);
-	const betsDispatch = useContext(BetDispatch);
 	const [sportsData, dispatch] = useReducer(sportsReducer, initialSportsData);
 	const [fetchedSportData, setFetchedSportData] = useState(false);
 
@@ -125,7 +122,6 @@ export function SportProvider(props) {
 
 			dispatch({ type: "ALL", data: sportData });
 			// setFetchedSportData(true);
-			// setBlockchain(blockchainData);
 		}
 
 		getSportsData();

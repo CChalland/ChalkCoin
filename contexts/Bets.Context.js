@@ -1,16 +1,20 @@
-import React, { createContext, useReducer, useEffect, useState } from "react";
+import React, { createContext, useReducer, useEffect, useContext } from "react";
 import axios from "axios";
 import betsReducer from "../reducers/Bets.Reducer";
+import { SportContext } from "../contexts/Sports.Context";
 
 export const BetContext = createContext();
 export const BetDispatch = createContext();
 export function BetProvider(props) {
+	const { sportsData } = useContext(SportContext);
 	const [bets, dispatch] = useReducer(betsReducer, {
 		pendingBets: { openBets: [], recipientBets: [] },
 		acceptedBets: [],
 		completedBets: [],
 		blockchain: {},
 	});
+
+	console.log("sports data in bet context", sportsData);
 
 	useEffect(() => {
 		async function getBetsData() {
