@@ -52,6 +52,17 @@ function BetScores({ betGameScoreData }) {
 						</Card>
 					</div>
 				);
+			} else if (betGameScoreData.sportName === "NFL") {
+				const time = betGameScoreData.detail.split(" ")[0];
+				const period = betGameScoreData.detail.split(" ")[2];
+				calendarCard = (
+					<div>
+						<Card border="secondary">
+							<p className="text-danger text-center my-1 mx-2">{period}</p>
+							<p className="text-center my-1 border-top mx-2">{time}</p>
+						</Card>
+					</div>
+				);
 			} else {
 				const [period, time] = betGameScoreData.detail.split(" ");
 				calendarCard = (

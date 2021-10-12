@@ -1,6 +1,7 @@
-import React, { createContext, useReducer, useEffect, useState } from "react";
+import React, { createContext, useContext, useReducer, useEffect, useState } from "react";
 import axios from "axios";
 import sportsReducer from "../reducers/Sports.Reducer";
+import { BetContext, BetDispatch } from "./Bets.Context";
 
 export const SportContext = createContext();
 export const SportDispatch = createContext();
@@ -68,15 +69,13 @@ export function SportProvider(props) {
 	const [sportsData, dispatch] = useReducer(sportsReducer, initialSportsData);
 	const [blockchain, setBlockchain] = useState({});
 	const [fetchedSportData, setFetchedSportData] = useState(false);
+	const betsData = useContext(BetContext);
+	const betsDispatch = useContext(BetDispatch);
 
 	useEffect(() => {
 		async function getSportsData() {
 			let removeSportsData = [];
 			let sportData = sportsData;
-
-			const getNode1 = `http://localhost:3001/blockchain`;
-			let response = await axios.get(getNode1);
-			const blockchainData = response.data;
 
 			try {
 				sportData = await Promise.all(
