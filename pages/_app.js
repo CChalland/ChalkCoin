@@ -27,15 +27,15 @@ class MyApp extends App {
 		const { Component, pageProps } = this.props;
 		return (
 			<Provider session={pageProps.session}>
-				<SportProvider>
-					<BetProvider>
-						<BlockchainProvider>
+				<BlockchainProvider>
+					<SportProvider>
+						<BetProvider>
 							<Admin>
 								<Component {...pageProps} />
 							</Admin>
-						</BlockchainProvider>
-					</BetProvider>
-				</SportProvider>
+						</BetProvider>
+					</SportProvider>
+				</BlockchainProvider>
 			</Provider>
 		);
 	}
