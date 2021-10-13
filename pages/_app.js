@@ -1,6 +1,7 @@
 import React from "react";
 import App from "next/app";
 import { Provider } from "next-auth/client";
+import { BlockchainProvider } from "../contexts/Blockchain.Context";
 import { SportProvider } from "../contexts/Sports.Context";
 import { BetProvider } from "../contexts/Bets.Context";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -28,9 +29,11 @@ class MyApp extends App {
 			<Provider session={pageProps.session}>
 				<SportProvider>
 					<BetProvider>
-						<Admin>
-							<Component {...pageProps} />
-						</Admin>
+						<BlockchainProvider>
+							<Admin>
+								<Component {...pageProps} />
+							</Admin>
+						</BlockchainProvider>
 					</BetProvider>
 				</SportProvider>
 			</Provider>
