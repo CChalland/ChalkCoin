@@ -9,10 +9,20 @@ import BetCard from "../components/BetCard";
 function Bets({ currentUser, sportWithBets }) {
 	const { sportsData } = useContext(SportContext);
 	const betsData = useContext(BetContext);
+	const betSorted = sportWithBets
+		.map((sport) => {
+			const bet = sport.bets.map((bet) => {
+				const sportGames = sportsData.find((item) => item.display_name === sport.displayName);
+				const event = sportGames.data.events?.find((event) => event.id === bet.details.id);
+				bet.event = event;
+				return bet;
+			});
+			return bet;
+		})
+		.flat();
+	// const betSorted = BetSorter(betsData.pendingBets.openBets, sportsData, currentUser.id);
 
-	const [allBets, setAllBets] = useState(
-		BetSorter(betsData.pendingBets.openBets, sportsData, currentUser.id)
-	);
+	const [allBets, setAllBets] = useState(betSorted);
 	const [bets, setBets] = useState([]);
 	const [search, setSearch] = useState("");
 	const [searchState, setSearchState] = useState(true);
@@ -28,7 +38,7 @@ function Bets({ currentUser, sportWithBets }) {
 
 	useEffect(() => {
 		console.log("betsData effect", betsData);
-		setAllBets(BetSorter(betsData.pendingBets.openBets, sportsData, currentUser.id));
+		setAllBets(betSorted);
 	}, [betsData]);
 
 	useEffect(() => {

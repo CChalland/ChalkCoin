@@ -75,23 +75,24 @@ model User {
 }
 
 model Bet {
-  id          Int      @id @default(autoincrement())
-  amount      Float
-  currency    String
-  details     Json
-  odds        Json?
-  accepted    Boolean  @default(false)
-  completed   Boolean  @default(false)
-  payed       Boolean  @default(false)
-  blockHash   String?
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @updatedAt @map(name: "updated_at")
-  requester   User     @relation("requester", fields: [requesterId], references: [id])
-  requesterId Int
-  accepter    User?    @relation("accepter", fields: [accepterId], references: [id])
-  accepterId  Int?
-  recipient   User?    @relation("recipient", fields: [recipientId], references: [id])
-  recipientId Int?
-  winner      User?    @relation("winner", fields: [winnerId], references: [id])
-  winnerId    Int?
+  id            Int      @id @default(autoincrement())
+  amount        Float
+  currency      String
+  details       Json
+  odds          Json?
+  accepted      Boolean  @default(false)
+  completed     Boolean  @default(false)
+  payed         Boolean  @default(false)
+  blockHash     String?
+  transactionId String?
+  createdAt     DateTime @default(now()) @map(name: "created_at")
+  updatedAt     DateTime @updatedAt @map(name: "updated_at")
+  requester     User     @relation("requester", fields: [requesterId], references: [id])
+  requesterId   Int
+  accepter      User?    @relation("accepter", fields: [accepterId], references: [id])
+  accepterId    Int?
+  recipient     User?    @relation("recipient", fields: [recipientId], references: [id])
+  recipientId   Int?
+  winner        User?    @relation("winner", fields: [winnerId], references: [id])
+  winnerId      Int?
 }

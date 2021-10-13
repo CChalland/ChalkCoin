@@ -24,7 +24,7 @@ export function BetProvider(props) {
 
 			try {
 				await axios.get("http://localhost:4000/api/bets?type=all").then((res) => {
-					dispatch({ type: "ALL", data: res.data, blockchain: blockchainData });
+					dispatch({ type: "INIT", bets: res.data, blockchain: blockchainData });
 				});
 			} catch (err) {
 				console.log(err.message);
@@ -32,6 +32,9 @@ export function BetProvider(props) {
 		}
 		getBetsData();
 	}, []);
+
+	useEffect(() => {}, [sportsData]);
+
 	return (
 		<BetContext.Provider value={bets}>
 			<BetDispatch.Provider value={dispatch}>{props.children}</BetDispatch.Provider>
