@@ -1,27 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
 import { getSession } from "next-auth/client";
-import { SportContext } from "../contexts/Sports.Context";
 import { BetContext } from "../contexts/Bets.Context";
-import { BetSorter } from "../helpers/BetCard";
 import BetCard from "../components/BetCard";
 
-function Bets({ currentUser, sportWithBets }) {
-	const { sportsData } = useContext(SportContext);
-	const betsData = useContext(BetContext);
-	const betSorted = sportWithBets
+function Bets({ currentUser }) {
+	const sportWithBets = useContext(BetContext);
+	const betSorted = sportWithBets.pendingBets.openBets
 		.map((sport) => {
-			const bet = sport.bets.map((bet) => {
-				const sportGames = sportsData.find((item) => item.display_name === sport.displayName);
-				const event = sportGames.data.events?.find((event) => event.id === bet.details.id);
-				bet.event = event;
-				return bet;
-			});
-			return bet;
+			return [...sport.bets];
 		})
 		.flat();
-	// const betSorted = BetSorter(betsData.pendingBets.openBets, sportsData, currentUser.id);
-
 	const [allBets, setAllBets] = useState(betSorted);
 	const [bets, setBets] = useState([]);
 	const [search, setSearch] = useState("");
@@ -33,14 +22,12 @@ function Bets({ currentUser, sportWithBets }) {
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
 
-	console.log("BetContext in bets.js", betsData);
-	// console.log("allBets", allBets);
-	// console.log("bets", bets);
+	console.log("allBets", allBets);
+	console.log("bets", bets);
 
 	useEffect(() => {
-		// console.log("betsData effect", betsData);
 		setAllBets(betSorted);
-	}, [betsData]);
+	}, [sportWithBets]);
 
 	useEffect(() => {
 		let filteredBetsData = [];
@@ -101,7 +88,7 @@ function Bets({ currentUser, sportWithBets }) {
 		}
 	}, [allBets, search, nflState, mlbState, nbaState, ncaabState, nhlState, wnbaState]);
 
-	const sportButtons = sportWithBets.map((sport, key) => {
+	const sportButtons = sportWithBets.pendingBets.openBets.map((sport, key) => {
 		let buttonClass;
 		if (sport.displayName === "NFL") {
 			buttonClass = nflState ? "btn-round" : "btn-outline btn-round";
@@ -243,7 +230,6 @@ export async function getServerSideProps(context) {
 	const { req, res } = context;
 	const session = await getSession({ req });
 	let currentUser = {};
-	let bets = [];
 	if (session) {
 		currentUser = await prisma.user.findUnique({
 			where: {
@@ -266,72 +252,9 @@ export async function getServerSideProps(context) {
 		delete currentUser.emailVerified;
 		delete currentUser.createdAt;
 		delete currentUser.updatedAt;
-		bets = await prisma.bet.findMany({
-			where: {
-				AND: [{ accepted: false }, { recipientId: null }],
-				NOT: {
-					requesterId: session.user.id,
-				},
-			},
-		});
-	} else {
-		bets = await prisma.bet.findMany({
-			where: {
-				AND: [{ accepted: false }, { recipientId: null }],
-			},
-		});
 	}
 
-	const betPromises = bets.map(async (bet) => {
-		// bet.details = JSON.parse(bet.details);
-		bet.createdAt = JSON.stringify(bet.createdAt);
-		bet.updatedAt = JSON.stringify(bet.updatedAt);
-		return bet;
-	});
-	const betsData = await Promise.all(betPromises);
-
-	const nflBets = betsData
-		.filter((bet) => bet.details.displayName === "NFL")
-		.sort((a, b) => {
-			new Date(a.details.date) - new Date(b.details.date);
-		});
-
-	const mlbBets = betsData
-		.filter((bet) => bet.details.displayName === "MLB")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-	const nbaBets = betsData
-		.filter((bet) => bet.details.displayName === "NBA")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-	const ncaabBets = betsData
-		.filter((bet) => bet.details.displayName === "NCAA Men's Basketball")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-	const nhlBets = betsData
-		.filter((bet) => bet.details.displayName === "NHL")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-	const wnbaBets = betsData
-		.filter((bet) => bet.details.displayName === "WNBA")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-
-	let sportWithBets = [];
-	if (nflBets.length > 0) sportWithBets.push({ displayName: "NFL", icon: 2, bets: nflBets });
-	if (mlbBets.length > 0) sportWithBets.push({ displayName: "MLB", icon: 3, bets: mlbBets });
-	if (nbaBets.length > 0) sportWithBets.push({ displayName: "NBA", icon: 4, bets: nbaBets });
-	if (ncaabBets.length > 0)
-		sportWithBets.push({ displayName: "NCAA Men's Basketball", icon: 5, bets: ncaabBets });
-	if (nhlBets.length > 0) sportWithBets.push({ displayName: "NHL", icon: 6, bets: nhlBets });
-	if (wnbaBets.length > 0) sportWithBets.push({ displayName: "WNBA", icon: 8, bets: wnbaBets });
-
 	return {
-		props: { currentUser, sportWithBets },
+		props: { currentUser },
 	};
 }
