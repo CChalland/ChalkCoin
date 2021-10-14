@@ -12,6 +12,8 @@ export function BlockchainProvider(props) {
 		networkNodes: [],
 	});
 
+	// console.log("blockchain in blockchain context", blockchain);
+
 	useEffect(() => {
 		async function getBlockchainData() {
 			try {

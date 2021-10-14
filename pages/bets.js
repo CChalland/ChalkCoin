@@ -33,11 +33,12 @@ function Bets({ currentUser, sportWithBets }) {
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
 
-	console.log("allBets", allBets);
-	console.log("bets", bets);
+	console.log("BetContext in bets.js", betsData);
+	// console.log("allBets", allBets);
+	// console.log("bets", bets);
 
 	useEffect(() => {
-		console.log("betsData effect", betsData);
+		// console.log("betsData effect", betsData);
 		setAllBets(betSorted);
 	}, [betsData]);
 
