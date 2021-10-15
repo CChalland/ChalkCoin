@@ -13,26 +13,75 @@ const betsReducer = (state, action) => {
 
 	switch (action.type) {
 		case "ADD BET":
-			if (action.recipient) {
-				state.pendingBets.recipientBets = [...state.pendingBets.recipientBets, action.bets];
-			} else {
-				state.pendingBets.openBets = [...state.pendingBets.openBets, action.bets];
-			}
-			return state;
+			// if (action.recipient) {
+			// 	return {
+			// 		...state,
+			// 		pendingBets: {
+			// 			openBets: state.pendingBets.openBets,
+			// 			recipientBets: state.pendingBets.recipientBets.map((sport) =>
+			// 				sport.displayName === action.bets.details.displayName
+			// 					? { ...sport, bets: [...sport.bets, action.bets] }
+			// 					: sport
+			// 			),
+			// 		},
+			// 	};
+			// } else {
+			// 	return {
+			// 		...state,
+			// 		pendingBets: {
+			// 			openBets: state.pendingBets.openBets.map((sport) =>
+			// 				sport.displayName === action.bets.details.displayName
+			// 					? { ...sport, bets: [...sport.bets, action.bets] }
+			// 					: sport
+			// 			),
+			// 			recipientBets: state.pendingBets.recipientBets,
+			// 		},
+			// 	};
+			// }
+			return {
+				...state,
+				pendingBets: {
+					openBets: action.recipient
+						? state.pendingBets.openBets
+						: state.pendingBets.openBets.map((sport) =>
+								sport.displayName === action.bets.details.displayName
+									? { ...sport, bets: [...sport.bets, action.bets] }
+									: sport
+						  ),
+					recipientBets: action.recipient
+						? state.pendingBets.recipientBets.map((sport) =>
+								sport.displayName === action.bets.details.displayName
+									? { ...sport, bets: [...sport.bets, action.bets] }
+									: sport
+						  )
+						: state.pendingBets.recipientBets,
+				},
+			};
+
 		case "ACCEPTED BET":
-			if (action.recipient) {
-				state.pendingBets.recipientBets = state.pendingBets.recipientBets.filter(
-					(bet) => bet.id !== action.bets.id
-				);
-			} else {
-				state.pendingBets.openBets = state.pendingBets.openBets.filter((bet) => bet.id !== action.bets.id);
-			}
-			state.acceptedBets = [...state.acceptedBets, action.bets];
-			return state;
+			console.log("accept bet reducer", action);
+			return {
+				...state,
+				pendingBets: {
+					openBets: state.pendingBets.openBets.map((sport) =>
+						sport.displayName === action.bets.details.displayName
+							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bets.id) }
+							: sport
+					),
+					recipientBets: state.pendingBets.recipientBets.map((sport) =>
+						sport.displayName === action.bets.details.displayName
+							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bets.id) }
+							: sport
+					),
+				},
+				acceptedBets: [...state.acceptedBets, action.bets],
+			};
+
 		case "COMPLETED BET":
 			state.acceptedBets = state.acceptedBets.filter((bet) => bet.id !== action.bets.id);
 			state.completedBets = [...state.completedBets, action.bets];
 			return state;
+
 		case "INIT":
 			return {
 				pendingBets: {

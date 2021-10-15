@@ -8,7 +8,7 @@ function Bets({ currentUser }) {
 	const sportWithBets = useContext(BetContext);
 	const betSorted = sportWithBets.pendingBets.openBets
 		.map((sport) => {
-			return [...sport.bets];
+			return sport.bets;
 		})
 		.flat()
 		.filter((bet) => bet.requesterId !== currentUser.id);
@@ -23,9 +23,9 @@ function Bets({ currentUser }) {
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
 
-	console.log("sportWithBets", sportWithBets);
-	console.log("openBets", openBets);
-	console.log("bets", bets);
+	// console.log("sportWithBets", sportWithBets);
+	// console.log("openBets", openBets);
+	// console.log("bets", bets);
 
 	useEffect(() => {
 		setOpenBets(betSorted);
@@ -76,8 +76,8 @@ function Bets({ currentUser }) {
 
 		const searchedBets = filteredBetsData.filter((bet) => {
 			return (
-				bet.details.displayName.toLowerCase().includes(search.toLowerCase()) ||
-				bet.details.name.toLowerCase().includes(search.toLowerCase())
+				bet?.details.displayName.toLowerCase().includes(search.toLowerCase()) ||
+				bet?.details.name.toLowerCase().includes(search.toLowerCase())
 			);
 		});
 

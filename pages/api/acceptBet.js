@@ -8,7 +8,6 @@ export default async (req, res) => {
 		return res.status(405).json({ message: "Method not allowed" });
 	} else if (req.method === "POST") {
 		const body = req.body;
-		console.log(body);
 		if (session) {
 			try {
 				const currentUserBets = await prisma.bet.findMany({

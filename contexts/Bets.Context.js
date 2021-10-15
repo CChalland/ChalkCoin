@@ -14,7 +14,18 @@ export function BetProvider(props) {
 		initialized: false,
 	});
 
-	// console.log("in Bets.Context", bets);
+	console.log("in Bets.Context", bets);
+
+	const completedGames = sportsData.map((sport) => {
+		return {
+			...sport,
+			data: sport.data.events?.filter((game) => {
+				return game.status.type.state === "post";
+			}),
+		};
+	});
+	console.log("sportsData", sportsData);
+	console.log("completedGames", completedGames);
 
 	useEffect(() => {
 		async function getBetsData() {
@@ -32,7 +43,7 @@ export function BetProvider(props) {
 		} else {
 			console.log("useEffect - else", bets);
 		}
-	}, [sportsData]);
+	}, [sportsData, bets.initialized]);
 
 	return (
 		<BetContext.Provider value={bets}>
