@@ -10,8 +10,9 @@ function Bets({ currentUser }) {
 		.map((sport) => {
 			return [...sport.bets];
 		})
-		.flat();
-	const [allBets, setAllBets] = useState(betSorted);
+		.flat()
+		.filter((bet) => bet.requesterId !== currentUser.id);
+	const [openBets, setOpenBets] = useState(betSorted);
 	const [bets, setBets] = useState([]);
 	const [search, setSearch] = useState("");
 	const [searchState, setSearchState] = useState(true);
@@ -22,50 +23,51 @@ function Bets({ currentUser }) {
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
 
-	console.log("allBets", allBets);
+	console.log("sportWithBets", sportWithBets);
+	console.log("openBets", openBets);
 	console.log("bets", bets);
 
 	useEffect(() => {
-		setAllBets(betSorted);
+		setOpenBets(betSorted);
 	}, [sportWithBets]);
 
 	useEffect(() => {
 		let filteredBetsData = [];
 		if (!nflState && !mlbState && !nbaState && !ncaabState && !nhlState && !wnbaState) {
-			filteredBetsData = allBets;
+			filteredBetsData = openBets;
 		} else {
 			if (nflState) {
-				const nflBets = allBets.filter((bet) => {
+				const nflBets = openBets.filter((bet) => {
 					return bet.details.displayName === "NFL";
 				});
 				filteredBetsData = [...filteredBetsData, ...nflBets];
 			}
 			if (mlbState) {
-				const mlbBets = allBets.filter((bet) => {
+				const mlbBets = openBets.filter((bet) => {
 					return bet.details.displayName === "MLB";
 				});
 				filteredBetsData = [...filteredBetsData, ...mlbBets];
 			}
 			if (nbaState) {
-				const nbaBets = allBets.filter((bet) => {
+				const nbaBets = openBets.filter((bet) => {
 					return bet.details.displayName === "NBA";
 				});
 				filteredBetsData = [...filteredBetsData, ...nbaBets];
 			}
 			if (ncaabState) {
-				const ncaabBets = allBets.filter((bet) => {
+				const ncaabBets = openBets.filter((bet) => {
 					return bet.details.displayName === "NCAA Men's Basketball";
 				});
 				filteredBetsData = [...filteredBetsData, ...ncaabBets];
 			}
 			if (nhlState) {
-				const nhlBets = allBets.filter((bet) => {
+				const nhlBets = openBets.filter((bet) => {
 					return bet.details.displayName === "NHL";
 				});
 				filteredBetsData = [...filteredBetsData, ...nhlBets];
 			}
 			if (wnbaState) {
-				const wnbaBets = allBets.filter((bet) => {
+				const wnbaBets = openBets.filter((bet) => {
 					return bet.details.displayName === "WNBA";
 				});
 				filteredBetsData = [...filteredBetsData, ...wnbaBets];
@@ -86,7 +88,7 @@ function Bets({ currentUser }) {
 			setBets(searchedBets);
 			setSearchState(true);
 		}
-	}, [allBets, search, nflState, mlbState, nbaState, ncaabState, nhlState, wnbaState]);
+	}, [openBets, search, nflState, mlbState, nbaState, ncaabState, nhlState, wnbaState]);
 
 	const sportButtons = sportWithBets.pendingBets.openBets.map((sport, key) => {
 		let buttonClass;
