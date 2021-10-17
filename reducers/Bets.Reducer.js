@@ -77,9 +77,17 @@ const betsReducer = (state, action) => {
 			};
 
 		case "COMPLETED BET":
-			state.acceptedBets = state.acceptedBets.filter((bet) => bet.id !== action.bets.id);
-			state.completedBets = [...state.completedBets, action.bets];
-			return state;
+			return {
+				...state,
+				acceptedBets: state.acceptedBets.map((sport) => {
+					return {
+						...sport,
+						bets: sport.bets.filter((bet) => !action.bets.some((actBet) => actBet.id === bet.id)),
+					};
+				}),
+				completedBets: [...state.completedBets, ...action.bets],
+			};
+			2;
 
 		case "INIT":
 			return {
@@ -88,7 +96,7 @@ const betsReducer = (state, action) => {
 					recipientBets: gamesAddedtoBets(action.bets.pendingBets.recipientBets, action.games),
 				},
 				acceptedBets: gamesAddedtoBets(action.bets.acceptedBets, action.games),
-				completedBets: gamesAddedtoBets(action.bets.completedBets, action.games),
+				completedBets: action.bets.completedBets,
 				initialized: action.initialized,
 			};
 

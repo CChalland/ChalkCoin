@@ -25,6 +25,7 @@ export function BetProvider(props) {
 		try {
 			await axios.post("http://localhost:4000/api/completedBets", completedAcceptedBets).then((res) => {
 				console.log(res.data);
+				dispatch({ type: "COMPLETED BET", bets: res.data });
 			});
 		} catch (err) {
 			console.log(err.message);
@@ -44,6 +45,8 @@ export function BetProvider(props) {
 
 		if (!bets.initialized) {
 			getBetsData();
+		} else {
+			console.log("useEffect else", completedAcceptedBets);
 		}
 	}, [sportsData, bets.initialized]);
 
@@ -51,6 +54,7 @@ export function BetProvider(props) {
 		handlingAcceptedGames();
 		console.log("completedAcceptedBets", completedAcceptedBets);
 	}
+
 	console.log("in Bets.Context", bets);
 
 	return (

@@ -78,7 +78,7 @@ export default async (req, res) => {
 			return res.json({
 				pendingBets: { openBets: betSorter(openBets), recipientBets: betSorter(recipientBets) },
 				acceptedBets: betSorter(acceptedBets),
-				completedBets: betSorter(completedBets),
+				completedBets: completedBets,
 			});
 		} else if (req.query.type === "open") {
 			return res.json({ openBets: betSorter(openBets) });
