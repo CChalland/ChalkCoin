@@ -59,7 +59,6 @@ const betsReducer = (state, action) => {
 			};
 
 		case "ACCEPTED BET":
-			console.log("accept bet reducer", action);
 			return {
 				...state,
 				pendingBets: {

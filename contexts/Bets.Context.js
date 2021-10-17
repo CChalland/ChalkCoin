@@ -13,19 +13,23 @@ export function BetProvider(props) {
 		completedBets: [],
 		initialized: false,
 	});
+	const completedAcceptedBets = bets.acceptedBets
+		.map((sport) => {
+			return sport.bets?.filter((bet) => {
+				return bet.event?.status.type.state === "post";
+			});
+		})
+		.flat();
 
-	console.log("in Bets.Context", bets);
-
-	const completedGames = sportsData.map((sport) => {
-		return {
-			...sport,
-			data: sport.data.events?.filter((game) => {
-				return game.status.type.state === "post";
-			}),
-		};
-	});
-	console.log("sportsData", sportsData);
-	console.log("completedGames", completedGames);
+	const handlingAcceptedGames = async () => {
+		try {
+			await axios.post("http://localhost:4000/api/completedBets", completedAcceptedBets).then((res) => {
+				console.log(res.data);
+			});
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
 
 	useEffect(() => {
 		async function getBetsData() {
@@ -40,10 +44,14 @@ export function BetProvider(props) {
 
 		if (!bets.initialized) {
 			getBetsData();
-		} else {
-			console.log("useEffect - else", bets);
 		}
 	}, [sportsData, bets.initialized]);
+
+	if (completedAcceptedBets.length > 0) {
+		handlingAcceptedGames();
+		console.log("completedAcceptedBets", completedAcceptedBets);
+	}
+	console.log("in Bets.Context", bets);
 
 	return (
 		<BetContext.Provider value={bets}>
