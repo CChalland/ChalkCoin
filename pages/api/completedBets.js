@@ -1,9 +1,7 @@
 import prisma from "../../contexts/prisma";
-import { getSession } from "next-auth/client";
+import axios from "axios";
 
 export default async (req, res) => {
-	const session = await getSession({ req });
-
 	if (req.method !== "POST") {
 		return res.status(405).json({ message: "Method not allowed" });
 	} else if (req.method === "POST") {
@@ -15,6 +13,24 @@ export default async (req, res) => {
 						? bet.event.competitions[0].competitors[0].team.shortDisplayName
 						: bet.event.competitions[0].competitors[1].team.shortDisplayName;
 					const winnerId = bet.details.winner === winner ? bet.requesterId : bet.accepterId;
+					const transactionBody = {
+						amount: bet.amount,
+						sender: bet.details.winner === winner ? bet.requester.walletAddress : bet.accepter.walletAddress,
+						recipient:
+							bet.details.winner === winner ? bet.accepter.walletAddress : bet.requester.walletAddress,
+						details: {
+							sport: bet.details.displayName,
+							gameId: bet.details.id,
+							date: bet.details.date,
+							name: bet.details.name,
+							winner: winner,
+						},
+					};
+
+					let transactionData;
+					await axios.post("http://localhost:3001/transaction/broadcast", transactionBody).then((res) => {
+						transactionData = res.data.transactionData;
+					});
 
 					return await prisma.bet.update({
 						where: {
@@ -22,9 +38,22 @@ export default async (req, res) => {
 						},
 						data: {
 							completed: true,
+							transactionId: transactionData.transactionId,
 							winner: {
 								connect: {
 									id: winnerId,
+								},
+							},
+						},
+						include: {
+							accepter: {
+								select: {
+									walletAddress: true,
+								},
+							},
+							requester: {
+								select: {
+									walletAddress: true,
 								},
 							},
 						},

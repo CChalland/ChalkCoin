@@ -29,6 +29,18 @@ export default async (req, res) => {
 								},
 							},
 						},
+						include: {
+							accepter: {
+								select: {
+									walletAddress: true,
+								},
+							},
+							requester: {
+								select: {
+									walletAddress: true,
+								},
+							},
+						},
 					});
 					return res.json(acceptedBet);
 				} else {

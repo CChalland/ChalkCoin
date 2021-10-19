@@ -25,7 +25,7 @@ app.get("/blockchain", function (req, res) {
 
 app.post("/transaction", function (req, res) {
 	const newTransaction = req.body;
-	const blockIndex = betoken.addTransactionToPendingTransactions(newTransaction);
+	const { blockIndex } = betoken.addTransactionToPendingTransactions(newTransaction);
 	res.json({ note: `Transaction will be added in block ${blockIndex}.` });
 });
 
@@ -36,7 +36,7 @@ app.post("/transaction/broadcast", function (req, res) {
 		req.body.recipient,
 		req.body.details
 	);
-	betoken.addTransactionToPendingTransactions(newTransaction);
+	const { transactionData } = betoken.addTransactionToPendingTransactions(newTransaction);
 
 	const requestPromises = [];
 	betoken.networkNodes.forEach((networkNodeUrl) => {
@@ -51,7 +51,7 @@ app.post("/transaction/broadcast", function (req, res) {
 	});
 
 	Promise.all(requestPromises).then((data) => {
-		res.json({ note: "Transaction created and broadcast successfully." });
+		res.json({ transactionData, note: "Transaction created and broadcast successfully." });
 	});
 });
 

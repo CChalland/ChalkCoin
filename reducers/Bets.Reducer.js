@@ -19,8 +19,8 @@ const betsReducer = (state, action) => {
 			// 		pendingBets: {
 			// 			openBets: state.pendingBets.openBets,
 			// 			recipientBets: state.pendingBets.recipientBets.map((sport) =>
-			// 				sport.displayName === action.bets.details.displayName
-			// 					? { ...sport, bets: [...sport.bets, action.bets] }
+			// 				sport.displayName === action.bet.details.displayName
+			// 					? { ...sport, bets: [...sport.bets, action.bet] }
 			// 					: sport
 			// 			),
 			// 		},
@@ -30,8 +30,8 @@ const betsReducer = (state, action) => {
 			// 		...state,
 			// 		pendingBets: {
 			// 			openBets: state.pendingBets.openBets.map((sport) =>
-			// 				sport.displayName === action.bets.details.displayName
-			// 					? { ...sport, bets: [...sport.bets, action.bets] }
+			// 				sport.displayName === action.bet.details.displayName
+			// 					? { ...sport, bets: [...sport.bets, action.bet] }
 			// 					: sport
 			// 			),
 			// 			recipientBets: state.pendingBets.recipientBets,
@@ -44,14 +44,14 @@ const betsReducer = (state, action) => {
 					openBets: action.recipient
 						? state.pendingBets.openBets
 						: state.pendingBets.openBets.map((sport) =>
-								sport.displayName === action.bets.details.displayName
-									? { ...sport, bets: [...sport.bets, action.bets] }
+								sport.displayName === action.bet.details.displayName
+									? { ...sport, bets: [...sport.bets, action.bet] }
 									: sport
 						  ),
 					recipientBets: action.recipient
 						? state.pendingBets.recipientBets.map((sport) =>
-								sport.displayName === action.bets.details.displayName
-									? { ...sport, bets: [...sport.bets, action.bets] }
+								sport.displayName === action.bet.details.displayName
+									? { ...sport, bets: [...sport.bets, action.bet] }
 									: sport
 						  )
 						: state.pendingBets.recipientBets,
@@ -63,17 +63,21 @@ const betsReducer = (state, action) => {
 				...state,
 				pendingBets: {
 					openBets: state.pendingBets.openBets.map((sport) =>
-						sport.displayName === action.bets.details.displayName
-							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bets.id) }
+						sport.displayName === action.bet.details.displayName
+							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
 							: sport
 					),
 					recipientBets: state.pendingBets.recipientBets.map((sport) =>
-						sport.displayName === action.bets.details.displayName
-							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bets.id) }
+						sport.displayName === action.bet.details.displayName
+							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
 							: sport
 					),
 				},
-				acceptedBets: [...state.acceptedBets, action.bets],
+				acceptedBets: state.acceptedBets.map((sport) =>
+					sport.displayName === action.bet.details.displayName
+						? { ...sport, bets: [...sport.bets, action.bet] }
+						: sport
+				),
 			};
 
 		case "COMPLETED BET":
@@ -87,7 +91,12 @@ const betsReducer = (state, action) => {
 				}),
 				completedBets: [...state.completedBets, ...action.bets],
 			};
-			2;
+
+		case "REMOVE BETS":
+			return {
+				...state,
+				completedBets: [],
+			};
 
 		case "INIT":
 			return {
@@ -100,8 +109,15 @@ const betsReducer = (state, action) => {
 				initialized: action.initialized,
 			};
 
-		// case "GAME UPDATE":
-		// 	return state;
+		case "GAME UPDATE":
+			return {
+				...state,
+				pendingBets: {
+					openBets: gamesAddedtoBets(state.pendingBets.openBets, action.games),
+					recipientBets: gamesAddedtoBets(state.pendingBets.recipientBets, action.games),
+				},
+				acceptedBets: gamesAddedtoBets(state.acceptedBets, action.games),
+			};
 
 		// default:
 		// 	return state;

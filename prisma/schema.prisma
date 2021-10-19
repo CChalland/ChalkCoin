@@ -64,6 +64,7 @@ model User {
   image         String?
   paypal        String?
   balance       Float     @default(0.00)
+  walletAddress String    @unique @default(uuid()) @db.VarChar(50)
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
   requester     Bet[]     @relation("requester")

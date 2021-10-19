@@ -68,10 +68,34 @@ export default async (req, res) => {
 			where: {
 				AND: [{ accepted: true }, { completed: false }],
 			},
+			include: {
+				accepter: {
+					select: {
+						walletAddress: true,
+					},
+				},
+				requester: {
+					select: {
+						walletAddress: true,
+					},
+				},
+			},
 		});
 		const completedBets = await prisma.bet.findMany({
 			where: {
-				AND: [{ completed: true }, { blockHash: null }],
+				AND: [{ completed: true }, { transactionId: null }],
+			},
+			include: {
+				accepter: {
+					select: {
+						walletAddress: true,
+					},
+				},
+				requester: {
+					select: {
+						walletAddress: true,
+					},
+				},
 			},
 		});
 		if (req.query.type === "all") {

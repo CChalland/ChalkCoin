@@ -32,6 +32,17 @@ export function BetProvider(props) {
 		}
 	};
 
+	// const handlingCompletedBetsToBlockchain = async () => {
+	// 	try {
+	// 		await axios.post("http://localhost:3001/transactions/broadcast", bets.completedBets).then((res) => {
+	// 			console.log("res data", res.data);
+	// 			dispatch({ type: "REMOVE BETS" });
+	// 		});
+	// 	} catch (err) {
+	// 		console.log(err.message);
+	// 	}
+	// };
+
 	useEffect(() => {
 		async function getBetsData() {
 			try {
@@ -46,16 +57,19 @@ export function BetProvider(props) {
 		if (!bets.initialized) {
 			getBetsData();
 		} else {
-			console.log("useEffect else", completedAcceptedBets);
+			dispatch({ type: "GAME UPDATE", games: sportsData });
 		}
 	}, [sportsData, bets.initialized]);
 
 	if (completedAcceptedBets.length > 0) {
 		handlingAcceptedGames();
-		console.log("completedAcceptedBets", completedAcceptedBets);
 	}
+	// if (bets.completedBets.length > 0) {
+	// 	handlingCompletedBetsToBlockchain();
+	// }
 
 	console.log("in Bets.Context", bets);
+	console.log("completedAcceptedBets", completedAcceptedBets);
 
 	return (
 		<BetContext.Provider value={bets}>
