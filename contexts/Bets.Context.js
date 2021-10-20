@@ -32,17 +32,6 @@ export function BetProvider(props) {
 		}
 	};
 
-	// const handlingCompletedBetsToBlockchain = async () => {
-	// 	try {
-	// 		await axios.post("http://localhost:3001/transactions/broadcast", bets.completedBets).then((res) => {
-	// 			console.log("res data", res.data);
-	// 			dispatch({ type: "REMOVE BETS" });
-	// 		});
-	// 	} catch (err) {
-	// 		console.log(err.message);
-	// 	}
-	// };
-
 	useEffect(() => {
 		async function getBetsData() {
 			try {
@@ -64,9 +53,6 @@ export function BetProvider(props) {
 	if (completedAcceptedBets.length > 0) {
 		handlingAcceptedGames();
 	}
-	// if (bets.completedBets.length > 0) {
-	// 	handlingCompletedBetsToBlockchain();
-	// }
 
 	console.log("in Bets.Context", bets);
 	console.log("completedAcceptedBets", completedAcceptedBets);

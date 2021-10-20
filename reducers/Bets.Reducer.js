@@ -13,50 +13,77 @@ const betsReducer = (state, action) => {
 
 	switch (action.type) {
 		case "ADD BET":
-			// if (action.recipient) {
-			// 	return {
-			// 		...state,
-			// 		pendingBets: {
-			// 			openBets: state.pendingBets.openBets,
-			// 			recipientBets: state.pendingBets.recipientBets.map((sport) =>
-			// 				sport.displayName === action.bet.details.displayName
-			// 					? { ...sport, bets: [...sport.bets, action.bet] }
-			// 					: sport
-			// 			),
-			// 		},
-			// 	};
-			// } else {
-			// 	return {
-			// 		...state,
-			// 		pendingBets: {
-			// 			openBets: state.pendingBets.openBets.map((sport) =>
-			// 				sport.displayName === action.bet.details.displayName
-			// 					? { ...sport, bets: [...sport.bets, action.bet] }
-			// 					: sport
-			// 			),
-			// 			recipientBets: state.pendingBets.recipientBets,
-			// 		},
-			// 	};
-			// }
-			return {
-				...state,
-				pendingBets: {
-					openBets: action.recipient
-						? state.pendingBets.openBets
-						: state.pendingBets.openBets.map((sport) =>
+			const sportIcons = [
+				{ displayName: "NFL", icon: 2, bets: [] },
+				{ displayName: "MLB", icon: 3, bets: [] },
+				{ displayName: "NBA", icon: 4, bets: [] },
+				{ displayName: "NCAA Men's Basketball", icon: 5, bets: [] },
+				{ displayName: "NHL", icon: 6, bets: [] },
+				{ displayName: "WNBA", icon: 8, bets: [] },
+			];
+			if (action.recipient) {
+				const index = state.pendingBets.recipientBets.findIndex(
+					(sport) => sport.displayName === action.bet.details.displayName
+				);
+				if (index === -1) {
+					return {
+						...state,
+						pendingBets: {
+							openBets: state.pendingBets.openBets,
+							recipientBets: [
+								...state.pendingBets.recipientBets,
+								{
+									...sportIcons.find((sport) => sport.displayName === action.bet.details.displayName),
+									bets: [action.bet],
+								},
+							],
+						},
+					};
+				} else {
+					return {
+						...state,
+						pendingBets: {
+							openBets: state.pendingBets.openBets,
+							recipientBets: state.pendingBets.recipientBets.map((sport) =>
 								sport.displayName === action.bet.details.displayName
 									? { ...sport, bets: [...sport.bets, action.bet] }
 									: sport
-						  ),
-					recipientBets: action.recipient
-						? state.pendingBets.recipientBets.map((sport) =>
+							),
+						},
+					};
+				}
+			} else {
+				const index = state.pendingBets.openBets.findIndex(
+					(sport) => sport.displayName === action.bet.details.displayName
+				);
+				if (index === -1) {
+					return {
+						...state,
+						pendingBets: {
+							openBets: [
+								...state.pendingBets.openBets,
+								{
+									...sportIcons.find((sport) => sport.displayName === action.bet.details.displayName),
+									bets: [action.bet],
+								},
+							],
+							recipientBets: state.pendingBets.recipientBets,
+						},
+					};
+				} else {
+					return {
+						...state,
+						pendingBets: {
+							openBets: state.pendingBets.openBets.map((sport) =>
 								sport.displayName === action.bet.details.displayName
 									? { ...sport, bets: [...sport.bets, action.bet] }
 									: sport
-						  )
-						: state.pendingBets.recipientBets,
-				},
-			};
+							),
+							recipientBets: state.pendingBets.recipientBets,
+						},
+					};
+				}
+			}
 
 		case "ACCEPTED BET":
 			return {
