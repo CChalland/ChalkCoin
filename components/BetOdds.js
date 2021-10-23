@@ -26,42 +26,56 @@ function BetOdds({ betGameOdds }) {
 		],
 	};
 
+	const styles = {
+		container: (provided) => ({
+			...provided,
+			display: "inline-block",
+			width: "150px",
+			minHeight: "1px",
+			textAlign: "left",
+			border: "none",
+		}),
+		control: (provided) => ({
+			...provided,
+			minHeight: "1px",
+			height: "25px",
+		}),
+		input: (provided) => ({
+			...provided,
+			minHeight: "1px",
+		}),
+		dropdownIndicator: (provided) => ({
+			...provided,
+			minHeight: "1px",
+			paddingTop: "0",
+			paddingBottom: "0",
+		}),
+		indicatorSeparator: (provided) => ({
+			...provided,
+			minHeight: "1px",
+			height: "6px",
+		}),
+		clearIndicator: (provided) => ({
+			...provided,
+			minHeight: "1px",
+		}),
+		valueContainer: (provided) => ({
+			...provided,
+			minHeight: "1px",
+			height: "20px",
+			paddingTop: "0",
+			paddingBottom: "0",
+		}),
+		singleValue: (provided) => ({
+			...provided,
+			minHeight: "1px",
+			paddingBottom: "2px",
+		}),
+	};
 	// console.log(betGameOdds);
 
 	return (
 		<Container fuild="true">
-			<Row className="">
-				{/* <Col className="text-secondary" style={{ fontSize: 14 }}>
-					{"Matchup Predictor"}
-				</Col> */}
-				<Col>
-					<Form.Group className={selectedMarketState ? "has-success" : "has-error"}>
-						<InputGroup>
-							<InputGroup.Prepend>
-								<InputGroup.Text>
-									<i className="nc-icon nc-bank"></i>
-								</InputGroup.Text>
-							</InputGroup.Prepend>
-							<Col xs={8} className="mx-0 px-0">
-								<Select
-									className="react-select primary"
-									classNamePrefix="react-select"
-									name="selectedMarket"
-									value={selectedMarket}
-									onChange={(value) => {
-										setAwayWinProb(makePercentage(value.odds.away.winProbability));
-										setHomeWinProb(makePercentage(value.odds.home.winProbability));
-										setSelectedMarket(value);
-										setSelectedMarketState(true);
-									}}
-									options={optionsMarket}
-									placeholder="Select Market"
-								/>
-							</Col>
-						</InputGroup>
-					</Form.Group>
-				</Col>
-			</Row>
 			<Row>
 				<Col>{`${awayWinProb}%`}</Col>
 				<Col xs="auto">
@@ -88,6 +102,33 @@ function BetOdds({ betGameOdds }) {
 					</div>
 				</Col>
 				<Col>{`${homeWinProb}%`}</Col>
+			</Row>
+			<Row className="">
+				<Col>
+					<Form.Group className={selectedMarketState ? "has-success" : "has-error"}>
+						<InputGroup size="sm">
+							<InputGroup.Prepend>
+								<InputGroup.Text>
+									<i className="nc-icon nc-bank"></i>
+								</InputGroup.Text>
+							</InputGroup.Prepend>
+							<Select
+								name="selectedMarket"
+								value={selectedMarket}
+								onChange={(value) => {
+									setAwayWinProb(makePercentage(value.odds.away.winProbability));
+									setHomeWinProb(makePercentage(value.odds.home.winProbability));
+									setSelectedMarket(value);
+									setSelectedMarketState(true);
+								}}
+								options={optionsMarket}
+								placeholder="Select Market"
+								isSearchable={false}
+								styles={styles}
+							/>
+						</InputGroup>
+					</Form.Group>
+				</Col>
 			</Row>
 		</Container>
 	);

@@ -74,11 +74,27 @@ function BetScores({ betGameScoreData }) {
 					</div>
 				);
 			}
-			awayScore = <Col className="font-weight-bold mr-auto">{gameData.away.score}</Col>;
-			homeScore = <Col className="font-weight-bold mr-auto">{gameData.home.score}</Col>;
+			awayScore = (
+				<Col className="">
+					<p className="font-weight-bold mr-auto">{gameData.away.score}</p>
+				</Col>
+			);
+			homeScore = (
+				<Col className="">
+					<p className="font-weight-bold mr-auto">{gameData.home.score}</p>
+				</Col>
+			);
 		} else if (gameData.status.type.state === "post") {
-			awayScore = <Col className="font-weight-bold mr-auto">{gameData.away.score}</Col>;
-			homeScore = <Col className="font-weight-bold mr-auto">{gameData.home.score}</Col>;
+			awayScore = (
+				<Col className="">
+					<p className="font-weight-bold mr-auto">{gameData.away.score}</p>
+				</Col>
+			);
+			homeScore = (
+				<Col className="">
+					<p className="font-weight-bold mr-auto">{gameData.home.score}</p>
+				</Col>
+			);
 		}
 
 		return { calendarCard, gameTimeCard, awayScore, homeScore };
@@ -87,13 +103,13 @@ function BetScores({ betGameScoreData }) {
 	const { calendarCard, gameTimeCard, awayScore, homeScore } = betScoreHelper(betGameScoreData);
 	return (
 		<Container fluid>
-			<Row>
-				<Col xs={"auto"} className="text-secondary">
+			<Row className="">
+				<Col xs={"auto"} className="mt-4 text-secondary">
 					{calendarCard}
 					{gameTimeCard}
 				</Col>
 				<Col xs={"auto"} className="">
-					<Row className="my-2 align-items-center">
+					<Row className=" align-items-center">
 						<Col xs={"auto"} className="">
 							<Image width={35} height={35} src={betGameScoreData.away.logo} rounded />
 						</Col>
@@ -108,7 +124,7 @@ function BetScores({ betGameScoreData }) {
 						{awayScore}
 					</Row>
 
-					<Row className="my-2 align-items-center">
+					<Row className=" align-items-center">
 						<Col xs={"auto"} className="">
 							<Image width={35} height={35} src={betGameScoreData.home.logo} rounded />
 						</Col>

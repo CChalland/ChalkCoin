@@ -6,6 +6,7 @@ import BetScore from "./BetScore";
 import BetOdds from "./BetOdds";
 import BetWinner from "./BetWinner";
 import axios from "axios";
+import moment from "moment";
 
 function BetCard({ betsData, currentUser }) {
 	const dispatch = useContext(BetDispatch);
@@ -24,36 +25,80 @@ function BetCard({ betsData, currentUser }) {
 				amount: bet.amount,
 				acceptingTeam: betGameData.away.requesterTeam ? betGameData.home : betGameData.away,
 			};
+			const gameTime = moment(betGameData.date);
+			const daysDiff = gameTime.diff(new Date(), "days");
+			const minutesDiff = gameTime.diff(new Date(), "minutes");
+			let cardBorderColor;
+			if (bet.event.status.type.state === "in" && minutesDiff > -15) {
+				cardBorderColor = "danger";
+			} else if (bet.event.status.type.state === "pre" && daysDiff === 0) {
+				if (minutesDiff < 60) {
+					cardBorderColor = "warning";
+				} else {
+					cardBorderColor = "info";
+				}
+			}
 
+			console.log(minutesDiff);
 			return (
 				<Container key={key} fluid>
-					<Card>
-						<Row className="">
-							<Col xs={"auto"} className="">
-								<BetScore key={bet.event.uid.toString()} betGameScoreData={betGameData} />
-							</Col>
-							<Col xs={"auto"}>
-								<BetOdds betGameOdds={betGameData} />
-							</Col>
-							<Col>
-								<BetWinner betWinnerData={betWinnerData} />
-							</Col>
-							<Col>
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(bet);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
-							</Col>
-						</Row>
+					<Card border={cardBorderColor}>
+						<Card.Header>
+							<Row>
+								<Col xl={"3"}>
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										STATUS
+									</h4>
+								</Col>
+								<Col xl={"3"}>
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										MATCHUP PREDICTOR
+									</h4>
+								</Col>
+								<Col xl={"3"}>
+									<Row>
+										<Col>
+											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+												AMOUNT
+											</h4>
+										</Col>
+										<Col>
+											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+												TO WIN
+											</h4>
+										</Col>
+									</Row>
+								</Col>
+							</Row>
+						</Card.Header>
+						<Card.Body>
+							<Row className="">
+								<Col xl={"3"} className="">
+									<BetScore key={bet.event.uid.toString()} betGameScoreData={betGameData} />
+								</Col>
+								<Col xl={"3"}>
+									<BetOdds betGameOdds={betGameData} />
+								</Col>
+								<Col xl={"3"}>
+									<BetWinner betWinnerData={betWinnerData} />
+								</Col>
+								<Col>
+									<Button
+										className="btn-round btn-wd"
+										type="button"
+										variant="success"
+										onClick={() => {
+											handleBet(bet);
+										}}
+									>
+										<span className="btn-label">
+											<i className="fas fa-plus"></i>
+										</span>
+										Accept
+									</Button>
+								</Col>
+							</Row>
+						</Card.Body>
 					</Card>
 
 					{/* For extra lage screen */}
