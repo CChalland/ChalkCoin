@@ -73,16 +73,16 @@ function BetScores({ betGameScoreData }) {
 	return (
 		<Container fluid>
 			<Row className="">
-				<Col xs={"auto"} className="mt-2 text-secondary">
+				<Col xl={3} className="mt-2 text-secondary">
 					{calendarCard}
 					{gameTimeCard}
 				</Col>
-				<Col xs={"auto"} className="">
+				<Col xl={8} className="">
 					<Row className="mb-3">
 						<Col xl={4} className="">
 							<Image width={35} height={35} src={betGameScoreData.away.logo} rounded />
 						</Col>
-						<Col xl={6} className="">
+						<Col xl={5} className="">
 							<Row className="mb-0 h5" style={{ fontSize: 16 }}>
 								{betGameScoreData.away.name}
 							</Row>
@@ -90,7 +90,7 @@ function BetScores({ betGameScoreData }) {
 								{`(${betGameScoreData.away.records[0].summary}, ${betGameScoreData.away.records[1].summary} ${betGameScoreData.away.homeAway})`}
 							</Row>
 						</Col>
-						<Col xl={2} className="">
+						<Col xl={3} className="">
 							{awayScore}
 						</Col>
 					</Row>
@@ -99,7 +99,7 @@ function BetScores({ betGameScoreData }) {
 						<Col xl={4} className="">
 							<Image width={35} height={35} src={betGameScoreData.home.logo} rounded />
 						</Col>
-						<Col xl={6} className="">
+						<Col xl={5} className="">
 							<Row className="mb-0 h5" style={{ fontSize: 16 }}>
 								{betGameScoreData.home.name}
 							</Row>
@@ -107,7 +107,7 @@ function BetScores({ betGameScoreData }) {
 								{`(${betGameScoreData.home.records[0].summary}, ${betGameScoreData.home.records[1].summary} ${betGameScoreData.home.homeAway})`}
 							</Row>
 						</Col>
-						<Col xl={1} className="">
+						<Col xl={3} className="">
 							{homeScore}
 						</Col>
 					</Row>

@@ -44,17 +44,17 @@ function BetCard({ betsData, currentUser }) {
 					<Card border={cardBorderColor}>
 						<Card.Header className="my-0 py-0">
 							<Row className="">
-								<Col xl={"3"}>
+								<Col xl={3}>
 									<h4 className="my-0" style={{ fontSize: 16 }}>
 										{startTime}
 									</h4>
 								</Col>
-								<Col xl={"3"}>
+								<Col xl={3}>
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 										MATCHUP PREDICTOR
 									</h4>
 								</Col>
-								<Col xl={"3"}>
+								<Col xl={3}>
 									<Row>
 										<Col>
 											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
@@ -70,15 +70,15 @@ function BetCard({ betsData, currentUser }) {
 								</Col>
 							</Row>
 						</Card.Header>
-						<Card.Body>
+						<Card.Body className="my-0 py-0">
 							<Row className="">
-								<Col xl={"3"} className="">
+								<Col xl={3} className="">
 									<BetScore key={bet.event.uid.toString()} betGameScoreData={betGameData} />
 								</Col>
-								<Col xl={"3"}>
+								<Col xl={3}>
 									<BetOdds betGameOdds={betGameData} />
 								</Col>
-								<Col xl={"3"}>
+								<Col xl={3}>
 									<BetWinner betWinnerData={betWinnerData} />
 								</Col>
 								<Col>

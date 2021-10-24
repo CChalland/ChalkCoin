@@ -76,7 +76,7 @@ function BetOdds({ betGameOdds }) {
 
 	return (
 		<Container fuild="true">
-			<Row>
+			<Row className="my-0 py-0">
 				<Col>{`${awayWinProb}%`}</Col>
 				<Col xs="auto">
 					<div className="chart-relative">
@@ -101,10 +101,10 @@ function BetOdds({ betGameOdds }) {
 						</div>
 					</div>
 				</Col>
-				<Col>{`${homeWinProb}%`}</Col>
+				<Col className="align-self-end">{`${homeWinProb}%`}</Col>
 			</Row>
-			<Row className="">
-				<Col>
+			{/* <Row className="justify-content-start">
+				<Col xs={"auto"}>
 					<Form.Group className={selectedMarketState ? "has-success" : "has-error"}>
 						<InputGroup size="sm">
 							<InputGroup.Prepend>
@@ -129,7 +129,7 @@ function BetOdds({ betGameOdds }) {
 						</InputGroup>
 					</Form.Group>
 				</Col>
-			</Row>
+			</Row> */}
 		</Container>
 	);
 }
