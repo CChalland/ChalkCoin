@@ -5,96 +5,65 @@ import moment from "moment";
 function BetScores({ betGameScoreData }) {
 	const gameTime = moment(betGameScoreData.date);
 	const daysUntil = gameTime.diff(new Date(), "days");
-	const [day, date, month, time] = gameTime.format("ddd,Do,MMM,h:mm a").split(",");
+	const [day, date, month] = gameTime.format("ddd,Do,MMM").split(",");
 
 	const betScoreHelper = (gameData) => {
 		let calendarCard, gameTimeCard, awayScore, homeScore;
 		if (gameData.status.type.state === "pre") {
 			if (daysUntil > 6) {
 				calendarCard = (
-					<div>
-						{time}
-						<Card border="secondary">
-							<p className="text-danger text-center my-1 border-bottom">{month}</p>
-							<p className="text-center my-1">{date}</p>
-						</Card>
-					</div>
+					<Card border="secondary" style={{ width: "4rem" }}>
+						<p className="text-danger text-center my-1 border-bottom">{month}</p>
+						<p className="text-center my-2">{date}</p>
+					</Card>
 				);
 			} else if (daysUntil > 1) {
 				calendarCard = (
-					<div>
-						{time}
-						<Card border="secondary">
-							<p className="text-danger text-center my-1 border-bottom">{day}</p>
-							<p className="text-center my-1">{date}</p>
-						</Card>
-					</div>
+					<Card border="secondary" style={{ width: "4rem" }}>
+						<p className="text-danger text-center my-1 border-bottom">{day}</p>
+						<p className="text-center my-2">{date}</p>
+					</Card>
 				);
 			} else {
 				calendarCard = (
-					<div>
-						{time}
-						<Card border="secondary">
-							<p className="text-danger text-center my-1 border-bottom">{day}</p>
-							<p className="text-center my-1">{date}</p>
-						</Card>
-					</div>
+					<Card border="secondary" style={{ width: "4rem" }}>
+						<p className="text-danger text-center my-1 border-bottom">{day}</p>
+						<p className="text-center my-2">{date}</p>
+					</Card>
 				);
 			}
 		} else if (gameData.status.type.state === "in") {
 			if (betGameScoreData.sportName === "MLB") {
 				const [topBot, inning] = betGameScoreData.detail.split(" ");
 				calendarCard = (
-					<div>
-						<Card border="secondary">
-							<p className="text-center my-1 mx-2">{inning}</p>
-							<p className="text-danger text-center my-1 border-top mx-2">{topBot}</p>
-						</Card>
-					</div>
+					<Card border="secondary" style={{ width: "4rem" }}>
+						<p className="text-danger text-center my-1 border-bottom">{inning}</p>
+						<p className="text-center my-2">{topBot}</p>
+					</Card>
 				);
 			} else if (betGameScoreData.sportName === "NFL") {
 				const time = betGameScoreData.detail.split(" ")[0];
 				const period = betGameScoreData.detail.split(" ")[2];
 				calendarCard = (
-					<div>
-						<Card border="secondary">
-							<p className="text-danger text-center my-1 mx-2">{period}</p>
-							<p className="text-center my-1 border-top mx-2">{time}</p>
-						</Card>
-					</div>
+					<Card border="secondary" style={{ width: "4rem" }}>
+						<p className="text-danger text-center my-1 border-bottom">{period}</p>
+						<p className="text-center my-2">{time}</p>
+					</Card>
 				);
 			} else {
 				const [period, time] = betGameScoreData.detail.split(" ");
 				calendarCard = (
-					<div>
-						<Card border="secondary">
-							<p className="text-center my-1 mx-2">{time}</p>
-							<p className="text-danger text-center my-1 border-top mx-2">{period}</p>
-						</Card>
-					</div>
+					<Card border="secondary" style={{ width: "4rem" }}>
+						<p className="text-center my-2">{time}</p>
+						<p className="text-danger text-center my-1 border-bottom">{period}</p>
+					</Card>
 				);
 			}
-			awayScore = (
-				<Col className="">
-					<p className="font-weight-bold mr-auto">{gameData.away.score}</p>
-				</Col>
-			);
-			homeScore = (
-				<Col className="">
-					<p className="font-weight-bold mr-auto">{gameData.home.score}</p>
-				</Col>
-			);
+			awayScore = <p className="font-weight-bold mr-auto">{gameData.away.score}</p>;
+			homeScore = <p className="font-weight-bold mr-auto">{gameData.home.score}</p>;
 		} else if (gameData.status.type.state === "post") {
-			awayScore = (
-				<Col className="">
-					<p className="font-weight-bold mr-auto">{gameData.away.score}</p>
-				</Col>
-			);
-			homeScore = (
-				<Col className="">
-					<p className="font-weight-bold mr-auto">{gameData.home.score}</p>
-				</Col>
-			);
+			awayScore = <p className="font-weight-bold mr-auto">{gameData.away.score}</p>;
+			homeScore = <p className="font-weight-bold mr-auto">{gameData.home.score}</p>;
 		}
 
 		return { calendarCard, gameTimeCard, awayScore, homeScore };
@@ -104,16 +73,16 @@ function BetScores({ betGameScoreData }) {
 	return (
 		<Container fluid>
 			<Row className="">
-				<Col xs={"auto"} className="mt-4 text-secondary">
+				<Col xs={"auto"} className="mt-2 text-secondary">
 					{calendarCard}
 					{gameTimeCard}
 				</Col>
 				<Col xs={"auto"} className="">
-					<Row className=" align-items-center">
-						<Col xs={"auto"} className="">
+					<Row className="mb-3">
+						<Col xl={4} className="">
 							<Image width={35} height={35} src={betGameScoreData.away.logo} rounded />
 						</Col>
-						<Col xs={"auto"} className="">
+						<Col xl={6} className="">
 							<Row className="mb-0 h5" style={{ fontSize: 16 }}>
 								{betGameScoreData.away.name}
 							</Row>
@@ -121,14 +90,16 @@ function BetScores({ betGameScoreData }) {
 								{`(${betGameScoreData.away.records[0].summary}, ${betGameScoreData.away.records[1].summary} ${betGameScoreData.away.homeAway})`}
 							</Row>
 						</Col>
-						{awayScore}
+						<Col xl={2} className="">
+							{awayScore}
+						</Col>
 					</Row>
 
-					<Row className=" align-items-center">
-						<Col xs={"auto"} className="">
+					<Row className="mt-3">
+						<Col xl={4} className="">
 							<Image width={35} height={35} src={betGameScoreData.home.logo} rounded />
 						</Col>
-						<Col xs={"auto"} className="">
+						<Col xl={6} className="">
 							<Row className="mb-0 h5" style={{ fontSize: 16 }}>
 								{betGameScoreData.home.name}
 							</Row>
@@ -136,7 +107,9 @@ function BetScores({ betGameScoreData }) {
 								{`(${betGameScoreData.home.records[0].summary}, ${betGameScoreData.home.records[1].summary} ${betGameScoreData.home.homeAway})`}
 							</Row>
 						</Col>
-						{homeScore}
+						<Col xl={1} className="">
+							{homeScore}
+						</Col>
 					</Row>
 				</Col>
 			</Row>

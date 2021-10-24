@@ -28,26 +28,25 @@ function BetCard({ betsData, currentUser }) {
 			const gameTime = moment(betGameData.date);
 			const daysDiff = gameTime.diff(new Date(), "days");
 			const minutesDiff = gameTime.diff(new Date(), "minutes");
-			let cardBorderColor;
-			if (bet.event.status.type.state === "in" && minutesDiff > -15) {
-				cardBorderColor = "danger";
+			let cardBorderColor, startTime;
+			if (bet.event.status.type.state === "in") {
+				startTime = "GAME STARTED";
+				if (minutesDiff > -15) cardBorderColor = "danger";
 			} else if (bet.event.status.type.state === "pre" && daysDiff === 0) {
-				if (minutesDiff < 60) {
-					cardBorderColor = "warning";
-				} else {
-					cardBorderColor = "info";
-				}
-			}
+				startTime = `@ ${gameTime.format("h:mm a")}`;
+				if (minutesDiff < 60) cardBorderColor = "warning";
+				else cardBorderColor = "info";
+			} else startTime = `@ ${gameTime.format("h:mm a")}`;
 
 			console.log(minutesDiff);
 			return (
 				<Container key={key} fluid>
 					<Card border={cardBorderColor}>
-						<Card.Header>
-							<Row>
+						<Card.Header className="my-0 py-0">
+							<Row className="">
 								<Col xl={"3"}>
-									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-										STATUS
+									<h4 className="my-0" style={{ fontSize: 16 }}>
+										{startTime}
 									</h4>
 								</Col>
 								<Col xl={"3"}>
