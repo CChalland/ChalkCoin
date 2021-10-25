@@ -16,7 +16,7 @@ function BetOdds({ betGameOdds, homeWinProb, awayWinProb }) {
 		<Container fuild="true">
 			<Row className="my-0 py-0">
 				<Col xs="auto" className="mx-0 px-0">
-					<h5 className="my-0" style={{ fontSize: 18 }}>{`${awayWinProb}%`}</h5>
+					<h5 className="mt-1" style={{ fontSize: 18 }}>{`${awayWinProb}%`}</h5>
 				</Col>
 				<Col xs="auto">
 					<div className="chart-relative">
@@ -41,8 +41,8 @@ function BetOdds({ betGameOdds, homeWinProb, awayWinProb }) {
 						</div>
 					</div>
 				</Col>
-				<Col className="align-self-end">
-					<h5 className="my-0" style={{ fontSize: 18 }}>{`${homeWinProb}%`}</h5>
+				<Col className="mx-0 px-0 align-self-end">
+					<h5 className="mb-2" style={{ fontSize: 18 }}>{`${homeWinProb}%`}</h5>
 				</Col>
 			</Row>
 		</Container>
