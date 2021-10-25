@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
 import { getSession } from "next-auth/client";
 import { BetContext } from "../contexts/Bets.Context";
+import { BetGameData } from "../helpers/BetCard";
 import BetCard from "../components/BetCard";
 
 function Bets({ currentUser }) {
@@ -133,6 +134,13 @@ function Bets({ currentUser }) {
 		);
 	});
 
+	const betCards = bets.map((bet, key) => {
+		if (bet.event) {
+			const betData = BetGameData(bet);
+			return <BetCard betData={betData} currentUser={currentUser} key={key} />;
+		}
+	});
+
 	return (
 		<Container fluid>
 			<Row>
@@ -221,7 +229,7 @@ function Bets({ currentUser }) {
 				</Col>
 			</Row>
 			{searchState ? null : <label className="error">No bets found.</label>}
-			<BetCard betsData={bets} currentUser={currentUser} />
+			{betCards}
 		</Container>
 	);
 }

@@ -71,6 +71,8 @@ export function BetGameData(bet) {
 	}
 
 	return {
+		id: bet.id,
+		amount: bet.amount,
 		date: bet.details.date,
 		sportName: bet.details.displayName,
 		status: bet.event.status,
@@ -101,6 +103,7 @@ export function BetGameData(bet) {
 			requesterTeam: homeTeam[0].team.shortDisplayName === bet.details.winner ? true : false,
 			winProb: homeAvgProb.toFixed(1),
 		},
+		venue: bet.event.competitions[0].venue,
 	};
 }
 

@@ -73,12 +73,12 @@ function BetScores({ betGameScoreData }) {
 	return (
 		<Container fluid>
 			<Row className="">
-				<Col xl={3} className="mt-2 text-secondary">
+				<Col xl={"auto"} className="mt-2 text-secondary">
 					{calendarCard}
 					{gameTimeCard}
 				</Col>
 				<Col xl={8} className="">
-					<Row className="mb-3">
+					<Row className="mb-4">
 						<Col xl={4} className="">
 							<Image width={35} height={35} src={betGameScoreData.away.logo} rounded />
 						</Col>
@@ -95,7 +95,7 @@ function BetScores({ betGameScoreData }) {
 						</Col>
 					</Row>
 
-					<Row className="mt-3">
+					<Row className="mt-4">
 						<Col xl={4} className="">
 							<Image width={35} height={35} src={betGameScoreData.home.logo} rounded />
 						</Col>
