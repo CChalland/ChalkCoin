@@ -106,7 +106,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 									MATCHUP PREDICTOR
 								</h4>
@@ -162,7 +162,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<InputGroup size="sm">
 									<InputGroup.Prepend>
 										<InputGroup.Text>
@@ -200,7 +200,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 									MATCHUP PREDICTOR
 								</h4>
@@ -256,7 +256,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<InputGroup size="sm">
 									<InputGroup.Prepend>
 										<InputGroup.Text>
@@ -294,7 +294,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 									MATCHUP PREDICTOR
 								</h4>
@@ -350,7 +350,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<InputGroup size="sm">
 									<InputGroup.Prepend>
 										<InputGroup.Text>
@@ -388,7 +388,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 									MATCHUP PREDICTOR
 								</h4>
@@ -444,7 +444,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<InputGroup size="sm">
 									<InputGroup.Prepend>
 										<InputGroup.Text>
@@ -482,7 +482,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 									MATCHUP PREDICTOR
 								</h4>
@@ -538,7 +538,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xl={3}>
+							<Col xl={3} className="mx-0 px-0">
 								<InputGroup size="sm">
 									<InputGroup.Prepend>
 										<InputGroup.Text>
