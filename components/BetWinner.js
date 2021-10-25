@@ -2,18 +2,19 @@ import React from "react";
 import { Col, Container, Row, Image } from "react-bootstrap";
 
 function BetWinner({ betWinnerData }) {
-	// console.log(betWinnerData);
 	return (
 		<Container fluid>
-			<Row>
+			<Row className="mt-2">
 				<Col>
 					<Row>
-						<h1 className="my-0">${betWinnerData.amount}</h1>
+						<h1 className="my-0" style={{ fontSize: 64 }}>
+							${betWinnerData.amount}
+						</h1>
 					</Row>
 				</Col>
 				<Col>
 					<Row>
-						<Image width={45} height={45} src={betWinnerData.acceptingTeam.logo} rounded />
+						<Image width={55} height={55} src={betWinnerData.acceptingTeam.logo} rounded />
 					</Row>
 					<Row className="mb-0 h5" style={{ fontSize: 16 }}>
 						{betWinnerData.acceptingTeam.name}

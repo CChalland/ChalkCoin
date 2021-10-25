@@ -95,156 +95,477 @@ function BetCard({ betData, currentUser }) {
 	} else startTime = `@ ${gameTime.format("h:mm a")}`;
 
 	return (
-		<Container fluid>
-			<Card border={cardBorderColor}>
-				<Card.Header className="my-0 py-0">
-					<Row className="">
-						<Col xl={3}>
-							<h4 className="my-0" style={{ fontSize: 16 }}>
-								{startTime}
-							</h4>
-						</Col>
-						<Col xl={3}>
-							<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-								MATCHUP PREDICTOR
-							</h4>
-						</Col>
-						<Col xl={3}>
-							<Row>
-								<Col>
-									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-										AMOUNT
-									</h4>
-								</Col>
-								<Col>
-									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-										TO WIN
-									</h4>
-								</Col>
-							</Row>
-						</Col>
-					</Row>
-				</Card.Header>
-				<Card.Body className="my-0 py-0">
-					<Row className="">
-						<Col xl={3} className="">
-							<BetScore betGameScoreData={betData} />
-						</Col>
-						<Col xl={3}>
-							<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
-						</Col>
-						<Col xl={3}>
-							<BetWinner betWinnerData={betWinnerData} />
-						</Col>
-						<Col>
-							<Button
-								className="btn-round btn-wd"
-								type="button"
-								variant="success"
-								onClick={() => {
-									handleBet(betData);
-								}}
-							>
-								<span className="btn-label">
-									<i className="fas fa-plus"></i>
-								</span>
-								Accept
-							</Button>
-						</Col>
-					</Row>
-				</Card.Body>
-				<Card.Footer className="my-0 py-0">
-					<Row>
-						<Col xl={3}>
-							<h4 className="my-0" style={{ fontSize: 14 }}>
-								{`${betData.venue.fullName}`}
-							</h4>
-						</Col>
-						<Col xl={3}>
-							<InputGroup size="sm">
-								<InputGroup.Prepend>
-									<InputGroup.Text>
-										<i className="nc-icon nc-bank"></i>
-									</InputGroup.Text>
-								</InputGroup.Prepend>
-								<Select
-									name="selectedMarket"
-									value={selectedMarket}
-									onChange={(value) => {
-										setAwayWinProb(makePercentage(value.odds.away.winProbability));
-										setHomeWinProb(makePercentage(value.odds.home.winProbability));
-										setSelectedMarket(value);
-									}}
-									options={optionsMarket}
-									placeholder="Select Market"
-									isSearchable={false}
-									styles={styles}
-								/>
-							</InputGroup>
-						</Col>
-						<Col xl={3}></Col>
-					</Row>
-				</Card.Footer>
-			</Card>
-
+		<Row>
 			{/* For extra lage screen */}
-			{/* <Col className="mx-0 px-0 d-none d-xl-block">
-						<Card>
-							<Row className="">
-								<Col className="">
-									<BetScore key={betData.event.uid.toString()} betGameScoreData={betGameScoreData} />
-								</Col>
-							</Row>
-						</Card>
-					</Col> */}
+			<Col xl={{ span: 9, offset: 1 }} className="d-none d-xl-block">
+				<Card border={cardBorderColor}>
+					<Card.Header className="my-0 py-0">
+						<Row className="">
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 16 }}>
+									{startTime}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+									MATCHUP PREDICTOR
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<Row>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											AMOUNT
+										</h4>
+									</Col>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											TO WIN
+										</h4>
+									</Col>
+								</Row>
+							</Col>
+						</Row>
+					</Card.Header>
+					<Card.Body className="my-0 py-0">
+						<Row className="">
+							<Col xl={4} className="">
+								<BetScore betGameScoreData={betData} />
+							</Col>
+							<Col xl={3} className="mx-0 px-0">
+								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
+							</Col>
+							<Col xl={3}>
+								<BetWinner betWinnerData={betWinnerData} />
+							</Col>
+							<Col xl={1} className="mx-0 px-0 my-4">
+								<Button
+									className="btn-round btn-wd"
+									type="button"
+									variant="success"
+									onClick={() => {
+										handleBet(betData);
+									}}
+								>
+									<span className="btn-label">
+										<i className="fas fa-plus"></i>
+									</span>
+									Accept
+								</Button>
+							</Col>
+						</Row>
+					</Card.Body>
+					<Card.Footer className="my-0 py-0">
+						<Row>
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 14 }}>
+									{`${betData.venue.fullName}`}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<InputGroup size="sm">
+									<InputGroup.Prepend>
+										<InputGroup.Text>
+											<i className="nc-icon nc-bank"></i>
+										</InputGroup.Text>
+									</InputGroup.Prepend>
+									<Select
+										name="selectedMarket"
+										value={selectedMarket}
+										onChange={(value) => {
+											setAwayWinProb(makePercentage(value.odds.away.winProbability));
+											setHomeWinProb(makePercentage(value.odds.home.winProbability));
+											setSelectedMarket(value);
+										}}
+										options={optionsMarket}
+										placeholder="Select Market"
+										isSearchable={false}
+										styles={styles}
+									/>
+								</InputGroup>
+							</Col>
+							<Col xl={3}></Col>
+						</Row>
+					</Card.Footer>
+				</Card>
+			</Col>
 
 			{/* For large screen */}
-			{/* <Col className="mx-0 px-0 d-none d-lg-block d-xl-none">
-						<Card>
-							<Row className="">
-								<Col className="">
-									<BetScore key={betData.event.uid.toString()} betGameScoreData={betGameScoreData} />
-								</Col>
-								<Col>
-									<BetOdds />
-								</Col>
-							</Row>
-						</Card>
-					</Col> */}
+			<Col className="mx-0 px-0 d-none d-lg-block d-xl-none">
+				<Card border={cardBorderColor}>
+					<Card.Header className="my-0 py-0">
+						<Row className="">
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 16 }}>
+									{startTime}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+									MATCHUP PREDICTOR
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<Row>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											AMOUNT
+										</h4>
+									</Col>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											TO WIN
+										</h4>
+									</Col>
+								</Row>
+							</Col>
+						</Row>
+					</Card.Header>
+					<Card.Body className="my-0 py-0">
+						<Row className="">
+							<Col xl={4} className="">
+								<BetScore betGameScoreData={betData} />
+							</Col>
+							<Col xl={3} className="mx-0 px-0">
+								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
+							</Col>
+							<Col xl={3}>
+								<BetWinner betWinnerData={betWinnerData} />
+							</Col>
+							<Col xl={1} className="mx-0 px-0 my-4">
+								<Button
+									className="btn-round btn-wd"
+									type="button"
+									variant="success"
+									onClick={() => {
+										handleBet(betData);
+									}}
+								>
+									<span className="btn-label">
+										<i className="fas fa-plus"></i>
+									</span>
+									Accept
+								</Button>
+							</Col>
+						</Row>
+					</Card.Body>
+					<Card.Footer className="my-0 py-0">
+						<Row>
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 14 }}>
+									{`${betData.venue.fullName}`}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<InputGroup size="sm">
+									<InputGroup.Prepend>
+										<InputGroup.Text>
+											<i className="nc-icon nc-bank"></i>
+										</InputGroup.Text>
+									</InputGroup.Prepend>
+									<Select
+										name="selectedMarket"
+										value={selectedMarket}
+										onChange={(value) => {
+											setAwayWinProb(makePercentage(value.odds.away.winProbability));
+											setHomeWinProb(makePercentage(value.odds.home.winProbability));
+											setSelectedMarket(value);
+										}}
+										options={optionsMarket}
+										placeholder="Select Market"
+										isSearchable={false}
+										styles={styles}
+									/>
+								</InputGroup>
+							</Col>
+							<Col xl={3}></Col>
+						</Row>
+					</Card.Footer>
+				</Card>
+			</Col>
 
 			{/* For medium screen */}
-			{/* <Col className="mx-0 px-0 d-none d-md-block d-lg-none">
-						<Card>
-							<Row className="">
-								<Col className="">
-									<BetScore key={betData.event.uid.toString()} betGameScoreData={betGameScoreData} />
-								</Col>
-							</Row>
-						</Card>
-					</Col> */}
+			<Col className="mx-0 px-0 d-none d-md-block d-lg-none">
+				<Card border={cardBorderColor}>
+					<Card.Header className="my-0 py-0">
+						<Row className="">
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 16 }}>
+									{startTime}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+									MATCHUP PREDICTOR
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<Row>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											AMOUNT
+										</h4>
+									</Col>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											TO WIN
+										</h4>
+									</Col>
+								</Row>
+							</Col>
+						</Row>
+					</Card.Header>
+					<Card.Body className="my-0 py-0">
+						<Row className="">
+							<Col xl={4} className="">
+								<BetScore betGameScoreData={betData} />
+							</Col>
+							<Col xl={3} className="mx-0 px-0">
+								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
+							</Col>
+							<Col xl={3}>
+								<BetWinner betWinnerData={betWinnerData} />
+							</Col>
+							<Col xl={1} className="mx-0 px-0 my-4">
+								<Button
+									className="btn-round btn-wd"
+									type="button"
+									variant="success"
+									onClick={() => {
+										handleBet(betData);
+									}}
+								>
+									<span className="btn-label">
+										<i className="fas fa-plus"></i>
+									</span>
+									Accept
+								</Button>
+							</Col>
+						</Row>
+					</Card.Body>
+					<Card.Footer className="my-0 py-0">
+						<Row>
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 14 }}>
+									{`${betData.venue.fullName}`}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<InputGroup size="sm">
+									<InputGroup.Prepend>
+										<InputGroup.Text>
+											<i className="nc-icon nc-bank"></i>
+										</InputGroup.Text>
+									</InputGroup.Prepend>
+									<Select
+										name="selectedMarket"
+										value={selectedMarket}
+										onChange={(value) => {
+											setAwayWinProb(makePercentage(value.odds.away.winProbability));
+											setHomeWinProb(makePercentage(value.odds.home.winProbability));
+											setSelectedMarket(value);
+										}}
+										options={optionsMarket}
+										placeholder="Select Market"
+										isSearchable={false}
+										styles={styles}
+									/>
+								</InputGroup>
+							</Col>
+							<Col xl={3}></Col>
+						</Row>
+					</Card.Footer>
+				</Card>
+			</Col>
 
 			{/* For small screen */}
-			{/* <Col className="mx-0 px-0 d-none d-sm-block d-md-none">
-						<Card>
-							<Row className="">
-								<Col className="">
-									<BetScore key={betData.event.uid.toString()} betGameScoreData={betGameScoreData} />
-								</Col>
-							</Row>
-						</Card>
-					</Col> */}
+			<Col className="mx-0 px-0 d-none d-sm-block d-md-none">
+				<Card border={cardBorderColor}>
+					<Card.Header className="my-0 py-0">
+						<Row className="">
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 16 }}>
+									{startTime}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+									MATCHUP PREDICTOR
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<Row>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											AMOUNT
+										</h4>
+									</Col>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											TO WIN
+										</h4>
+									</Col>
+								</Row>
+							</Col>
+						</Row>
+					</Card.Header>
+					<Card.Body className="my-0 py-0">
+						<Row className="">
+							<Col xl={4} className="">
+								<BetScore betGameScoreData={betData} />
+							</Col>
+							<Col xl={3} className="mx-0 px-0">
+								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
+							</Col>
+							<Col xl={3}>
+								<BetWinner betWinnerData={betWinnerData} />
+							</Col>
+							<Col xl={1} className="mx-0 px-0 my-4">
+								<Button
+									className="btn-round btn-wd"
+									type="button"
+									variant="success"
+									onClick={() => {
+										handleBet(betData);
+									}}
+								>
+									<span className="btn-label">
+										<i className="fas fa-plus"></i>
+									</span>
+									Accept
+								</Button>
+							</Col>
+						</Row>
+					</Card.Body>
+					<Card.Footer className="my-0 py-0">
+						<Row>
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 14 }}>
+									{`${betData.venue.fullName}`}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<InputGroup size="sm">
+									<InputGroup.Prepend>
+										<InputGroup.Text>
+											<i className="nc-icon nc-bank"></i>
+										</InputGroup.Text>
+									</InputGroup.Prepend>
+									<Select
+										name="selectedMarket"
+										value={selectedMarket}
+										onChange={(value) => {
+											setAwayWinProb(makePercentage(value.odds.away.winProbability));
+											setHomeWinProb(makePercentage(value.odds.home.winProbability));
+											setSelectedMarket(value);
+										}}
+										options={optionsMarket}
+										placeholder="Select Market"
+										isSearchable={false}
+										styles={styles}
+									/>
+								</InputGroup>
+							</Col>
+							<Col xl={3}></Col>
+						</Row>
+					</Card.Footer>
+				</Card>
+			</Col>
 
 			{/* For xs screen */}
-			{/* <Col className="mx-0 px-0 d-block d-sm-none">
-						<Card>
-							<Row className="">
-								<Col className="">
-									<BetScore key={betData.event.uid.toString()} betGameScoreData={betGameScoreData} />
-								</Col>
-							</Row>
-						</Card>
-					</Col> */}
-		</Container>
+			<Col className="mx-0 px-0 d-block d-sm-none">
+				<Card border={cardBorderColor}>
+					<Card.Header className="my-0 py-0">
+						<Row className="">
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 16 }}>
+									{startTime}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+									MATCHUP PREDICTOR
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<Row>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											AMOUNT
+										</h4>
+									</Col>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											TO WIN
+										</h4>
+									</Col>
+								</Row>
+							</Col>
+						</Row>
+					</Card.Header>
+					<Card.Body className="my-0 py-0">
+						<Row className="">
+							<Col xl={4} className="">
+								<BetScore betGameScoreData={betData} />
+							</Col>
+							<Col xl={3} className="mx-0 px-0">
+								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
+							</Col>
+							<Col xl={3}>
+								<BetWinner betWinnerData={betWinnerData} />
+							</Col>
+							<Col xl={1} className="mx-0 px-0 my-4">
+								<Button
+									className="btn-round btn-wd"
+									type="button"
+									variant="success"
+									onClick={() => {
+										handleBet(betData);
+									}}
+								>
+									<span className="btn-label">
+										<i className="fas fa-plus"></i>
+									</span>
+									Accept
+								</Button>
+							</Col>
+						</Row>
+					</Card.Body>
+					<Card.Footer className="my-0 py-0">
+						<Row>
+							<Col xl={4}>
+								<h4 className="my-0" style={{ fontSize: 14 }}>
+									{`${betData.venue.fullName}`}
+								</h4>
+							</Col>
+							<Col xl={3}>
+								<InputGroup size="sm">
+									<InputGroup.Prepend>
+										<InputGroup.Text>
+											<i className="nc-icon nc-bank"></i>
+										</InputGroup.Text>
+									</InputGroup.Prepend>
+									<Select
+										name="selectedMarket"
+										value={selectedMarket}
+										onChange={(value) => {
+											setAwayWinProb(makePercentage(value.odds.away.winProbability));
+											setHomeWinProb(makePercentage(value.odds.home.winProbability));
+											setSelectedMarket(value);
+										}}
+										options={optionsMarket}
+										placeholder="Select Market"
+										isSearchable={false}
+										styles={styles}
+									/>
+								</InputGroup>
+							</Col>
+							<Col xl={3}></Col>
+						</Row>
+					</Card.Footer>
+				</Card>
+			</Col>
+		</Row>
 	);
 }
 
