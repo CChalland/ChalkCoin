@@ -97,7 +97,7 @@ function BetCard({ betData, currentUser }) {
 	return (
 		<Row>
 			{/* For extra lage screen */}
-			<Col xl={{ span: 9, offset: 1 }} className="d-none d-xl-block">
+			<Col xxl={{ span: 9, offset: 1 }} className="d-none d-xl-block">
 				<Card border={cardBorderColor}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
@@ -129,7 +129,7 @@ function BetCard({ betData, currentUser }) {
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col xl={4} className="">
+							<Col xl={4} className="mx-0 px-0">
 								<BetScore betGameScoreData={betData} />
 							</Col>
 							<Col xl={3} className="mx-0 px-0">
@@ -195,68 +195,36 @@ function BetCard({ betData, currentUser }) {
 				<Card border={cardBorderColor}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
-							<Col xl={4}>
+							<Col lg={7}>
 								<h4 className="my-0" style={{ fontSize: 16 }}>
 									{startTime}
 								</h4>
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
+							<Col lg={5} className="mx-0 px-0">
 								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 									MATCHUP PREDICTOR
 								</h4>
-							</Col>
-							<Col xl={3}>
-								<Row>
-									<Col>
-										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-											AMOUNT
-										</h4>
-									</Col>
-									<Col>
-										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-											TO WIN
-										</h4>
-									</Col>
-								</Row>
 							</Col>
 						</Row>
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col xl={4} className="">
+							<Col lg={7} className="mx-0 px-0">
 								<BetScore betGameScoreData={betData} />
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
+							<Col lg={5} className="mx-0 px-0">
 								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
-							</Col>
-							<Col xl={3}>
-								<BetWinner betWinnerData={betWinnerData} />
-							</Col>
-							<Col xl={1} className="mx-0 px-0 my-4">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
 							</Col>
 						</Row>
 					</Card.Body>
 					<Card.Footer className="my-0 py-0">
 						<Row>
-							<Col xl={4}>
+							<Col lg={7}>
 								<h4 className="my-0" style={{ fontSize: 14 }}>
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
+							<Col lg={5} className="mx-0 px-0">
 								<InputGroup size="sm">
 									<InputGroup.Prepend>
 										<InputGroup.Text>
@@ -278,9 +246,48 @@ function BetCard({ betData, currentUser }) {
 									/>
 								</InputGroup>
 							</Col>
-							<Col xl={3}></Col>
 						</Row>
 					</Card.Footer>
+					<Card.Header>
+						<Row className="">
+							<Col lg={7}>
+								<Row>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											AMOUNT
+										</h4>
+									</Col>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											TO WIN
+										</h4>
+									</Col>
+								</Row>
+							</Col>
+						</Row>
+					</Card.Header>
+					<Card.Body className="my-0 py-0">
+						<Row className="">
+							<Col lg={7}>
+								<BetWinner betWinnerData={betWinnerData} />
+							</Col>
+							<Col lg={1} className="mx-0 px-0 my-4">
+								<Button
+									className="btn-round btn-wd"
+									type="button"
+									variant="success"
+									onClick={() => {
+										handleBet(betData);
+									}}
+								>
+									<span className="btn-label">
+										<i className="fas fa-plus"></i>
+									</span>
+									Accept
+								</Button>
+							</Col>
+						</Row>
+					</Card.Body>
 				</Card>
 			</Col>
 

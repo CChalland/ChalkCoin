@@ -18,7 +18,7 @@ function BetOdds({ betGameOdds, homeWinProb, awayWinProb }) {
 				<Col xs="auto" className="mx-0 px-0">
 					<h5 className="mt-1" style={{ fontSize: 18 }}>{`${awayWinProb}%`}</h5>
 				</Col>
-				<Col xs="auto">
+				<Col xs="auto" className="mx-0 px-0">
 					<div className="chart-relative">
 						<Doughnut
 							data={data}
