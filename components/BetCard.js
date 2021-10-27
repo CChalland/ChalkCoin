@@ -13,7 +13,7 @@ const styles = {
 	container: (provided) => ({
 		...provided,
 		display: "inline-block",
-		width: "175px",
+		width: "150px",
 		minHeight: "1px",
 		textAlign: "left",
 		border: "none",
@@ -61,14 +61,6 @@ function BetCard({ betData, currentUser }) {
 	const [awayWinProb, setAwayWinProb] = useState(betData.away.winProb);
 	const [homeWinProb, setHomeWinProb] = useState(betData.home.winProb);
 	const [selectedMarket, setSelectedMarket] = useState("");
-	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
-	const toggleMultipleExpandablePanels = (event, value) => {
-		if (multipleExpandablePanels.includes(value)) {
-			setMultipleExpandablePanels(multipleExpandablePanels.filter((prop) => prop !== value));
-		} else {
-			setMultipleExpandablePanels([...multipleExpandablePanels, value]);
-		}
-	};
 	const optionsMarket = betData.odds?.map((odd) => {
 		return {
 			value: odd.key,
@@ -396,68 +388,36 @@ function BetCard({ betData, currentUser }) {
 				<Card border={cardBorderColor}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
-							<Col xl={4}>
+							<Col sm={7}>
 								<h4 className="my-0" style={{ fontSize: 16 }}>
 									{startTime}
 								</h4>
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
+							<Col sm={5} className="mx-0 px-0">
 								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 									MATCHUP PREDICTOR
 								</h4>
-							</Col>
-							<Col xl={3}>
-								<Row>
-									<Col>
-										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-											AMOUNT
-										</h4>
-									</Col>
-									<Col>
-										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-											TO WIN
-										</h4>
-									</Col>
-								</Row>
 							</Col>
 						</Row>
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col xl={4} className="">
+							<Col sm={7} className="mx-0 px-0">
 								<BetScore betGameScoreData={betData} />
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
+							<Col sm={5} className="mx-0 px-0">
 								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
-							</Col>
-							<Col xl={3}>
-								<BetWinner betWinnerData={betWinnerData} />
-							</Col>
-							<Col xl={1} className="mx-0 px-0 my-4">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
 							</Col>
 						</Row>
 					</Card.Body>
 					<Card.Footer className="my-0 py-0">
 						<Row>
-							<Col xl={4}>
+							<Col sm={7}>
 								<h4 className="my-0" style={{ fontSize: 14 }}>
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
+							<Col sm={5} className="mx-0 px-0">
 								<InputGroup size="sm">
 									<InputGroup.Prepend>
 										<InputGroup.Text>
@@ -479,9 +439,48 @@ function BetCard({ betData, currentUser }) {
 									/>
 								</InputGroup>
 							</Col>
-							<Col xl={3}></Col>
 						</Row>
 					</Card.Footer>
+					<Card.Header>
+						<Row className="">
+							<Col sm={7}>
+								<Row>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											AMOUNT
+										</h4>
+									</Col>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											TO WIN
+										</h4>
+									</Col>
+								</Row>
+							</Col>
+						</Row>
+					</Card.Header>
+					<Card.Body className="my-0 py-0">
+						<Row className="align-items-center ">
+							<Col sm={7}>
+								<BetWinner betWinnerData={betWinnerData} />
+							</Col>
+							<Col className="">
+								<Button
+									className="btn-round btn-wd"
+									type="button"
+									variant="success"
+									onClick={() => {
+										handleBet(betData);
+									}}
+								>
+									<span className="btn-label">
+										<i className="fas fa-plus"></i>
+									</span>
+									Accept
+								</Button>
+							</Col>
+						</Row>
+					</Card.Body>
 				</Card>
 			</Col>
 
@@ -490,68 +489,36 @@ function BetCard({ betData, currentUser }) {
 				<Card border={cardBorderColor}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
-							<Col xl={4}>
+							<Col xs={7}>
 								<h4 className="my-0" style={{ fontSize: 16 }}>
 									{startTime}
 								</h4>
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
+							<Col xs={5} className="mx-0 px-0">
 								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 									MATCHUP PREDICTOR
 								</h4>
-							</Col>
-							<Col xl={3}>
-								<Row>
-									<Col>
-										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-											AMOUNT
-										</h4>
-									</Col>
-									<Col>
-										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-											TO WIN
-										</h4>
-									</Col>
-								</Row>
 							</Col>
 						</Row>
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col xl={4} className="">
+							<Col xs={7} className="mx-0 px-0">
 								<BetScore betGameScoreData={betData} />
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
+							<Col xs={5} className="mx-0 px-0">
 								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
-							</Col>
-							<Col xl={3}>
-								<BetWinner betWinnerData={betWinnerData} />
-							</Col>
-							<Col xl={1} className="mx-0 px-0 my-4">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
 							</Col>
 						</Row>
 					</Card.Body>
 					<Card.Footer className="my-0 py-0">
 						<Row>
-							<Col xl={4}>
+							<Col xs={7}>
 								<h4 className="my-0" style={{ fontSize: 14 }}>
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
+							<Col xs={5} className="mx-0 px-0">
 								<InputGroup size="sm">
 									<InputGroup.Prepend>
 										<InputGroup.Text>
@@ -573,9 +540,48 @@ function BetCard({ betData, currentUser }) {
 									/>
 								</InputGroup>
 							</Col>
-							<Col xl={3}></Col>
 						</Row>
 					</Card.Footer>
+					<Card.Header>
+						<Row className="">
+							<Col xs={7}>
+								<Row>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											AMOUNT
+										</h4>
+									</Col>
+									<Col>
+										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+											TO WIN
+										</h4>
+									</Col>
+								</Row>
+							</Col>
+						</Row>
+					</Card.Header>
+					<Card.Body className="my-0 py-0">
+						<Row className="align-items-center ">
+							<Col xs={7}>
+								<BetWinner betWinnerData={betWinnerData} />
+							</Col>
+							<Col className="">
+								<Button
+									className="btn-round btn-wd"
+									type="button"
+									variant="success"
+									onClick={() => {
+										handleBet(betData);
+									}}
+								>
+									<span className="btn-label">
+										<i className="fas fa-plus"></i>
+									</span>
+									Accept
+								</Button>
+							</Col>
+						</Row>
+					</Card.Body>
 				</Card>
 			</Col>
 		</Row>
