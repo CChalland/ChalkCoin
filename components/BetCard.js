@@ -93,6 +93,48 @@ function BetCard({ betData, currentUser }) {
 		else cardBorderColor = "info";
 	} else startTime = `@ ${gameTime.format("h:mm a")}`;
 
+	console.log("BetCard - betData", betData);
+
+	let matchupPredictor = { header: null, body: null, footer: null };
+	if (awayWinProb && homeWinProb) {
+		matchupPredictor.header = (
+			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
+				<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+					MATCHUP PREDICTOR
+				</h4>
+			</Col>
+		);
+		matchupPredictor.body = (
+			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
+				<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
+			</Col>
+		);
+		matchupPredictor.footer = (
+			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
+				<InputGroup size="sm">
+					<InputGroup.Prepend>
+						<InputGroup.Text>
+							<i className="nc-icon nc-bank"></i>
+						</InputGroup.Text>
+					</InputGroup.Prepend>
+					<Select
+						name="selectedMarket"
+						value={selectedMarket}
+						onChange={(value) => {
+							setAwayWinProb(makePercentage(value.odds.away.winProbability));
+							setHomeWinProb(makePercentage(value.odds.home.winProbability));
+							setSelectedMarket(value);
+						}}
+						options={optionsMarket}
+						placeholder="Select Market"
+						isSearchable={false}
+						styles={styles}
+					/>
+				</InputGroup>
+			</Col>
+		);
+	}
+
 	return (
 		<Row>
 			{/* For extra lage screen */}
@@ -105,11 +147,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
-								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-									MATCHUP PREDICTOR
-								</h4>
-							</Col>
+							{matchupPredictor.header}
 							<Col xl={3}>
 								<Row>
 									<Col>
@@ -131,9 +169,7 @@ function BetCard({ betData, currentUser }) {
 							<Col xl={4} className="mx-0 px-0">
 								<BetScore betGameScoreData={betData} />
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
-								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
-							</Col>
+							{matchupPredictor.body}
 							<Col xl={3}>
 								<BetWinner betWinnerData={betWinnerData} />
 							</Col>
@@ -161,28 +197,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xl={3} className="mx-0 px-0">
-								<InputGroup size="sm">
-									<InputGroup.Prepend>
-										<InputGroup.Text>
-											<i className="nc-icon nc-bank"></i>
-										</InputGroup.Text>
-									</InputGroup.Prepend>
-									<Select
-										name="selectedMarket"
-										value={selectedMarket}
-										onChange={(value) => {
-											setAwayWinProb(makePercentage(value.odds.away.winProbability));
-											setHomeWinProb(makePercentage(value.odds.home.winProbability));
-											setSelectedMarket(value);
-										}}
-										options={optionsMarket}
-										placeholder="Select Market"
-										isSearchable={false}
-										styles={styles}
-									/>
-								</InputGroup>
-							</Col>
+							{matchupPredictor.footer}
 							<Col xl={3}></Col>
 						</Row>
 					</Card.Footer>
@@ -199,11 +214,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col lg={5} className="mx-0 px-0">
-								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-									MATCHUP PREDICTOR
-								</h4>
-							</Col>
+							{matchupPredictor.header}
 						</Row>
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
@@ -211,9 +222,7 @@ function BetCard({ betData, currentUser }) {
 							<Col lg={7} className="mx-0 px-0">
 								<BetScore betGameScoreData={betData} />
 							</Col>
-							<Col lg={5} className="mx-0 px-0">
-								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
-							</Col>
+							{matchupPredictor.body}
 						</Row>
 					</Card.Body>
 					<Card.Footer className="my-0 py-0">
@@ -223,28 +232,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col lg={5} className="mx-0 px-0">
-								<InputGroup size="sm">
-									<InputGroup.Prepend>
-										<InputGroup.Text>
-											<i className="nc-icon nc-bank"></i>
-										</InputGroup.Text>
-									</InputGroup.Prepend>
-									<Select
-										name="selectedMarket"
-										value={selectedMarket}
-										onChange={(value) => {
-											setAwayWinProb(makePercentage(value.odds.away.winProbability));
-											setHomeWinProb(makePercentage(value.odds.home.winProbability));
-											setSelectedMarket(value);
-										}}
-										options={optionsMarket}
-										placeholder="Select Market"
-										isSearchable={false}
-										styles={styles}
-									/>
-								</InputGroup>
-							</Col>
+							{matchupPredictor.footer}
 						</Row>
 					</Card.Footer>
 					<Card.Header>
@@ -300,11 +288,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col md={4} className="mx-0 px-0">
-								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-									MATCHUP PREDICTOR
-								</h4>
-							</Col>
+							{matchupPredictor.header}
 							<Col md={3} className="mx-0 px-0">
 								<Row>
 									<Col>
@@ -326,9 +310,7 @@ function BetCard({ betData, currentUser }) {
 							<Col md={5} className="mx-0 px-0">
 								<BetScore betGameScoreData={betData} />
 							</Col>
-							<Col md={4} className="mx-0 px-0">
-								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
-							</Col>
+							{matchupPredictor.body}
 							<Col md={3} className="mx-0 px-0">
 								<BetWinner betWinnerData={betWinnerData} />
 							</Col>
@@ -341,28 +323,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col md={4} className="mx-0 px-0">
-								<InputGroup size="sm">
-									<InputGroup.Prepend>
-										<InputGroup.Text>
-											<i className="nc-icon nc-bank"></i>
-										</InputGroup.Text>
-									</InputGroup.Prepend>
-									<Select
-										name="selectedMarket"
-										value={selectedMarket}
-										onChange={(value) => {
-											setAwayWinProb(makePercentage(value.odds.away.winProbability));
-											setHomeWinProb(makePercentage(value.odds.home.winProbability));
-											setSelectedMarket(value);
-										}}
-										options={optionsMarket}
-										placeholder="Select Market"
-										isSearchable={false}
-										styles={styles}
-									/>
-								</InputGroup>
-							</Col>
+							{matchupPredictor.footer}
 							<Col>
 								<Button
 									className="btn-round btn-wd"
@@ -393,11 +354,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col sm={5} className="mx-0 px-0">
-								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-									MATCHUP PREDICTOR
-								</h4>
-							</Col>
+							{matchupPredictor.header}
 						</Row>
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
@@ -405,9 +362,7 @@ function BetCard({ betData, currentUser }) {
 							<Col sm={7} className="mx-0 px-0">
 								<BetScore betGameScoreData={betData} />
 							</Col>
-							<Col sm={5} className="mx-0 px-0">
-								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
-							</Col>
+							{matchupPredictor.body}
 						</Row>
 					</Card.Body>
 					<Card.Footer className="my-0 py-0">
@@ -417,28 +372,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col sm={5} className="mx-0 px-0">
-								<InputGroup size="sm">
-									<InputGroup.Prepend>
-										<InputGroup.Text>
-											<i className="nc-icon nc-bank"></i>
-										</InputGroup.Text>
-									</InputGroup.Prepend>
-									<Select
-										name="selectedMarket"
-										value={selectedMarket}
-										onChange={(value) => {
-											setAwayWinProb(makePercentage(value.odds.away.winProbability));
-											setHomeWinProb(makePercentage(value.odds.home.winProbability));
-											setSelectedMarket(value);
-										}}
-										options={optionsMarket}
-										placeholder="Select Market"
-										isSearchable={false}
-										styles={styles}
-									/>
-								</InputGroup>
-							</Col>
+							{matchupPredictor.footer}
 						</Row>
 					</Card.Footer>
 					<Card.Header>
@@ -494,11 +428,7 @@ function BetCard({ betData, currentUser }) {
 									{startTime}
 								</h4>
 							</Col>
-							<Col xs={5} className="mx-0 px-0">
-								<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-									MATCHUP PREDICTOR
-								</h4>
-							</Col>
+							{matchupPredictor.header}
 						</Row>
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
@@ -506,9 +436,7 @@ function BetCard({ betData, currentUser }) {
 							<Col xs={7} className="mx-0 px-0">
 								<BetScore betGameScoreData={betData} />
 							</Col>
-							<Col xs={5} className="mx-0 px-0">
-								<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
-							</Col>
+							{matchupPredictor.body}
 						</Row>
 					</Card.Body>
 					<Card.Footer className="my-0 py-0">
@@ -518,28 +446,7 @@ function BetCard({ betData, currentUser }) {
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							<Col xs={5} className="mx-0 px-0">
-								<InputGroup size="sm">
-									<InputGroup.Prepend>
-										<InputGroup.Text>
-											<i className="nc-icon nc-bank"></i>
-										</InputGroup.Text>
-									</InputGroup.Prepend>
-									<Select
-										name="selectedMarket"
-										value={selectedMarket}
-										onChange={(value) => {
-											setAwayWinProb(makePercentage(value.odds.away.winProbability));
-											setHomeWinProb(makePercentage(value.odds.home.winProbability));
-											setSelectedMarket(value);
-										}}
-										options={optionsMarket}
-										placeholder="Select Market"
-										isSearchable={false}
-										styles={styles}
-									/>
-								</InputGroup>
-							</Col>
+							{matchupPredictor.footer}
 						</Row>
 					</Card.Footer>
 					<Card.Header>

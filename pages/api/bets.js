@@ -3,6 +3,11 @@ import { getSession } from "next-auth/client";
 
 const betSorter = (bets) => {
 	let sportWithBets = [];
+	const ncaafBets = bets
+		.filter((bet) => bet.details.displayName === "NCAA Football")
+		.sort((a, b) => {
+			return new Date(a.details.date) - new Date(b.details.date);
+		});
 	const nflBets = bets
 		.filter((bet) => bet.details.displayName === "NFL")
 		.sort((a, b) => {
@@ -34,6 +39,7 @@ const betSorter = (bets) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 
+	if (ncaafBets.length > 0) sportWithBets.push({ displayName: "NCAA Football", icon: 1, bets: ncaafBets });
 	if (nflBets.length > 0) sportWithBets.push({ displayName: "NFL", icon: 2, bets: nflBets });
 	if (mlbBets.length > 0) sportWithBets.push({ displayName: "MLB", icon: 3, bets: mlbBets });
 	if (nbaBets.length > 0) sportWithBets.push({ displayName: "NBA", icon: 4, bets: nbaBets });

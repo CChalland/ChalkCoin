@@ -7,7 +7,15 @@ export const SportDispatch = createContext();
 
 export function SportProvider(props) {
 	let initialSportsData = [
-		// { id: 1, abbrv: "NCAAF", sport: "football", display_name: "NCAA Football", league_name: "college-football", data: {}, reload: false },
+		{
+			id: 1,
+			abbrv: "NCAAF",
+			sport: "football",
+			display_name: "NCAA Football",
+			league_name: "college-football",
+			data: {},
+			reload: false,
+		},
 		{
 			id: 2,
 			abbrv: "NFL",
@@ -37,7 +45,7 @@ export function SportProvider(props) {
 		},
 		{
 			id: 5,
-			abbrv: "NCAAM",
+			abbrv: "NCAAB",
 			sport: "basketball",
 			display_name: "NCAA Men's Basketball",
 			league_name: "mens-college-basketball",

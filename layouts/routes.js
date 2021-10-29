@@ -26,6 +26,12 @@ var routes = [
 		icon: "",
 		views: [
 			{
+				path: "/games?sport=ncaaf",
+				name: "Football",
+				image: "../../static/media/sports-icons/1.png",
+				mini: "NCAAB",
+			},
+			{
 				path: "/games?sport=nfl",
 				name: "NFL",
 				image: "../../static/media/sports-icons/2.png",
@@ -44,7 +50,7 @@ var routes = [
 				mini: "../../static/media/sports-icons/4.png",
 			},
 			{
-				path: "/games?sport=ncaam",
+				path: "/games?sport=ncaab",
 				name: "Basketball",
 				image: "../../static/media/sports-icons/5.png",
 				mini: "../../static/media/sports-icons/5.png",

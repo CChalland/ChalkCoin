@@ -17,6 +17,7 @@ function Bets({ currentUser }) {
 	const [bets, setBets] = useState([]);
 	const [search, setSearch] = useState("");
 	const [searchState, setSearchState] = useState(true);
+	const [ncaafState, setNCAAFState] = useState(false);
 	const [nflState, setNFLState] = useState(false);
 	const [mlbState, setMLBState] = useState(false);
 	const [nbaState, setNBAState] = useState(false);
@@ -34,9 +35,15 @@ function Bets({ currentUser }) {
 
 	useEffect(() => {
 		let filteredBetsData = [];
-		if (!nflState && !mlbState && !nbaState && !ncaabState && !nhlState && !wnbaState) {
+		if (!ncaafState && !nflState && !mlbState && !nbaState && !ncaabState && !nhlState && !wnbaState) {
 			filteredBetsData = openBets;
 		} else {
+			if (ncaafState) {
+				const ncaafBets = openBets.filter((bet) => {
+					return bet.details.displayName === "NCAA Football";
+				});
+				filteredBetsData = [...filteredBetsData, ...ncaafBets];
+			}
 			if (nflState) {
 				const nflBets = openBets.filter((bet) => {
 					return bet.details.displayName === "NFL";
@@ -89,11 +96,13 @@ function Bets({ currentUser }) {
 			setBets(searchedBets);
 			setSearchState(true);
 		}
-	}, [openBets, search, nflState, mlbState, nbaState, ncaabState, nhlState, wnbaState]);
+	}, [openBets, search, ncaafState, nflState, mlbState, nbaState, ncaabState, nhlState, wnbaState]);
 
 	const sportButtons = sportWithBets.pendingBets.openBets.map((sport, key) => {
 		let buttonClass;
-		if (sport.displayName === "NFL") {
+		if (sport.displayName === "NCAA Football") {
+			buttonClass = ncaafState ? "btn-round" : "btn-outline btn-round";
+		} else if (sport.displayName === "NFL") {
 			buttonClass = nflState ? "btn-round" : "btn-outline btn-round";
 		} else if (sport.displayName === "MLB") {
 			buttonClass = mlbState ? "btn-round" : "btn-outline btn-round";
@@ -113,7 +122,9 @@ function Bets({ currentUser }) {
 					className={`${buttonClass}`}
 					variant="default"
 					onClick={() => {
-						if (sport.displayName === "NFL") {
+						if (sport.displayName === "NCAA Football") {
+							setNCAAFState(!ncaafState);
+						} else if (sport.displayName === "NFL") {
 							setNFLState(!nflState);
 						} else if (sport.displayName === "MLB") {
 							setMLBState(!mlbState);

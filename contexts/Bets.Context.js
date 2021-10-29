@@ -54,8 +54,8 @@ export function BetProvider(props) {
 		handlingAcceptedGames();
 	}
 
-	console.log("in Bets.Context", bets);
-	console.log("completedAcceptedBets", completedAcceptedBets);
+	// console.log("in Bets.Context", bets);
+	// console.log("completedAcceptedBets", completedAcceptedBets);
 
 	return (
 		<BetContext.Provider value={bets}>
