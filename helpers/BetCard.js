@@ -340,6 +340,7 @@ export function BetGameData(bet) {
 		shortDetail: bet.event.competitions[0].status.type.shortDetail,
 		detail: bet.event.competitions[0].status.type.detail,
 		odds: bookmakers,
+		openStatus: bet.openStatus,
 		away: {
 			abbreviation: awayTeam[0].team.abbreviation,
 			alternateColor: `#${awayTeam[0].team.alternateColor}`,

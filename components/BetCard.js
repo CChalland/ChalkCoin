@@ -79,9 +79,6 @@ function BetCard({ betData, currentUser }) {
 		});
 	};
 	const gameTime = moment(betData.date);
-	const daysDiff = gameTime.diff(new Date(), "days");
-	const minutesDiff = gameTime.diff(new Date(), "minutes");
-
 	let cardBorderColor, startTime;
 	let matchupPredictor = { header: null, body: null, footer: null };
 	if (awayWinProb && homeWinProb) {
@@ -123,14 +120,9 @@ function BetCard({ betData, currentUser }) {
 		);
 	}
 	if (betData.status.type.state === "post") startTime = "GAME ENDED";
-	else if (betData.status.type.state === "in") {
-		startTime = "GAME STARTED";
-		if (minutesDiff > -15) cardBorderColor = "danger";
-	} else if (betData.status.type.state === "pre" && daysDiff === 0) {
-		startTime = `@ ${gameTime.format("h:mm a")}`;
-		if (minutesDiff < 60) cardBorderColor = "warning";
-		else cardBorderColor = "info";
-	} else startTime = `@ ${gameTime.format("h:mm a")}`;
+	else if (betData.status.type.state === "in") startTime = "GAME STARTED";
+	else startTime = `@ ${gameTime.format("h:mm a")}`;
+	cardBorderColor = betData.openStatus;
 
 	// console.log("BetCard - betData", betData);
 

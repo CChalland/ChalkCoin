@@ -8,13 +8,13 @@ const betsReducer = (state, action) => {
 				if (event?.status.type.state === "post") {
 					bet.openStatus = "Ended";
 				} else if (event?.status.type.state === "in") {
-					bet.openStatus = event.status.period <= 1 ? "Closing Soon" : "Closed";
+					bet.openStatus = event.status.period <= 1 ? "danger" : "Closed";
 				} else if (event?.status.type.state === "pre") {
 					const now = new Date();
 					const gameTime = new Date(bet.event.date);
 					const timeDiff = (gameTime.getTime() - now.getTime()) / (3600 * 1000);
 					if (gameTime.getDate() === now.getDate() && gameTime.getMonth() === now.getMonth()) {
-						bet.openStatus = timeDiff <= 2 ? "Starting Soon" : "Today";
+						bet.openStatus = timeDiff <= 2 ? "warning" : "info";
 					}
 				}
 				return bet;

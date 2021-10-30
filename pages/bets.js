@@ -146,19 +146,19 @@ function Bets({ currentUser }) {
 			}
 			if (closingState) {
 				const closingBets = openBets.filter((bet) => {
-					return bet.openStatus === "Closing Soon";
+					return bet.openStatus === "danger";
 				});
 				filteredBetsData = [...filteredBetsData, ...closingBets];
 			}
 			if (startingState) {
 				const startingBets = openBets.filter((bet) => {
-					return bet.openStatus === "Starting Soon";
+					return bet.openStatus === "warning";
 				});
 				filteredBetsData = [...filteredBetsData, ...startingBets];
 			}
 			if (todayState) {
 				const todayBets = openBets.filter((bet) => {
-					return bet.openStatus === "Today";
+					return bet.openStatus === "info";
 				});
 				filteredBetsData = [...filteredBetsData, ...todayBets];
 			}
@@ -172,7 +172,7 @@ function Bets({ currentUser }) {
 		});
 
 		if (searchedBets.length === 0) {
-			setBets(filteredBetsData);
+			setBets(searchedBets);
 			setSearchState(false);
 		} else {
 			setBets(searchedBets);
