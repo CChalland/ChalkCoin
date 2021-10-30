@@ -6,7 +6,7 @@ const betsReducer = (state, action) => {
 				const event = sportGames.data.events?.find((event) => event.id === bet.details.id);
 				bet.event = event;
 				if (event?.status.type.state === "post") {
-					bet.openStatus = "Closed";
+					bet.openStatus = "Ended";
 				} else if (event?.status.type.state === "in") {
 					bet.openStatus = event.status.period <= 1 ? "Closing Soon" : "Closed";
 				} else if (event?.status.type.state === "pre") {
