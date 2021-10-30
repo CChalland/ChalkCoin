@@ -5,6 +5,18 @@ const betsReducer = (state, action) => {
 				const sportGames = games.find((item) => item.display_name === sport.displayName);
 				const event = sportGames.data.events?.find((event) => event.id === bet.details.id);
 				bet.event = event;
+				if (event?.status.type.state === "post") {
+					bet.openStatus = "Closed";
+				} else if (event?.status.type.state === "in") {
+					bet.openStatus = event.status.period <= 1 ? "Closing Soon" : "Closed";
+				} else if (event?.status.type.state === "pre") {
+					const now = new Date();
+					const gameTime = new Date(bet.event.date);
+					const timeDiff = (gameTime.getTime() - now.getTime()) / (3600 * 1000);
+					if (gameTime.getDate() === now.getDate() && gameTime.getMonth() === now.getMonth()) {
+						bet.openStatus = timeDiff <= 2 ? "Starting Soon" : "Today";
+					}
+				}
 				return bet;
 			});
 			return { ...sport, bets: bet };

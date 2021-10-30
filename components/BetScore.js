@@ -60,13 +60,25 @@ function BetScores({ betGameScoreData }) {
 						</Card>
 					</Col>
 				);
-			} else {
-				const [period, time] = betGameScoreData.detail.split(" ");
+			} else if (betGameScoreData.sportName === "NCAA Football") {
+				const time = betGameScoreData.detail.split(" ")[0];
+				const period = betGameScoreData.detail.split(" ")[2];
 				scoreCard = (
 					<Col xs={3} sm="auto" className="mt-2 text-secondary">
 						<Card border="secondary" style={{ width: "4rem" }}>
-							<p className="text-center my-2">{time}</p>
 							<p className="text-danger text-center my-1 border-bottom">{period}</p>
+							<p className="text-center my-2">{time}</p>
+						</Card>
+					</Col>
+				);
+			} else {
+				const time = betGameScoreData.detail.split(" ")[0];
+				const period = betGameScoreData.detail.split(" ")[2];
+				scoreCard = (
+					<Col xs={3} sm="auto" className="mt-2 text-secondary">
+						<Card border="secondary" style={{ width: "4rem" }}>
+							<p className="text-danger text-center my-1 border-bottom">{period}</p>
+							<p className="text-center my-2">{time}</p>
 						</Card>
 					</Col>
 				);

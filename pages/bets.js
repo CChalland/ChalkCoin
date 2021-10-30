@@ -24,11 +24,63 @@ function Bets({ currentUser }) {
 	const [ncaabState, setNCAABState] = useState(false);
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
-
-	console.log("sportWithBets", sportWithBets);
-	console.log("betSorted", betSorted);
-	console.log("openBets", openBets);
-	// console.log("bets", bets);
+	const [closingState, setClosingState] = useState(false);
+	const [startingState, setStartingState] = useState(false);
+	const [todayState, setTodayState] = useState(false);
+	const sportButtons = sportWithBets.pendingBets.openBets.map((sport, key) => {
+		let buttonClass;
+		if (sport.displayName === "NCAA Football") {
+			buttonClass = ncaafState ? "btn-round" : "btn-outline btn-round";
+		} else if (sport.displayName === "NFL") {
+			buttonClass = nflState ? "btn-round" : "btn-outline btn-round";
+		} else if (sport.displayName === "MLB") {
+			buttonClass = mlbState ? "btn-round" : "btn-outline btn-round";
+		} else if (sport.displayName === "NBA") {
+			buttonClass = nbaState ? "btn-round" : "btn-outline btn-round";
+		} else if (sport.displayName === "NCAA Men's Basketball") {
+			buttonClass = ncaabState ? "btn-round" : "btn-outline btn-round";
+		} else if (sport.displayName === "NHL") {
+			buttonClass = nhlState ? "btn-round" : "btn-outline btn-round";
+		} else if (sport.displayName === "WNBA") {
+			buttonClass = wnbaState ? "btn-round" : "btn-outline btn-round";
+		}
+		return (
+			<Col xs={"auto"} key={key}>
+				<Button
+					className={`${buttonClass}`}
+					variant="default"
+					onClick={() => {
+						if (sport.displayName === "NCAA Football") {
+							setNCAAFState(!ncaafState);
+						} else if (sport.displayName === "NFL") {
+							setNFLState(!nflState);
+						} else if (sport.displayName === "MLB") {
+							setMLBState(!mlbState);
+						} else if (sport.displayName === "NBA") {
+							setNBAState(!nbaState);
+						} else if (sport.displayName === "NCAA Men's Basketball") {
+							setNCAABState(!ncaabState);
+						} else if (sport.displayName === "NHL") {
+							setNHLState(!nhlState);
+						} else if (sport.displayName === "WNBA") {
+							setWNBAState(!wnbaState);
+						}
+					}}
+				>
+					<Image height={30} src={`../static/media/sports-icons/${sport.icon}.png`} rounded />
+				</Button>
+			</Col>
+		);
+	});
+	const closingClass = closingState ? "" : "btn-outline";
+	const startingClass = startingState ? "" : "btn-outline";
+	const todayClass = todayState ? "" : "btn-outline";
+	const betCards = bets.map((bet, key) => {
+		if (bet.event) {
+			const betData = BetGameData(bet);
+			return <BetCard betData={betData} currentUser={currentUser} key={key} />;
+		}
+	});
 
 	useEffect(() => {
 		setOpenBets(betSorted);
@@ -36,7 +88,18 @@ function Bets({ currentUser }) {
 
 	useEffect(() => {
 		let filteredBetsData = [];
-		if (!ncaafState && !nflState && !mlbState && !nbaState && !ncaabState && !nhlState && !wnbaState) {
+		if (
+			!ncaafState &&
+			!nflState &&
+			!mlbState &&
+			!nbaState &&
+			!ncaabState &&
+			!nhlState &&
+			!wnbaState &&
+			!closingState &&
+			!startingState &&
+			!todayState
+		) {
 			filteredBetsData = openBets;
 		} else {
 			if (ncaafState) {
@@ -81,6 +144,24 @@ function Bets({ currentUser }) {
 				});
 				filteredBetsData = [...filteredBetsData, ...wnbaBets];
 			}
+			if (closingState) {
+				const closingBets = openBets.filter((bet) => {
+					return bet.openStatus === "Closing Soon";
+				});
+				filteredBetsData = [...filteredBetsData, ...closingBets];
+			}
+			if (startingState) {
+				const startingBets = openBets.filter((bet) => {
+					return bet.openStatus === "Starting Soon";
+				});
+				filteredBetsData = [...filteredBetsData, ...startingBets];
+			}
+			if (todayState) {
+				const todayBets = openBets.filter((bet) => {
+					return bet.openStatus === "Today";
+				});
+				filteredBetsData = [...filteredBetsData, ...todayBets];
+			}
 		}
 
 		const searchedBets = filteredBetsData.filter((bet) => {
@@ -97,69 +178,32 @@ function Bets({ currentUser }) {
 			setBets(searchedBets);
 			setSearchState(true);
 		}
-	}, [openBets, search, ncaafState, nflState, mlbState, nbaState, ncaabState, nhlState, wnbaState]);
+	}, [
+		openBets,
+		search,
+		ncaafState,
+		nflState,
+		mlbState,
+		nbaState,
+		ncaabState,
+		nhlState,
+		wnbaState,
+		closingState,
+		startingState,
+		todayState,
+	]);
 
-	const sportButtons = sportWithBets.pendingBets.openBets.map((sport, key) => {
-		let buttonClass;
-		if (sport.displayName === "NCAA Football") {
-			buttonClass = ncaafState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "NFL") {
-			buttonClass = nflState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "MLB") {
-			buttonClass = mlbState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "NBA") {
-			buttonClass = nbaState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "NCAA Men's Basketball") {
-			buttonClass = ncaabState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "NHL") {
-			buttonClass = nhlState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "WNBA") {
-			buttonClass = wnbaState ? "btn-round" : "btn-outline btn-round";
-		}
-
-		return (
-			<Col xs={"auto"} key={key}>
-				<Button
-					className={`${buttonClass}`}
-					variant="default"
-					onClick={() => {
-						if (sport.displayName === "NCAA Football") {
-							setNCAAFState(!ncaafState);
-						} else if (sport.displayName === "NFL") {
-							setNFLState(!nflState);
-						} else if (sport.displayName === "MLB") {
-							setMLBState(!mlbState);
-						} else if (sport.displayName === "NBA") {
-							setNBAState(!nbaState);
-						} else if (sport.displayName === "NCAA Men's Basketball") {
-							setNCAABState(!ncaabState);
-						} else if (sport.displayName === "NHL") {
-							setNHLState(!nhlState);
-						} else if (sport.displayName === "WNBA") {
-							setWNBAState(!wnbaState);
-						}
-					}}
-				>
-					<Image height={30} src={`../static/media/sports-icons/${sport.icon}.png`} rounded />
-				</Button>
-			</Col>
-		);
-	});
-
-	const betCards = bets.map((bet, key) => {
-		if (bet.event) {
-			const betData = BetGameData(bet);
-			return <BetCard betData={betData} currentUser={currentUser} key={key} />;
-		}
-	});
-
+	// console.log("sportWithBets", sportWithBets);
+	// console.log("betSorted", betSorted);
+	// console.log("openBets", openBets);
+	// console.log("bets", bets);
 	return (
 		<Container fluid>
 			<Row className="justify-content-center">
 				<Col xs="auto">
 					<Form>
 						<Card>
-							<Card.Header>
+							<Card.Header className="mx-2">
 								<Row className="mt-2 justify-content-center align-items-center">
 									<Col xs={"auto"} className="">
 										<h2 className="mt-0 pt-0">{"BETS: "}</h2>
@@ -186,20 +230,23 @@ function Bets({ currentUser }) {
 									</Col>
 								</Row>
 							</Card.Header>
-							<Card.Body>
+							<Card.Body className="mx-2">
 								<Row className="justify-content-center">{sportButtons}</Row>
-								<Row className="justify-content-center">
+								<Row className="justify-content-center align-items-center">
 									<Col>
 										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
 												<Button
-													className="btn-outline"
+													className={closingClass}
 													type="button"
 													variant="danger"
 													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setClosingState(!closingState);
+													}}
 												></Button>
 											</Col>
-											<Col xs={7} sm={8} className="mx-0 px-0">
+											<Col xs={7} sm={8} className="ml-1 pl-1">
 												<h5 className="my-0" style={{ fontSize: 15 }}>
 													{"Closing Soon"}
 												</h5>
@@ -208,15 +255,18 @@ function Bets({ currentUser }) {
 									</Col>
 									<Col>
 										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
 												<Button
-													className="btn-outline"
+													className={startingClass}
 													type="button"
 													variant="warning"
 													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setStartingState(!startingState);
+													}}
 												></Button>
 											</Col>
-											<Col xs={7} sm={8} className="mx-0 px-0">
+											<Col xs={7} sm={8} className="ml-1 pl-1">
 												<h5 className="my-0" style={{ fontSize: 15 }}>
 													{"Game Starting Soon"}
 												</h5>
@@ -225,15 +275,18 @@ function Bets({ currentUser }) {
 									</Col>
 									<Col>
 										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
 												<Button
-													className="btn-outline"
+													className={todayClass}
 													type="button"
 													variant="info"
 													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setTodayState(!todayState);
+													}}
 												></Button>
 											</Col>
-											<Col xs={7} sm={8} className="mx-0 px-0">
+											<Col xs={7} sm={8} className="ml-1 pl-1">
 												<h5 className="my-0" style={{ fontSize: 15 }}>
 													{"Game Today"}
 												</h5>
