@@ -295,6 +295,21 @@ export function GameLeadersHelper(game, sportName) {
 					type: "completed",
 				};
 			});
+		} else if (sportName === "NCAA Football") {
+			athletes = game.competitions[0].leaders?.map((athlete) => {
+				return {
+					title: "TOP PERFORMERS",
+					position: athlete.shortDisplayName,
+					headshot: athlete.leaders[0].athlete.headshot,
+					displayName: athlete.leaders[0].athlete.displayName,
+					team:
+						athlete.leaders[0].team.id === homeTeam[0].team.id
+							? homeTeam[0].team.abbreviation
+							: awayTeam[0].team.abbreviation,
+					displayValue: athlete.leaders[0].displayValue,
+					type: "completed",
+				};
+			});
 		} else {
 			if (awayAthlete) awayAthlete.type = "in";
 			if (homeAthlete) homeAthlete.type = "in";
@@ -337,6 +352,21 @@ export function GameLeadersHelper(game, sportName) {
 				};
 			});
 		} else if (sportName === "NFL") {
+			athletes = game.competitions[0].leaders?.map((athlete) => {
+				return {
+					title: "TOP PERFORMERS",
+					position: athlete.shortDisplayName,
+					headshot: athlete.leaders[0].athlete.headshot,
+					displayName: athlete.leaders[0].athlete.displayName,
+					team:
+						athlete.leaders[0].team.id === homeTeam[0].team.id
+							? homeTeam[0].team.abbreviation
+							: awayTeam[0].team.abbreviation,
+					displayValue: athlete.leaders[0].displayValue,
+					type: "completed",
+				};
+			});
+		} else if (sportName === "NCAA Football") {
 			athletes = game.competitions[0].leaders?.map((athlete) => {
 				return {
 					title: "TOP PERFORMERS",

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useState } from "react";
+import React, { createContext, useContext, useReducer, useEffect, useState } from "react";
 import axios from "axios";
 import sportsReducer from "../reducers/Sports.Reducer";
 
@@ -7,7 +7,15 @@ export const SportDispatch = createContext();
 
 export function SportProvider(props) {
 	let initialSportsData = [
-		// { id: 1, abbrv: "NCAAF", sport: "football", display_name: "NCAA Football", league_name: "college-football", data: {}, reload: false },
+		{
+			id: 1,
+			abbrv: "NCAAF",
+			sport: "football",
+			display_name: "NCAA Football",
+			league_name: "college-football",
+			data: {},
+			reload: false,
+		},
 		{
 			id: 2,
 			abbrv: "NFL",
@@ -37,7 +45,7 @@ export function SportProvider(props) {
 		},
 		{
 			id: 5,
-			abbrv: "NCAAM",
+			abbrv: "NCAAB",
 			sport: "basketball",
 			display_name: "NCAA Men's Basketball",
 			league_name: "mens-college-basketball",
@@ -64,19 +72,13 @@ export function SportProvider(props) {
 		},
 		// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {}, reload: false },
 	];
-	// const [sportsData, setSportsData] = useState(initialSportsData);
 	const [sportsData, dispatch] = useReducer(sportsReducer, initialSportsData);
-	const [blockchain, setBlockchain] = useState({});
 	const [fetchedSportData, setFetchedSportData] = useState(false);
 
 	useEffect(() => {
 		async function getSportsData() {
 			let removeSportsData = [];
 			let sportData = sportsData;
-
-			const getNode1 = `http://localhost:3001/blockchain`;
-			let response = await axios.get(getNode1);
-			const blockchainData = response.data;
 
 			try {
 				sportData = await Promise.all(
@@ -128,14 +130,13 @@ export function SportProvider(props) {
 
 			dispatch({ type: "ALL", data: sportData });
 			// setFetchedSportData(true);
-			// setBlockchain(blockchainData);
 		}
 
 		getSportsData();
 	}, [fetchedSportData]);
 
 	return (
-		<SportContext.Provider value={{ sportsData, blockchain, fetchedSportData }}>
+		<SportContext.Provider value={{ sportsData, fetchedSportData }}>
 			<SportDispatch.Provider value={dispatch}>{props.children}</SportDispatch.Provider>
 		</SportContext.Provider>
 	);

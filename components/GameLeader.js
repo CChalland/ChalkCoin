@@ -127,6 +127,7 @@ function GameLeader(props) {
 					</p>
 				);
 			} else if (!athlete.displayValue) {
+				// get a error rendering the page, saying that the filter mathod is undefined.
 				let goals = athlete.statistics.filter((stat) => {
 					return stat.name === "goals";
 				});

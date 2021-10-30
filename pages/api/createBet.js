@@ -63,9 +63,9 @@ export default async (req, res) => {
 				return res.json(createdBet);
 			} catch (e) {
 				console.log(e);
-				if (e.code === "P2002") {
-					return res.json({ error: `There's already an account with that ${e.meta.target[0]}` });
-				}
+				// if (e.code === "P2002") {
+				// 	return res.json({ error: `There's already an bet with that ${e.meta.target[0]}` });
+				// }
 				// throw e;
 			}
 		}

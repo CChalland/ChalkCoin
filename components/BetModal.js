@@ -141,7 +141,7 @@ function BetModal(props) {
 			};
 			if (betType === "recipient") submitBet.recipientId = recipient.id;
 			await axios.post("http://localhost:4000/api/createBet", submitBet).then((res) => {
-				dispatch({ type: "ADD BET", data: res.data, recipient: recipient.id });
+				dispatch({ type: "ADD BET", bet: res.data, recipient: recipient.id });
 			});
 		}
 	};
