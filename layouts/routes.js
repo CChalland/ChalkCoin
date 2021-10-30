@@ -19,6 +19,11 @@ var routes = [
 		icon: "nc-icon nc-money-coins",
 	},
 	{
+		path: "/blockchain",
+		name: "Blockchain",
+		icon: "nc-icon nc-bank",
+	},
+	{
 		collapse: true,
 		path: "/games",
 		name: "Games",
