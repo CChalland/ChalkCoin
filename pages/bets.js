@@ -25,8 +25,9 @@ function Bets({ currentUser }) {
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
 
-	// console.log("sportWithBets", sportWithBets);
-	// console.log("openBets", openBets);
+	console.log("sportWithBets", sportWithBets);
+	console.log("betSorted", betSorted);
+	console.log("openBets", openBets);
 	// console.log("bets", bets);
 
 	useEffect(() => {
@@ -154,12 +155,12 @@ function Bets({ currentUser }) {
 
 	return (
 		<Container fluid>
-			<Row>
-				<Col>
+			<Row className="justify-content-center">
+				<Col xs="auto">
 					<Form>
 						<Card>
 							<Card.Header>
-								<Row className="mt-2 align-items-center">
+								<Row className="mt-2 justify-content-center align-items-center">
 									<Col xs={"auto"} className="">
 										<h2 className="mt-0 pt-0">{"BETS: "}</h2>
 									</Col>
@@ -186,11 +187,11 @@ function Bets({ currentUser }) {
 								</Row>
 							</Card.Header>
 							<Card.Body>
-								<Row>{sportButtons}</Row>
-								<Row className="align-items-center">
-									<Col xs={4} md={3}>
-										<Row>
-											<Col xs={4} sm="auto" className="mr-0 pr-0">
+								<Row className="justify-content-center">{sportButtons}</Row>
+								<Row className="justify-content-center">
+									<Col>
+										<Row className="align-items-center">
+											<Col xs={4} sm="auto" className="mt-1">
 												<Button
 													className="btn-outline"
 													type="button"
@@ -198,14 +199,16 @@ function Bets({ currentUser }) {
 													style={{ width: "1.5rem", height: "1.5rem" }}
 												></Button>
 											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												{"Closing Soon"}
+											<Col xs={7} sm={8} className="mx-0 px-0">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Closing Soon"}
+												</h5>
 											</Col>
 										</Row>
 									</Col>
-									<Col xs={4}>
-										<Row>
-											<Col xs={4} sm="auto" className="mr-0 pr-0">
+									<Col>
+										<Row className="align-items-center">
+											<Col xs={4} sm="auto" className="mt-1">
 												<Button
 													className="btn-outline"
 													type="button"
@@ -213,14 +216,16 @@ function Bets({ currentUser }) {
 													style={{ width: "1.5rem", height: "1.5rem" }}
 												></Button>
 											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												{"Game Starting Soon"}
+											<Col xs={7} sm={8} className="mx-0 px-0">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Game Starting Soon"}
+												</h5>
 											</Col>
 										</Row>
 									</Col>
-									<Col xs={4}>
-										<Row>
-											<Col xs={4} sm="auto" className="mr-0 pr-0">
+									<Col>
+										<Row className="align-items-center">
+											<Col xs={4} sm="auto" className="mt-1">
 												<Button
 													className="btn-outline"
 													type="button"
@@ -228,8 +233,10 @@ function Bets({ currentUser }) {
 													style={{ width: "1.5rem", height: "1.5rem" }}
 												></Button>
 											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												{"Game Today"}
+											<Col xs={7} sm={8} className="mx-0 px-0">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Game Today"}
+												</h5>
 											</Col>
 										</Row>
 									</Col>

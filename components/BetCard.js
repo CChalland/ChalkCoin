@@ -83,18 +83,6 @@ function BetCard({ betData, currentUser }) {
 	const minutesDiff = gameTime.diff(new Date(), "minutes");
 
 	let cardBorderColor, startTime;
-	if (betData.status.type.state === "post") startTime = "GAME ENDED";
-	else if (betData.status.type.state === "in") {
-		startTime = "GAME STARTED";
-		if (minutesDiff > -15) cardBorderColor = "danger";
-	} else if (betData.status.type.state === "pre" && daysDiff === 0) {
-		startTime = `@ ${gameTime.format("h:mm a")}`;
-		if (minutesDiff < 60) cardBorderColor = "warning";
-		else cardBorderColor = "info";
-	} else startTime = `@ ${gameTime.format("h:mm a")}`;
-
-	console.log("BetCard - betData", betData);
-
 	let matchupPredictor = { header: null, body: null, footer: null };
 	if (awayWinProb && homeWinProb) {
 		matchupPredictor.header = (
@@ -134,6 +122,17 @@ function BetCard({ betData, currentUser }) {
 			</Col>
 		);
 	}
+	if (betData.status.type.state === "post") startTime = "GAME ENDED";
+	else if (betData.status.type.state === "in") {
+		startTime = "GAME STARTED";
+		if (minutesDiff > -15) cardBorderColor = "danger";
+	} else if (betData.status.type.state === "pre" && daysDiff === 0) {
+		startTime = `@ ${gameTime.format("h:mm a")}`;
+		if (minutesDiff < 60) cardBorderColor = "warning";
+		else cardBorderColor = "info";
+	} else startTime = `@ ${gameTime.format("h:mm a")}`;
+
+	// console.log("BetCard - betData", betData);
 
 	return (
 		<Row>
