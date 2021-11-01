@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "reac
 import { getSession } from "next-auth/client";
 import { BetContext } from "../contexts/Bets.Context";
 import { BetGameData } from "../helpers/BetCard";
-import BetCard from "../components/BetCard";
+import BetCard from "../components/Bet/BetCard";
 
 function Bets({ currentUser }) {
 	const sportWithBets = useContext(BetContext);

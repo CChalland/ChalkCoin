@@ -1,6 +1,6 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Collapse, Button, InputGroup } from "react-bootstrap";
-import { BetDispatch } from "../contexts/Bets.Context";
+import { BetDispatch } from "../../contexts/Bets.Context";
 import BetScore from "./BetScore";
 import BetOdds from "./BetOdds";
 import BetWinner from "./BetWinner";
@@ -124,7 +124,7 @@ function BetCard({ betData, currentUser }) {
 	else startTime = `@ ${gameTime.format("h:mm a")}`;
 	cardBorderColor = betData.openStatus;
 
-	// console.log("BetCard - betData", betData);
+	console.log("BetCard - betData", betData);
 
 	return (
 		<Row>

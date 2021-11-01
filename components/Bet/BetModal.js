@@ -14,8 +14,8 @@ import {
 } from "react-bootstrap";
 import Select, { components } from "react-select";
 import { Doughnut } from "react-chartjs-2";
-import { BetDispatch } from "../contexts/Bets.Context";
-import GameScore from "./GameScore";
+import { BetDispatch } from "../../contexts/Bets.Context";
+import GameScore from "../Game/GameScore";
 import axios from "axios";
 
 function BetModal(props) {

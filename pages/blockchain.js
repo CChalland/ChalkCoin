@@ -1,13 +1,87 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { getSession } from "next-auth/client";
+import { BlockchainContext, BlockchainDispatch } from "../contexts/Blockchain.Context";
+import TransactionCard from "../components/Blockchain/TransactionCard";
+import BlockCard from "../components/Blockchain/BlockCard";
 
 function Blockchain({ currentUser }) {
-	console.log("blockchain - currentUser", currentUser)
-  
-  return (
+	const blockchainData = useContext(BlockchainContext);
+	const [pendingTransactions, setPendingTransactions] = useState(blockchainData.pendingTransactions);
+	const [recentBlocks, setRecentBlocks] = useState(blockchainData.chain);
+	const [blockTransactions, setBlockTransactions] = useState([]);
+
+	const pendingTransCards = pendingTransactions.map((transaction, key) => {
+		return (
+			<Row>
+				<TransactionCard transactionData={transaction} key={key} />
+			</Row>
+		);
+	});
+	const recentBlockCards = recentBlocks.map((block, key) => {
+		return (
+			<Row>
+				<BlockCard blockData={block} key={key} />
+			</Row>
+		);
+	});
+	const blockTransCards = blockTransactions.map((transaction, key) => {
+		return (
+			<Row>
+				<h5>transactions</h5>
+			</Row>
+		);
+	});
+
+	useEffect(() => {
+		setPendingTransactions(blockchainData.pendingTransactions);
+	}, [blockchainData.pendingTransactions]);
+	useEffect(() => {
+		setRecentBlocks(blockchainData.chain);
+	}, [blockchainData.chain]);
+
+	console.log("pending transactions", pendingTransactions);
+	console.log("recent blocks", recentBlocks);
+	// console.log("blockchain - currentUser", currentUser);
+
+	return (
 		<Container fluid>
-			<h1>Blockchain</h1>
+			<Row>
+				<Col xs="auto">
+					<Row className="align-items-center">
+						<Col xs="auto">
+							<h2>Pending Transactions</h2>
+						</Col>
+						<Col xs="auto">
+							<Button className="btn-round btn-wd" type="button" variant="success" onClick={() => {}}>
+								<span className="btn-label">
+									<i className="fas fa-plus"></i>
+								</span>
+								Mine
+							</Button>
+						</Col>
+					</Row>
+					{pendingTransCards}
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<Row>
+						<h2>Recent Blocks</h2>
+					</Row>
+					{recentBlockCards}
+				</Col>
+			</Row>
+
+			<Row>
+				<Col xs="auto">
+					<Row className="">
+						<h2>Block's Transactions</h2>
+					</Row>
+					{blockTransCards}
+				</Col>
+			</Row>
 		</Container>
 	);
 }
