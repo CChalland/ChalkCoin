@@ -11,7 +11,7 @@ function GameScore(props) {
 			index++;
 			if ((gameScoreCardData.sportName == "NHL" && index == 4) || index == 5) {
 				return (
-					<Col xs={1} className="text-center" key={key}>
+					<Col xs={1} className="mx-0 px-0 text-center" key={key}>
 						{"OT"}
 					</Col>
 				);
@@ -126,7 +126,7 @@ function GameScore(props) {
 				<>
 					{gameScoreCardData.away.periods.map((period, key) => {
 						return (
-							<Col xs={1} className="text-center" key={key}>
+							<Col xs={1} className="mx-0 px-0 text-center" key={key}>
 								{period.value}
 							</Col>
 						);
@@ -137,7 +137,7 @@ function GameScore(props) {
 				<>
 					{gameScoreCardData.home.periods.map((period, key) => {
 						return (
-							<Col xs={1} className="text-center" key={key}>
+							<Col xs={1} className="mx-0 px-0 text-center" key={key}>
 								{period.value}
 							</Col>
 						);
@@ -145,12 +145,12 @@ function GameScore(props) {
 				</>
 			);
 			awayScore = (
-				<Col xs={1} className="font-weight-bold mr-auto">
+				<Col xs={1} className="mr-auto px-0 text-center font-weight-bold">
 					{gameScoreCardData.away.score}
 				</Col>
 			);
 			homeScore = (
-				<Col xs={1} className="font-weight-bold mr-auto">
+				<Col xs={1} className="mr-auto px-0 text-center font-weight-bold">
 					{gameScoreCardData.home.score}
 				</Col>
 			);

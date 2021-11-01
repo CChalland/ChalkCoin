@@ -13,21 +13,21 @@ function Blockchain({ currentUser }) {
 
 	const pendingTransCards = pendingTransactions.map((transaction, key) => {
 		return (
-			<Row>
+			<Row key={`pending-row-${key}`}>
 				<TransactionCard transactionData={transaction} key={key} />
 			</Row>
 		);
 	});
 	const recentBlockCards = recentBlocks.map((block, key) => {
 		return (
-			<Row>
+			<Row key={`recent-row-${key}`}>
 				<BlockCard blockData={block} key={key} />
 			</Row>
 		);
 	});
 	const blockTransCards = blockTransactions.map((transaction, key) => {
 		return (
-			<Row>
+			<Row key={`trans-row-${key}`}>
 				<h5>transactions</h5>
 			</Row>
 		);
@@ -40,8 +40,8 @@ function Blockchain({ currentUser }) {
 		setRecentBlocks(blockchainData.chain);
 	}, [blockchainData.chain]);
 
-	console.log("pending transactions", pendingTransactions);
-	console.log("recent blocks", recentBlocks);
+	// console.log("pending transactions", pendingTransactions);
+	// console.log("recent blocks", recentBlocks);
 	// console.log("blockchain - currentUser", currentUser);
 
 	return (
