@@ -8,7 +8,7 @@ import { getSession } from "next-auth/client";
 function Games(props) {
 	const { sportsData } = useContext(SportContext);
 	const dispatch = useContext(SportDispatch);
-	let sportData = sportsData.filter((sport) => {
+	let sportData = sportsData.find((sport) => {
 		return sport.abbrv === props.query.sport.toUpperCase();
 	});
 
@@ -19,10 +19,10 @@ function Games(props) {
 			leagueData,
 			sortedGames = [];
 
-		if (sportData[0].reload) {
+		if (sportData.reload) {
 			axios
 				.get(
-					`http://site.api.espn.com/apis/site/v2/sports/${sportData[0].sport}/${sportData[0].league_name}/scoreboard`
+					`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
 				)
 				.then((response) => {
 					leagueData = response.data;
@@ -58,14 +58,14 @@ function Games(props) {
 	});
 
 	let gameItems;
-	if (sportData[0].data.events) {
-		gameItems = sportData[0].data.events.map((game, key) => {
+	if (sportData.data.events) {
+		gameItems = sportData.data.events.map((game, key) => {
 			return (
 				<GameCard
 					key={key}
 					panelKey={key}
 					gameData={game}
-					sportName={sportData[0].display_name}
+					sportName={sportData.display_name}
 					users={props.users}
 					currentUser={props.currentUser}
 				/>
@@ -75,11 +75,9 @@ function Games(props) {
 		gameItems = <h1>Loading</h1>;
 	}
 
-	console.log(sportData);
-
 	return (
 		<Container fluid>
-			<h1>{sportData[0].display_name}</h1>
+			<h1>{sportData.display_name}</h1>
 			{gameItems}
 		</Container>
 	);

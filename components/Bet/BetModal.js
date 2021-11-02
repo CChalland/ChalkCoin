@@ -19,7 +19,7 @@ import GameScore from "../Game/GameScore";
 import axios from "axios";
 
 function BetModal(props) {
-	const { gameScoreCardData, betData, users, currentUser } = props;
+	const { gameBetData, users, currentUser } = props;
 	const dispatch = useContext(BetDispatch);
 	const [modal, setModal] = useState(false);
 	const [selectedWinner, setSelectedWinner] = useState("");
@@ -33,28 +33,29 @@ function BetModal(props) {
 	const [recipient, setRecipient] = useState("");
 	const [recipientState, setRecipientState] = useState(false);
 	const [submitBetState, setSubmitBetState] = useState(false);
+	const [betButtonState, setBetButtonState] = useState(true);
 
 	const minValue = (value, min) => min < value;
 	// const data = {
 	// 	datasets: [
 	// 		{
 	// 			data: [34.7, 65.0],
-	// 			backgroundColor: [`#${gameScoreCardData.away.color}`, `#${gameScoreCardData.home.color}`],
+	// 			backgroundColor: [`#${gameBetData.away.color}`, `#${gameBetData.home.color}`],
 	// 		},
 	// 	],
 	// };
 	const optionsTeams = [
 		{
 			value: "away",
-			image: gameScoreCardData.away.logo,
-			label: gameScoreCardData.away.name,
-			record: `(${gameScoreCardData.away.records[0].summary}, ${gameScoreCardData.away.records[1].summary} Away)`,
+			image: gameBetData.away.logo,
+			label: gameBetData.away.name,
+			record: `(${gameBetData.away.records[0].summary}, ${gameBetData.away.records[1].summary} Away)`,
 		},
 		{
 			value: "home",
-			image: gameScoreCardData.home.logo,
-			label: gameScoreCardData.home.name,
-			record: `(${gameScoreCardData.home.records[0].summary}, ${gameScoreCardData.home.records[1].summary} Home)`,
+			image: gameBetData.home.logo,
+			label: gameBetData.home.name,
+			record: `(${gameBetData.home.records[0].summary}, ${gameBetData.home.records[1].summary} Home)`,
 		},
 	];
 	const optionsUsers = users.map((user) => {
@@ -101,7 +102,7 @@ function BetModal(props) {
 	let openButtonClass = openButtonState ? "btn-round" : "btn-round btn-outline";
 	let friendButtonClass = recipientButtonState ? "btn-round" : "btn-round btn-outline";
 	let sumbitButtonClass = submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
-	let carouselItem = betData.odds?.map((betOdds, key) => {
+	let carouselItem = gameBetData.odds?.map((betOdds, key) => {
 		return (
 			<Carousel.Item key={key}>
 				<Row className="justify-content-center">
@@ -130,10 +131,10 @@ function BetModal(props) {
 			let submitBet = {
 				amount,
 				details: {
-					displayName: betData.displayName,
-					id: betData.id,
-					date: betData.date,
-					name: betData.name,
+					displayName: gameBetData.sportName,
+					id: gameBetData.id,
+					date: gameBetData.date,
+					name: gameBetData.name,
 					winner: selectedWinner.label,
 				},
 				currency,
@@ -147,6 +148,15 @@ function BetModal(props) {
 	};
 
 	useEffect(() => {
+		if (
+			gameBetData.status.type.completed ||
+			(gameBetData.status.type.state === "in" && gameBetData.status.period > 1)
+		)
+			setBetButtonState(false);
+		else setBetButtonState(true);
+	}, [gameBetData]);
+
+	useEffect(() => {
 		if (selectedWinner && amount && amountState && recipient && recipientState) {
 			setSubmitBetState(true);
 		} else if (selectedWinner && amount && amountState && openButtonState) {
@@ -158,18 +168,20 @@ function BetModal(props) {
 
 	return (
 		<>
-			<Button
-				className={props.buttonClassName}
-				type="button"
-				variant="success"
-				onClick={() => setModal(!modal)}
-				style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
-			>
-				<span className="btn-label">
-					<i className="fas fa-plus"></i>
-				</span>
-				Place Bet
-			</Button>
+			{betButtonState ? (
+				<Button
+					className={props.buttonClassName}
+					type="button"
+					variant="success"
+					onClick={() => setModal(!modal)}
+					style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
+				>
+					<span className="btn-label">
+						<i className="fas fa-plus"></i>
+					</span>
+					Place Bet
+				</Button>
+			) : null}
 
 			{/* Modal */}
 			<Modal centered size="lg" onHide={() => setModal(!modal)} show={modal}>
@@ -177,7 +189,7 @@ function BetModal(props) {
 					<Container>
 						<Row className="justify-content-md-center">
 							<Col xs={12} lg={8} className="border">
-								<GameScore gameScoreCardData={gameScoreCardData} />
+								<GameScore gameScoreCardData={gameBetData} />
 							</Col>
 							{carouselItem ? (
 								<Col lg={4} className="d-none d-lg-block">
@@ -206,8 +218,8 @@ function BetModal(props) {
 									<div className="chart-absolute-center chart-text-center">
 										<div className="data-chart">
 											<div className="inner-circle">
-												<span className="home-team">{gameScoreCardData.home.abbreviation}</span>
-												<span className="away-team">{gameScoreCardData.away.abbreviation}</span>
+												<span className="home-team">{gameBetData.home.abbreviation}</span>
+												<span className="away-team">{gameBetData.away.abbreviation}</span>
 											</div>
 										</div>
 									</div>
@@ -393,8 +405,8 @@ function BetModal(props) {
 											<div className="chart-absolute-center chart-text-center">
 												<div className="data-chart">
 													<div className="inner-circle">
-														<span className="home-team">{gameScoreCardData.home.abbreviation}</span>
-														<span className="away-team">{gameScoreCardData.away.abbreviation}</span>
+														<span className="home-team">{gameBetData.home.abbreviation}</span>
+														<span className="away-team">{gameBetData.away.abbreviation}</span>
 													</div>
 												</div>
 											</div>

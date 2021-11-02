@@ -4,7 +4,7 @@ import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
 import BetModal from "../Bet/BetModal";
-import { GameScoreHelper, GamePlayHelper, GameLeadersHelper, BetDataHelper } from "../../helpers/SportCard";
+import { GameScoreHelper, GamePlayHelper, GameLeadersHelper, BetModalHelper } from "../../helpers/SportCard";
 
 function GameCard(props) {
 	const { panelKey, gameData, sportName, users, currentUser } = props;
@@ -37,22 +37,19 @@ function GameCard(props) {
 							<GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} />
 						</Col>
 
-						<Col lg={3} xxl={2} className="">
+						<Col lg={4} xxl={2} className="">
 							<GameLeader
 								gameLeadersData={GameLeadersHelper(gameData, sportName)}
 								sportName={sportName}
 								screenSize={"xl"}
 							/>
 						</Col>
-						<Col lg={1} className="mr-0 pr-0">
-							<BetModal
-								currentUser={currentUser}
-								users={users}
-								buttonClassName={"btn-wd"}
-								gameScoreCardData={GameScoreHelper(gameData, sportName)}
-								betData={BetDataHelper(gameData, sportName)}
-							/>
-						</Col>
+						<BetModal
+							currentUser={currentUser}
+							users={users}
+							buttonClassName={"btn-wd"}
+							gameBetData={BetModalHelper(gameData, sportName)}
+						/>
 					</Row>
 				</Card>
 			</Col>
@@ -78,8 +75,7 @@ function GameCard(props) {
 									currentUser={currentUser}
 									users={users}
 									buttonClassName={"btn-round btn-wd"}
-									gameScoreCardData={GameScoreHelper(gameData, sportName)}
-									betData={BetDataHelper(gameData, sportName)}
+									gameBetData={BetModalHelper(gameData, sportName)}
 								/>
 
 								<Button
@@ -136,8 +132,7 @@ function GameCard(props) {
 									currentUser={currentUser}
 									users={users}
 									buttonClassName={"btn-round btn-wd"}
-									gameScoreCardData={GameScoreHelper(gameData, sportName)}
-									betData={BetDataHelper(gameData, sportName)}
+									gameBetData={BetModalHelper(gameData, sportName)}
 								/>
 								<Button
 									className={infoButtonClass}
@@ -189,8 +184,7 @@ function GameCard(props) {
 									currentUser={currentUser}
 									users={users}
 									buttonClassName={"btn-round btn-wd"}
-									gameScoreCardData={GameScoreHelper(gameData, sportName)}
-									betData={BetDataHelper(gameData, sportName)}
+									gameBetData={BetModalHelper(gameData, sportName)}
 								/>
 								<Button
 									className={infoButtonClass}
@@ -258,8 +252,7 @@ function GameCard(props) {
 									currentUser={currentUser}
 									users={users}
 									buttonClassName={"btn-round btn-wd"}
-									gameScoreCardData={GameScoreHelper(gameData, sportName)}
-									betData={BetDataHelper(gameData, sportName)}
+									gameBetData={BetModalHelper(gameData, sportName)}
 								/>
 								<Button
 									className={infoButtonClass}

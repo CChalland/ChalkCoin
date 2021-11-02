@@ -396,12 +396,12 @@ export function GameLeadersHelper(game, sportName) {
 	};
 }
 
-export function BetDataHelper(game, sportName) {
+export function BetModalHelper(game, sportName) {
 	return {
+		...GameScoreHelper(game, sportName),
 		id: game.id,
 		date: game.date,
 		name: game.name,
 		odds: game.competitions[0].odds,
-		displayName: sportName,
 	};
 }

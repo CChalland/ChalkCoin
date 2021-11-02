@@ -1,5 +1,3 @@
-import { cloneElement } from "react";
-
 const capitalize = ([firstLetter, ...restOfWord]) => firstLetter.toUpperCase() + restOfWord.join("");
 function homeAwayHelper(game) {
 	let homeTeam = game.competitions[0].competitors.filter((team) => {
