@@ -40,9 +40,9 @@ function Blockchain({ currentUser }) {
 		setRecentBlocks(blockchainData.chain);
 	}, [blockchainData.chain]);
 
-	// console.log("pending transactions", pendingTransactions);
-	// console.log("recent blocks", recentBlocks);
-	// console.log("blockchain - currentUser", currentUser);
+	console.log("pending transactions", pendingTransactions);
+	console.log("recent blocks", recentBlocks);
+	console.log("blockchain - currentUser", currentUser);
 
 	return (
 		<Container fluid>
