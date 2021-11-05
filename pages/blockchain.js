@@ -12,18 +12,10 @@ function Blockchain({ currentUser }) {
 	const [blockTransactions, setBlockTransactions] = useState([]);
 
 	const pendingTransCards = pendingTransactions.map((transaction, key) => {
-		return (
-			<Row key={`pending-row-${key}`}>
-				<TransactionCard transactionData={transaction} key={key} />
-			</Row>
-		);
+		return <TransactionCard transactionData={transaction} key={key} />;
 	});
 	const recentBlockCards = recentBlocks.map((block, key) => {
-		return (
-			<Row key={`recent-row-${key}`}>
-				<BlockCard blockData={block} key={key} />
-			</Row>
-		);
+		return <BlockCard blockData={block} key={key} />;
 	});
 	const blockTransCards = blockTransactions.map((transaction, key) => {
 		return (
@@ -36,14 +28,11 @@ function Blockchain({ currentUser }) {
 	useEffect(() => {
 		setPendingTransactions(blockchainData.pendingTransactions);
 	}, [blockchainData.pendingTransactions]);
-	useEffect(() => {
-		setRecentBlocks(blockchainData.chain);
-	}, [blockchainData.chain]);
 
-	console.log("blockchainData", blockchainData);
-	console.log("pending transactions", pendingTransactions);
-	console.log("recent blocks", recentBlocks);
-	console.log("blockchain - currentUser", currentUser);
+	// console.log("blockchainData", blockchainData);
+	// console.log("pending transactions", pendingTransactions);
+	// console.log("recent blocks", recentBlocks);
+	// console.log("blockchain - currentUser", currentUser);
 
 	return (
 		<Container fluid>

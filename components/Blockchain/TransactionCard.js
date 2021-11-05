@@ -1,15 +1,31 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Collapse, Button, InputGroup } from "react-bootstrap";
 
-function TransactionCard(props) {
+function TransactionCard({ transactionData }) {
+	console.log("transactionData", transactionData);
+
 	return (
-		<Card>
-			<Row>
-				<Col xs="auto">Transaction ID</Col>
-				<Col xs="auto">Sender</Col>
-				<Col xs="auto">Amount</Col>
-			</Row>
-		</Card>
+		<Row>
+			<Card>
+				<Row>
+					<Col xs="auto">
+						<h1 className="my-0" style={{ fontSize: 24 }}>
+							{transactionData.transactionId}
+						</h1>
+					</Col>
+					<Col xs="auto">
+						<h1 className="my-0" style={{ fontSize: 24 }}>
+							{transactionData.sender}
+						</h1>
+					</Col>
+					<Col xs="auto">
+						<h1 className="my-0" style={{ fontSize: 24 }}>
+							{transactionData.recipient}
+						</h1>
+					</Col>
+				</Row>
+			</Card>
+		</Row>
 	);
 }
 
