@@ -140,10 +140,10 @@ const betsReducer = (state, action) => {
 		case "INIT":
 			return {
 				pendingBets: {
-					openBets: gamesAddedtoBets(action.bets.pendingBets.openBets, action.games),
-					recipientBets: gamesAddedtoBets(action.bets.pendingBets.recipientBets, action.games),
+					openBets: action.bets.pendingBets.openBets,
+					recipientBets: action.bets.pendingBets.recipientBets,
 				},
-				acceptedBets: gamesAddedtoBets(action.bets.acceptedBets, action.games),
+				acceptedBets: action.bets.acceptedBets,
 				completedBets: action.bets.completedBets,
 				initialized: action.initialized,
 			};
@@ -156,6 +156,17 @@ const betsReducer = (state, action) => {
 					recipientBets: gamesAddedtoBets(state.pendingBets.recipientBets, action.games),
 				},
 				acceptedBets: gamesAddedtoBets(state.acceptedBets, action.games),
+			};
+
+		case "INIT2":
+			return {
+				pendingBets: {
+					openBets: gamesAddedtoBets(action.bets.pendingBets.openBets, action.games),
+					recipientBets: gamesAddedtoBets(action.bets.pendingBets.recipientBets, action.games),
+				},
+				acceptedBets: gamesAddedtoBets(action.bets.acceptedBets, action.games),
+				completedBets: action.bets.completedBets,
+				initialized: action.initialized,
 			};
 
 		// default:

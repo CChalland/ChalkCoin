@@ -1,7 +1,6 @@
 import prisma from "../../contexts/prisma";
-import { getSession } from "next-auth/client";
 
-const betSorter = (bets) => {
+const betSorter = async (bets) => {
 	let sportWithBets = [];
 	const ncaafBets = bets
 		.filter((bet) => bet.details.displayName === "NCAA Football")
@@ -39,21 +38,89 @@ const betSorter = (bets) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 
-	if (ncaafBets.length > 0) sportWithBets.push({ displayName: "NCAA Football", icon: 1, bets: ncaafBets });
-	if (nflBets.length > 0) sportWithBets.push({ displayName: "NFL", icon: 2, bets: nflBets });
-	if (mlbBets.length > 0) sportWithBets.push({ displayName: "MLB", icon: 3, bets: mlbBets });
-	if (nbaBets.length > 0) sportWithBets.push({ displayName: "NBA", icon: 4, bets: nbaBets });
+	const mlsBets = bets
+		.filter((bet) => bet.details.displayName === "WNBA")
+		.sort((a, b) => {
+			return new Date(a.details.date) - new Date(b.details.date);
+		});
+
+	if (ncaafBets.length > 0)
+		sportWithBets.push({
+			icon: 1,
+			abbrv: "NCAAF",
+			sport: "football",
+			displayName: "NCAA Football",
+			league_name: "college-football",
+			bets: ncaafBets,
+		});
+	if (nflBets.length > 0)
+		sportWithBets.push({
+			icon: 2,
+			abbrv: "NFL",
+			sport: "football",
+			displayName: "NFL",
+			league_name: "nfl",
+			bets: nflBets,
+		});
+	if (mlbBets.length > 0)
+		sportWithBets.push({
+			icon: 3,
+			abbrv: "MLB",
+			sport: "baseball",
+			displayName: "MLB",
+			league_name: "mlb",
+			bets: mlbBets,
+		});
+	if (nbaBets.length > 0)
+		sportWithBets.push({
+			icon: 4,
+			abbrv: "NBA",
+			sport: "basketball",
+			displayName: "NBA",
+			league_name: "nba",
+			bets: nbaBets,
+		});
 	if (ncaabBets.length > 0)
-		sportWithBets.push({ displayName: "NCAA Men's Basketball", icon: 5, bets: ncaabBets });
-	if (nhlBets.length > 0) sportWithBets.push({ displayName: "NHL", icon: 6, bets: nhlBets });
-	if (wnbaBets.length > 0) sportWithBets.push({ displayName: "WNBA", icon: 8, bets: wnbaBets });
+		sportWithBets.push({
+			icon: 5,
+			abbrv: "NCAAB",
+			sport: "basketball",
+			displayName: "NCAA Men's Basketball",
+			league_name: "mens-college-basketball",
+			bets: ncaabBets,
+		});
+	if (nhlBets.length > 0)
+		sportWithBets.push({
+			icon: 6,
+			abbrv: "NHL",
+			sport: "hockey",
+			displayName: "NHL",
+			league_name: "nhl",
+			bets: nhlBets,
+		});
+	if (wnbaBets.length > 0)
+		sportWithBets.push({
+			icon: 8,
+			abbrv: "WNBA",
+			sport: "basketball",
+			displayName: "WNBA",
+			league_name: "wnba",
+			bets: wnbaBets,
+		});
+	if (mlsBets.length > 0)
+		sportWithBets.push({
+			icon: 10,
+			abbrv: "MLS",
+			sport: "soccer",
+			displayName: "MLS",
+			league_name: "mls",
+			bets: mlsBets,
+		});
 
 	return sportWithBets;
 };
 
 export default async (req, res) => {
-	const session = await getSession({ req });
-
 	if (req.method !== "GET") {
 		return res.status(405).json({ message: "Method not allowed" });
 	} else if (req.method === "GET") {
@@ -106,18 +173,18 @@ export default async (req, res) => {
 		});
 		if (req.query.type === "all") {
 			return res.json({
-				pendingBets: { openBets: betSorter(openBets), recipientBets: betSorter(recipientBets) },
-				acceptedBets: betSorter(acceptedBets),
+				pendingBets: { openBets: await betSorter(openBets), recipientBets: await betSorter(recipientBets) },
+				acceptedBets: await betSorter(acceptedBets),
 				completedBets: completedBets,
 			});
 		} else if (req.query.type === "open") {
-			return res.json({ openBets: betSorter(openBets) });
+			return res.json({ openBets: await betSorter(openBets) });
 		} else if (req.query.type === "recipient") {
-			return res.json({ recipientBets: betSorter(recipientBets) });
+			return res.json({ recipientBets: await betSorter(recipientBets) });
 		} else if (req.query.type === "accepted") {
-			return res.json({ acceptedBets: betSorter(acceptedBets) });
+			return res.json({ acceptedBets: await betSorter(acceptedBets) });
 		} else if (req.query.type === "completed") {
-			return res.json({ completedBets: betSorter(completedBets) });
+			return res.json({ completedBets: await betSorter(completedBets) });
 		}
 	}
 };
