@@ -12,7 +12,7 @@ function Blockchain({ currentUser }) {
 	const [blockTransactions, setBlockTransactions] = useState([]);
 
 	const pendingTransCards = pendingTransactions.map((transaction, key) => {
-		return <TransactionCard transactionData={transaction} key={key} />;
+		return <TransactionCard transactionData={transaction} key={key} panelKey={key} />;
 	});
 	const recentBlockCards = recentBlocks.map((block, key) => {
 		return <BlockCard blockData={block} key={key} />;
@@ -29,7 +29,7 @@ function Blockchain({ currentUser }) {
 		setPendingTransactions(blockchainData.pendingTransactions);
 	}, [blockchainData.pendingTransactions]);
 
-	// console.log("blockchainData", blockchainData);
+	console.log("blockchainData", blockchainData);
 	// console.log("pending transactions", pendingTransactions);
 	// console.log("recent blocks", recentBlocks);
 	// console.log("blockchain - currentUser", currentUser);
