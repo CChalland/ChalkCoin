@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useContext } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import blockchainReducer from "../reducers/Blockchain.Reducer";
 
@@ -69,6 +69,7 @@ export function BlockchainProvider(props) {
 		currentNodeUrl: "",
 		networkNodes: [],
 		initialized: false,
+		selectedBlocks: [],
 	});
 	const betEvents = async (transactions) => {
 		let bets = transactions;
@@ -100,13 +101,15 @@ export function BlockchainProvider(props) {
 			try {
 				const getNode1 = `http://localhost:3001/blockchain`;
 				const res = await axios.get(getNode1);
+
 				dispatch({
 					type: "INIT",
-					blockchain: {
+					data: {
 						...res.data,
 						pendingTransactions: await betEvents(res.data.pendingTransactions),
+						initialized: true,
+						selectedBlocks: res.data.chain.slice(Math.max(res.data.chain.length - 5, 1)),
 					},
-					initialized: true,
 				});
 			} catch (err) {
 				console.log(err.message);
@@ -114,6 +117,8 @@ export function BlockchainProvider(props) {
 		}
 		getBlockchainData();
 	}, []);
+
+	useEffect(() => {}, [blockchain.selectedBlocks]);
 
 	return (
 		<BlockchainContext.Provider value={blockchain}>

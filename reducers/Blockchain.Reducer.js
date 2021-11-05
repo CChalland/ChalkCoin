@@ -1,9 +1,9 @@
 const blockchainReducer = (state, action) => {
 	switch (action.type) {
-		case "PENDING BET EVENTS":
-			return { ...state, pendingTransactions: action.pendingBets };
+		case "UPDATE SELECTED BLOCKS":
+			return { ...state, selectedBlocks: action.blocks };
 		case "INIT":
-			return { ...action.blockchain, initialized: action.initialized };
+			return action.data;
 		default:
 			return state;
 	}

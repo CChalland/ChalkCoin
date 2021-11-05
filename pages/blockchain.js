@@ -8,7 +8,7 @@ import BlockCard from "../components/Blockchain/BlockCard";
 function Blockchain({ currentUser }) {
 	const blockchainData = useContext(BlockchainContext);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchainData.pendingTransactions);
-	const [recentBlocks, setRecentBlocks] = useState(blockchainData.chain);
+	const [recentBlocks, setRecentBlocks] = useState(blockchainData.selectedBlocks);
 	const [blockTransactions, setBlockTransactions] = useState([]);
 
 	const pendingTransCards = pendingTransactions.map((transaction, key) => {
@@ -40,6 +40,7 @@ function Blockchain({ currentUser }) {
 		setRecentBlocks(blockchainData.chain);
 	}, [blockchainData.chain]);
 
+	console.log("blockchainData", blockchainData);
 	console.log("pending transactions", pendingTransactions);
 	console.log("recent blocks", recentBlocks);
 	console.log("blockchain - currentUser", currentUser);
