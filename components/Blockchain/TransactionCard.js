@@ -27,57 +27,57 @@ function TransactionCard({ transactionData, panelKey }) {
 					<Card className="my-0 py-0">
 						<Card.Header className="my-0 py-0">
 							<Row className="align-items-center">
-								<Col xs={3}>
+								<Col xl={3}>
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 										Transaction ID
 									</h4>
 								</Col>
-								<Col xs={8}>
+								<Col xl={8}>
 									<Row className="justify-content-between">
-										<Col xs={5}>
+										<Col xl={5}>
 											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 												Sender
 											</h4>
 										</Col>
-										<Col xs={5}>
+										<Col xl={5}>
 											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 												Recipient
 											</h4>
 										</Col>
 									</Row>
 								</Col>
-								<Col xs={1}>
+								<Col xl={1} className="mx-0 px-0">
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 										Amount
 									</h4>
 								</Col>
 							</Row>
 						</Card.Header>
-						<Card.Body className="my-0 py-0">
+						<Card.Body className="mt-0 pt-0">
 							<Row className="align-items-center">
-								<Col xs={3}>
+								<Col xl={3}>
 									<h1 className="my-0" style={{ fontSize: 20 }}>
 										{transactionData.transactionId}
 									</h1>
 								</Col>
-								<Col xs={8}>
+								<Col xl={8}>
 									<Row className="align-items-center">
-										<Col xs={5}>
-											<h1 className="my-0" style={{ fontSize: 20 }}>
+										<Col xl={5}>
+											<h1 className="my-0 text-danger" style={{ fontSize: 20 }}>
 												{transactionData.sender}
 											</h1>
 										</Col>
-										<Col xs={2}>
+										<Col xl={2}>
 											<Image height={35} src="../../static/media/arrow_cartoon.png" />
 										</Col>
-										<Col xs={5}>
-											<h1 className="my-0" style={{ fontSize: 20 }}>
+										<Col xl={5}>
+											<h1 className="my-0 text-success" style={{ fontSize: 20 }}>
 												{transactionData.recipient}
 											</h1>
 										</Col>
 									</Row>
 								</Col>
-								<Col xs={1}>
+								<Col xl={1}>
 									<h1 className="my-0" style={{ fontSize: 36 }}>
 										${transactionData.amount}
 									</h1>
@@ -109,18 +109,59 @@ function TransactionCard({ transactionData, panelKey }) {
 					<Card className="my-0 py-0">
 						<Card.Header className="my-0 py-0">
 							<Row className="align-items-center">
-								<Col xs={3}>
+								<Col lg={3}>
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 										Transaction ID
 									</h4>
 								</Col>
+								<Col lg={8}>
+									<Row className="justify-content-between">
+										<Col lg={5}>
+											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+												Sender
+											</h4>
+										</Col>
+										<Col lg={5}>
+											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+												Recipient
+											</h4>
+										</Col>
+									</Row>
+								</Col>
+								<Col lg={1} className="mx-0 px-0">
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										Amount
+									</h4>
+								</Col>
 							</Row>
 						</Card.Header>
-						<Card.Body className="my-0 py-0">
+						<Card.Body className="mt-0 pt-0">
 							<Row className="align-items-center">
-								<Col xs={3}>
+								<Col lg={3}>
 									<h1 className="my-0" style={{ fontSize: 20 }}>
 										{transactionData.transactionId}
+									</h1>
+								</Col>
+								<Col lg={8}>
+									<Row className="align-items-center">
+										<Col lg={5}>
+											<h1 className="my-0 text-danger" style={{ fontSize: 20 }}>
+												{transactionData.sender}
+											</h1>
+										</Col>
+										<Col lg={2}>
+											<Image height={35} src="../../static/media/arrow_cartoon.png" />
+										</Col>
+										<Col lg={5}>
+											<h1 className="my-0 text-success" style={{ fontSize: 20 }}>
+												{transactionData.recipient}
+											</h1>
+										</Col>
+									</Row>
+								</Col>
+								<Col lg={1}>
+									<h1 className="my-0" style={{ fontSize: 36 }}>
+										${transactionData.amount}
 									</h1>
 								</Col>
 							</Row>
@@ -151,18 +192,56 @@ function TransactionCard({ transactionData, panelKey }) {
 					<Card className="my-0 py-0">
 						<Card.Header className="my-0 py-0">
 							<Row className="align-items-center">
-								<Col xs={3}>
+								<Col md={12}>
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 										Transaction ID
 									</h4>
 								</Col>
 							</Row>
 						</Card.Header>
-						<Card.Body className="my-0 py-0">
-							<Row className="align-items-center">
-								<Col xs={3}>
-									<h1 className="my-0" style={{ fontSize: 20 }}>
+						<Card.Body className="mt-0 pt-0">
+							<Row className="text-center">
+								<Col md={12}>
+									<h1 className="my-0" style={{ fontSize: 24 }}>
 										{transactionData.transactionId}
+									</h1>
+								</Col>
+							</Row>
+							<Row className="mt-2 pt-2">
+								<Col md={12}>
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										Sender
+									</h4>
+								</Col>
+							</Row>
+							<Row className="text-center">
+								<Col>
+									<h1 className="mt-0 text-danger" style={{ fontSize: 20 }}>
+										{transactionData.sender}
+									</h1>
+								</Col>
+							</Row>
+							<Row className="my-0 py-0">
+								<Col md={{ span: 1, offset: 4 }}>
+									<Image height={40} src="../../static/media/arrow_cartoon-down.png" />
+								</Col>
+								<Col md={2}>
+									<h1 className="my-0" style={{ fontSize: 36 }}>
+										${transactionData.amount}
+									</h1>
+								</Col>
+							</Row>
+							<Row>
+								<Col md={12}>
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										Recipient
+									</h4>
+								</Col>
+							</Row>
+							<Row className="text-center">
+								<Col>
+									<h1 className="mt-0 text-success" style={{ fontSize: 20 }}>
+										{transactionData.recipient}
 									</h1>
 								</Col>
 							</Row>
@@ -193,18 +272,56 @@ function TransactionCard({ transactionData, panelKey }) {
 					<Card className="my-0 py-0">
 						<Card.Header className="my-0 py-0">
 							<Row className="align-items-center">
-								<Col xs={3}>
+								<Col sm={12}>
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 										Transaction ID
 									</h4>
 								</Col>
 							</Row>
 						</Card.Header>
-						<Card.Body className="my-0 py-0">
-							<Row className="align-items-center">
-								<Col xs={3}>
-									<h1 className="my-0" style={{ fontSize: 20 }}>
+						<Card.Body className="mt-0 pt-0">
+							<Row className="text-center">
+								<Col sm={12}>
+									<h1 className="my-0" style={{ fontSize: 24 }}>
 										{transactionData.transactionId}
+									</h1>
+								</Col>
+							</Row>
+							<Row className="mt-2 pt-2">
+								<Col sm={12}>
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										Sender
+									</h4>
+								</Col>
+							</Row>
+							<Row className="text-center">
+								<Col>
+									<h1 className="mt-0 text-danger" style={{ fontSize: 20 }}>
+										{transactionData.sender}
+									</h1>
+								</Col>
+							</Row>
+							<Row className="my-0 py-0">
+								<Col sm={{ span: 1, offset: 4 }}>
+									<Image height={40} src="../../static/media/arrow_cartoon-down.png" />
+								</Col>
+								<Col sm={2}>
+									<h1 className="my-0" style={{ fontSize: 36 }}>
+										${transactionData.amount}
+									</h1>
+								</Col>
+							</Row>
+							<Row>
+								<Col sm={12}>
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										Recipient
+									</h4>
+								</Col>
+							</Row>
+							<Row className="text-center">
+								<Col>
+									<h1 className="mt-0 text-success" style={{ fontSize: 20 }}>
+										{transactionData.recipient}
 									</h1>
 								</Col>
 							</Row>
@@ -235,18 +352,56 @@ function TransactionCard({ transactionData, panelKey }) {
 					<Card className="my-0 py-0">
 						<Card.Header className="my-0 py-0">
 							<Row className="align-items-center">
-								<Col xs={3}>
+								<Col xs={12}>
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 										Transaction ID
 									</h4>
 								</Col>
 							</Row>
 						</Card.Header>
-						<Card.Body className="my-0 py-0">
-							<Row className="align-items-center">
-								<Col xs={3}>
-									<h1 className="my-0" style={{ fontSize: 20 }}>
+						<Card.Body className="mt-0 pt-0">
+							<Row className="text-center">
+								<Col xs={12}>
+									<h1 className="my-0" style={{ fontSize: 24 }}>
 										{transactionData.transactionId}
+									</h1>
+								</Col>
+							</Row>
+							<Row className="mt-2 pt-2">
+								<Col xs={12}>
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										Sender
+									</h4>
+								</Col>
+							</Row>
+							<Row className="text-center">
+								<Col>
+									<h1 className="mt-0 text-danger" style={{ fontSize: 20 }}>
+										{transactionData.sender}
+									</h1>
+								</Col>
+							</Row>
+							<Row className="my-0 py-0">
+								<Col xs={{ span: 1, offset: 4 }}>
+									<Image height={40} src="../../static/media/arrow_cartoon-down.png" />
+								</Col>
+								<Col xs={2}>
+									<h1 className="my-0" style={{ fontSize: 36 }}>
+										${transactionData.amount}
+									</h1>
+								</Col>
+							</Row>
+							<Row>
+								<Col xs={12}>
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										Recipient
+									</h4>
+								</Col>
+							</Row>
+							<Row className="text-center">
+								<Col>
+									<h1 className="mt-0 text-success" style={{ fontSize: 20 }}>
+										{transactionData.recipient}
 									</h1>
 								</Col>
 							</Row>
