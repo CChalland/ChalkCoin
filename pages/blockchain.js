@@ -37,7 +37,7 @@ function Blockchain({ currentUser }) {
 	return (
 		<Container fluid>
 			<Row>
-				<Col xs="auto">
+				<Col xs={12}>
 					<Row className="align-items-center">
 						<Col xs="auto">
 							<h2>Pending Transactions</h2>

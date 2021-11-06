@@ -1,5 +1,9 @@
 const sportsReducer = (state, action) => {
 	switch (action.type) {
+		case "NCAA Football":
+			return state.map((sport) =>
+				sport.display_name === action.type ? { ...sport, data: action.data, reload: action.reload } : sport
+			);
 		case "NFL":
 			return state.map((sport) =>
 				sport.display_name === action.type ? { ...sport, data: action.data, reload: action.reload } : sport

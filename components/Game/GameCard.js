@@ -21,10 +21,10 @@ function GameCard(props) {
 		: "btn-round btn-wd";
 
 	return (
-		<Row>
+		<>
 			{/* For extra lage screen */}
 			<Col className="d-none d-xl-block">
-				<Card>
+				<Card className="my-0 py-0">
 					<Row className="mx-0 px-0">
 						<Col lg={5} xxl={4} className="border-right">
 							<GameScore
@@ -302,7 +302,7 @@ function GameCard(props) {
 					</Row>
 				</Card>
 			</Col>
-		</Row>
+		</>
 	);
 }
 

@@ -1,8 +1,9 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import { SportContext, SportDispatch } from "../contexts/Sports.Context";
 import GameCard from "../components/Game/GameCard";
 import prisma from "../contexts/prisma";
+import axios from "axios";
 import { getSession } from "next-auth/client";
 
 function Games(props) {
@@ -27,7 +28,7 @@ function Games(props) {
 				.then((response) => {
 					leagueData = response.data;
 					inGames = response.data.events.filter((game) => {
-						reloadData = true;
+						sportData.reload = true;
 						return game.status.type.state === "in";
 					});
 					postGames = response.data.events.filter((game) => {
@@ -37,10 +38,10 @@ function Games(props) {
 						return game.status.type.state === "pre";
 					});
 
-					if (inGames.length === 0) reloadData = false;
+					if (inGames.length === 0) sportData.reload = false;
 					sortedGames.push(inGames, postGames, preGames);
 					leagueData.events = sortedGames.flat();
-					dispatch({ type: sportName, data: leagueData, reload: reloadData });
+					dispatch({ type: sportData.display_name, data: leagueData, reload: sportData.reload });
 
 					console.log(sortedGames.flat());
 				});
@@ -61,14 +62,16 @@ function Games(props) {
 	if (sportData.data.events) {
 		gameItems = sportData.data.events.map((game, key) => {
 			return (
-				<GameCard
-					key={key}
-					panelKey={key}
-					gameData={game}
-					sportName={sportData.display_name}
-					users={props.users}
-					currentUser={props.currentUser}
-				/>
+				<Row className="my-3">
+					<GameCard
+						key={key}
+						panelKey={key}
+						gameData={game}
+						sportName={sportData.display_name}
+						users={props.users}
+						currentUser={props.currentUser}
+					/>
+				</Row>
 			);
 		});
 	} else {
