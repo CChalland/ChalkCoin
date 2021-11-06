@@ -43,7 +43,7 @@ function Blockchain({ currentUser }) {
 							<h2>Pending Transactions</h2>
 						</Col>
 						<Col xs="auto">
-							<Button className="btn-round btn-wd" type="button" variant="success" onClick={() => {}}>
+							<Button className="btn-wd" type="button" variant="success" onClick={() => {}}>
 								<span className="btn-label">
 									<i className="fas fa-plus"></i>
 								</span>
