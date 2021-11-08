@@ -25,7 +25,7 @@ function BlockCard({ blockData, selected }) {
 							<Row className="align-items-center">
 								<Col md={1}>
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-										Block ID
+										ID
 									</h4>
 								</Col>
 								<Col md={6}>
@@ -35,17 +35,17 @@ function BlockCard({ blockData, selected }) {
 								</Col>
 								<Col md={1} className="mx-0 px-0">
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-										# of Transactions
+										Transactions
 									</h4>
 								</Col>
 								<Col md={2} className="mx-0 px-0">
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-										Total $ Sent
+										Total Sent
 									</h4>
 								</Col>
 								<Col md={1} className="mx-0 px-0">
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-										Total $ Fees
+										Total Fees
 									</h4>
 								</Col>
 								<Col md={1} className="mx-0 px-0">

@@ -11,7 +11,7 @@ function Blockchain({ currentUser }) {
 	const dispatch = useContext(BlockchainDispatch);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchainData.pendingTransactions);
 	const [selectedBlock, setSelectedBlock] = useState(blockchainData.selectedBlock);
-
+	const blockchainBlocks = [...blockchainData.chain].reverse();
 	const handleMine = async () => {
 		await axios
 			.post("http://localhost:3001/mine", {
@@ -48,7 +48,7 @@ function Blockchain({ currentUser }) {
 						<Col xs="auto">
 							<h2>Pending Transactions</h2>
 						</Col>
-						<Col xs="auto">
+						<Col xs="auto" className="mt-4">
 							<Button
 								className="btn-wd"
 								type="button"
@@ -75,7 +75,7 @@ function Blockchain({ currentUser }) {
 					<Row>
 						<h2>Recent Blocks</h2>
 					</Row>
-					{blockchainData.chain.slice(Math.max(blockchainData.chain.length - 5, 1)).map((block, key) => {
+					{blockchainBlocks.map((block, key) => {
 						return (
 							<BlockCard
 								blockData={block}
@@ -90,7 +90,11 @@ function Blockchain({ currentUser }) {
 			<Row>
 				<Col>
 					<Row className="">
-						<h2>Block's Transactions</h2>
+						<Col xs={3} className="mx-0 px-0">
+							<h2 className="truncate-hash">{selectedBlock.hash}</h2>
+						</Col>
+						<Col xs={"auto"} className="mx-0 px-0"></Col>
+						<h2>'s Transactions</h2>
 					</Row>
 					{selectedBlock.transactions?.map((transaction, key) => {
 						return <TransactionCard transactionData={transaction} key={key} panelKey={key} />;

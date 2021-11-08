@@ -29,7 +29,7 @@ function TransactionCard({ transactionData, panelKey }) {
 							<Row className="align-items-center">
 								<Col md={3}>
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-										Transaction ID
+										ID
 									</h4>
 								</Col>
 								<Col md={8}>
@@ -114,7 +114,7 @@ function TransactionCard({ transactionData, panelKey }) {
 							<Row className="align-items-center">
 								<Col xs={12}>
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
-										Transaction ID
+										ID
 									</h4>
 								</Col>
 							</Row>

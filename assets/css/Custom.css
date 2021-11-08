@@ -8,6 +8,12 @@
   bottom: -22px;
 }
 
+h2.truncate-hash {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 div.diamond.second-base {
   border: 19.5px solid transparent;
   border-bottom: 19.5px solid #CBCCCE;
