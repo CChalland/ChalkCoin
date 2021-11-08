@@ -90,7 +90,7 @@ function Blockchain({ currentUser }) {
 			<Row>
 				<Col>
 					<Row className="">
-						<Col xs={3} className="mx-0 px-0">
+						<Col xs={5} md={3} lg={4} xl={2} className="mx-0 px-0">
 							<h2 className="truncate-hash">{selectedBlock.hash}</h2>
 						</Col>
 						<Col xs={"auto"} className="mx-0 px-0"></Col>

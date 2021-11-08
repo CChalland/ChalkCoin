@@ -8,7 +8,7 @@
   bottom: -22px;
 }
 
-h2.truncate-hash {
+.truncate-hash {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
