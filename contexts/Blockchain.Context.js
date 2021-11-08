@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import blockchainReducer from "../reducers/Blockchain.Reducer";
+import { EventsFinder } from "../helpers/BlockchainHelper";
 
 Date.prototype.yyyymmdd = function () {
 	var mm = this.getMonth() + 1; // getMonth() is zero-based
@@ -11,58 +12,6 @@ Date.prototype.yyyymmdd = function () {
 export const BlockchainContext = createContext();
 export const BlockchainDispatch = createContext();
 export function BlockchainProvider(props) {
-	let leagues = [
-		{
-			abbrv: "NCAAF",
-			sport: "football",
-			display_name: "NCAA Football",
-			league_name: "college-football",
-			data: [],
-		},
-		{
-			abbrv: "NFL",
-			sport: "football",
-			display_name: "NFL",
-			league_name: "nfl",
-			data: [],
-		},
-		{
-			abbrv: "MLB",
-			sport: "baseball",
-			display_name: "MLB",
-			league_name: "mlb",
-			data: [],
-		},
-		{
-			abbrv: "NBA",
-			sport: "basketball",
-			display_name: "NBA",
-			league_name: "nba",
-			data: [],
-		},
-		{
-			abbrv: "NCAAB",
-			sport: "basketball",
-			display_name: "NCAA Men's Basketball",
-			league_name: "mens-college-basketball",
-			data: [],
-		},
-		{
-			abbrv: "NHL",
-			sport: "hockey",
-			display_name: "NHL",
-			league_name: "nhl",
-			data: [],
-		},
-		{
-			abbrv: "WNBA",
-			sport: "basketball",
-			display_name: "WNBA",
-			league_name: "wnba",
-			data: [],
-		},
-		// { abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: [] },
-	];
 	const [blockchain, dispatch] = useReducer(blockchainReducer, {
 		chain: [],
 		pendingTransactions: [],
@@ -71,30 +20,6 @@ export function BlockchainProvider(props) {
 		initialized: false,
 		selectedBlock: [],
 	});
-	const betEvents = async (transactions) => {
-		let bets = transactions;
-		try {
-			bets = await Promise.all(
-				bets.map(async (bet) => {
-					const date = new Date(bet.details.date);
-					const yyyymmdd = date.yyyymmdd();
-					const betLeague = leagues.find((league) => league.display_name === bet.details.sport);
-					let betEvent;
-					await axios
-						.get(
-							`http://site.api.espn.com/apis/site/v2/sports/${betLeague.sport}/${betLeague.league_name}/scoreboard?dates=${yyyymmdd}`
-						)
-						.then((res) => {
-							betEvent = res.data.events.find((event) => event.id === bet.details.gameId);
-						});
-					return { ...bet, event: betEvent };
-				})
-			);
-		} catch (err) {
-			console.log(err.message);
-		}
-		return bets;
-	};
 
 	useEffect(() => {
 		async function getBlockchainData() {
@@ -106,9 +31,12 @@ export function BlockchainProvider(props) {
 					type: "INIT",
 					data: {
 						...res.data,
-						pendingTransactions: await betEvents(res.data.pendingTransactions),
+						pendingTransactions: await EventsFinder(res.data.pendingTransactions),
 						initialized: true,
-						selectedBlock: res.data.chain[res.data.chain.length - 1],
+						selectedBlock: {
+							...res.data.chain[res.data.chain.length - 1],
+							transactions: await EventsFinder(res.data.chain[res.data.chain.length - 1].transactions),
+						},
 					},
 				});
 			} catch (err) {
@@ -117,8 +45,6 @@ export function BlockchainProvider(props) {
 		}
 		getBlockchainData();
 	}, []);
-
-	useEffect(() => {}, [blockchain.selectedBlocks]);
 
 	return (
 		<BlockchainContext.Provider value={blockchain}>

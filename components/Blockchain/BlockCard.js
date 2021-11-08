@@ -1,23 +1,26 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Row, Col, Card } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
+import { EventsFinder } from "../../helpers/BlockchainHelper";
 
-function BlockCard({ blockData }) {
+function BlockCard({ blockData, selected }) {
 	const dispatch = useContext(BlockchainDispatch);
-
-	// console.log("block card data", blockData);
+	const handleSelectedBlock = async () => {
+		const block = { ...blockData, transactions: await EventsFinder(blockData.transactions) };
+		dispatch({ type: "UPDATE SELECTED BLOCK", block });
+	};
 
 	return (
-		<Row className="my-2">
+		<Row className="">
 			{/* For md, lg, xl and up screens */}
 			<Col className="d-none d-md-block d-xl-block">
 				<a
 					style={{ cursor: "pointer" }}
 					onClick={() => {
-						dispatch({ type: "UPDATE SELECTED BLOCK", block: blockData });
+						handleSelectedBlock();
 					}}
 				>
-					<Card className="my-0 py-0">
+					<Card border={selected ? "secondary" : null} className="">
 						<Card.Header className="my-0 py-0">
 							<Row className="align-items-center">
 								<Col md={1}>
@@ -52,7 +55,7 @@ function BlockCard({ blockData }) {
 								</Col>
 							</Row>
 						</Card.Header>
-						<Card.Body className="mt-0 pt-0">
+						<Card.Body className="">
 							<Row className="align-items-center">
 								<Col md={1}>
 									<h1 className="my-0" style={{ fontSize: 18 }}>

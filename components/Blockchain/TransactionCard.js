@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, Collapse, Image } from "react-bootstrap";
+import { Row, Col, Card, Collapse, Image } from "react-bootstrap";
 import GameCard from "../Game/GameCard";
 
 function TransactionCard({ transactionData, panelKey }) {
@@ -11,7 +11,7 @@ function TransactionCard({ transactionData, panelKey }) {
 			setMultipleExpandablePanels([...multipleExpandablePanels, value]);
 		}
 	};
-	const gameState = transactionData.details.type === "Mine Reward" ? false : true;
+	const gameState = transactionData.event ? true : false;
 	const cursorStyle = gameState ? { cursor: "pointer" } : {};
 
 	return (
@@ -86,7 +86,7 @@ function TransactionCard({ transactionData, panelKey }) {
 						</Card.Body>
 					</Card>
 				</a>
-				{/* {gameState ? (
+				{gameState ? (
 					<Collapse className="collapse my-0 py-0" id="collapseOne" in={multipleExpandablePanels.includes(1)}>
 						<Col>
 							<GameCard
@@ -98,7 +98,7 @@ function TransactionCard({ transactionData, panelKey }) {
 							/>
 						</Col>
 					</Collapse>
-				) : null} */}
+				) : null}
 			</Col>
 
 			{/* For xs & sm screens */}
@@ -168,7 +168,7 @@ function TransactionCard({ transactionData, panelKey }) {
 						</Card.Body>
 					</Card>
 				</a>
-				{/* {gameState ? (
+				{gameState ? (
 					<Collapse className="collapse my-0 py-0" id="collapseOne" in={multipleExpandablePanels.includes(1)}>
 						<Col>
 							<GameCard
@@ -180,7 +180,7 @@ function TransactionCard({ transactionData, panelKey }) {
 							/>
 						</Col>
 					</Collapse>
-				) : null} */}
+				) : null}
 			</Col>
 		</Row>
 	);

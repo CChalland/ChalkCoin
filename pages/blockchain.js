@@ -76,7 +76,13 @@ function Blockchain({ currentUser }) {
 						<h2>Recent Blocks</h2>
 					</Row>
 					{blockchainData.chain.slice(Math.max(blockchainData.chain.length - 5, 1)).map((block, key) => {
-						return <BlockCard blockData={block} key={key} />;
+						return (
+							<BlockCard
+								blockData={block}
+								selected={block.index === selectedBlock.index ? true : false}
+								key={key}
+							/>
+						);
 					})}
 				</Col>
 			</Row>
