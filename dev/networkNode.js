@@ -55,7 +55,8 @@ app.post("/transaction/broadcast", function (req, res) {
 	});
 });
 
-app.get("/mine", function (req, res) {
+app.post("/mine", function (req, res) {
+	const minerAddress = req.body.address;
 	const lastBlock = betoken.getLastBlock();
 	const previousBlockHash = lastBlock["hash"];
 	const currentBlockData = {
@@ -86,7 +87,7 @@ app.get("/mine", function (req, res) {
 				body: {
 					amount: 12.5,
 					sender: "00",
-					recipient: nodeAddress,
+					recipient: minerAddress,
 					details: { type: "Mine Reward" },
 				},
 				json: true,
@@ -98,6 +99,7 @@ app.get("/mine", function (req, res) {
 			res.json({
 				note: "New block mined & broadcast successfully",
 				block: newBlock,
+				mineTransaction: data.transactionData,
 			});
 		});
 });

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, Collapse, Button, Image } from "react-bootstrap";
+import { Container, Row, Col, Card, Collapse, Image } from "react-bootstrap";
 import GameCard from "../Game/GameCard";
 
 function TransactionCard({ transactionData, panelKey }) {
@@ -11,15 +11,15 @@ function TransactionCard({ transactionData, panelKey }) {
 			setMultipleExpandablePanels([...multipleExpandablePanels, value]);
 		}
 	};
-
-	// console.log("transactionData", transactionData);
+	const gameState = transactionData.details.type === "Mine Reward" ? false : true;
+	const cursorStyle = gameState ? { cursor: "pointer" } : {};
 
 	return (
 		<Row className="my-3">
 			{/* For md, lg, xl and up screens */}
 			<Col className="d-none d-md-block d-xl-block">
 				<a
-					style={{ cursor: "pointer" }}
+					style={cursorStyle}
 					data-toggle="collapse"
 					aria-expanded={multipleExpandablePanels.includes(1)}
 					onClick={(e) => toggleMultipleExpandablePanels(e, 1)}
@@ -78,7 +78,7 @@ function TransactionCard({ transactionData, panelKey }) {
 									</Row>
 								</Col>
 								<Col md={1} className="mx-0 px-0">
-									<h1 className="my-0" style={{ fontSize: 36 }}>
+									<h1 className="my-0" style={{ fontSize: 28 }}>
 										${transactionData.amount}
 									</h1>
 								</Col>
@@ -86,23 +86,25 @@ function TransactionCard({ transactionData, panelKey }) {
 						</Card.Body>
 					</Card>
 				</a>
-				<Collapse className="collapse my-0 py-0" id="collapseOne" in={multipleExpandablePanels.includes(1)}>
-					<Col>
-						<GameCard
-							panelKey={panelKey}
-							gameData={transactionData.event}
-							sportName={transactionData.details.sport}
-							users={[]}
-							currentUser={[]}
-						/>
-					</Col>
-				</Collapse>
+				{/* {gameState ? (
+					<Collapse className="collapse my-0 py-0" id="collapseOne" in={multipleExpandablePanels.includes(1)}>
+						<Col>
+							<GameCard
+								panelKey={panelKey}
+								gameData={transactionData.event}
+								sportName={transactionData.details.sport}
+								users={[]}
+								currentUser={[]}
+							/>
+						</Col>
+					</Collapse>
+				) : null} */}
 			</Col>
 
 			{/* For xs & sm screens */}
 			<Col className="mx-0 px-0 d-block d-md-none">
 				<a
-					style={{ cursor: "pointer" }}
+					style={cursorStyle}
 					data-toggle="collapse"
 					aria-expanded={multipleExpandablePanels.includes(1)}
 					onClick={(e) => toggleMultipleExpandablePanels(e, 1)}
@@ -143,7 +145,7 @@ function TransactionCard({ transactionData, panelKey }) {
 								<Col xs={{ span: 1, offset: 4 }}>
 									<Image height={40} src="../../static/media/arrow_down.png" />
 								</Col>
-								<Col xs={2}>
+								<Col xs={3} className="mx-0 px-0">
 									<h1 className="my-0" style={{ fontSize: 36 }}>
 										${transactionData.amount}
 									</h1>
@@ -166,17 +168,19 @@ function TransactionCard({ transactionData, panelKey }) {
 						</Card.Body>
 					</Card>
 				</a>
-				<Collapse className="collapse my-0 py-0" id="collapseOne" in={multipleExpandablePanels.includes(1)}>
-					<Col>
-						<GameCard
-							panelKey={panelKey}
-							gameData={transactionData.event}
-							sportName={transactionData.details.sport}
-							users={[]}
-							currentUser={[]}
-						/>
-					</Col>
-				</Collapse>
+				{/* {gameState ? (
+					<Collapse className="collapse my-0 py-0" id="collapseOne" in={multipleExpandablePanels.includes(1)}>
+						<Col>
+							<GameCard
+								panelKey={panelKey}
+								gameData={transactionData.event}
+								sportName={transactionData.details.sport}
+								users={[]}
+								currentUser={[]}
+							/>
+						</Col>
+					</Collapse>
+				) : null} */}
 			</Col>
 		</Row>
 	);

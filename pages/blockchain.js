@@ -4,34 +4,40 @@ import { getSession } from "next-auth/client";
 import { BlockchainContext, BlockchainDispatch } from "../contexts/Blockchain.Context";
 import TransactionCard from "../components/Blockchain/TransactionCard";
 import BlockCard from "../components/Blockchain/BlockCard";
+import axios from "axios";
 
 function Blockchain({ currentUser }) {
 	const blockchainData = useContext(BlockchainContext);
+	const dispatch = useContext(BlockchainDispatch);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchainData.pendingTransactions);
-	const [recentBlocks, setRecentBlocks] = useState(blockchainData.selectedBlocks);
-	const [blockTransactions, setBlockTransactions] = useState([]);
+	const [selectedBlock, setSelectedBlock] = useState(blockchainData.selectedBlock);
 
-	const pendingTransCards = pendingTransactions.map((transaction, key) => {
-		return <TransactionCard transactionData={transaction} key={key} panelKey={key} />;
-	});
-	const recentBlockCards = recentBlocks.map((block, key) => {
-		return <BlockCard blockData={block} key={key} />;
-	});
-	const blockTransCards = blockTransactions.map((transaction, key) => {
-		return (
-			<Row key={`trans-row-${key}`}>
-				<h5>transactions</h5>
-			</Row>
-		);
-	});
+	const handleMine = async () => {
+		await axios
+			.post("http://localhost:3001/mine", {
+				address: currentUser.walletAddress,
+			})
+			.then((res) => {
+				console.log(res.data);
+				dispatch({
+					type: "ADD BLOCK",
+					block: res.data.block,
+					mineTransaction: res.data.mineTransaction,
+				});
+			});
+	};
 
 	useEffect(() => {
 		setPendingTransactions(blockchainData.pendingTransactions);
 	}, [blockchainData.pendingTransactions]);
 
+	useEffect(() => {
+		setSelectedBlock(blockchainData.selectedBlock);
+	}, [blockchainData.selectedBlock]);
+
 	console.log("blockchainData", blockchainData);
 	// console.log("pending transactions", pendingTransactions);
-	// console.log("recent blocks", recentBlocks);
+	// console.log("recent blocks", blocks);
 	// console.log("blockchain - currentUser", currentUser);
 
 	return (
@@ -43,7 +49,14 @@ function Blockchain({ currentUser }) {
 							<h2>Pending Transactions</h2>
 						</Col>
 						<Col xs="auto">
-							<Button className="btn-wd" type="button" variant="success" onClick={() => {}}>
+							<Button
+								className="btn-wd"
+								type="button"
+								variant="success"
+								onClick={() => {
+									handleMine();
+								}}
+							>
 								<span className="btn-label">
 									<i className="fas fa-plus"></i>
 								</span>
@@ -51,7 +64,9 @@ function Blockchain({ currentUser }) {
 							</Button>
 						</Col>
 					</Row>
-					{pendingTransCards}
+					{pendingTransactions.map((transaction, key) => {
+						return <TransactionCard transactionData={transaction} key={key} panelKey={key} />;
+					})}
 				</Col>
 			</Row>
 
@@ -60,16 +75,20 @@ function Blockchain({ currentUser }) {
 					<Row>
 						<h2>Recent Blocks</h2>
 					</Row>
-					{recentBlockCards}
+					{blockchainData.chain.slice(Math.max(blockchainData.chain.length - 5, 1)).map((block, key) => {
+						return <BlockCard blockData={block} key={key} />;
+					})}
 				</Col>
 			</Row>
 
 			<Row>
-				<Col xs="auto">
+				<Col>
 					<Row className="">
 						<h2>Block's Transactions</h2>
 					</Row>
-					{blockTransCards}
+					{selectedBlock.transactions?.map((transaction, key) => {
+						return <TransactionCard transactionData={transaction} key={key} panelKey={key} />;
+					})}
 				</Col>
 			</Row>
 		</Container>

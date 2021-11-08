@@ -69,7 +69,7 @@ export function BlockchainProvider(props) {
 		currentNodeUrl: "",
 		networkNodes: [],
 		initialized: false,
-		selectedBlocks: [],
+		selectedBlock: [],
 	});
 	const betEvents = async (transactions) => {
 		let bets = transactions;
@@ -108,7 +108,7 @@ export function BlockchainProvider(props) {
 						...res.data,
 						pendingTransactions: await betEvents(res.data.pendingTransactions),
 						initialized: true,
-						selectedBlocks: res.data.chain.slice(Math.max(res.data.chain.length - 5, 1)),
+						selectedBlock: res.data.chain[res.data.chain.length - 1],
 					},
 				});
 			} catch (err) {
