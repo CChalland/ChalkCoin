@@ -65,8 +65,8 @@ export async function EventsFinder(transactions) {
 					const yyyymmdd = date.yyyymmdd();
 					const leagueIndex = leagues.findIndex((league) => league.display_name === bet.details.sport);
 					let event;
-					if (leagues[leagueIndex].data.some((event) => event.id === bet.details.id)) {
-						event = leagues[leagueIndex].data.find((event) => event.id === bet.details.id);
+					if (leagues[leagueIndex].data.some((event) => event.id === bet.details.gameId)) {
+						event = leagues[leagueIndex].data.find((event) => event.id === bet.details.gameId);
 					} else {
 						const response = await axios.get(
 							`http://site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard?dates=${yyyymmdd}`

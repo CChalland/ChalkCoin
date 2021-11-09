@@ -32,7 +32,7 @@ function TransactionCard({ transactionData, panelKey }) {
 										ID
 									</h4>
 								</Col>
-								<Col md={8}>
+								<Col md={7}>
 									<Row className="justify-content-between">
 										<Col md={5}>
 											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
@@ -46,7 +46,7 @@ function TransactionCard({ transactionData, panelKey }) {
 										</Col>
 									</Row>
 								</Col>
-								<Col md={1} className="mx-0 px-0">
+								<Col md={2} className="mx-0 px-0 text-center">
 									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 										Amount
 									</h4>
@@ -56,28 +56,28 @@ function TransactionCard({ transactionData, panelKey }) {
 						<Card.Body className="mt-0 pt-0">
 							<Row className="align-items-center">
 								<Col md={3}>
-									<h1 className="my-0" style={{ fontSize: 20 }}>
+									<h1 className="my-0 truncate-hash" style={{ fontSize: 20 }}>
 										{transactionData.transactionId}
 									</h1>
 								</Col>
-								<Col md={8}>
+								<Col md={7}>
 									<Row className="align-items-center">
 										<Col md={5} className="">
-											<h1 className="my-0 text-danger" style={{ fontSize: 20 }}>
+											<h1 className="my-0 text-danger truncate-hash" style={{ fontSize: 20 }}>
 												{transactionData.sender}
 											</h1>
 										</Col>
-										<Col md={2} className="ml-0 pl-0">
+										<Col md={2} className="mx-0 px-0">
 											<Image height={35} src="../../static/media/arrow.png" />
 										</Col>
 										<Col md={5}>
-											<h1 className="my-0 text-success" style={{ fontSize: 20 }}>
+											<h1 className="my-0 text-success truncate-hash" style={{ fontSize: 20 }}>
 												{transactionData.recipient}
 											</h1>
 										</Col>
 									</Row>
 								</Col>
-								<Col md={1} className="mx-0 px-0">
+								<Col md={2} className="mx-0 px-0 text-center">
 									<h1 className="my-0" style={{ fontSize: 28 }}>
 										${transactionData.amount}
 									</h1>
