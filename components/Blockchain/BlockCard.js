@@ -3,8 +3,10 @@ import { Row, Col, Card } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
 import { EventsFinder } from "../../helpers/BlockchainHelper";
 
-function BlockCard({ blockData, selected }) {
+function BlockCard({ blockData, selected, genesisState }) {
 	const dispatch = useContext(BlockchainDispatch);
+	const cursorStyle = genesisState ? null : { cursor: "pointer" };
+
 	const handleSelectedBlock = async () => {
 		const block = { ...blockData, transactions: await EventsFinder(blockData.transactions) };
 		dispatch({ type: "UPDATE SELECTED BLOCK", block });
@@ -15,9 +17,9 @@ function BlockCard({ blockData, selected }) {
 			{/* For md, lg, xl and up screens */}
 			<Col className="d-none d-md-block d-xl-block">
 				<a
-					style={{ cursor: "pointer" }}
+					style={cursorStyle}
 					onClick={() => {
-						handleSelectedBlock();
+						if (!genesisState) handleSelectedBlock();
 					}}
 				>
 					<Card border={selected ? "secondary" : null} className="">
@@ -121,7 +123,7 @@ function BlockCard({ blockData, selected }) {
 						</Card.Header>
 						<Card.Body className="">
 							<Row>
-								<Col xs={1} classNam>
+								<Col xs={1} className="">
 									<Row className="align-items-center">
 										<Col xs={"auto"} className="mr-0 pr-0">
 											<h4 className="my-0" style={{ fontSize: 14 }}>

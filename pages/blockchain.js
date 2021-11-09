@@ -11,7 +11,10 @@ function Blockchain({ currentUser }) {
 	const dispatch = useContext(BlockchainDispatch);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchainData.pendingTransactions);
 	const [selectedBlock, setSelectedBlock] = useState(blockchainData.selectedBlock);
-	const blockchainBlocks = [...blockchainData.chain].reverse();
+	const blockchainBlocks = [
+		...blockchainData.chain.slice(Math.max(blockchainData.chain.length - 5, 1)),
+	].reverse();
+	// const blockchainBlocks = [...blockchainData.chain].reverse();
 	const handleMine = async () => {
 		await axios
 			.post("http://localhost:3001/mine", {
@@ -79,6 +82,7 @@ function Blockchain({ currentUser }) {
 						return (
 							<BlockCard
 								blockData={block}
+								genesisState={block.hash === "0" ? true : false}
 								selected={block.index === selectedBlock.index ? true : false}
 								key={key}
 							/>
