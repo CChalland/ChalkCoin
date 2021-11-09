@@ -3,7 +3,7 @@ const betsReducer = (state, action) => {
 		return bets.map((sport) => {
 			const bet = sport.bets.map((bet) => {
 				const sportGames = games.find((item) => item.display_name === sport.displayName);
-				const event = sportGames.data.events?.find((event) => event.id === bet.details.id);
+				const event = sportGames.data.events?.find((event) => event.id === bet.details.gameId);
 				bet.event = event;
 				if (event?.status.type.state === "post") {
 					bet.openStatus = "Ended";
@@ -35,7 +35,7 @@ const betsReducer = (state, action) => {
 			];
 			if (action.recipient) {
 				const index = state.pendingBets.recipientBets.findIndex(
-					(sport) => sport.displayName === action.bet.details.displayName
+					(sport) => sport.displayName === action.bet.details.sport
 				);
 				if (index === -1) {
 					return {
@@ -45,7 +45,7 @@ const betsReducer = (state, action) => {
 							recipientBets: [
 								...state.pendingBets.recipientBets,
 								{
-									...sportIcons.find((sport) => sport.displayName === action.bet.details.displayName),
+									...sportIcons.find((sport) => sport.displayName === action.bet.details.sport),
 									bets: [action.bet],
 								},
 							],
@@ -57,7 +57,7 @@ const betsReducer = (state, action) => {
 						pendingBets: {
 							openBets: state.pendingBets.openBets,
 							recipientBets: state.pendingBets.recipientBets.map((sport) =>
-								sport.displayName === action.bet.details.displayName
+								sport.displayName === action.bet.details.sport
 									? { ...sport, bets: [...sport.bets, action.bet] }
 									: sport
 							),
@@ -66,7 +66,7 @@ const betsReducer = (state, action) => {
 				}
 			} else {
 				const index = state.pendingBets.openBets.findIndex(
-					(sport) => sport.displayName === action.bet.details.displayName
+					(sport) => sport.displayName === action.bet.details.sport
 				);
 				if (index === -1) {
 					return {
@@ -75,7 +75,7 @@ const betsReducer = (state, action) => {
 							openBets: [
 								...state.pendingBets.openBets,
 								{
-									...sportIcons.find((sport) => sport.displayName === action.bet.details.displayName),
+									...sportIcons.find((sport) => sport.displayName === action.bet.details.sport),
 									bets: [action.bet],
 								},
 							],
@@ -87,7 +87,7 @@ const betsReducer = (state, action) => {
 						...state,
 						pendingBets: {
 							openBets: state.pendingBets.openBets.map((sport) =>
-								sport.displayName === action.bet.details.displayName
+								sport.displayName === action.bet.details.sport
 									? { ...sport, bets: [...sport.bets, action.bet] }
 									: sport
 							),
@@ -102,18 +102,18 @@ const betsReducer = (state, action) => {
 				...state,
 				pendingBets: {
 					openBets: state.pendingBets.openBets.map((sport) =>
-						sport.displayName === action.bet.details.displayName
+						sport.displayName === action.bet.details.sport
 							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
 							: sport
 					),
 					recipientBets: state.pendingBets.recipientBets.map((sport) =>
-						sport.displayName === action.bet.details.displayName
+						sport.displayName === action.bet.details.sport
 							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
 							: sport
 					),
 				},
 				acceptedBets: state.acceptedBets.map((sport) =>
-					sport.displayName === action.bet.details.displayName
+					sport.displayName === action.bet.details.sport
 						? { ...sport, bets: [...sport.bets, action.bet] }
 						: sport
 				),

@@ -223,7 +223,7 @@ export function BetGameData(bet) {
 						away.winProbability = favoritePercentage;
 						home.winProbability = underdogPercentage;
 					} else {
-						if (bet.details.displayName === "NCAA Football") {
+						if (bet.details.sport === "NCAA Football") {
 							if (Math.abs(favoriteValue) >= 20) {
 								away.winProbability = spreadPercentages.ncaaf[20].favorite;
 								home.winProbability = spreadPercentages.ncaaf[20].underdog;
@@ -231,7 +231,7 @@ export function BetGameData(bet) {
 								away.winProbability = spreadPercentages.ncaaf[Math.abs(favoriteValue)].favorite;
 								home.winProbability = spreadPercentages.ncaaf[Math.abs(favoriteValue)].underdog;
 							}
-						} else if (bet.details.displayName === "NFL") {
+						} else if (bet.details.sport === "NFL") {
 							if (Math.abs(favoriteValue) >= 17) {
 								away.winProbability = spreadPercentages.nfl[17].favorite;
 								home.winProbability = spreadPercentages.nfl[17].underdog;
@@ -239,7 +239,7 @@ export function BetGameData(bet) {
 								away.winProbability = spreadPercentages.nfl[Math.abs(favoriteValue)].favorite;
 								home.winProbability = spreadPercentages.nfl[Math.abs(favoriteValue)].underdog;
 							}
-						} else if (bet.details.displayName === "NBA") {
+						} else if (bet.details.sport === "NBA") {
 							if (Math.abs(favoriteValue) >= 13.5) {
 								away.winProbability = spreadPercentages.nba[13.5].favorite;
 								home.winProbability = spreadPercentages.nba[13.5].underdog;
@@ -247,7 +247,7 @@ export function BetGameData(bet) {
 								away.winProbability = spreadPercentages.nba[Math.abs(favoriteValue)].favorite;
 								home.winProbability = spreadPercentages.nba[Math.abs(favoriteValue)].underdog;
 							}
-						} else if (bet.details.displayName === "NCAA Men's Basketball") {
+						} else if (bet.details.sport === "NCAA Men's Basketball") {
 							if (Math.abs(favoriteValue) >= 13) {
 								away.winProbability = spreadPercentages.ncaab[13].favorite;
 								home.winProbability = spreadPercentages.ncaab[13].underdog;
@@ -262,7 +262,7 @@ export function BetGameData(bet) {
 						home.winProbability = favoritePercentage;
 						away.winProbability = underdogPercentage;
 					} else {
-						if (bet.details.displayName === "NCAA Football") {
+						if (bet.details.sport === "NCAA Football") {
 							if (Math.abs(favoriteValue) >= 20) {
 								home.winProbability = spreadPercentages.ncaaf[20].favorite;
 								away.winProbability = spreadPercentages.ncaaf[20].underdog;
@@ -270,7 +270,7 @@ export function BetGameData(bet) {
 								home.winProbability = spreadPercentages.ncaaf[Math.abs(favoriteValue)].favorite;
 								away.winProbability = spreadPercentages.ncaaf[Math.abs(favoriteValue)].underdog;
 							}
-						} else if (bet.details.displayName === "NFL") {
+						} else if (bet.details.sport === "NFL") {
 							if (Math.abs(favoriteValue) >= 17) {
 								home.winProbability = spreadPercentages.nfl[17].favorite;
 								away.winProbability = spreadPercentages.nfl[17].underdog;
@@ -278,7 +278,7 @@ export function BetGameData(bet) {
 								home.winProbability = spreadPercentages.nfl[Math.abs(favoriteValue)].favorite;
 								away.winProbability = spreadPercentages.nfl[Math.abs(favoriteValue)].underdog;
 							}
-						} else if (bet.details.displayName === "NBA") {
+						} else if (bet.details.sport === "NBA") {
 							if (Math.abs(favoriteValue) >= 13.5) {
 								home.winProbability = spreadPercentages.nba[13.5].favorite;
 								away.winProbability = spreadPercentages.nba[13.5].underdog;
@@ -286,7 +286,7 @@ export function BetGameData(bet) {
 								home.winProbability = spreadPercentages.nba[Math.abs(favoriteValue)].favorite;
 								away.winProbability = spreadPercentages.nba[Math.abs(favoriteValue)].underdog;
 							}
-						} else if (bet.details.displayName === "NCAA Men's Basketball") {
+						} else if (bet.details.sport === "NCAA Men's Basketball") {
 							if (Math.abs(favoriteValue) >= 13) {
 								home.winProbability = spreadPercentages.ncaab[13].favorite;
 								away.winProbability = spreadPercentages.ncaab[13].underdog;
@@ -333,7 +333,7 @@ export function BetGameData(bet) {
 		id: bet.id,
 		amount: bet.amount,
 		date: bet.details.date,
-		sportName: bet.details.displayName,
+		sportName: bet.details.sport,
 		status: bet.event.status,
 		shortDetail: bet.event.competitions[0].status.type.shortDetail,
 		detail: bet.event.competitions[0].status.type.detail,
@@ -365,59 +365,4 @@ export function BetGameData(bet) {
 		},
 		venue: bet.event.competitions[0].venue,
 	};
-}
-
-export function BetSorter(bets, sportsData, currentUserId) {
-	let sportWithBets = [];
-	const allBets = bets.filter((bet) => bet.requesterId !== currentUserId);
-
-	const nflBets = allBets
-		.filter((bet) => bet.details.displayName === "NFL")
-		.sort((a, b) => {
-			new Date(a.details.date) - new Date(b.details.date);
-		});
-	const mlbBets = allBets
-		.filter((bet) => bet.details.displayName === "MLB")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-	const nbaBets = allBets
-		.filter((bet) => bet.details.displayName === "NBA")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-	const ncaabBets = allBets
-		.filter((bet) => bet.details.displayName === "NCAA Men's Basketball")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-	const nhlBets = allBets
-		.filter((bet) => bet.details.displayName === "NHL")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-	const wnbaBets = allBets
-		.filter((bet) => bet.details.displayName === "WNBA")
-		.sort((a, b) => {
-			return new Date(a.details.date) - new Date(b.details.date);
-		});
-
-	if (nflBets.length > 0) sportWithBets.push({ displayName: "NFL", icon: 2, bets: nflBets });
-	if (mlbBets.length > 0) sportWithBets.push({ displayName: "MLB", icon: 3, bets: mlbBets });
-	if (nbaBets.length > 0) sportWithBets.push({ displayName: "NBA", icon: 4, bets: nbaBets });
-	if (ncaabBets.length > 0)
-		sportWithBets.push({ displayName: "NCAA Men's Basketball", icon: 5, bets: ncaabBets });
-	if (nhlBets.length > 0) sportWithBets.push({ displayName: "NHL", icon: 6, bets: nhlBets });
-	if (wnbaBets.length > 0) sportWithBets.push({ displayName: "WNBA", icon: 8, bets: wnbaBets });
-	return sportWithBets
-		.map((sport) => {
-			const bet = sport.bets.map((bet) => {
-				const sportGames = sportsData.find((item) => item.display_name === sport.displayName);
-				const event = sportGames.data.events?.find((event) => event.id === bet.details.id);
-				bet.event = event;
-				return bet;
-			});
-			return bet;
-		})
-		.flat();
 }

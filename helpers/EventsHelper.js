@@ -53,8 +53,9 @@ let leagues = [
 	// { abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: [] },
 ];
 
-export async function EventsFinder(transactions) {
-	let bets = transactions;
+export async function EventsFinder(transactions, type) {
+	let bets = type === "league" ? transactions.bets : transactions;
+
 	try {
 		bets = await Promise.all(
 			bets.map(async (bet) => {
@@ -81,5 +82,5 @@ export async function EventsFinder(transactions) {
 	} catch (err) {
 		console.log(err.message);
 	}
-	return bets;
+	return type === "league" ? { ...transactions, bets } : bets;
 }

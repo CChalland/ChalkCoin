@@ -3,43 +3,43 @@ import prisma from "../../contexts/prisma";
 const betSorter = async (bets) => {
 	let sportWithBets = [];
 	const ncaafBets = bets
-		.filter((bet) => bet.details.displayName === "NCAA Football")
+		.filter((bet) => bet.details.sport === "NCAA Football")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const nflBets = bets
-		.filter((bet) => bet.details.displayName === "NFL")
+		.filter((bet) => bet.details.sport === "NFL")
 		.sort((a, b) => {
 			new Date(a.details.date) - new Date(b.details.date);
 		});
 	const mlbBets = bets
-		.filter((bet) => bet.details.displayName === "MLB")
+		.filter((bet) => bet.details.sport === "MLB")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const nbaBets = bets
-		.filter((bet) => bet.details.displayName === "NBA")
+		.filter((bet) => bet.details.sport === "NBA")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const ncaabBets = bets
-		.filter((bet) => bet.details.displayName === "NCAA Men's Basketball")
+		.filter((bet) => bet.details.sport === "NCAA Men's Basketball")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const nhlBets = bets
-		.filter((bet) => bet.details.displayName === "NHL")
+		.filter((bet) => bet.details.sport === "NHL")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const wnbaBets = bets
-		.filter((bet) => bet.details.displayName === "WNBA")
+		.filter((bet) => bet.details.sport === "WNBA")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 
 	const mlsBets = bets
-		.filter((bet) => bet.details.displayName === "WNBA")
+		.filter((bet) => bet.details.sport === "WNBA")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});

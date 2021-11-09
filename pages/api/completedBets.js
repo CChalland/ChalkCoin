@@ -19,8 +19,8 @@ export default async (req, res) => {
 						recipient:
 							bet.details.winner === winner ? bet.accepter.walletAddress : bet.requester.walletAddress,
 						details: {
-							sport: bet.details.displayName,
-							gameId: bet.details.id,
+							sport: bet.details.sport,
+							gameId: bet.details.gameId,
 							date: bet.details.date,
 							name: bet.details.name,
 							winner: winner,

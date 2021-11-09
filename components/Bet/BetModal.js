@@ -131,8 +131,8 @@ function BetModal(props) {
 			let submitBet = {
 				amount,
 				details: {
-					displayName: gameBetData.sportName,
-					id: gameBetData.id,
+					sport: gameBetData.sportName,
+					gameId: gameBetData.id,
 					date: gameBetData.date,
 					name: gameBetData.name,
 					winner: selectedWinner.label,

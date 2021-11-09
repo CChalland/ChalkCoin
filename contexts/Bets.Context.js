@@ -2,62 +2,11 @@ import React, { createContext, useReducer, useEffect, useContext, useState } fro
 import axios from "axios";
 import betsReducer from "../reducers/Bets.Reducer";
 import { SportContext } from "../contexts/Sports.Context";
+import { EventsFinder } from "../helpers/EventsHelper";
 
 export const BetContext = createContext();
 export const BetDispatch = createContext();
 export function BetProvider(props) {
-	let leagues = [
-		{
-			abbrv: "NCAAF",
-			sport: "football",
-			display_name: "NCAA Football",
-			league_name: "college-football",
-			data: [],
-		},
-		{
-			abbrv: "NFL",
-			sport: "football",
-			display_name: "NFL",
-			league_name: "nfl",
-			data: [],
-		},
-		{
-			abbrv: "MLB",
-			sport: "baseball",
-			display_name: "MLB",
-			league_name: "mlb",
-			data: [],
-		},
-		{
-			abbrv: "NBA",
-			sport: "basketball",
-			display_name: "NBA",
-			league_name: "nba",
-			data: [],
-		},
-		{
-			abbrv: "NCAAB",
-			sport: "basketball",
-			display_name: "NCAA Men's Basketball",
-			league_name: "mens-college-basketball",
-			data: [],
-		},
-		{
-			abbrv: "NHL",
-			sport: "hockey",
-			display_name: "NHL",
-			league_name: "nhl",
-			data: [],
-		},
-		{
-			abbrv: "WNBA",
-			sport: "basketball",
-			display_name: "WNBA",
-			league_name: "wnba",
-			data: [],
-		},
-		// { abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: [] },
-	];
 	const { sportsData } = useContext(SportContext);
 	const [bets, dispatch] = useReducer(betsReducer, {
 		pendingBets: { openBets: [], recipientBets: [] },
@@ -82,33 +31,6 @@ export function BetProvider(props) {
 			console.log(err.message);
 		}
 	};
-	const eventsFinder = async (league) => {
-		let leagueBets = league.bets;
-		try {
-			leagueBets = await Promise.all(
-				leagueBets.map(async (bet) => {
-					const date = new Date(bet.details.date);
-					const yyyymmdd = date.yyyymmdd();
-					const leagueIndex = leagues.findIndex((league) => league.display_name === bet.details.displayName);
-					let event;
-					if (leagues[leagueIndex].data.some((event) => event.id === bet.details.id)) {
-						event = leagues[leagueIndex].data.find((event) => event.id === bet.details.id);
-					} else {
-						const response = await axios.get(
-							`http://site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard?dates=${yyyymmdd}`
-						);
-						leagues[leagueIndex].data = [...leagues[leagueIndex].data, ...response.data.events];
-						event = response.data.events.find((event) => event.id === bet.details.id);
-					}
-
-					return { ...bet, event };
-				})
-			);
-		} catch (err) {
-			console.log(err.message);
-		}
-		return { ...league, bets: leagueBets };
-	};
 
 	useEffect(() => {
 		async function betEventFinder() {
@@ -118,17 +40,17 @@ export function BetProvider(props) {
 				betsData = res.data;
 				betsData.pendingBets.openBets = await Promise.all(
 					betsData.pendingBets.openBets.map(async (league) => {
-						return await eventsFinder(league);
+						return await EventsFinder(league, "league");
 					})
 				);
 				betsData.pendingBets.recipientBets = await Promise.all(
 					betsData.pendingBets.recipientBets.map(async (league) => {
-						return await eventsFinder(league);
+						return await EventsFinder(league, "league");
 					})
 				);
 				betsData.acceptedBets = await Promise.all(
 					betsData.acceptedBets.map(async (league) => {
-						return await eventsFinder(league);
+						return await EventsFinder(league, "league");
 					})
 				);
 			} catch (err) {

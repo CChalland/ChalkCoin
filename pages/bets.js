@@ -104,43 +104,43 @@ function Bets({ currentUser }) {
 		} else {
 			if (ncaafState) {
 				const ncaafBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NCAA Football";
+					return bet.details.sport === "NCAA Football";
 				});
 				filteredBetsData = [...filteredBetsData, ...ncaafBets];
 			}
 			if (nflState) {
 				const nflBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NFL";
+					return bet.details.sport === "NFL";
 				});
 				filteredBetsData = [...filteredBetsData, ...nflBets];
 			}
 			if (mlbState) {
 				const mlbBets = openBets.filter((bet) => {
-					return bet.details.displayName === "MLB";
+					return bet.details.sport === "MLB";
 				});
 				filteredBetsData = [...filteredBetsData, ...mlbBets];
 			}
 			if (nbaState) {
 				const nbaBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NBA";
+					return bet.details.sport === "NBA";
 				});
 				filteredBetsData = [...filteredBetsData, ...nbaBets];
 			}
 			if (ncaabState) {
 				const ncaabBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NCAA Men's Basketball";
+					return bet.details.sport === "NCAA Men's Basketball";
 				});
 				filteredBetsData = [...filteredBetsData, ...ncaabBets];
 			}
 			if (nhlState) {
 				const nhlBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NHL";
+					return bet.details.sport === "NHL";
 				});
 				filteredBetsData = [...filteredBetsData, ...nhlBets];
 			}
 			if (wnbaState) {
 				const wnbaBets = openBets.filter((bet) => {
-					return bet.details.displayName === "WNBA";
+					return bet.details.sport === "WNBA";
 				});
 				filteredBetsData = [...filteredBetsData, ...wnbaBets];
 			}
@@ -166,7 +166,7 @@ function Bets({ currentUser }) {
 
 		const searchedBets = filteredBetsData.filter((bet) => {
 			return (
-				bet?.details.displayName.toLowerCase().includes(search.toLowerCase()) ||
+				bet?.details.sport.toLowerCase().includes(search.toLowerCase()) ||
 				bet?.details.name.toLowerCase().includes(search.toLowerCase())
 			);
 		});

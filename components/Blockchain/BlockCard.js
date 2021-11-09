@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
-import { EventsFinder } from "../../helpers/BlockchainHelper";
+import { EventsFinder } from "../../helpers/EventsHelper";
 
 function BlockCard({ blockData, selected, genesisState }) {
 	const dispatch = useContext(BlockchainDispatch);
 	const cursorStyle = genesisState ? null : { cursor: "pointer" };
 
 	const handleSelectedBlock = async () => {
-		const block = { ...blockData, transactions: await EventsFinder(blockData.transactions) };
+		const block = { ...blockData, transactions: await EventsFinder(blockData.transactions, "blockchain") };
 		dispatch({ type: "UPDATE SELECTED BLOCK", block });
 	};
 

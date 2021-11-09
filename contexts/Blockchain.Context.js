@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import blockchainReducer from "../reducers/Blockchain.Reducer";
-import { EventsFinder } from "../helpers/BlockchainHelper";
+import { EventsFinder } from "../helpers/EventsHelper";
 
 Date.prototype.yyyymmdd = function () {
 	var mm = this.getMonth() + 1; // getMonth() is zero-based
@@ -31,11 +31,14 @@ export function BlockchainProvider(props) {
 					type: "INIT",
 					data: {
 						...res.data,
-						pendingTransactions: await EventsFinder(res.data.pendingTransactions),
+						pendingTransactions: await EventsFinder(res.data.pendingTransactions, "blockchain"),
 						initialized: true,
 						selectedBlock: {
 							...res.data.chain[res.data.chain.length - 1],
-							transactions: await EventsFinder(res.data.chain[res.data.chain.length - 1].transactions),
+							transactions: await EventsFinder(
+								res.data.chain[res.data.chain.length - 1].transactions,
+								"blockchain"
+							),
 						},
 					},
 				});
