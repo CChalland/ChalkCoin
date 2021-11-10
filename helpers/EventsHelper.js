@@ -53,9 +53,25 @@ let leagues = [
 	// { abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: [] },
 ];
 
+export async function EventFinder(transaction) {
+	const date = new Date(transaction.details.date);
+	const yyyymmdd = date.yyyymmdd();
+	const leagueIndex = leagues.findIndex((league) => league.display_name === transaction.details.sport);
+	let event;
+	if (leagues[leagueIndex].data.some((event) => event.id === transaction.details.gameId)) {
+		event = leagues[leagueIndex].data.find((event) => event.id === transaction.details.gameId);
+	} else {
+		const response = await axios.get(
+			`http://site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard?dates=${yyyymmdd}`
+		);
+		leagues[leagueIndex].data = [...leagues[leagueIndex].data, ...response.data.events];
+		event = response.data.events.find((event) => event.id === transaction.details.gameId);
+	}
+	return { ...transaction, event };
+}
+
 export async function EventsFinder(transactions, type) {
 	let bets = type === "league" ? transactions.bets : transactions;
-
 	try {
 		bets = await Promise.all(
 			bets.map(async (bet) => {

@@ -7,6 +7,8 @@ import BetWinner from "./BetWinner";
 import axios from "axios";
 import Select from "react-select";
 import moment from "moment";
+import { BetGameData } from "../../helpers/BetCard";
+import { EventFinder } from "../../helpers/EventsHelper";
 
 const makePercentage = (value) => (value * 100).toFixed(1);
 const styles = {
@@ -56,8 +58,9 @@ const styles = {
 	}),
 };
 
-function BetCard({ betData, currentUser }) {
+function BetCard({ bet, currentUser }) {
 	const dispatch = useContext(BetDispatch);
+	const betData = BetGameData(bet);
 	const [awayWinProb, setAwayWinProb] = useState(betData.away.winProb);
 	const [homeWinProb, setHomeWinProb] = useState(betData.home.winProb);
 	const [selectedMarket, setSelectedMarket] = useState("");
@@ -74,9 +77,8 @@ function BetCard({ betData, currentUser }) {
 	};
 	const handleBet = async (bet) => {
 		const betReqData = { betId: bet.id, currentUserId: currentUser.id };
-		await axios.post("http://localhost:4000/api/acceptBet", betReqData).then((res) => {
-			dispatch({ type: "ACCEPTED BET", bet: res.data });
-		});
+		const res = await axios.post("http://localhost:4000/api/acceptBet", betReqData);
+		dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
 	};
 	const gameTime = moment(betData.date);
 	let cardBorderColor, startTime;
@@ -124,7 +126,7 @@ function BetCard({ betData, currentUser }) {
 	else startTime = `@ ${gameTime.format("h:mm a")}`;
 	cardBorderColor = betData.openStatus;
 
-	console.log("BetCard - betData", betData);
+	// console.log("BetCard - betData", betData);
 
 	return (
 		<Row>

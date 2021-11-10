@@ -30,29 +30,33 @@ app.post("/transaction", function (req, res) {
 });
 
 app.post("/transaction/broadcast", function (req, res) {
-	const newTransaction = betoken.createNewTransaction(
-		req.body.amount,
-		req.body.sender,
-		req.body.recipient,
-		req.body.details
-	);
-	const { transactionData } = betoken.addTransactionToPendingTransactions(newTransaction);
+	if (!betoken.pendingTransactions.some((bet) => bet.details.betId === req.body.details.betId)) {
+		const newTransaction = betoken.createNewTransaction(
+			req.body.amount,
+			req.body.sender,
+			req.body.recipient,
+			req.body.details
+		);
+		const { transactionData } = betoken.addTransactionToPendingTransactions(newTransaction);
 
-	const requestPromises = [];
-	betoken.networkNodes.forEach((networkNodeUrl) => {
-		const requestOptions = {
-			uri: networkNodeUrl + "/transaction",
-			method: "POST",
-			body: newTransaction,
-			json: true,
-		};
+		const requestPromises = [];
+		betoken.networkNodes.forEach((networkNodeUrl) => {
+			const requestOptions = {
+				uri: networkNodeUrl + "/transaction",
+				method: "POST",
+				body: newTransaction,
+				json: true,
+			};
 
-		requestPromises.push(rp(requestOptions));
-	});
+			requestPromises.push(rp(requestOptions));
+		});
 
-	Promise.all(requestPromises).then((data) => {
-		res.json({ transactionData, note: "Transaction created and broadcast successfully." });
-	});
+		Promise.all(requestPromises).then((data) => {
+			res.json({ transactionData, note: "Transaction created and broadcast successfully." });
+		});
+	} else {
+		res.json({ error: true, note: "Transaction already broadcast" });
+	}
 });
 
 app.post("/mine", function (req, res) {
