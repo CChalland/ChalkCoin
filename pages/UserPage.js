@@ -3,6 +3,7 @@ import { Alert, Button, Card, Form, Collapse, Nav, Container, Row, Col, Tab } fr
 import { getSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import { BetContext } from "../contexts/Bets.Context";
+import BetsTab from "../components/User/BetsTab";
 import axios from "axios";
 import prisma from "../contexts/prisma";
 
@@ -23,13 +24,13 @@ const isRequired = (value) => value !== null && value !== "" && value;
 const equalTo = (value1, value2) => value1 === value2;
 const minLength = (value, length) => value.length >= length;
 
-function UserPage(props) {
+function UserPage({ session }) {
 	const bets = useContext(BetContext);
 	const [user, setUser] = useState({
-		username: props.session.user.username ? props.session.user.username : "",
-		name: props.session.user.name ? props.session.user.name : "",
-		email: props.session.user.email ? props.session.user.email : "",
-		image: props.session.user.image ? props.session.user.image : "../static/img/faces/face-0.jpg",
+		username: session.user.username ? session.user.username : "",
+		name: session.user.name ? session.user.name : "",
+		email: session.user.email ? session.user.email : "",
+		image: session.user.image ? session.user.image : "../static/img/faces/face-0.jpg",
 	});
 	const [newUserState, setNewUserState] = useState(false);
 	const [updateSuccessState, setUpdateSuccessState] = useState(false);
@@ -150,9 +151,6 @@ function UserPage(props) {
 	}, [router]);
 
 	useEffect(() => {}, [bets]);
-
-	// console.log(props.session);
-	console.log("UserPage - betContext", bets);
 
 	return (
 		<Container fluid>
@@ -365,15 +363,7 @@ function UserPage(props) {
 										</Card>
 									</Tab.Pane>
 									<Tab.Pane eventKey="user-page-bets">
-										<Card>
-											<Card.Header>
-												<Card.Title as="h4">
-													<i className="nc-icon nc-paper-2"></i> Your Bets
-												</Card.Title>
-												<p className="category">Here is some text</p>
-											</Card.Header>
-											<Card.Body>Testing</Card.Body>
-										</Card>
+										<BetsTab userBets={bets.userBets} />
 									</Tab.Pane>
 								</Tab.Content>
 							</Tab.Container>
