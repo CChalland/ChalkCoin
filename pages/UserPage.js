@@ -363,7 +363,7 @@ function UserPage({ session }) {
 										</Card>
 									</Tab.Pane>
 									<Tab.Pane eventKey="user-page-bets">
-										<BetsTab userBets={bets.userBets} />
+										<BetsTab userBets={bets.userBets} currentUser={session.user} />
 									</Tab.Pane>
 								</Tab.Content>
 							</Tab.Container>
