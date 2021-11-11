@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/client";
 import prisma from "../../contexts/prisma";
 
 const betSorter = async (bets) => {
@@ -121,70 +122,122 @@ const betSorter = async (bets) => {
 };
 
 export default async (req, res) => {
+	const session = await getSession({ req });
 	if (req.method !== "GET") {
 		return res.status(405).json({ message: "Method not allowed" });
 	} else if (req.method === "GET") {
-		const openBets = await prisma.bet.findMany({
-			where: {
-				AND: [{ accepted: false }, { recipientId: null }],
-			},
-		});
-		const recipientBets = await prisma.bet.findMany({
-			where: {
-				accepted: false,
-				NOT: {
-					recipientId: null,
+		let openBets, recipientBets, acceptedBets, completedBets;
+		if (req.query.type === "currentUser") {
+			if (session) {
+				openBets = await prisma.bet.findMany({
+					where: { AND: [{ accepted: false, requesterId: session.user.id }] },
+				});
+				recipientBets = await prisma.bet.findMany({
+					where: { AND: [{ accepted: false, recipientId: session.user.id }] },
+				});
+				acceptedBets = await prisma.bet.findMany({
+					where: {
+						AND: [
+							{ accepted: true },
+							{ NOT: { completed: true } },
+							{ OR: [{ requesterId: session.user.id }, { recipientId: session.user.id }] },
+						],
+					},
+					include: {
+						accepter: {
+							select: {
+								walletAddress: true,
+							},
+						},
+						requester: {
+							select: {
+								walletAddress: true,
+							},
+						},
+					},
+				});
+				completedBets = await prisma.bet.findMany({
+					where: {
+						AND: [
+							{ completed: true },
+							{ OR: [{ requesterId: session.user.id }, { recipientId: session.user.id }] },
+						],
+					},
+					include: {
+						accepter: {
+							select: {
+								walletAddress: true,
+							},
+						},
+						requester: {
+							select: {
+								walletAddress: true,
+							},
+						},
+					},
+				});
+
+				return res.json({
+					pendingBets: { openBets: await betSorter(openBets), recipientBets: await betSorter(recipientBets) },
+					acceptedBets: await betSorter(acceptedBets),
+					completedBets: await betSorter(completedBets),
+				});
+			} else {
+				return res.json({ error: true, message: "You are not logged in." });
+			}
+		} else if (req.query.type === "all") {
+			openBets = await prisma.bet.findMany({
+				where: {
+					AND: [{ accepted: false }, { recipientId: null }],
 				},
-			},
-		});
-		const acceptedBets = await prisma.bet.findMany({
-			where: {
-				AND: [{ accepted: true }, { completed: false }],
-			},
-			include: {
-				accepter: {
-					select: {
-						walletAddress: true,
+			});
+			recipientBets = await prisma.bet.findMany({
+				where: {
+					accepted: false,
+					NOT: {
+						recipientId: null,
 					},
 				},
-				requester: {
-					select: {
-						walletAddress: true,
+			});
+			acceptedBets = await prisma.bet.findMany({
+				where: {
+					AND: [{ accepted: true }, { completed: false }],
+				},
+				include: {
+					accepter: {
+						select: {
+							walletAddress: true,
+						},
+					},
+					requester: {
+						select: {
+							walletAddress: true,
+						},
 					},
 				},
-			},
-		});
-		const completedBets = await prisma.bet.findMany({
-			where: {
-				AND: [{ completed: true }, { transactionId: null }],
-			},
-			include: {
-				accepter: {
-					select: {
-						walletAddress: true,
+			});
+			completedBets = await prisma.bet.findMany({
+				where: {
+					AND: [{ completed: true }, { transactionId: null }],
+				},
+				include: {
+					accepter: {
+						select: {
+							walletAddress: true,
+						},
+					},
+					requester: {
+						select: {
+							walletAddress: true,
+						},
 					},
 				},
-				requester: {
-					select: {
-						walletAddress: true,
-					},
-				},
-			},
-		});
-		if (req.query.type === "all") {
+			});
 			return res.json({
 				pendingBets: { openBets: await betSorter(openBets), recipientBets: await betSorter(recipientBets) },
 				acceptedBets: await betSorter(acceptedBets),
 				completedBets: completedBets,
 			});
-		} else if (req.query.type === "open") {
-			return res.json({ openBets: await betSorter(openBets) });
-		} else if (req.query.type === "recipient") {
-			return res.json({ recipientBets: await betSorter(recipientBets) });
-		} else if (req.query.type === "accepted") {
-			return res.json({ acceptedBets: await betSorter(acceptedBets) });
-		} else if (req.query.type === "completed") {
-			return res.json({ completedBets: await betSorter(completedBets) });
 		}
 	}
 };

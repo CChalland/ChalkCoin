@@ -3,6 +3,7 @@ import axios from "axios";
 import betsReducer from "../reducers/Bets.Reducer";
 import { EventsFinder } from "../helpers/EventsHelper";
 import { BlockchainDispatch } from "./Blockchain.Context";
+import { getSession } from "next-auth/client";
 
 export const BetContext = createContext();
 export const BetDispatch = createContext();
@@ -13,6 +14,7 @@ export function BetProvider(props) {
 		acceptedBets: [],
 		completedBets: [],
 		initialized: false,
+		userBets: {},
 	});
 	const completedAcceptedBets = bets.acceptedBets
 		.map((sport) => {
@@ -24,8 +26,33 @@ export function BetProvider(props) {
 
 	useEffect(() => {
 		async function betEventFinder() {
-			let betsData;
+			let betsData, userBets;
+			let session = await getSession();
 			try {
+				if (session) {
+					const userRes = await axios.get("http://localhost:4000/api/bets?type=currentUser");
+					userBets = userRes.data;
+					userBets.pendingBets.openBets = await Promise.all(
+						userBets.pendingBets.openBets.map(async (league) => {
+							return await EventsFinder(league, "league");
+						})
+					);
+					userBets.pendingBets.recipientBets = await Promise.all(
+						userBets.pendingBets.recipientBets.map(async (league) => {
+							return await EventsFinder(league, "league");
+						})
+					);
+					userBets.acceptedBets = await Promise.all(
+						userBets.acceptedBets.map(async (league) => {
+							return await EventsFinder(league, "league");
+						})
+					);
+					userBets.completedBets = await Promise.all(
+						userBets.completedBets.map(async (league) => {
+							return await EventsFinder(league, "league");
+						})
+					);
+				}
 				const res = await axios.get("http://localhost:4000/api/bets?type=all");
 				betsData = res.data;
 				betsData.pendingBets.openBets = await Promise.all(
@@ -46,7 +73,7 @@ export function BetProvider(props) {
 			} catch (err) {
 				console.log(err.message);
 			}
-			dispatch({ type: "INIT", bets: betsData, initialized: true });
+			dispatch({ type: "INIT", bets: betsData, userBets, initialized: true });
 		}
 		betEventFinder();
 	}, []);

@@ -24,12 +24,70 @@ const gamesAddedtoBets = (bets, games) => {
 
 const betsReducer = (state, action) => {
 	const sportIcons = [
-		{ displayName: "NFL", icon: 2, bets: [] },
-		{ displayName: "MLB", icon: 3, bets: [] },
-		{ displayName: "NBA", icon: 4, bets: [] },
-		{ displayName: "NCAA Men's Basketball", icon: 5, bets: [] },
-		{ displayName: "NHL", icon: 6, bets: [] },
-		{ displayName: "WNBA", icon: 8, bets: [] },
+		{
+			icon: 1,
+			abbrv: "NCAAF",
+			sport: "football",
+			displayName: "NCAA Football",
+			league_name: "college-football",
+			bets: [],
+		},
+		{
+			icon: 2,
+			abbrv: "NFL",
+			sport: "football",
+			displayName: "NFL",
+			league_name: "nfl",
+			bets: [],
+		},
+		{
+			icon: 3,
+			abbrv: "MLB",
+			sport: "baseball",
+			displayName: "MLB",
+			league_name: "mlb",
+			bets: [],
+		},
+		{
+			icon: 4,
+			abbrv: "NBA",
+			sport: "basketball",
+			displayName: "NBA",
+			league_name: "nba",
+			bets: [],
+		},
+		{
+			icon: 5,
+			abbrv: "NCAAB",
+			sport: "basketball",
+			displayName: "NCAA Men's Basketball",
+			league_name: "mens-college-basketball",
+			bets: [],
+		},
+		{
+			icon: 6,
+			abbrv: "NHL",
+			sport: "hockey",
+			displayName: "NHL",
+			league_name: "nhl",
+			bets: [],
+		},
+		{
+			icon: 8,
+			abbrv: "WNBA",
+			sport: "basketball",
+			displayName: "WNBA",
+			league_name: "wnba",
+			bets: [],
+		},
+		{
+			icon: 10,
+			abbrv: "MLS",
+			sport: "soccer",
+			displayName: "MLS",
+			league_name: "mls",
+			bets: [],
+		},
 	];
 
 	switch (action.type) {
@@ -169,6 +227,7 @@ const betsReducer = (state, action) => {
 				acceptedBets: action.bets.acceptedBets,
 				completedBets: action.bets.completedBets,
 				initialized: action.initialized,
+				userBets: action.userBets,
 			};
 
 		case "GAME UPDATE":

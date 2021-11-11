@@ -1,27 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-// import { useRouter } from "next/router";
-// import PropTypes from "prop-types";
-
 // react-bootstrap components
-import {
-	Badge,
-	Button,
-	ButtonGroup,
-	Card,
-	Collapse,
-	Form,
-	InputGroup,
-	Navbar,
-	Nav,
-	Pagination,
-	Container,
-	Row,
-	Col,
-	Image,
-} from "react-bootstrap";
+import { Collapse, Nav, Container, Row, Col, Image } from "react-bootstrap";
 
-function Sidebar({ routes, image, background, pathname }) {
+function Sidebar({ currentUser, routes, image, background, pathname }) {
 	// // to check for active links and opened collapses
 	// const router = useRouter();
 	// let location = router.asPath;
@@ -137,6 +119,7 @@ function Sidebar({ routes, image, background, pathname }) {
 	const activeRoute = (routeName) => {
 		return pathname === routeName ? "active" : "";
 	};
+
 	return (
 		<>
 			<div className="sidebar" data-color={background} data-image={image}>
@@ -149,51 +132,53 @@ function Sidebar({ routes, image, background, pathname }) {
 							BEToken
 						</a>
 					</div>
-					<div className="user">
-						<div className="photo">
-							<img alt="..." src=""></img>
+					{currentUser ? (
+						<div className="user">
+							<div className="photo">
+								<img alt="..." src={currentUser?.image}></img>
+							</div>
+							<div className="info">
+								<a
+									className={userCollapseState ? "collapsed" : ""}
+									data-toggle="collapse"
+									href="#pablo"
+									onClick={(e) => {
+										e.preventDefault();
+										setUserCollapseState(!userCollapseState);
+									}}
+									aria-expanded={userCollapseState}
+								>
+									<span>
+										{currentUser?.username} <b className="caret"></b>
+									</span>
+								</a>
+								<Collapse id="collapseExample" in={userCollapseState}>
+									<div>
+										<Nav as="ul" className="mt-2">
+											<li>
+												<a className="profile-dropdown">
+													<span className="sidebar-mini">${currentUser?.balance}</span>
+													<span className="sidebar-normal">Balance</span>
+												</a>
+											</li>
+											<li>
+												<a className="profile-dropdown">
+													<span className="sidebar-mini">{currentUser?.openBetsLength}</span>
+													<span className="sidebar-normal">Open Bets</span>
+												</a>
+											</li>
+											<li>
+												<a className="profile-dropdown">
+													<span className="sidebar-mini">{currentUser?.acceptedBetsLength}</span>
+													<span className="sidebar-normal">Accept Bets</span>
+												</a>
+											</li>
+										</Nav>
+									</div>
+								</Collapse>
+							</div>
 						</div>
-						<div className="info">
-							<a
-								className={userCollapseState ? "collapsed" : ""}
-								data-toggle="collapse"
-								href="#pablo"
-								onClick={(e) => {
-									e.preventDefault();
-									setUserCollapseState(!userCollapseState);
-								}}
-								aria-expanded={userCollapseState}
-							>
-								<span>
-									Cole <b className="caret"></b>
-								</span>
-							</a>
-							<Collapse id="collapseExample" in={userCollapseState}>
-								<div>
-									<Nav as="ul">
-										<li>
-											<a className="profile-dropdown" href="#pablo" onClick={(e) => e.preventDefault()}>
-												<span className="sidebar-mini">MP</span>
-												<span className="sidebar-normal">My Profile</span>
-											</a>
-										</li>
-										<li>
-											<a className="profile-dropdown" href="#pablo" onClick={(e) => e.preventDefault()}>
-												<span className="sidebar-mini">EP</span>
-												<span className="sidebar-normal">Edit Profile</span>
-											</a>
-										</li>
-										<li>
-											<a className="profile-dropdown" href="#pablo" onClick={(e) => e.preventDefault()}>
-												<span className="sidebar-mini">S</span>
-												<span className="sidebar-normal">Settings</span>
-											</a>
-										</li>
-									</Nav>
-								</div>
-							</Collapse>
-						</div>
-					</div>
+					) : null}
 					<Nav as="ul">{createLinks(routes)}</Nav>
 				</div>
 				<div
@@ -210,42 +195,5 @@ function Sidebar({ routes, image, background, pathname }) {
 Sidebar.getInitialProps = async ({ pathname }) => {
 	return pathname;
 };
-
-// let linkPropTypes = {
-// 	path: PropTypes.string,
-// 	layout: PropTypes.string,
-// 	name: PropTypes.string,
-// 	component: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-// };
-
-// Sidebar.defaultProps = {
-// 	image: "",
-// 	background: "black",
-// 	routes: [],
-// };
-
-// Sidebar.propTypes = {
-// 	image: PropTypes.string,
-// 	background: PropTypes.oneOf(["black", "azure", "green", "orange", "red", "purple"]),
-// 	routes: PropTypes.arrayOf(
-// 		PropTypes.oneOfType([
-// 			PropTypes.shape({
-// 				...linkPropTypes,
-// 				icon: PropTypes.string,
-// 			}),
-// 			PropTypes.shape({
-// 				collapse: true,
-// 				path: PropTypes.string,
-// 				name: PropTypes.string,
-// 				state: PropTypes.string,
-// 				icon: PropTypes.string,
-// 				views: PropTypes.shape({
-// 					...linkPropTypes,
-// 					mini: PropTypes.string,
-// 				}),
-// 			}),
-// 		])
-// 	),
-// };
 
 export default Sidebar;

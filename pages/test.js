@@ -9,7 +9,7 @@ function Test(props) {
 	const getBetsData = async () => {
 		let data;
 		try {
-			await axios.get("http://localhost:4000/api/bets?type=test").then((res) => {
+			await axios.get("http://localhost:4000/api/bets?type=currentUser").then((res) => {
 				data = res.data;
 				console.log(data);
 			});
@@ -18,7 +18,7 @@ function Test(props) {
 		}
 		return data;
 	};
-	// getBetsData();
+	getBetsData();
 
 	// console.log(bets);
 
