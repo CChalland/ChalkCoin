@@ -6,7 +6,7 @@ function BetCards({ tabBets, tabType, currentUser }) {
 	let betsCards;
 	if (tabBets) {
 		betsCards = tabBets.map((bet) => {
-			console.log("BetCards - bet", bet);
+			// console.log("BetCards - bet", bet);
 			if (tabType === "Completed") {
 				return (
 					<TransactionCard

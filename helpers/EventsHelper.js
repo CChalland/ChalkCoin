@@ -54,10 +54,12 @@ let leagues = [
 ];
 
 export async function EventFinder(transaction) {
+	const now = new Date();
 	const date = new Date(transaction.details.date);
+	const timeDiff = (date.getTime() - now.getTime()) / (3600 * 1000);
 	const yyyymmdd = date.yyyymmdd();
 	const leagueIndex = leagues.findIndex((league) => league.display_name === transaction.details.sport);
-	let event;
+	let event, openStatus;
 	if (leagues[leagueIndex].data.some((event) => event.id === transaction.details.gameId)) {
 		event = leagues[leagueIndex].data.find((event) => event.id === transaction.details.gameId);
 	} else {
@@ -67,7 +69,18 @@ export async function EventFinder(transaction) {
 		leagues[leagueIndex].data = [...leagues[leagueIndex].data, ...response.data.events];
 		event = response.data.events.find((event) => event.id === transaction.details.gameId);
 	}
-	return { ...transaction, event };
+
+	if (event?.status.type.state === "post") {
+		openStatus = "Ended";
+	} else if (event?.status.type.state === "in") {
+		openStatus = event.status.period <= 1 ? "danger" : "Closed";
+	} else if (event?.status.type.state === "pre") {
+		if (date.getDate() === now.getDate() && date.getMonth() === now.getMonth()) {
+			openStatus = timeDiff <= 2 ? "warning" : "info";
+		}
+	}
+
+	return { ...transaction, event, openStatus };
 }
 
 export async function EventsFinder(transactions, type) {
@@ -78,10 +91,12 @@ export async function EventsFinder(transactions, type) {
 				if (bet.details.type === "Mine Reward") {
 					return bet;
 				} else {
+					const now = new Date();
 					const date = new Date(bet.details.date);
+					const timeDiff = (date.getTime() - now.getTime()) / (3600 * 1000);
 					const yyyymmdd = date.yyyymmdd();
 					const leagueIndex = leagues.findIndex((league) => league.display_name === bet.details.sport);
-					let event;
+					let event, openStatus;
 					if (leagues[leagueIndex].data.some((event) => event.id === bet.details.gameId)) {
 						event = leagues[leagueIndex].data.find((event) => event.id === bet.details.gameId);
 					} else {
@@ -91,7 +106,18 @@ export async function EventsFinder(transactions, type) {
 						leagues[leagueIndex].data = [...leagues[leagueIndex].data, ...response.data.events];
 						event = response.data.events.find((event) => event.id === bet.details.gameId);
 					}
-					return { ...bet, event };
+
+					if (event?.status.type.state === "post") {
+						openStatus = "Ended";
+					} else if (event?.status.type.state === "in") {
+						openStatus = event.status.period <= 1 ? "danger" : "Closed";
+					} else if (event?.status.type.state === "pre") {
+						if (date.getDate() === now.getDate() && date.getMonth() === now.getMonth()) {
+							openStatus = timeDiff <= 2 ? "warning" : "info";
+						}
+					}
+
+					return { ...bet, event, openStatus };
 				}
 			})
 		);

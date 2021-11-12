@@ -60,7 +60,7 @@ const styles = {
 
 function BetCard({ acceptState, bet, currentUser }) {
 	const dispatch = useContext(BetDispatch);
-	const betData = BetGameData(bet);
+	const betData = BetGameData(bet, currentUser.id);
 	const [awayWinProb, setAwayWinProb] = useState(betData.away.winProb);
 	const [homeWinProb, setHomeWinProb] = useState(betData.home.winProb);
 	const [selectedMarket, setSelectedMarket] = useState("");
@@ -72,10 +72,6 @@ function BetCard({ acceptState, bet, currentUser }) {
 			odds: odd.market,
 		};
 	});
-	const betWinnerData = {
-		amount: betData.amount,
-		acceptingTeam: betData.away.requesterTeam ? betData.home : betData.away,
-	};
 	const handleBet = async (bet) => {
 		if (acceptState) {
 			const betReqData = { betId: bet.id, currentUserId: currentUser.id };
@@ -144,6 +140,9 @@ function BetCard({ acceptState, bet, currentUser }) {
 	else startTime = `@ ${gameTime.format("h:mm a")}`;
 	cardBorderColor = betData.openStatus;
 
+	// console.log("BetCard - bet", bet);
+	// console.log("BetCard - betData", betData);
+
 	return (
 		<Row>
 			{/* For extra lage screen */}
@@ -180,7 +179,9 @@ function BetCard({ acceptState, bet, currentUser }) {
 							</Col>
 							{matchupPredictor.body}
 							<Col xl={3}>
-								<BetWinner betWinnerData={betWinnerData} />
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
 							<Col xl={1} className="mx-0 px-0 my-4">
 								{acceptButton}
@@ -253,7 +254,9 @@ function BetCard({ acceptState, bet, currentUser }) {
 					<Card.Body className="my-0 py-0">
 						<Row className="">
 							<Col lg={7}>
-								<BetWinner betWinnerData={betWinnerData} />
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
 							<Col lg={1} className="mx-0 px-0 my-4">
 								{acceptButton}
@@ -297,7 +300,9 @@ function BetCard({ acceptState, bet, currentUser }) {
 							</Col>
 							{matchupPredictor.body}
 							<Col md={3} className="mx-0 px-0">
-								<BetWinner betWinnerData={betWinnerData} />
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
 						</Row>
 					</Card.Body>
@@ -367,7 +372,9 @@ function BetCard({ acceptState, bet, currentUser }) {
 					<Card.Body className="my-0 py-0">
 						<Row className="align-items-center ">
 							<Col sm={7}>
-								<BetWinner betWinnerData={betWinnerData} />
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
 							<Col className="">{acceptButton}</Col>
 						</Row>
@@ -427,7 +434,9 @@ function BetCard({ acceptState, bet, currentUser }) {
 					<Card.Body className="my-0 py-0">
 						<Row className="align-items-center ">
 							<Col xs={7}>
-								<BetWinner betWinnerData={betWinnerData} />
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
 							<Col className="">{acceptButton}</Col>
 						</Row>

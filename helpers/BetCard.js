@@ -31,7 +31,7 @@ function marketHelper(market, away, home) {
 	};
 }
 
-export function BetGameData(bet) {
+export function BetGameData(bet, currentUserId) {
 	const spreadPercentages = {
 		nfl: {
 			0: { favorite: 0.5, underdog: 0.5 },
@@ -174,7 +174,7 @@ export function BetGameData(bet) {
 		},
 	};
 	const { homeTeam, awayTeam } = homeAwayHelper(bet.event);
-	let homeRecords, homeAvgProb, awayRecords, awayAvgProb;
+	let home, homeRecords, homeAvgProb, away, awayRecords, awayAvgProb, displayedWinner;
 	let temp = [
 		{ name: "Home", type: "home", summary: 0 },
 		{ name: "Away", type: "away", summary: 0 },
@@ -329,6 +329,37 @@ export function BetGameData(bet) {
 		awayRecords = [...awayTeam[0].records, ...temp];
 	}
 
+	away = {
+		abbreviation: awayTeam[0].team.abbreviation,
+		alternateColor: `#${awayTeam[0].team.alternateColor}`,
+		color: `#${awayTeam[0].team.color}`,
+		logo: awayTeam[0].team.logo,
+		name: awayTeam[0].team.shortDisplayName,
+		records: awayRecords,
+		score: parseInt(awayTeam[0].score),
+		homeAway: capitalize(awayTeam[0].homeAway),
+		requesterTeam: awayTeam[0].team.shortDisplayName === bet.details.winner ? true : false,
+		winProb: awayAvgProb,
+	};
+	home = {
+		abbreviation: homeTeam[0].team.abbreviation,
+		alternateColor: `#${homeTeam[0].team.alternateColor}`,
+		color: `#${homeTeam[0].team.color}`,
+		logo: homeTeam[0].team.logo,
+		name: homeTeam[0].team.shortDisplayName,
+		records: homeRecords,
+		score: parseInt(homeTeam[0].score),
+		homeAway: capitalize(homeTeam[0].homeAway),
+		requesterTeam: homeTeam[0].team.shortDisplayName === bet.details.winner ? true : false,
+		winProb: homeAvgProb,
+	};
+
+	if (bet.requesterId === currentUserId) {
+		displayedWinner = awayTeam[0].team.shortDisplayName === bet.details.winner ? away : home;
+	} else {
+		displayedWinner = bet.details.winner !== awayTeam[0].team.shortDisplayName ? away : home;
+	}
+
 	return {
 		id: bet.id,
 		amount: bet.amount,
@@ -339,30 +370,9 @@ export function BetGameData(bet) {
 		detail: bet.event.competitions[0].status.type.detail,
 		odds: bookmakers,
 		openStatus: bet.openStatus,
-		away: {
-			abbreviation: awayTeam[0].team.abbreviation,
-			alternateColor: `#${awayTeam[0].team.alternateColor}`,
-			color: `#${awayTeam[0].team.color}`,
-			logo: awayTeam[0].team.logo,
-			name: awayTeam[0].team.shortDisplayName,
-			records: awayRecords,
-			score: parseInt(awayTeam[0].score),
-			homeAway: capitalize(awayTeam[0].homeAway),
-			requesterTeam: awayTeam[0].team.shortDisplayName === bet.details.winner ? true : false,
-			winProb: awayAvgProb,
-		},
-		home: {
-			abbreviation: homeTeam[0].team.abbreviation,
-			alternateColor: `#${homeTeam[0].team.alternateColor}`,
-			color: `#${homeTeam[0].team.color}`,
-			logo: homeTeam[0].team.logo,
-			name: homeTeam[0].team.shortDisplayName,
-			records: homeRecords,
-			score: parseInt(homeTeam[0].score),
-			homeAway: capitalize(homeTeam[0].homeAway),
-			requesterTeam: homeTeam[0].team.shortDisplayName === bet.details.winner ? true : false,
-			winProb: homeAvgProb,
-		},
+		away,
+		home,
 		venue: bet.event.competitions[0].venue,
+		displayedWinner,
 	};
 }
