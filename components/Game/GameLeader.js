@@ -317,7 +317,7 @@ function GameLeader(props) {
 		const { title, player, rowStyle } = leadersHelper(athlete, sportName, key);
 		gameTitle = title;
 
-		return player;
+		return <div key={key}>{player}</div>;
 	});
 
 	return (

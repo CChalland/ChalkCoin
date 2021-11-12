@@ -3,7 +3,7 @@ import { Alert, Button, Card, Form, Collapse, Nav, Container, Row, Col, Tab } fr
 import { getSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import { BetContext } from "../contexts/Bets.Context";
-import BetsTab from "../components/User/BetsTab";
+import BetsTabs from "../components/User/BetsTabs";
 import axios from "axios";
 import prisma from "../contexts/prisma";
 
@@ -26,6 +26,7 @@ const minLength = (value, length) => value.length >= length;
 
 function UserPage({ session }) {
 	const bets = useContext(BetContext);
+	const [userBets, setUserBets] = useState([]);
 	const [user, setUser] = useState({
 		username: session.user.username ? session.user.username : "",
 		name: session.user.name ? session.user.name : "",
@@ -150,7 +151,19 @@ function UserPage({ session }) {
 		}
 	}, [router]);
 
-	useEffect(() => {}, [bets]);
+	useEffect(() => {
+		let userBetsData = [];
+		if (bets.userBets.pendingBets?.recipientBets.length)
+			userBetsData.push({ type: "Received", bets: bets.userBets.pendingBets?.recipientBets });
+		if (bets.userBets.pendingBets?.openBets.length)
+			userBetsData.push({ type: "Open", bets: bets.userBets.pendingBets?.openBets });
+		if (bets.userBets.acceptedBets?.length)
+			userBetsData.push({ type: "Accepted", bets: bets.userBets.acceptedBets });
+		if (bets.userBets.completedBets?.length)
+			userBetsData.push({ type: "Completed", bets: bets.userBets.completedBets });
+
+		setUserBets(userBetsData);
+	}, [bets.userBets]);
 
 	return (
 		<Container fluid>
@@ -163,9 +176,9 @@ function UserPage({ session }) {
 				>
 					<Row>
 						<Col className="">
-							<Tab.Container defaultActiveKey="user-page-settings">
-								<div className="nav-container">
-									<Nav role="tablist" variant="tabs" className="justify-content-center border-0 nav-icons">
+							<Tab.Container defaultActiveKey="user-page-bets">
+								<div className="mx-5 px-5 nav-container">
+									<Nav role="tablist" variant="tabs" className="justify-content-start border-0 nav-icons">
 										<Nav.Item>
 											<Nav.Link eventKey="user-page-settings" className="border-0 bg-transparent">
 												<i className="nc-icon nc-preferences-circle-rotate"></i>
@@ -363,7 +376,7 @@ function UserPage({ session }) {
 										</Card>
 									</Tab.Pane>
 									<Tab.Pane eventKey="user-page-bets">
-										<BetsTab userBets={bets.userBets} currentUser={session.user} />
+										<BetsTabs userBets={userBets} currentUser={session.user} />
 									</Tab.Pane>
 								</Tab.Content>
 							</Tab.Container>

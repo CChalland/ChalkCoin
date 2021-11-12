@@ -69,6 +69,7 @@ function Games(props) {
 						sportName={sportData.display_name}
 						users={props.users}
 						currentUser={props.currentUser}
+						completed={game.status.type.completed}
 					/>
 				</Row>
 			);

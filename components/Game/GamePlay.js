@@ -94,6 +94,8 @@ function GamePlay(props) {
 		// let progressBar = document.querySelector(".progress");
 		// let progressBarWidth = progressBar?.clientWidth;
 
+		console.log("footballHelper - situation", situation);
+
 		return (
 			<Container fluid>
 				<section className="sb-detail">
@@ -139,14 +141,12 @@ function GamePlay(props) {
 						</div>
 
 						<div className="down" style={{ display: "block" }}>
-							1st &amp; 10 at CHI 45
+							{situation?.downDistanceText}
 						</div>
 
 						<p className="last-play" style={{ display: "block" }}>
 							<span className="title">Last Play:</span>
-							<span className="text">
-								(8:34) (Shotgun) J.Fields pass short middle to D.Newsome to CHI 45 for 7 yards (M.Lee).
-							</span>
+							<span className="text">{situation?.lastPlay.text}</span>
 						</p>
 					</div>
 				</section>
@@ -287,10 +287,10 @@ function GamePlay(props) {
 			}
 		}
 	} else if (gamePlayData.status.type.completed) {
-		// if (sportName === "NFL") {
-		// 	lastPlay = footballHelper(gamePlayData.situation);
-		// } else
-		if (gamePlayData.headlines) {
+		if (sportName === "NFL") {
+			// testing
+			lastPlay = footballHelper(gamePlayData.situation);
+		} else if (gamePlayData.headlines) {
 			if (sportName && gamePlayData.headlines.video) {
 				headline = videoHelper(gamePlayData.headlines);
 			} else {

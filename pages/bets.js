@@ -78,7 +78,7 @@ function Bets({ currentUser }) {
 	const betCards = bets.map((bet, key) => {
 		if (bet.event) {
 			const betData = BetGameData(bet);
-			return <BetCard bet={bet} currentUser={currentUser} key={key} />;
+			return <BetCard acceptState={true} bet={bet} currentUser={currentUser} key={key} />;
 		}
 	});
 

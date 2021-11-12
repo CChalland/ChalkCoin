@@ -58,11 +58,14 @@ const styles = {
 	}),
 };
 
-function BetCard({ bet, currentUser }) {
+function BetCard({ acceptState, bet, currentUser }) {
 	const dispatch = useContext(BetDispatch);
 	const betData = BetGameData(bet);
-	const [awayWinProb, setAwayWinProb] = useState(betData.away.winProb);
-	const [homeWinProb, setHomeWinProb] = useState(betData.home.winProb);
+	let awayWinProb = betData.away.winProb;
+	let homeWinProb = betData.home.winProb;
+	const [awayWinPrct, setAwayWinPrct] = useState(betData.away.winProb);
+	const [homeWinPrct, setHomeWinPrct] = useState(betData.home.winProb);
+
 	const [selectedMarket, setSelectedMarket] = useState("");
 	const optionsMarket = betData.odds?.map((odd) => {
 		return {
@@ -76,14 +79,36 @@ function BetCard({ bet, currentUser }) {
 		acceptingTeam: betData.away.requesterTeam ? betData.home : betData.away,
 	};
 	const handleBet = async (bet) => {
-		const betReqData = { betId: bet.id, currentUserId: currentUser.id };
-		const res = await axios.post("http://localhost:4000/api/acceptBet", betReqData);
-		dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
+		if (acceptState) {
+			const betReqData = { betId: bet.id, currentUserId: currentUser.id };
+			const res = await axios.post("http://localhost:4000/api/acceptBet", betReqData);
+			dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
+		}
 	};
+	const handlePredictor = (value) => {
+		console.log("handlePredictor", value);
+		awayWinProb = makePercentage(value.odds.away.winProbability);
+		homeWinProb = makePercentage(value.odds.home.winProbability);
+	};
+	const acceptButton = acceptState ? (
+		<Button
+			className="btn-round btn-wd"
+			type="button"
+			variant="success"
+			onClick={() => {
+				handleBet(betData);
+			}}
+		>
+			<span className="btn-label">
+				<i className="fas fa-plus"></i>
+			</span>
+			Accept
+		</Button>
+	) : null;
 	const gameTime = moment(betData.date);
 	let cardBorderColor, startTime;
 	let matchupPredictor = { header: null, body: null, footer: null };
-	if (awayWinProb && homeWinProb) {
+	if (awayWinPrct && homeWinPrct) {
 		matchupPredictor.header = (
 			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
 				<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
@@ -93,7 +118,7 @@ function BetCard({ bet, currentUser }) {
 		);
 		matchupPredictor.body = (
 			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
-				<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
+				<BetOdds betGameOdds={betData} awayWinPrct={awayWinPrct} homeWinPrct={homeWinPrct} />
 			</Col>
 		);
 		matchupPredictor.footer = (
@@ -108,8 +133,9 @@ function BetCard({ bet, currentUser }) {
 						name="selectedMarket"
 						value={selectedMarket}
 						onChange={(value) => {
-							setAwayWinProb(makePercentage(value.odds.away.winProbability));
-							setHomeWinProb(makePercentage(value.odds.home.winProbability));
+							handlePredictor(value);
+							setAwayWinPrct(makePercentage(value.odds.away.winProbability));
+							setHomeWinPrct(makePercentage(value.odds.home.winProbability));
 							setSelectedMarket(value);
 						}}
 						options={optionsMarket}
@@ -126,7 +152,13 @@ function BetCard({ bet, currentUser }) {
 	else startTime = `@ ${gameTime.format("h:mm a")}`;
 	cardBorderColor = betData.openStatus;
 
-	// console.log("BetCard - betData", betData);
+	// useEffect(() => {
+	// 	if (betData.away.winProb) setAwayWinPrct(betData.away.winProb);
+	// 	if (betData.home.winProb) setHomeWinPrct(betData.home.winProb);
+	// }, [betData]);
+
+	// console.log("BetCard - awayWinPrct", awayWinPrct);
+	// console.log("BetCard - homeWinPrct", homeWinPrct);
 
 	return (
 		<Row>
@@ -167,19 +199,7 @@ function BetCard({ bet, currentUser }) {
 								<BetWinner betWinnerData={betWinnerData} />
 							</Col>
 							<Col xl={1} className="mx-0 px-0 my-4">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
+								{acceptButton}
 							</Col>
 						</Row>
 					</Card.Body>
@@ -252,19 +272,7 @@ function BetCard({ bet, currentUser }) {
 								<BetWinner betWinnerData={betWinnerData} />
 							</Col>
 							<Col lg={1} className="mx-0 px-0 my-4">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
+								{acceptButton}
 							</Col>
 						</Row>
 					</Card.Body>
@@ -317,21 +325,7 @@ function BetCard({ bet, currentUser }) {
 								</h4>
 							</Col>
 							{matchupPredictor.footer}
-							<Col>
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
-							</Col>
+							<Col>{acceptButton}</Col>
 						</Row>
 					</Card.Footer>
 				</Card>
@@ -391,21 +385,7 @@ function BetCard({ bet, currentUser }) {
 							<Col sm={7}>
 								<BetWinner betWinnerData={betWinnerData} />
 							</Col>
-							<Col className="">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
-							</Col>
+							<Col className="">{acceptButton}</Col>
 						</Row>
 					</Card.Body>
 				</Card>
@@ -465,21 +445,7 @@ function BetCard({ bet, currentUser }) {
 							<Col xs={7}>
 								<BetWinner betWinnerData={betWinnerData} />
 							</Col>
-							<Col className="">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
-							</Col>
+							<Col className="">{acceptButton}</Col>
 						</Row>
 					</Card.Body>
 				</Card>

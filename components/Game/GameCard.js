@@ -5,9 +5,10 @@ import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
 import BetModal from "../Bet/BetModal";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper, BetModalHelper } from "../../helpers/SportCard";
+import { GetPlaysData } from "../../test/footballHelperJSON";
 
 function GameCard(props) {
-	const { panelKey, gameData, sportName, users, currentUser } = props;
+	const { panelKey, gameData, sportName, users, currentUser, completed } = props;
 	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
 	const toggleMultipleExpandablePanels = (event, value) => {
 		if (multipleExpandablePanels.includes(value)) {
@@ -19,6 +20,15 @@ function GameCard(props) {
 	let infoButtonClass = multipleExpandablePanels.includes(panelKey)
 		? "btn-round btn-wd btn-outline"
 		: "btn-round btn-wd";
+
+	let tempGameData = completed
+		? {
+				...gameData,
+				competitions: [{ ...gameData.competitions[0], situation: GetPlaysData()[0] }],
+		  }
+		: gameData;
+
+	console.log(tempGameData);
 
 	return (
 		<>
@@ -34,7 +44,8 @@ function GameCard(props) {
 						</Col>
 
 						<Col lg={3} xxl={2} className="border-right">
-							<GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} />
+							{/* <GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} /> */}
+							<GamePlay gamePlayData={GamePlayHelper(tempGameData, sportName)} sportName={sportName} />
 						</Col>
 
 						<Col lg={4} xxl={2} className="">

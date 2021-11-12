@@ -18,7 +18,7 @@ function Test(props) {
 		}
 		return data;
 	};
-	getBetsData();
+	// getBetsData();
 
 	// console.log(bets);
 
