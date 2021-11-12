@@ -91,7 +91,7 @@ export function GameScoreHelper(game, sportName) {
 	};
 }
 
-export function GamePlayHelper(game) {
+export function GamePlayHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
 	away = { id: awayTeam[0].team.id, name: awayTeam[0].team.displayName.split(" ").pop(), links: [] };
@@ -125,12 +125,33 @@ export function GamePlayHelper(game) {
 				game.competitions[0].situation.lastPlay.team.id === homeTeam[0].team.id
 					? homeTeam[0].team
 					: awayTeam[0].team;
-		lastPlay = {
-			athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
-			text: game.competitions[0].situation.lastPlay.text,
-			type: game.competitions[0].situation.lastPlay.type,
-			team,
-		};
+		if (sportName === "NFL") {
+			lastPlay = {
+				...game.competitions[0].situation.lastPlay,
+				team,
+			};
+		} else {
+			lastPlay = {
+				athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
+				text: game.competitions[0].situation.lastPlay.text,
+				type: game.competitions[0].situation.lastPlay.type,
+				team,
+			};
+		}
+	}
+
+	if (game.status.type.state === "post") {
+		if (game.competitions[0].situation?.lastPlay.team)
+			team =
+				game.competitions[0].situation?.lastPlay.team.id === homeTeam[0].team.id
+					? homeTeam[0].team
+					: awayTeam[0].team;
+		if (sportName === "NFL") {
+			lastPlay = {
+				...game.competitions[0].situation?.lastPlay,
+				team,
+			};
+		}
 	}
 
 	return { away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay };

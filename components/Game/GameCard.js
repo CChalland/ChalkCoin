@@ -28,7 +28,7 @@ function GameCard(props) {
 		  }
 		: gameData;
 
-	console.log(gameData);
+	// console.log("GameCard - gameData", gameData);
 
 	return (
 		<>
