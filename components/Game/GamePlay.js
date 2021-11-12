@@ -94,7 +94,7 @@ function GamePlay(props) {
 		// let progressBar = document.querySelector(".progress");
 		// let progressBarWidth = progressBar?.clientWidth;
 
-		// console.log("footballHelper - situation", situation);
+		console.log("footballHelper - situation", situation);
 
 		return (
 			<Container fluid>
@@ -339,7 +339,7 @@ function GamePlay(props) {
 		}
 	}
 
-	console.log("GamePlay - gamePlayData", gamePlayData);
+	// console.log("GamePlay - gamePlayData", gamePlayData);
 
 	return (
 		<>

@@ -138,6 +138,7 @@ export function GamePlayHelper(game, sportName) {
 				team,
 			};
 		}
+		situation = { ...situation, lastPlay };
 	}
 
 	if (game.status.type.state === "post") {
@@ -149,8 +150,12 @@ export function GamePlayHelper(game, sportName) {
 		if (sportName === "NFL") {
 			lastPlay = {
 				...game.competitions[0].situation?.lastPlay,
-				team,
+				team:
+					game.competitions[0].situation?.lastPlay.team.id === homeTeam[0].team.id
+						? homeTeam[0].team
+						: awayTeam[0].team,
 			};
+			situation = { ...situation, lastPlay };
 		}
 	}
 

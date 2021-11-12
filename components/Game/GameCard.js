@@ -77,7 +77,8 @@ function GameCard(props) {
 						</Col>
 
 						<Col md={5} className="">
-							<GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} />
+							{/* <GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} /> */}
+							<GamePlay gamePlayData={GamePlayHelper(tempGameData, sportName)} sportName={sportName} />
 						</Col>
 
 						<Col md={12} className="text-center">
@@ -134,7 +135,8 @@ function GameCard(props) {
 						</Col>
 
 						<Col md={5} className="">
-							<GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} />
+							{/* <GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} /> */}
+							<GamePlay gamePlayData={GamePlayHelper(tempGameData, sportName)} sportName={sportName} />
 						</Col>
 
 						<Col md={12} className="text-center">
@@ -220,8 +222,12 @@ function GameCard(props) {
 										<Carousel.Item>
 											<Row className="justify-content-center">
 												<Col sm={9} className="">
-													<GamePlay
+													{/* <GamePlay
 														gamePlayData={GamePlayHelper(gameData, sportName)}
+														sportName={sportName}
+													/> */}
+													<GamePlay
+														gamePlayData={GamePlayHelper(tempGameData, sportName)}
 														sportName={sportName}
 													/>
 												</Col>
@@ -230,10 +236,14 @@ function GameCard(props) {
 										<Carousel.Item>
 											<Row className="justify-content-center">
 												<Col sm={9} className="">
-													<GameLeader
+													{/* <GameLeader
 														gameLeadersData={GameLeadersHelper(gameData, sportName)}
 														sportName={sportName}
 														screenSize={"sm"}
+													/> */}
+													<GamePlay
+														gamePlayData={GamePlayHelper(tempGameData, sportName)}
+														sportName={sportName}
 													/>
 												</Col>
 											</Row>
@@ -288,8 +298,13 @@ function GameCard(props) {
 										<Carousel.Item>
 											<Row className="justify-content-center">
 												<Col xs={9} className="">
+													{/* <GameLeader
+														gameLeadersData={GameLeadersHelper(gameData, sportName)}
+														sportName={sportName}
+														screenSize={"sm"}
+													/> */}
 													<GamePlay
-														gamePlayData={GamePlayHelper(gameData, sportName)}
+														gamePlayData={GamePlayHelper(tempGameData, sportName)}
 														sportName={sportName}
 													/>
 												</Col>
