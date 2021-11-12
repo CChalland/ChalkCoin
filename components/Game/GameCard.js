@@ -5,7 +5,7 @@ import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
 import BetModal from "../Bet/BetModal";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper, BetModalHelper } from "../../helpers/SportCard";
-import { GetPlaysData } from "../../test/footballHelperJSON";
+import { GetPlaysData, GamePlayHelperTest } from "../../test/footballHelperJSON";
 
 function GameCard(props) {
 	const { panelKey, gameData, sportName, users, currentUser, completed } = props;
@@ -28,7 +28,7 @@ function GameCard(props) {
 		  }
 		: gameData;
 
-	console.log(tempGameData);
+	console.log(gameData);
 
 	return (
 		<>

@@ -94,8 +94,8 @@ export function GameScoreHelper(game, sportName) {
 export function GamePlayHelper(game) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
-	away = { name: awayTeam[0].team.displayName.split(" ").pop(), links: [] };
-	home = { name: homeTeam[0].team.displayName.split(" ").pop(), links: [] };
+	away = { id: awayTeam[0].team.id, name: awayTeam[0].team.displayName.split(" ").pop(), links: [] };
+	home = { id: homeTeam[0].team.id, name: homeTeam[0].team.displayName.split(" ").pop(), links: [] };
 
 	if (game.weather) {
 		weather = game.weather;
@@ -132,6 +132,7 @@ export function GamePlayHelper(game) {
 			team,
 		};
 	}
+
 	return { away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay };
 }
 

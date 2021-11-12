@@ -4494,3 +4494,58 @@ export function GetPlaysData() {
 		return current;
 	}, []);
 }
+
+function homeAwayHelper(game) {
+	let homeTeam = game.competitions[0].competitors.filter((team) => {
+		return team.homeAway === "home";
+	});
+	let awayTeam = game.competitions[0].competitors.filter((team) => {
+		return team.homeAway === "away";
+	});
+	return { homeTeam, awayTeam };
+}
+
+export function GamePlayHelperTest(game) {
+	const { homeTeam, awayTeam } = homeAwayHelper(game);
+	let away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
+	away = { id: awayTeam[0].team.id, name: awayTeam[0].team.displayName.split(" ").pop(), links: [] };
+	home = { id: homeTeam[0].team.id, name: homeTeam[0].team.displayName.split(" ").pop(), links: [] };
+
+	if (game.weather) {
+		weather = game.weather;
+		if (!weather.temperature) weather.temperature = weather.highTemperature;
+	}
+	if (game.competitions[0].situation) situation = game.competitions[0].situation;
+	if (game.competitions[0].headlines) headlines = game.competitions[0].headlines[0];
+	if (game.competitions[0].odds) odds = game.competitions[0].odds[0];
+	if (game.competitions[0].tickets) tickets = game.competitions[0].tickets[0];
+	status = game.competitions[0].status;
+	venue = game.competitions[0].venue;
+	away.links = awayTeam[0].team.links.filter((link) => {
+		return link.text === "Roster" || link.text === "Statistics" || link.text === "Schedule";
+	});
+	home.links = homeTeam[0].team.links.filter((link) => {
+		return link.text === "Roster" || link.text === "Statistics" || link.text === "Schedule";
+	});
+
+	if (headlines)
+		headlines.link = game.links.filter((link) => {
+			return link.text === headlines.type;
+		});
+
+	if (game.status.type.state === "in") {
+		if (game.competitions[0].situation.lastPlay.team)
+			team =
+				game.competitions[0].situation.lastPlay.team.id === homeTeam[0].team.id
+					? homeTeam[0].team
+					: awayTeam[0].team;
+		lastPlay = {
+			athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
+			text: game.competitions[0].situation.lastPlay.text,
+			type: game.competitions[0].situation.lastPlay.type,
+			team,
+		};
+	}
+
+	return { away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay };
+}
