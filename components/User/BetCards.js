@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import axios from "axios";
+import React from "react";
 import BetCard from "../Bet/BetCard";
 import TransactionCard from "../Blockchain/TransactionCard";
 
 function BetCards({ tabBets, tabType, currentUser }) {
 	let betsCards;
 	if (tabBets) {
-		betsCards = tabBets.map((bet, key) => {
+		betsCards = tabBets.map((bet) => {
+			console.log("BetCards - bet", bet);
 			if (tabType === "Completed") {
 				return (
 					<TransactionCard
@@ -21,11 +20,12 @@ function BetCards({ tabBets, tabType, currentUser }) {
 							event: bet.event,
 							transactionId: bet.transactionId,
 						}}
-						key={key}
+						panelKey={bet.id}
+						key={bet.id}
 					/>
 				);
 			} else {
-				return <BetCard acceptState={false} bet={bet} currentUser={currentUser} key={key} />;
+				return <BetCard acceptState={false} bet={bet} currentUser={currentUser} key={bet.id} />;
 			}
 		});
 	} else {

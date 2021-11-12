@@ -24,7 +24,7 @@ function GameCard(props) {
 	let tempGameData = completed
 		? {
 				...gameData,
-				competitions: [{ ...gameData.competitions[0], situation: GetPlaysData()[0] }],
+				competitions: [{ ...gameData.competitions[0], situation: GetPlaysData()[12] }],
 		  }
 		: gameData;
 

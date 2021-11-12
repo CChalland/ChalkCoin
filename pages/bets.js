@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
 import { getSession } from "next-auth/client";
 import { BetContext } from "../contexts/Bets.Context";
-import { BetGameData } from "../helpers/BetCard";
 import BetCard from "../components/Bet/BetCard";
 
 function Bets({ currentUser }) {
@@ -75,10 +74,9 @@ function Bets({ currentUser }) {
 	const closingClass = closingState ? "" : "btn-outline";
 	const startingClass = startingState ? "" : "btn-outline";
 	const todayClass = todayState ? "" : "btn-outline";
-	const betCards = bets.map((bet, key) => {
+	const betCards = bets.map((bet) => {
 		if (bet.event) {
-			const betData = BetGameData(bet);
-			return <BetCard acceptState={true} bet={bet} currentUser={currentUser} key={key} />;
+			return <BetCard acceptState={true} bet={bet} currentUser={currentUser} key={bet.id} />;
 		}
 	});
 

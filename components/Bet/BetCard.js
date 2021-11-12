@@ -61,12 +61,10 @@ const styles = {
 function BetCard({ acceptState, bet, currentUser }) {
 	const dispatch = useContext(BetDispatch);
 	const betData = BetGameData(bet);
-	let awayWinProb = betData.away.winProb;
-	let homeWinProb = betData.home.winProb;
-	const [awayWinPrct, setAwayWinPrct] = useState(betData.away.winProb);
-	const [homeWinPrct, setHomeWinPrct] = useState(betData.home.winProb);
-
+	const [awayWinProb, setAwayWinProb] = useState(betData.away.winProb);
+	const [homeWinProb, setHomeWinProb] = useState(betData.home.winProb);
 	const [selectedMarket, setSelectedMarket] = useState("");
+	const gameTime = moment(betData.date);
 	const optionsMarket = betData.odds?.map((odd) => {
 		return {
 			value: odd.key,
@@ -85,11 +83,6 @@ function BetCard({ acceptState, bet, currentUser }) {
 			dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
 		}
 	};
-	const handlePredictor = (value) => {
-		console.log("handlePredictor", value);
-		awayWinProb = makePercentage(value.odds.away.winProbability);
-		homeWinProb = makePercentage(value.odds.home.winProbability);
-	};
 	const acceptButton = acceptState ? (
 		<Button
 			className="btn-round btn-wd"
@@ -105,10 +98,10 @@ function BetCard({ acceptState, bet, currentUser }) {
 			Accept
 		</Button>
 	) : null;
-	const gameTime = moment(betData.date);
+
 	let cardBorderColor, startTime;
 	let matchupPredictor = { header: null, body: null, footer: null };
-	if (awayWinPrct && homeWinPrct) {
+	if (awayWinProb && homeWinProb) {
 		matchupPredictor.header = (
 			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
 				<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
@@ -118,7 +111,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 		);
 		matchupPredictor.body = (
 			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
-				<BetOdds betGameOdds={betData} awayWinPrct={awayWinPrct} homeWinPrct={homeWinPrct} />
+				<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
 			</Col>
 		);
 		matchupPredictor.footer = (
@@ -133,9 +126,8 @@ function BetCard({ acceptState, bet, currentUser }) {
 						name="selectedMarket"
 						value={selectedMarket}
 						onChange={(value) => {
-							handlePredictor(value);
-							setAwayWinPrct(makePercentage(value.odds.away.winProbability));
-							setHomeWinPrct(makePercentage(value.odds.home.winProbability));
+							setAwayWinProb(makePercentage(value.odds.away.winProbability));
+							setHomeWinProb(makePercentage(value.odds.home.winProbability));
 							setSelectedMarket(value);
 						}}
 						options={optionsMarket}
@@ -151,14 +143,6 @@ function BetCard({ acceptState, bet, currentUser }) {
 	else if (betData.status.type.state === "in") startTime = "GAME STARTED";
 	else startTime = `@ ${gameTime.format("h:mm a")}`;
 	cardBorderColor = betData.openStatus;
-
-	// useEffect(() => {
-	// 	if (betData.away.winProb) setAwayWinPrct(betData.away.winProb);
-	// 	if (betData.home.winProb) setHomeWinPrct(betData.home.winProb);
-	// }, [betData]);
-
-	// console.log("BetCard - awayWinPrct", awayWinPrct);
-	// console.log("BetCard - homeWinPrct", homeWinPrct);
 
 	return (
 		<Row>

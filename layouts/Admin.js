@@ -25,18 +25,18 @@ function Admin(props) {
 
 	useEffect(() => {
 		const openBets = [
-			bets.userBets.pendingBets?.openBets
+			bets.userBets?.pendingBets?.openBets
 				.map((sport) => {
 					return sport.bets;
 				})
 				.flat(),
-			bets.userBets.pendingBets?.recipientBets
+			bets.userBets?.pendingBets?.recipientBets
 				.map((sport) => {
 					return sport.bets;
 				})
 				.flat(),
 		].flat();
-		const acceptedBets = bets.userBets.acceptedBets
+		const acceptedBets = bets.userBets?.acceptedBets
 			?.map((sport) => {
 				return sport.bets;
 			})

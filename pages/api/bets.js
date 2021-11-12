@@ -137,11 +137,8 @@ export default async (req, res) => {
 				});
 				acceptedBets = await prisma.bet.findMany({
 					where: {
-						AND: [
-							{ accepted: true },
-							{ NOT: { completed: true } },
-							{ OR: [{ requesterId: session.user.id }, { recipientId: session.user.id }] },
-						],
+						OR: [{ requesterId: session.user.id }, { accepterId: session.user.id }],
+						AND: [{ accepted: true }, { completed: false }],
 					},
 					include: {
 						accepter: {

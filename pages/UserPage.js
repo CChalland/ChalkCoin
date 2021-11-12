@@ -165,6 +165,8 @@ function UserPage({ session }) {
 		setUserBets(userBetsData);
 	}, [bets.userBets]);
 
+	// console.log("UserPage bets", bets);
+
 	return (
 		<Container fluid>
 			<Row>

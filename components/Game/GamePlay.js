@@ -103,17 +103,17 @@ function GamePlay(props) {
 						<div className="drivechart">
 							<span className="football-bar"></span>
 							<div className="football-progress-wrap">
-								<span className="football-progress" style={{ left: "1%", right: "1%" }}></span>
-								<div className="football-logo-wrap away" style={{ left: "55%" }}>
+								<span className="football-progress" style={{ left: "1%", right: "60%" }}></span>
+								<div className="football-logo-wrap away" style={{ left: "40%" }}>
 									<div className="football-logo">
-										<div className="football-front">
+										<div className="football-back">
 											<img
 												className="focus-image scoreboard-logo-home imageLoaded"
 												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/chi.png&amp;w=35&amp;h=35"
 											/>
 											<div className="football-logo-placeholder">CHI</div>
 										</div>
-										<div className="football-back">
+										<div className="football-front">
 											<img
 												className="focus-image scoreboard-logo-away imageLoaded"
 												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/buf.png&amp;w=35&amp;h=35"
@@ -121,7 +121,7 @@ function GamePlay(props) {
 											<div className="football-logo-placeholder">BUF</div>
 										</div>
 									</div>
-									<span className="football-arrow left"></span>
+									<span className="football-arrow right"></span>
 								</div>
 							</div>
 
@@ -287,10 +287,11 @@ function GamePlay(props) {
 			}
 		}
 	} else if (gamePlayData.status.type.completed) {
-		if (sportName === "NFL") {
-			// testing
-			lastPlay = footballHelper(gamePlayData.situation);
-		} else if (gamePlayData.headlines) {
+		// if (sportName === "NFL") {
+		// 	// testing
+		// 	lastPlay = footballHelper(gamePlayData.situation);
+		// }
+		if (gamePlayData.headlines) {
 			if (sportName && gamePlayData.headlines.video) {
 				headline = videoHelper(gamePlayData.headlines);
 			} else {

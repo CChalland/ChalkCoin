@@ -62,7 +62,7 @@ function Games(props) {
 	if (sportData.data.events) {
 		gameItems = sportData.data.events.map((game, key) => {
 			return (
-				<Row className="my-3" key={key}>
+				<Row className="my-3" key={game.id}>
 					<GameCard
 						panelKey={key}
 						gameData={game}

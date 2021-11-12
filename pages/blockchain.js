@@ -38,10 +38,10 @@ function Blockchain({ currentUser }) {
 		setSelectedBlock(blockchainData.selectedBlock);
 	}, [blockchainData.selectedBlock]);
 
-	console.log("blockchainData", blockchainData);
+	// console.log("blockchainData", blockchainData);
 	// console.log("pending transactions", pendingTransactions);
-	// console.log("recent blocks", blocks);
-	// console.log("blockchain - currentUser", currentUser);
+	// console.log("blockchain blocks", blockchainBlocks);
+	// console.log("selectedBlock", selectedBlock);
 
 	return (
 		<Container fluid>
