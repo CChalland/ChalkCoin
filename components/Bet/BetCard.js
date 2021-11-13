@@ -95,7 +95,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 		</Button>
 	) : null;
 
-	let cardBorderColor, startTime;
+	let cardBorder, startTime;
 	let matchupPredictor = { header: null, body: null, footer: null };
 	if (awayWinProb && homeWinProb) {
 		matchupPredictor.header = (
@@ -138,7 +138,10 @@ function BetCard({ acceptState, bet, currentUser }) {
 	if (betData.status.type.state === "post") startTime = "GAME ENDED";
 	else if (betData.status.type.state === "in") startTime = "GAME STARTED";
 	else startTime = `@ ${gameTime.format("h:mm a")}`;
-	cardBorderColor = betData.openStatus;
+
+	if (betData.openStatus === "danger") cardBorder = "#FB404B";
+	else if (betData.openStatus === "warning") cardBorder = "#FFA534";
+	else if (betData.openStatus === "info") cardBorder = "#23CCEF";
 
 	// console.log("BetCard - bet", bet);
 	// console.log("BetCard - betData", betData);
@@ -147,7 +150,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 		<Row>
 			{/* For extra lage screen */}
 			<Col xxl={{ span: 9, offset: 1 }} className="d-none d-xl-block">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
 							<Col xl={4}>
@@ -204,7 +207,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 
 			{/* For large screen */}
 			<Col className="mx-0 px-0 d-none d-lg-block d-xl-none">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
 							<Col lg={7}>
@@ -268,7 +271,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 
 			{/* For medium screen */}
 			<Col className="mx-0 px-0 d-none d-md-block d-lg-none">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
 							<Col md={5}>
@@ -322,7 +325,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 
 			{/* For small screen */}
 			<Col className="mx-0 px-0 d-none d-sm-block d-md-none">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
 							<Col sm={7}>
@@ -384,7 +387,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 
 			{/* For xs screen */}
 			<Col className="mx-0 px-0 d-block d-sm-none">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
 							<Col xs={7}>

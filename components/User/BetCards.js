@@ -20,6 +20,7 @@ function BetCards({ tabBets, tabType, currentUser }) {
 							event: bet.event,
 							transactionId: bet.transactionId,
 						}}
+						userAddress={currentUser.walletAddress}
 						panelKey={bet.id}
 						key={bet.id}
 					/>

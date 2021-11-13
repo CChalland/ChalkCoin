@@ -17,6 +17,7 @@ function BetsTabs({ userBets, currentUser }) {
 	const [ncaabState, setNCAABState] = useState(false);
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
+	const [mlsState, setMLSState] = useState(false);
 	const [sportButtons, setSportButtons] = useState(false);
 	const closingClass = closingState ? "" : "btn-outline";
 	const startingClass = startingState ? "" : "btn-outline";
@@ -38,6 +39,7 @@ function BetsTabs({ userBets, currentUser }) {
 			!ncaabState &&
 			!nhlState &&
 			!wnbaState &&
+			!mlsState &&
 			!closingState &&
 			!startingState &&
 			!todayState
@@ -125,6 +127,17 @@ function BetsTabs({ userBets, currentUser }) {
 					});
 				filteredBetsData = [...filteredBetsData, ...wnbaBets];
 			}
+			if (mlsState) {
+				const mlsBets = tab.bets
+					?.map((sport) => {
+						return sport.bets;
+					})
+					.flat()
+					.filter((bet) => {
+						return bet.details.sport === "MLS";
+					});
+				filteredBetsData = [...filteredBetsData, ...mlsBets];
+			}
 			if (closingState) {
 				const closingBets = tab.bets
 					?.map((sport) => {
@@ -179,19 +192,21 @@ function BetsTabs({ userBets, currentUser }) {
 			tab?.bets?.map((sport, key) => {
 				let buttonClass;
 				if (sport.displayName === "NCAA Football") {
-					buttonClass = ncaafState ? "btn-round" : "btn-outline btn-round";
+					buttonClass = ncaafState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
 				} else if (sport.displayName === "NFL") {
-					buttonClass = nflState ? "btn-round" : "btn-outline btn-round";
+					buttonClass = nflState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
 				} else if (sport.displayName === "MLB") {
-					buttonClass = mlbState ? "btn-round" : "btn-outline btn-round";
+					buttonClass = mlbState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
 				} else if (sport.displayName === "NBA") {
-					buttonClass = nbaState ? "btn-round" : "btn-outline btn-round";
+					buttonClass = nbaState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
 				} else if (sport.displayName === "NCAA Men's Basketball") {
-					buttonClass = ncaabState ? "btn-round" : "btn-outline btn-round";
+					buttonClass = ncaabState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
 				} else if (sport.displayName === "NHL") {
-					buttonClass = nhlState ? "btn-round" : "btn-outline btn-round";
+					buttonClass = nhlState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
 				} else if (sport.displayName === "WNBA") {
-					buttonClass = wnbaState ? "btn-round" : "btn-outline btn-round";
+					buttonClass = wnbaState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
+				} else if (sport.displayName === "MLS") {
+					buttonClass = mlsState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
 				}
 				return (
 					<Col xs={"auto"} key={key}>
@@ -213,6 +228,8 @@ function BetsTabs({ userBets, currentUser }) {
 									setNHLState(!nhlState);
 								} else if (sport.displayName === "WNBA") {
 									setWNBAState(!wnbaState);
+								} else if (sport.displayName === "MLS") {
+									setMLSState(!mlsState);
 								}
 							}}
 						>
@@ -232,15 +249,22 @@ function BetsTabs({ userBets, currentUser }) {
 		ncaabState,
 		nhlState,
 		wnbaState,
+		mlsState,
 		closingState,
 		startingState,
 		todayState,
 	]);
 
+	const closingSoon = bets?.some((bet) => bet.openStatus === "danger");
+	const startSoon = bets?.some((bet) => bet.openStatus === "warning");
+	const gameDay = bets?.some((bet) => bet.openStatus === "info");
+
+	// console.log("bets", bets);
+
 	return (
 		<Container fluid>
 			<Card>
-				<Tab.Container id="left-tabs-example" defaultActiveKey="first">
+				<Tab.Container id="left-tabs-types-bets" defaultActiveKey={"Open"}>
 					<Row>
 						<Col xs={2} className="mx-2">
 							<Nav variant="pills" className="flex-column">
@@ -285,66 +309,107 @@ function BetsTabs({ userBets, currentUser }) {
 									</Row>
 
 									<Row className="">{sportButtons}</Row>
-									{searchState ? null : <label className="error">No bets found.</label>}
 								</Col>
-								<Col xs={4}>
-									<Row className="align-items-center">
-										<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-											<Button
-												className={closingClass}
-												type="button"
-												variant="danger"
-												style={{ width: "1.5rem", height: "1.5rem" }}
-												onClick={() => {
-													setClosingState(!closingState);
-												}}
-											></Button>
-										</Col>
-										<Col xs={7} sm={8} className="ml-1 pl-1">
-											<h5 className="my-0" style={{ fontSize: 15 }}>
-												{"Closing Soon"}
-											</h5>
-										</Col>
-									</Row>
 
-									<Row className="align-items-center">
-										<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-											<Button
-												className={startingClass}
-												type="button"
-												variant="warning"
-												style={{ width: "1.5rem", height: "1.5rem" }}
-												onClick={() => {
-													setStartingState(!startingState);
-												}}
-											></Button>
-										</Col>
-										<Col xs={7} sm={8} className="ml-1 pl-1">
-											<h5 className="my-0" style={{ fontSize: 15 }}>
-												{"Game Starting Soon"}
-											</h5>
-										</Col>
-									</Row>
+								{tab.type === "Completed" ? (
+									<Col xs={4}>
+										<Row className="align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													type="button"
+													variant="success"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Won"}
+												</h5>
+											</Col>
+										</Row>
+										<Row className="align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													type="button"
+													variant="danger"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Lost"}
+												</h5>
+											</Col>
+										</Row>
+									</Col>
+								) : (
+									<Col xs={4}>
+										{closingSoon ? (
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														className={closingClass}
+														type="button"
+														variant="danger"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setClosingState(!closingState);
+														}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Closing Soon"}
+													</h5>
+												</Col>
+											</Row>
+										) : null}
 
-									<Row className="align-items-center">
-										<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-											<Button
-												className={todayClass}
-												type="button"
-												variant="info"
-												style={{ width: "1.5rem", height: "1.5rem" }}
-												onClick={() => {
-													setTodayState(!todayState);
-												}}
-											></Button>
-										</Col>
-										<Col xs={7} sm={8} className="ml-1 pl-1">
-											<h5 className="my-0" style={{ fontSize: 15 }}>
-												{"Game Today"}
-											</h5>
-										</Col>
-									</Row>
-								</Col>
+										{startSoon ? (
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														className={startingClass}
+														type="button"
+														variant="warning"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setStartingState(!startingState);
+														}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Game Starting Soon"}
+													</h5>
+												</Col>
+											</Row>
+										) : null}
+
+										{gameDay ? (
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														className={todayClass}
+														type="button"
+														variant="info"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setTodayState(!todayState);
+														}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Game Today"}
+													</h5>
+												</Col>
+											</Row>
+										) : null}
+									</Col>
+								)}
 							</Row>
 						</Col>
 					</Row>
@@ -352,6 +417,7 @@ function BetsTabs({ userBets, currentUser }) {
 			</Card>
 			<h4>{tab.type ? `${tab.type} Bets` : "Loading"}</h4>
 			<BetCards tabType={tab.type} tabBets={bets} currentUser={currentUser} />
+			{searchState ? null : <label className="error">No bets found.</label>}
 		</Container>
 	);
 }

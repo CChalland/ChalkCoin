@@ -70,6 +70,14 @@ export async function EventFinder(transaction) {
 		event = response.data.events.find((event) => event.id === transaction.details.gameId);
 	}
 
+	if (!event) {
+		const response = await axios.get(
+			`http://site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard/${bet.details.gameId}`
+		);
+		leagues[leagueIndex].data = [...leagues[leagueIndex].data, response.data];
+		event = response.data;
+	}
+
 	if (event?.status.type.state === "post") {
 		openStatus = "Ended";
 	} else if (event?.status.type.state === "in") {
@@ -105,6 +113,14 @@ export async function EventsFinder(transactions, type) {
 						);
 						leagues[leagueIndex].data = [...leagues[leagueIndex].data, ...response.data.events];
 						event = response.data.events.find((event) => event.id === bet.details.gameId);
+					}
+
+					if (!event) {
+						const response = await axios.get(
+							`http://site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard/${bet.details.gameId}`
+						);
+						leagues[leagueIndex].data = [...leagues[leagueIndex].data, response.data];
+						event = response.data;
 					}
 
 					if (event?.status.type.state === "post") {

@@ -23,6 +23,7 @@ function Bets({ currentUser }) {
 	const [ncaabState, setNCAABState] = useState(false);
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
+	const [mlsState, setMLSState] = useState(false);
 	const [closingState, setClosingState] = useState(false);
 	const [startingState, setStartingState] = useState(false);
 	const [todayState, setTodayState] = useState(false);
@@ -42,6 +43,8 @@ function Bets({ currentUser }) {
 			buttonClass = nhlState ? "btn-round" : "btn-outline btn-round";
 		} else if (sport.displayName === "WNBA") {
 			buttonClass = wnbaState ? "btn-round" : "btn-outline btn-round";
+		} else if (sport.displayName === "MLS") {
+			buttonClass = mlsState ? "btn-round" : "btn-outline btn-round";
 		}
 		return (
 			<Col xs={"auto"} key={key}>
@@ -63,6 +66,8 @@ function Bets({ currentUser }) {
 							setNHLState(!nhlState);
 						} else if (sport.displayName === "WNBA") {
 							setWNBAState(!wnbaState);
+						} else if (sport.displayName === "MLS") {
+							setMLSState(!mlsState);
 						}
 					}}
 				>
@@ -94,6 +99,7 @@ function Bets({ currentUser }) {
 			!ncaabState &&
 			!nhlState &&
 			!wnbaState &&
+			!mlsState &&
 			!closingState &&
 			!startingState &&
 			!todayState
@@ -142,6 +148,17 @@ function Bets({ currentUser }) {
 				});
 				filteredBetsData = [...filteredBetsData, ...wnbaBets];
 			}
+			if (mlsState) {
+				const mlsBets = tab.bets
+					?.map((sport) => {
+						return sport.bets;
+					})
+					.flat()
+					.filter((bet) => {
+						return bet.details.sport === "MLS";
+					});
+				filteredBetsData = [...filteredBetsData, ...mlsBets];
+			}
 			if (closingState) {
 				const closingBets = openBets.filter((bet) => {
 					return bet.openStatus === "danger";
@@ -186,6 +203,7 @@ function Bets({ currentUser }) {
 		ncaabState,
 		nhlState,
 		wnbaState,
+		mlsState,
 		closingState,
 		startingState,
 		todayState,

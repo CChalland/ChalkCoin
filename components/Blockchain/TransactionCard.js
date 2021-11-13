@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Card, Collapse, Image } from "react-bootstrap";
 import GameCard from "../Game/GameCard";
 
-function TransactionCard({ transactionData, panelKey }) {
+function TransactionCard({ transactionData, userAddress, panelKey }) {
 	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
 	const toggleMultipleExpandablePanels = (event, value) => {
 		if (multipleExpandablePanels.includes(value)) {
@@ -13,6 +13,7 @@ function TransactionCard({ transactionData, panelKey }) {
 	};
 	const gameState = transactionData.event ? true : false;
 	const cursorStyle = gameState ? { cursor: "pointer" } : {};
+	const transactionBorder = transactionData.recipient === userAddress ? "#87CB16" : "#FB404B";
 
 	return (
 		<Row className="my-3">
@@ -24,7 +25,7 @@ function TransactionCard({ transactionData, panelKey }) {
 					aria-expanded={multipleExpandablePanels.includes(1)}
 					onClick={(e) => toggleMultipleExpandablePanels(e, 1)}
 				>
-					<Card className="my-0 py-0">
+					<Card style={{ border: `1px solid ${transactionBorder}` }} className="my-0 py-0">
 						<Card.Header className="my-0 py-0">
 							<Row className="align-items-center">
 								<Col md={3}>
@@ -109,7 +110,7 @@ function TransactionCard({ transactionData, panelKey }) {
 					aria-expanded={multipleExpandablePanels.includes(1)}
 					onClick={(e) => toggleMultipleExpandablePanels(e, 1)}
 				>
-					<Card className="my-0 py-0">
+					<Card style={{ border: `1px solid ${transactionBorder}` }} className="my-0 py-0">
 						<Card.Header className="my-0 py-0">
 							<Row className="align-items-center">
 								<Col xs={12}>

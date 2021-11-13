@@ -68,7 +68,14 @@ function Blockchain({ currentUser }) {
 						</Col>
 					</Row>
 					{pendingTransactions.map((transaction, key) => {
-						return <TransactionCard transactionData={transaction} key={key} panelKey={key} />;
+						return (
+							<TransactionCard
+								transactionData={transaction}
+								userAddress={currentUser.walletAddress}
+								key={key}
+								panelKey={key}
+							/>
+						);
 					})}
 				</Col>
 			</Row>
@@ -101,7 +108,14 @@ function Blockchain({ currentUser }) {
 						<h2>'s Transactions</h2>
 					</Row>
 					{selectedBlock.transactions?.map((transaction, key) => {
-						return <TransactionCard transactionData={transaction} key={key} panelKey={key} />;
+						return (
+							<TransactionCard
+								transactionData={transaction}
+								userAddress={currentUser.walletAddress}
+								key={key}
+								panelKey={key}
+							/>
+						);
 					})}
 				</Col>
 			</Row>
