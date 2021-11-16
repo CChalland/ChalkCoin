@@ -64,7 +64,7 @@ function UserPage({ session }) {
 			updatedUser.password = confirmPassword;
 
 		if (usernameState && emailState && passwordState && confirmPasswordState) {
-			let response = await axios.post("http://localhost:4000/api/currentUser", updatedUser);
+			let response = await axios.post(`${process.env.APP_URL}/api/currentUser`, updatedUser);
 			console.log(response);
 			if (response.data.id) {
 				setUser(response.data);

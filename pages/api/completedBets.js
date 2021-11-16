@@ -28,7 +28,10 @@ export default async (req, res) => {
 						},
 					};
 
-					const res = await axios.post("http://localhost:3001/transaction/broadcast", transactionBody);
+					const res = await axios.post(
+						`${process.env.BLOCKCHAIN_URL}/transaction/broadcast`,
+						transactionBody
+					);
 					if (res.data.transactionData) {
 						let transactionData = res.data.transactionData;
 						return await prisma.bet.update({

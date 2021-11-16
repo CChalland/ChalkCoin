@@ -157,7 +157,7 @@ export default async (req, res) => {
 					where: {
 						AND: [
 							{ completed: true },
-							{ OR: [{ requesterId: session.user.id }, { recipientId: session.user.id }] },
+							{ OR: [{ requesterId: session.user.id }, { accepterId: session.user.id }] },
 						],
 					},
 					include: {

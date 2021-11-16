@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Image, Card } from "react-bootstrap";
 import moment from "moment";
 
-function BetScores({ betGameScoreData }) {
+function BetScores({ betGameScoreData, screenSize }) {
 	const gameTime = moment(betGameScoreData.date);
 	const daysUntil = gameTime.diff(new Date(), "days");
 	const [day, date, month] = gameTime.format("ddd,Do,MMM").split(",");
@@ -13,7 +13,7 @@ function BetScores({ betGameScoreData }) {
 			if (daysUntil > 6) {
 				scoreCard = (
 					<Col xs={3} sm="auto" className="mt-2 text-secondary">
-						<Card border="secondary" style={{ width: "4rem" }}>
+						<Card border="secondary" className="mr-1" style={{ width: "4rem" }}>
 							<p className="text-danger text-center my-1 border-bottom">{month}</p>
 							<p className="text-center my-2">{date}</p>
 						</Card>
@@ -22,7 +22,7 @@ function BetScores({ betGameScoreData }) {
 			} else if (daysUntil > 1) {
 				scoreCard = (
 					<Col xs={3} sm="auto" className="mt-2 text-secondary">
-						<Card border="secondary" style={{ width: "4rem" }}>
+						<Card border="secondary" className="mr-1" style={{ width: "4rem" }}>
 							<p className="text-danger text-center my-1 border-bottom">{day}</p>
 							<p className="text-center my-2">{date}</p>
 						</Card>
@@ -31,7 +31,7 @@ function BetScores({ betGameScoreData }) {
 			} else {
 				scoreCard = (
 					<Col xs={3} sm="auto" className="mt-2 text-secondary">
-						<Card border="secondary" style={{ width: "4rem" }}>
+						<Card border="secondary" className="mr-1" style={{ width: "4rem" }}>
 							<p className="text-danger text-center my-1 border-bottom">{day}</p>
 							<p className="text-center my-2">{date}</p>
 						</Card>
@@ -43,7 +43,7 @@ function BetScores({ betGameScoreData }) {
 				const [topBot, inning] = betGameScoreData.detail.split(" ");
 				scoreCard = (
 					<Col xs={3} sm="auto" className="mt-2 text-secondary">
-						<Card border="secondary" style={{ width: "4rem" }}>
+						<Card border="secondary" className="mr-1" style={{ width: "4rem" }}>
 							<p className="text-danger text-center my-1 border-bottom">{inning}</p>
 							<p className="text-center my-2">{topBot}</p>
 						</Card>
@@ -54,7 +54,7 @@ function BetScores({ betGameScoreData }) {
 				const period = betGameScoreData.detail.split(" ")[2];
 				scoreCard = (
 					<Col xs={3} sm="auto" className="mt-2 text-secondary">
-						<Card border="secondary" style={{ width: "4rem" }}>
+						<Card border="secondary" className="mr-1" style={{ width: "4rem" }}>
 							<p className="text-danger text-center my-1 border-bottom">{period}</p>
 							<p className="text-center my-2">{time}</p>
 						</Card>
@@ -65,7 +65,7 @@ function BetScores({ betGameScoreData }) {
 				const period = betGameScoreData.detail.split(" ")[2];
 				scoreCard = (
 					<Col xs={3} sm="auto" className="mt-2 text-secondary">
-						<Card border="secondary" style={{ width: "4rem" }}>
+						<Card border="secondary" className="mr-1" style={{ width: "4rem" }}>
 							<p className="text-danger text-center my-1 border-bottom">{period}</p>
 							<p className="text-center my-2">{time}</p>
 						</Card>
@@ -76,7 +76,7 @@ function BetScores({ betGameScoreData }) {
 				const period = betGameScoreData.detail.split(" ")[2];
 				scoreCard = (
 					<Col xs={3} sm="auto" className="mt-2 text-secondary">
-						<Card border="secondary" style={{ width: "4rem" }}>
+						<Card border="secondary" className="mr-1" style={{ width: "4rem" }}>
 							<p className="text-danger text-center my-1 border-bottom">{period}</p>
 							<p className="text-center my-2">{time}</p>
 						</Card>
@@ -85,7 +85,7 @@ function BetScores({ betGameScoreData }) {
 			}
 			awayScore = <p className="font-weight-bold mr-auto">{gameData.away.score}</p>;
 			homeScore = <p className="font-weight-bold mr-auto">{gameData.home.score}</p>;
-		} else if (gameData.status.type.state === "post") {
+		} else if (gameData.status.type.name === "STATUS_FINAL") {
 			awayScore = <p className="font-weight-bold mr-auto">{gameData.away.score}</p>;
 			homeScore = <p className="font-weight-bold mr-auto">{gameData.home.score}</p>;
 		}
@@ -95,15 +95,15 @@ function BetScores({ betGameScoreData }) {
 
 	const { scoreCard, awayScore, homeScore } = betScoreHelper(betGameScoreData);
 	return (
-		<Container fluid>
+		<Col sm={7} md={5} lg={7} xl={4}>
 			<Row className="">
 				{scoreCard}
 				<Col xs={9} sm={8} className="">
-					<Row className="mb-4">
-						<Col xs={4} sm={4} lg={3} className="">
+					<Row className="mt-1 mb-3">
+						<Col xs={"auto"} sm={4} lg={3} className="">
 							<Image width={35} height={35} src={betGameScoreData.away.logo} rounded />
 						</Col>
-						<Col xs={5} sm={5} lg={6} className="">
+						<Col xs={"auto"} sm={5} lg={6} className="">
 							<Row className="mb-0 h5" style={{ fontSize: 16 }}>
 								{betGameScoreData.away.name}
 							</Row>
@@ -116,11 +116,11 @@ function BetScores({ betGameScoreData }) {
 						</Col>
 					</Row>
 
-					<Row className="mt-4">
-						<Col xs={4} sm={4} lg={3} className="">
+					<Row className="mt-3">
+						<Col xs={"auto"} sm={4} lg={3} className="">
 							<Image width={35} height={35} src={betGameScoreData.home.logo} rounded />
 						</Col>
-						<Col xs={5} sm={5} lg={6} className="">
+						<Col xs={"auto"} sm={5} lg={6} className="">
 							<Row className="mb-0 h5" style={{ fontSize: 16 }}>
 								{betGameScoreData.home.name}
 							</Row>
@@ -134,7 +134,7 @@ function BetScores({ betGameScoreData }) {
 					</Row>
 				</Col>
 			</Row>
-		</Container>
+		</Col>
 	);
 }
 

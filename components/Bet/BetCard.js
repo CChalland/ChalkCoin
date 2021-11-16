@@ -64,7 +64,15 @@ function BetCard({ acceptState, bet, currentUser }) {
 	const [awayWinProb, setAwayWinProb] = useState(betData.away.winProb);
 	const [homeWinProb, setHomeWinProb] = useState(betData.home.winProb);
 	const [selectedMarket, setSelectedMarket] = useState("");
+	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
 	const gameTime = moment(betData.date);
+	const toggleMultipleExpandablePanels = (event, value) => {
+		if (multipleExpandablePanels.includes(value)) {
+			setMultipleExpandablePanels(multipleExpandablePanels.filter((prop) => prop !== value));
+		} else {
+			setMultipleExpandablePanels([...multipleExpandablePanels, value]);
+		}
+	};
 	const optionsMarket = betData.odds?.map((odd) => {
 		return {
 			value: odd.key,
@@ -75,7 +83,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 	const handleBet = async (bet) => {
 		if (acceptState) {
 			const betReqData = { betId: bet.id, currentUserId: currentUser.id };
-			const res = await axios.post("http://localhost:4000/api/acceptBet", betReqData);
+			const res = await axios.post(`/api/acceptBet`, betReqData);
 			dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
 		}
 	};
@@ -106,12 +114,12 @@ function BetCard({ acceptState, bet, currentUser }) {
 			</Col>
 		);
 		matchupPredictor.body = (
-			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
+			<Col xs={11} md={4} lg={5} xl={3} className="mx-0 px-0">
 				<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
 			</Col>
 		);
 		matchupPredictor.footer = (
-			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
+			<Col xs={11} md={4} lg={5} xl={3} className="mx-0 px-0">
 				<InputGroup size="sm">
 					<InputGroup.Prepend>
 						<InputGroup.Text>
@@ -135,7 +143,9 @@ function BetCard({ acceptState, bet, currentUser }) {
 			</Col>
 		);
 	}
-	if (betData.status.type.state === "post") startTime = "GAME ENDED";
+
+	if (betData.status.type.name === "STATUS_POSTPONED") startTime = betData.status.type.shortDetail;
+	else if (betData.status.type.name === "STATUS_FINAL") startTime = "GAME ENDED";
 	else if (betData.status.type.state === "in") startTime = "GAME STARTED";
 	else startTime = `@ ${gameTime.format("h:mm a")}`;
 
@@ -177,9 +187,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col xl={4} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
+							<BetScore betGameScoreData={betData} screenSize={"xl"} />
 							{matchupPredictor.body}
 							<Col xl={3}>
 								<BetWinner
@@ -220,9 +228,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col lg={7} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
+							<BetScore betGameScoreData={betData} screenSize={"lg"} />
 							{matchupPredictor.body}
 						</Row>
 					</Card.Body>
@@ -298,9 +304,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col md={5} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
+							<BetScore betGameScoreData={betData} screenSize={"md"} />
 							{matchupPredictor.body}
 							<Col md={3} className="mx-0 px-0">
 								<BetWinner
@@ -338,9 +342,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col sm={7} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
+							<BetScore betGameScoreData={betData} screenSize={"sm"} />
 							{matchupPredictor.body}
 						</Row>
 					</Card.Body>
@@ -357,7 +359,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 					<Card.Header>
 						<Row className="">
 							<Col sm={7}>
-								<Row>
+								<Row className="justify-content-between">
 									<Col>
 										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 											AMOUNT
@@ -390,42 +392,59 @@ function BetCard({ acceptState, bet, currentUser }) {
 				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
-							<Col xs={7}>
+							<Col xs={12}>
 								<h4 className="my-0" style={{ fontSize: 16 }}>
 									{startTime}
 								</h4>
 							</Col>
-							{matchupPredictor.header}
 						</Row>
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
-						<Row className="">
-							<Col xs={7} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
-							{matchupPredictor.body}
-						</Row>
-					</Card.Body>
-					<Card.Footer className="my-0 py-0">
 						<Row>
-							<Col xs={7}>
+							<BetScore betGameScoreData={betData} screenSize={"xs"} />
+						</Row>
+						<Row className="justify-content-between">
+							<Col xs="auto">
 								<h4 className="my-0" style={{ fontSize: 14 }}>
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							{matchupPredictor.footer}
+							<Col xs="auto">
+								<Button
+									className="btn-round btn-outline"
+									type="button"
+									variant="info"
+									data-toggle="collapse"
+									aria-expanded={multipleExpandablePanels.includes(1)}
+									onClick={(e) => toggleMultipleExpandablePanels(e, 1)}
+								>
+									<span className="btn-label">
+										<i className="nc-icon nc-notes"></i>
+									</span>
+								</Button>
+							</Col>
 						</Row>
-					</Card.Footer>
-					<Card.Header>
+
+						<Collapse
+							className="collapse my-0 py-0"
+							id="collapseOne"
+							in={multipleExpandablePanels.includes(1)}
+						>
+							<Row className="justify-content-center">
+								{matchupPredictor.body}
+								{matchupPredictor.footer}
+							</Row>
+						</Collapse>
+
 						<Row className="">
-							<Col xs={7}>
+							<Col xs={12}>
 								<Row>
-									<Col>
+									<Col className="">
 										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 											AMOUNT
 										</h4>
 									</Col>
-									<Col>
+									<Col className="">
 										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 											TO WIN
 										</h4>
@@ -433,17 +452,19 @@ function BetCard({ acceptState, bet, currentUser }) {
 								</Row>
 							</Col>
 						</Row>
-					</Card.Header>
-					<Card.Body className="my-0 py-0">
 						<Row className="align-items-center ">
-							<Col xs={7}>
+							<Col xs={12}>
 								<BetWinner
 									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
 								/>
 							</Col>
-							<Col className="">{acceptButton}</Col>
 						</Row>
 					</Card.Body>
+					<Card.Footer>
+						<Row>
+							<Col xs={{ span: 4, offset: 2 }}>{acceptButton}</Col>
+						</Row>
+					</Card.Footer>
 				</Card>
 			</Col>
 		</Row>

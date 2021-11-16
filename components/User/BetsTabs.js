@@ -264,7 +264,7 @@ function BetsTabs({ userBets, currentUser }) {
 	return (
 		<Container fluid>
 			<Card>
-				<Tab.Container id="left-tabs-types-bets" defaultActiveKey={"Open"}>
+				<Tab.Container id="left-tabs-types-bets">
 					<Row>
 						<Col xs={2} className="mx-2">
 							<Nav variant="pills" className="flex-column">
@@ -276,7 +276,10 @@ function BetsTabs({ userBets, currentUser }) {
 												setTab(item);
 											}}
 										>
-											<Nav.Link eventKey={item.type}>{`${item.type} Bets`}</Nav.Link>
+											<Nav.Link
+												className={item.type === tab.type ? "active" : ""}
+												eventKey={item.type}
+											>{`${item.type} Bets`}</Nav.Link>
 										</Nav.Item>
 									);
 								})}

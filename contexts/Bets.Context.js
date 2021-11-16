@@ -19,7 +19,7 @@ export function BetProvider(props) {
 	const completedAcceptedBets = bets.acceptedBets
 		.map((sport) => {
 			return sport.bets?.filter((bet) => {
-				return bet.event?.status.type.state === "post";
+				return bet.event?.status.type.name === "STATUS_POSTPONED";
 			});
 		})
 		.flat();
@@ -30,7 +30,7 @@ export function BetProvider(props) {
 			let session = await getSession();
 			try {
 				if (session) {
-					const userRes = await axios.get("http://localhost:4000/api/bets?type=currentUser");
+					const userRes = await axios.get(`/api/bets?type=currentUser`);
 					userBets = userRes.data;
 					userBets.pendingBets.openBets = await Promise.all(
 						userBets.pendingBets.openBets.map(async (league) => {
@@ -53,7 +53,7 @@ export function BetProvider(props) {
 						})
 					);
 				}
-				const res = await axios.get("http://localhost:4000/api/bets?type=all");
+				const res = await axios.get(`/api/bets?type=all`);
 				betsData = res.data;
 				betsData.pendingBets.openBets = await Promise.all(
 					betsData.pendingBets.openBets.map(async (league) => {
@@ -82,7 +82,7 @@ export function BetProvider(props) {
 		async function handlingAcceptedGames() {
 			let betsData;
 			try {
-				const res = await axios.post("http://localhost:4000/api/completedBets", completedAcceptedBets);
+				const res = await axios.post(`/api/completedBets`, completedAcceptedBets);
 				betsData = res.data.map((bet) => {
 					const event = completedAcceptedBets.find((acptBet) => acptBet.event.id === bet.details.gameId);
 					return { ...bet, event: event.event };

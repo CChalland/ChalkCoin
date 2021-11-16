@@ -79,6 +79,9 @@ function Bets({ currentUser }) {
 	const closingClass = closingState ? "" : "btn-outline";
 	const startingClass = startingState ? "" : "btn-outline";
 	const todayClass = todayState ? "" : "btn-outline";
+	const closingSoon = bets?.some((bet) => bet.openStatus === "danger");
+	const startSoon = bets?.some((bet) => bet.openStatus === "warning");
+	const gameDay = bets?.some((bet) => bet.openStatus === "info");
 	const betCards = bets.map((bet) => {
 		if (bet.event) {
 			return <BetCard acceptState={true} bet={bet} currentUser={currentUser} key={bet.id} />;
@@ -212,19 +215,119 @@ function Bets({ currentUser }) {
 	// console.log("sportWithBets", sportWithBets);
 	// console.log("betSorted", betSorted);
 	// console.log("openBets", openBets);
-	// console.log("bets", bets);
+	console.log("bets", bets);
 	return (
 		<Container fluid>
 			<Row className="justify-content-center">
-				<Col xs="auto">
+				{/* For md, lg, xl and up screens */}
+				<Col md={"auto"} className="d-none d-md-block d-xl-block">
+					<Form>
+						<Card>
+							<Card.Body>
+								<Row>
+									<Col xs={8}>
+										<Row>
+											<Col>
+												<Form.Group className={searchState ? "has-success" : "has-error"}>
+													<InputGroup>
+														<InputGroup.Prepend>
+															<InputGroup.Text>
+																<i className="nc-icon nc-paper-2"></i>
+															</InputGroup.Text>
+														</InputGroup.Prepend>
+														<Form.Control
+															name="search"
+															type="text"
+															value={search}
+															onChange={(e) => {
+																setSearch(e.target.value);
+															}}
+															placeholder="Search..."
+														/>
+													</InputGroup>
+												</Form.Group>
+											</Col>
+										</Row>
+										<Row className="justify-content-center">{sportButtons}</Row>
+									</Col>
+
+									<Col md={"auto"}>
+										{closingSoon ? (
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														className={closingClass}
+														type="button"
+														variant="danger"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setClosingState(!closingState);
+														}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Closing Soon"}
+													</h5>
+												</Col>
+											</Row>
+										) : null}
+
+										{startSoon ? (
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														className={startingClass}
+														type="button"
+														variant="warning"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setStartingState(!startingState);
+														}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Game Starting Soon"}
+													</h5>
+												</Col>
+											</Row>
+										) : null}
+
+										{gameDay ? (
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														className={todayClass}
+														type="button"
+														variant="info"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setTodayState(!todayState);
+														}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Game Today"}
+													</h5>
+												</Col>
+											</Row>
+										) : null}
+									</Col>
+								</Row>
+							</Card.Body>
+						</Card>
+					</Form>
+				</Col>
+
+				{/* For xs & sm screens */}
+				<Col className="mx-0 px-0 d-block d-md-none">
 					<Form>
 						<Card>
 							<Card.Header className="mx-2">
 								<Row className="mt-2 justify-content-center align-items-center">
-									<Col xs={"auto"} className="">
-										<h2 className="mt-0 pt-0">{"BETS: "}</h2>
-									</Col>
-									<Col xs={7} className="mx-0 px-0">
+									<Col className="mx-0 px-0">
 										<Form.Group className={searchState ? "has-success" : "has-error"}>
 											<InputGroup>
 												<InputGroup.Prepend>
@@ -248,68 +351,68 @@ function Bets({ currentUser }) {
 							</Card.Header>
 							<Card.Body className="mx-2">
 								<Row className="justify-content-center">{sportButtons}</Row>
-								<Row className="justify-content-center align-items-center">
-									<Col>
-										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-												<Button
-													className={closingClass}
-													type="button"
-													variant="danger"
-													style={{ width: "1.5rem", height: "1.5rem" }}
-													onClick={() => {
-														setClosingState(!closingState);
-													}}
-												></Button>
-											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												<h5 className="my-0" style={{ fontSize: 15 }}>
-													{"Closing Soon"}
-												</h5>
-											</Col>
-										</Row>
-									</Col>
-									<Col>
-										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-												<Button
-													className={startingClass}
-													type="button"
-													variant="warning"
-													style={{ width: "1.5rem", height: "1.5rem" }}
-													onClick={() => {
-														setStartingState(!startingState);
-													}}
-												></Button>
-											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												<h5 className="my-0" style={{ fontSize: 15 }}>
-													{"Game Starting Soon"}
-												</h5>
-											</Col>
-										</Row>
-									</Col>
-									<Col>
-										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-												<Button
-													className={todayClass}
-													type="button"
-													variant="info"
-													style={{ width: "1.5rem", height: "1.5rem" }}
-													onClick={() => {
-														setTodayState(!todayState);
-													}}
-												></Button>
-											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												<h5 className="my-0" style={{ fontSize: 15 }}>
-													{"Game Today"}
-												</h5>
-											</Col>
-										</Row>
-									</Col>
-								</Row>
+								{closingSoon ? (
+									<Row className="align-items-center">
+										<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+											<Button
+												className={closingClass}
+												type="button"
+												variant="danger"
+												style={{ width: "1.5rem", height: "1.5rem" }}
+												onClick={() => {
+													setClosingState(!closingState);
+												}}
+											></Button>
+										</Col>
+										<Col xs={7} sm={8} className="ml-1 pl-1">
+											<h5 className="my-0" style={{ fontSize: 15 }}>
+												{"Closing Soon"}
+											</h5>
+										</Col>
+									</Row>
+								) : null}
+
+								{startSoon ? (
+									<Row className="align-items-center">
+										<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+											<Button
+												className={startingClass}
+												type="button"
+												variant="warning"
+												style={{ width: "1.5rem", height: "1.5rem" }}
+												onClick={() => {
+													setStartingState(!startingState);
+												}}
+											></Button>
+										</Col>
+										<Col xs={7} sm={8} className="ml-1 pl-1">
+											<h5 className="my-0" style={{ fontSize: 15 }}>
+												{"Game Starting Soon"}
+											</h5>
+										</Col>
+									</Row>
+								) : null}
+
+								{gameDay ? (
+									<Row className="align-items-center">
+										<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+											<Button
+												className={todayClass}
+												type="button"
+												variant="info"
+												style={{ width: "1.5rem", height: "1.5rem" }}
+												onClick={() => {
+													setTodayState(!todayState);
+												}}
+											></Button>
+										</Col>
+										<Col xs={7} sm={8} className="ml-1 pl-1">
+											<h5 className="my-0" style={{ fontSize: 15 }}>
+												{"Game Today"}
+											</h5>
+										</Col>
+									</Row>
+								) : null}
 							</Card.Body>
 						</Card>
 					</Form>

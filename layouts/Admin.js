@@ -15,8 +15,8 @@ function Admin(props) {
 
 	useEffect(() => {
 		async function getUserData() {
-			let res = await axios.get("http://localhost:4000/api/currentUser?type=layout");
-			if (!res.data.error) {
+			let res = await axios.get(`/api/currentUser?type=layout`);
+			if (res.data && !res.data.error) {
 				setUser({ ...res.data });
 			}
 		}

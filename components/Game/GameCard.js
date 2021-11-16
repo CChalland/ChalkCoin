@@ -3,7 +3,7 @@ import { Row, Col, Button, Collapse, Carousel, Card } from "react-bootstrap";
 import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
-import BetModal from "../Bet/BetModal";
+import BetModal from "./BetModal";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper, BetModalHelper } from "../../helpers/SportCard";
 import { GetPlaysData, GamePlayHelperTest } from "../../test/footballHelperJSON";
 
@@ -40,6 +40,7 @@ function GameCard(props) {
 							<GameScore
 								key={gameData.uid.toString()}
 								gameScoreCardData={GameScoreHelper(gameData, sportName)}
+								screenSize={"xl"}
 							/>
 						</Col>
 
@@ -73,6 +74,7 @@ function GameCard(props) {
 							<GameScore
 								key={gameData.uid.toString()}
 								gameScoreCardData={GameScoreHelper(gameData, sportName)}
+								screenSize={"lg"}
 							/>
 						</Col>
 
@@ -131,6 +133,7 @@ function GameCard(props) {
 							<GameScore
 								key={gameData.uid.toString()}
 								gameScoreCardData={GameScoreHelper(gameData, sportName)}
+								screenSize={"md"}
 							/>
 						</Col>
 
@@ -188,6 +191,7 @@ function GameCard(props) {
 							<GameScore
 								key={gameData.uid.toString()}
 								gameScoreCardData={GameScoreHelper(gameData, sportName)}
+								screenSize={"sm"}
 							/>
 						</Col>
 
@@ -264,6 +268,7 @@ function GameCard(props) {
 							<GameScore
 								key={gameData.uid.toString()}
 								gameScoreCardData={GameScoreHelper(gameData, sportName)}
+								screenSize={"xs"}
 							/>
 						</Col>
 

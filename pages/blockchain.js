@@ -17,7 +17,7 @@ function Blockchain({ currentUser }) {
 	// const blockchainBlocks = [...blockchainData.chain].reverse();
 	const handleMine = async () => {
 		await axios
-			.post("http://localhost:3001/mine", {
+			.post(`http://192.168.4.27:3001/mine`, {
 				address: currentUser.walletAddress,
 			})
 			.then((res) => {

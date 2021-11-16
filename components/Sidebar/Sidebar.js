@@ -132,7 +132,7 @@ function Sidebar({ currentUser, routes, image, background, pathname }) {
 							BEToken
 						</a>
 					</div>
-					{currentUser ? (
+					{currentUser?.id ? (
 						<div className="user">
 							<div className="photo">
 								<img alt="..." src={currentUser?.image}></img>
