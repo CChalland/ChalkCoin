@@ -215,17 +215,17 @@ function Bets({ currentUser }) {
 	// console.log("sportWithBets", sportWithBets);
 	// console.log("betSorted", betSorted);
 	// console.log("openBets", openBets);
-	console.log("bets", bets);
+	// console.log("bets", bets);
 	return (
 		<Container fluid>
 			<Row className="justify-content-center">
 				{/* For md, lg, xl and up screens */}
-				<Col md={"auto"} className="d-none d-md-block d-xl-block">
+				<Col md={10} xl={8} className="d-none d-md-block d-xl-block">
 					<Form>
 						<Card>
 							<Card.Body>
 								<Row>
-									<Col xs={8}>
+									<Col md={8}>
 										<Row>
 											<Col>
 												<Form.Group className={searchState ? "has-success" : "has-error"}>
@@ -251,10 +251,10 @@ function Bets({ currentUser }) {
 										<Row className="justify-content-center">{sportButtons}</Row>
 									</Col>
 
-									<Col md={"auto"}>
+									<Col md={4}>
 										{closingSoon ? (
 											<Row className="align-items-center">
-												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Col sm={"auto"} className="mt-1">
 													<Button
 														className={closingClass}
 														type="button"
@@ -265,7 +265,7 @@ function Bets({ currentUser }) {
 														}}
 													></Button>
 												</Col>
-												<Col xs={7} sm={8} className="ml-1 pl-1">
+												<Col sm={8} className="ml-1 pl-1">
 													<h5 className="my-0" style={{ fontSize: 15 }}>
 														{"Closing Soon"}
 													</h5>
@@ -275,7 +275,7 @@ function Bets({ currentUser }) {
 
 										{startSoon ? (
 											<Row className="align-items-center">
-												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Col sm={"auto"} className="mt-1 mr-0 pr-0">
 													<Button
 														className={startingClass}
 														type="button"
@@ -286,7 +286,7 @@ function Bets({ currentUser }) {
 														}}
 													></Button>
 												</Col>
-												<Col xs={7} sm={8} className="ml-1 pl-1">
+												<Col sm={8} className="ml-1 pl-1">
 													<h5 className="my-0" style={{ fontSize: 15 }}>
 														{"Game Starting Soon"}
 													</h5>
@@ -296,7 +296,7 @@ function Bets({ currentUser }) {
 
 										{gameDay ? (
 											<Row className="align-items-center">
-												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Col sm={"auto"} className="mt-1 mr-0 pr-0">
 													<Button
 														className={todayClass}
 														type="button"
@@ -307,7 +307,7 @@ function Bets({ currentUser }) {
 														}}
 													></Button>
 												</Col>
-												<Col xs={7} sm={8} className="ml-1 pl-1">
+												<Col sm={8} className="ml-1 pl-1">
 													<h5 className="my-0" style={{ fontSize: 15 }}>
 														{"Game Today"}
 													</h5>
@@ -353,7 +353,7 @@ function Bets({ currentUser }) {
 								<Row className="justify-content-center">{sportButtons}</Row>
 								{closingSoon ? (
 									<Row className="align-items-center">
-										<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+										<Col xs={"auto"} className="mt-1 mr-0 pr-0">
 											<Button
 												className={closingClass}
 												type="button"
@@ -374,7 +374,7 @@ function Bets({ currentUser }) {
 
 								{startSoon ? (
 									<Row className="align-items-center">
-										<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+										<Col xs={"auto"} className="mt-1 mr-0 pr-0">
 											<Button
 												className={startingClass}
 												type="button"
@@ -395,7 +395,7 @@ function Bets({ currentUser }) {
 
 								{gameDay ? (
 									<Row className="align-items-center">
-										<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+										<Col xs={"auto"} className="mt-1 mr-0 pr-0">
 											<Button
 												className={todayClass}
 												type="button"

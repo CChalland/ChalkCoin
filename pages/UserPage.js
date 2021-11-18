@@ -166,39 +166,41 @@ function UserPage({ session }) {
 	}, [bets.userBets]);
 
 	// console.log("UserPage bets", bets);
+	// console.log("UserPage session", session);
 
 	return (
 		<Container fluid>
 			<Row>
-				<Col
-					xs={{ span: 12, order: 2 }}
-					// md={{ span: 8, order: 1 }}
-					lg={{ span: 9, order: 1 }}
-					xl={{ span: 9, order: 1 }}
-				>
-					<Row>
-						<Col className="">
-							<Tab.Container defaultActiveKey="user-page-bets">
-								<div className="mx-5 px-5 nav-container">
-									<Nav role="tablist" variant="tabs" className="justify-content-start border-0 nav-icons">
-										<Nav.Item>
-											<Nav.Link eventKey="user-page-settings" className="border-0 bg-transparent">
-												<i className="nc-icon nc-preferences-circle-rotate"></i>
-												<br></br>
-												Edit Profile
-											</Nav.Link>
-										</Nav.Item>
-										<Nav.Item>
-											<Nav.Link eventKey="user-page-bets" className="border-0 bg-transparent">
-												<i className="nc-icon nc-paper-2"></i>
-												<br></br>
-												Your Bets
-											</Nav.Link>
-										</Nav.Item>
-									</Nav>
-								</div>
-								<Tab.Content>
-									<Tab.Pane eventKey="user-page-settings">
+				<Col className="">
+					<Tab.Container defaultActiveKey="user-page-bets">
+						<div className="nav-container">
+							<Nav role="tablist" variant="tabs" className="justify-content-start border-0 nav-icons">
+								<Nav.Item>
+									<Nav.Link eventKey="user-page-settings" className="border-0 bg-transparent">
+										<i className="nc-icon nc-preferences-circle-rotate"></i>
+										<br></br>
+										Edit Profile
+									</Nav.Link>
+								</Nav.Item>
+								<Nav.Item>
+									<Nav.Link eventKey="user-page-bets" className="border-0 bg-transparent">
+										<i className="nc-icon nc-paper-2"></i>
+										<br></br>
+										Your Bets
+									</Nav.Link>
+								</Nav.Item>
+							</Nav>
+						</div>
+						<Tab.Content>
+							<Tab.Pane eventKey="user-page-settings">
+								<Row>
+									{/* Edit User Col */}
+									<Col
+									// xs={{ span: 12, order: 2 }}
+									// md={{ span: 8, order: 1 }}
+									// lg={{ span: 9, order: 2 }}
+									// xl={{ span: 9, order: 1 }}
+									>
 										<Card>
 											<Card.Header>
 												<Card.Title as="h4">
@@ -376,65 +378,46 @@ function UserPage({ session }) {
 												</Button>
 											</Card.Body>
 										</Card>
-									</Tab.Pane>
-									<Tab.Pane eventKey="user-page-bets">
-										<BetsTabs userBets={userBets} currentUser={session.user} />
-									</Tab.Pane>
-								</Tab.Content>
-							</Tab.Container>
-						</Col>
-					</Row>
-				</Col>
-				<Col
-					xs={{ span: 12, order: 1 }}
-					// md={{ span: 4, order: 2 }}
-					lg={{ span: 3, order: 2 }}
-					xl={{ span: 3, order: 2 }}
-				>
-					<Card className="card-user">
-						<Card.Header className="no-padding">
-							<div className="card-image">
-								<img alt="..." src={"../static/img/full-screen-image-3.jpg"}></img>
-							</div>
-						</Card.Header>
-						<Card.Body>
-							<div className="author">
-								<img alt="..." className="avatar border-gray" src={user.image}></img>
-								<Card.Title as="h5">{user.name}</Card.Title>
-								<p className="card-description">{user.username}</p>
-							</div>
-							<div className="card-description text-center">Balance</div>
-						</Card.Body>
-						<Card.Footer>
-							<hr></hr>
-							<div className="button-container text-center">
-								<Button
-									className="btn-simple btn-icon"
-									href="#pablo"
-									onClick={(e) => e.preventDefault()}
-									variant="link"
-								>
-									<i className="fab fa-facebook-square"></i>
-								</Button>
-								<Button
-									className="btn-simple btn-icon"
-									href="#pablo"
-									onClick={(e) => e.preventDefault()}
-									variant="link"
-								>
-									<i className="fab fa-twitter"></i>
-								</Button>
-								<Button
-									className="btn-simple btn-icon"
-									href="#pablo"
-									onClick={(e) => e.preventDefault()}
-									variant="link"
-								>
-									<i className="fab fa-google-plus-square"></i>
-								</Button>
-							</div>
-						</Card.Footer>
-					</Card>
+									</Col>
+
+									{/* For User Card */}
+									{/* <Col
+										xs={{ span: 12, order: 1 }}
+										// md={{ span: 4, order: 2 }}
+										lg={{ span: 12, order: 1 }}
+										xl={{ span: 3, order: 2 }}
+										// className="d-none d-xl-block"
+									>
+										<Card className="card-user">
+											<Card.Header className="no-padding">
+												<div className="card-image">
+													<img alt="..." src={"../static/img/full-screen-image-3.jpg"}></img>
+												</div>
+											</Card.Header>
+											<Card.Body>
+												<div className="author">
+													<img alt="..." className="avatar border-gray" src={user.image}></img>
+													<Card.Title as="h3">{user.name || user.username}</Card.Title>
+												</div>
+												<div className="card-description">
+													<Row>
+														<Col>Testing</Col>
+													</Row>
+													<Row>
+														<Col>Testing2</Col>
+													</Row>
+												</div>
+											</Card.Body>
+											
+										</Card>
+									</Col> */}
+								</Row>
+							</Tab.Pane>
+							<Tab.Pane eventKey="user-page-bets">
+								<BetsTabs userBets={userBets} currentUser={session.user} />
+							</Tab.Pane>
+						</Tab.Content>
+					</Tab.Container>
 				</Col>
 			</Row>
 		</Container>

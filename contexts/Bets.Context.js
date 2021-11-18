@@ -19,7 +19,7 @@ export function BetProvider(props) {
 	const completedAcceptedBets = bets.acceptedBets
 		.map((sport) => {
 			return sport.bets?.filter((bet) => {
-				return bet.event?.status.type.name === "STATUS_POSTPONED";
+				return bet.event?.status.type.name === "STATUS_FINAL";
 			});
 		})
 		.flat();

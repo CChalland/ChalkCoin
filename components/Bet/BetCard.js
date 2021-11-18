@@ -114,12 +114,12 @@ function BetCard({ acceptState, bet, currentUser }) {
 			</Col>
 		);
 		matchupPredictor.body = (
-			<Col xs={11} md={4} lg={5} xl={3} className="mx-0 px-0">
+			<Col xs={11} sm={5} md={4} lg={5} xl={3} className="mx-0 px-0">
 				<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
 			</Col>
 		);
 		matchupPredictor.footer = (
-			<Col xs={11} md={4} lg={5} xl={3} className="mx-0 px-0">
+			<Col xs={11} sm={5} md={4} lg={5} xl={3} className="mx-0 px-0">
 				<InputGroup size="sm">
 					<InputGroup.Prepend>
 						<InputGroup.Text>

@@ -192,21 +192,21 @@ function BetsTabs({ userBets, currentUser }) {
 			tab?.bets?.map((sport, key) => {
 				let buttonClass;
 				if (sport.displayName === "NCAA Football") {
-					buttonClass = ncaafState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
+					buttonClass = ncaafState ? " btn-round" : " btn-outline btn-round";
 				} else if (sport.displayName === "NFL") {
-					buttonClass = nflState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
+					buttonClass = nflState ? " btn-round" : " btn-outline btn-round";
 				} else if (sport.displayName === "MLB") {
-					buttonClass = mlbState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
+					buttonClass = mlbState ? " btn-round" : " btn-outline btn-round";
 				} else if (sport.displayName === "NBA") {
-					buttonClass = nbaState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
+					buttonClass = nbaState ? " btn-round" : " btn-outline btn-round";
 				} else if (sport.displayName === "NCAA Men's Basketball") {
-					buttonClass = ncaabState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
+					buttonClass = ncaabState ? " btn-round" : " btn-outline btn-round";
 				} else if (sport.displayName === "NHL") {
-					buttonClass = nhlState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
+					buttonClass = nhlState ? " btn-round" : " btn-outline btn-round";
 				} else if (sport.displayName === "WNBA") {
-					buttonClass = wnbaState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
+					buttonClass = wnbaState ? " btn-round" : " btn-outline btn-round";
 				} else if (sport.displayName === "MLS") {
-					buttonClass = mlsState ? "btn-wd btn-round" : "btn-wd btn-outline btn-round";
+					buttonClass = mlsState ? " btn-round" : " btn-outline btn-round";
 				}
 				return (
 					<Col xs={"auto"} key={key}>
@@ -255,101 +255,102 @@ function BetsTabs({ userBets, currentUser }) {
 		todayState,
 	]);
 
-	const closingSoon = bets?.some((bet) => bet.openStatus === "danger");
-	const startSoon = bets?.some((bet) => bet.openStatus === "warning");
-	const gameDay = bets?.some((bet) => bet.openStatus === "info");
+	// const closingSoon = bets?.some((bet) => bet.openStatus === "danger");
+	// const startSoon = bets?.some((bet) => bet.openStatus === "warning");
+	// const gameDay = bets?.some((bet) => bet.openStatus === "info");
 
 	// console.log("bets", bets);
 
 	return (
-		<Container fluid>
-			<Card>
-				<Tab.Container id="left-tabs-types-bets">
-					<Row>
-						<Col xs={2} className="mx-2">
-							<Nav variant="pills" className="flex-column">
-								{userBets.map((item, key) => {
-									return (
-										<Nav.Item
-											key={key}
-											onClick={() => {
-												setTab(item);
-											}}
-										>
-											<Nav.Link
-												className={item.type === tab.type ? "active" : ""}
-												eventKey={item.type}
-											>{`${item.type} Bets`}</Nav.Link>
-										</Nav.Item>
-									);
-								})}
-							</Nav>
-						</Col>
-						<Col xs={9}>
-							<Row className="my-3">
-								<Col xs={8}>
-									<Row>
-										<Col>
-											<Form.Group className={searchState ? "has-success" : "has-error"}>
-												<InputGroup>
-													<InputGroup.Prepend>
-														<InputGroup.Text>
-															<i className="nc-icon nc-paper-2"></i>
-														</InputGroup.Text>
-													</InputGroup.Prepend>
-													<Form.Control
-														name="search"
-														type="text"
-														value={search}
-														onChange={(e) => {
-															setSearch(e.target.value);
-														}}
-														placeholder="Search..."
-													/>
-												</InputGroup>
-											</Form.Group>
-										</Col>
-									</Row>
-
-									<Row className="">{sportButtons}</Row>
-								</Col>
-
-								{tab.type === "Completed" ? (
-									<Col xs={4}>
-										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-												<Button
-													type="button"
-													variant="success"
-													style={{ width: "1.5rem", height: "1.5rem" }}
-													onClick={() => {}}
-												></Button>
-											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												<h5 className="my-0" style={{ fontSize: 15 }}>
-													{"Won"}
-												</h5>
+		<Row>
+			{/* For sm, md, lg, xl and up screens */}
+			<Col className="d-none d-lg-block d-xl-block">
+				<Card>
+					<Tab.Container id="left-tabs-types-bets">
+						<Row>
+							<Col xs={2} className="mx-2">
+								<Nav variant="pills" className="flex-column">
+									{userBets.map((item, key) => {
+										return (
+											<Nav.Item
+												key={key}
+												onClick={() => {
+													setTab(item);
+												}}
+											>
+												<Nav.Link
+													className={item.type === tab.type ? "active" : ""}
+													eventKey={item.type}
+												>{`${item.type} Bets`}</Nav.Link>
+											</Nav.Item>
+										);
+									})}
+								</Nav>
+							</Col>
+							<Col xs={9}>
+								<Row className="my-3">
+									<Col xs={8}>
+										<Row>
+											<Col>
+												<Form.Group className={searchState ? "has-success" : "has-error"}>
+													<InputGroup>
+														<InputGroup.Prepend>
+															<InputGroup.Text>
+																<i className="nc-icon nc-paper-2"></i>
+															</InputGroup.Text>
+														</InputGroup.Prepend>
+														<Form.Control
+															name="search"
+															type="text"
+															value={search}
+															onChange={(e) => {
+																setSearch(e.target.value);
+															}}
+															placeholder="Search..."
+														/>
+													</InputGroup>
+												</Form.Group>
 											</Col>
 										</Row>
-										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-												<Button
-													type="button"
-													variant="danger"
-													style={{ width: "1.5rem", height: "1.5rem" }}
-													onClick={() => {}}
-												></Button>
-											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												<h5 className="my-0" style={{ fontSize: 15 }}>
-													{"Lost"}
-												</h5>
-											</Col>
-										</Row>
+
+										<Row className="justify-content-center">{sportButtons}</Row>
 									</Col>
-								) : (
-									<Col xs={4}>
-										{closingSoon ? (
+
+									{tab.type === "Completed" ? (
+										<Col xs={4}>
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														type="button"
+														variant="success"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Won"}
+													</h5>
+												</Col>
+											</Row>
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														type="button"
+														variant="danger"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Lost"}
+													</h5>
+												</Col>
+											</Row>
+										</Col>
+									) : (
+										<Col xs={4}>
 											<Row className="align-items-center">
 												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
 													<Button
@@ -368,9 +369,7 @@ function BetsTabs({ userBets, currentUser }) {
 													</h5>
 												</Col>
 											</Row>
-										) : null}
 
-										{startSoon ? (
 											<Row className="align-items-center">
 												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
 													<Button
@@ -385,13 +384,11 @@ function BetsTabs({ userBets, currentUser }) {
 												</Col>
 												<Col xs={7} sm={8} className="ml-1 pl-1">
 													<h5 className="my-0" style={{ fontSize: 15 }}>
-														{"Game Starting Soon"}
+														{"Starting Soon"}
 													</h5>
 												</Col>
 											</Row>
-										) : null}
 
-										{gameDay ? (
 											<Row className="align-items-center">
 												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
 													<Button
@@ -410,18 +407,472 @@ function BetsTabs({ userBets, currentUser }) {
 													</h5>
 												</Col>
 											</Row>
-										) : null}
+										</Col>
+									)}
+								</Row>
+							</Col>
+						</Row>
+					</Tab.Container>
+				</Card>
+			</Col>
+
+			{/* For md screens */}
+			<Col className="d-none d-md-block d-lg-none">
+				<Card>
+					<Tab.Container id="left-tabs-types-bets">
+						<Row>
+							<Col xs={3} className="mx-2">
+								<Nav variant="pills" className="flex-column">
+									{userBets.map((item, key) => {
+										return (
+											<Nav.Item
+												key={key}
+												onClick={() => {
+													setTab(item);
+												}}
+											>
+												<Nav.Link
+													className={item.type === tab.type ? "active" : ""}
+													eventKey={item.type}
+												>{`${item.type} Bets`}</Nav.Link>
+											</Nav.Item>
+										);
+									})}
+								</Nav>
+							</Col>
+							<Col xs={8}>
+								<Row className="my-3">
+									<Col xs={8}>
+										<Row>
+											<Col>
+												<Form.Group className={searchState ? "has-success" : "has-error"}>
+													<InputGroup>
+														<InputGroup.Prepend>
+															<InputGroup.Text>
+																<i className="nc-icon nc-paper-2"></i>
+															</InputGroup.Text>
+														</InputGroup.Prepend>
+														<Form.Control
+															name="search"
+															type="text"
+															value={search}
+															onChange={(e) => {
+																setSearch(e.target.value);
+															}}
+															placeholder="Search..."
+														/>
+													</InputGroup>
+												</Form.Group>
+											</Col>
+										</Row>
+
+										<Row className="justify-content-center">{sportButtons}</Row>
 									</Col>
+
+									{tab.type === "Completed" ? (
+										<Col xs={4}>
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														type="button"
+														variant="success"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Won"}
+													</h5>
+												</Col>
+											</Row>
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														type="button"
+														variant="danger"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Lost"}
+													</h5>
+												</Col>
+											</Row>
+										</Col>
+									) : (
+										<Col xs={4}>
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														className={closingClass}
+														type="button"
+														variant="danger"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setClosingState(!closingState);
+														}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Closing Soon"}
+													</h5>
+												</Col>
+											</Row>
+
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														className={startingClass}
+														type="button"
+														variant="warning"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setStartingState(!startingState);
+														}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Starting Soon"}
+													</h5>
+												</Col>
+											</Row>
+
+											<Row className="align-items-center">
+												<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+													<Button
+														className={todayClass}
+														type="button"
+														variant="info"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setTodayState(!todayState);
+														}}
+													></Button>
+												</Col>
+												<Col xs={7} sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Game Today"}
+													</h5>
+												</Col>
+											</Row>
+										</Col>
+									)}
+								</Row>
+							</Col>
+						</Row>
+					</Tab.Container>
+				</Card>
+			</Col>
+
+			{/* For sm screens */}
+			<Col className="d-none d-sm-block d-md-none">
+				<Card>
+					<Tab.Container id="left-tabs-types-bets">
+						<Row>
+							<Col xs={6} className="ml-2 mr-0">
+								<Nav variant="pills" className="flex-column">
+									{userBets.map((item, key) => {
+										return (
+											<Nav.Item
+												key={key}
+												onClick={() => {
+													setTab(item);
+												}}
+											>
+												<Nav.Link
+													className={item.type === tab.type ? "active" : ""}
+													eventKey={item.type}
+												>{`${item.type} Bets`}</Nav.Link>
+											</Nav.Item>
+										);
+									})}
+								</Nav>
+							</Col>
+							<Col xs={5} className="mx-0">
+								{tab.type === "Completed" ? (
+									<>
+										<Row className="align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													type="button"
+													variant="success"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Won"}
+												</h5>
+											</Col>
+										</Row>
+										<Row className="align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													type="button"
+													variant="danger"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Lost"}
+												</h5>
+											</Col>
+										</Row>
+									</>
+								) : (
+									<>
+										<Row className="my-2 align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													className={closingClass}
+													type="button"
+													variant="danger"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setClosingState(!closingState);
+													}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Closing Soon"}
+												</h5>
+											</Col>
+										</Row>
+
+										<Row className="my-2 align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													className={startingClass}
+													type="button"
+													variant="warning"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setStartingState(!startingState);
+													}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Starting Soon"}
+												</h5>
+											</Col>
+										</Row>
+
+										<Row className="my-2 align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													className={todayClass}
+													type="button"
+													variant="info"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setTodayState(!todayState);
+													}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Game Today"}
+												</h5>
+											</Col>
+										</Row>
+									</>
 								)}
-							</Row>
-						</Col>
-					</Row>
-				</Tab.Container>
-			</Card>
-			<h4>{tab.type ? `${tab.type} Bets` : "Loading"}</h4>
-			<BetCards tabType={tab.type} tabBets={bets} currentUser={currentUser} />
-			{searchState ? null : <label className="error">No bets found.</label>}
-		</Container>
+							</Col>
+						</Row>
+
+						<Row className="mx-1 my-2 justify-content-center">{sportButtons}</Row>
+
+						<Row>
+							<Col className="mx-1">
+								<Form.Group className={searchState ? "has-success" : "has-error"}>
+									<InputGroup>
+										<InputGroup.Prepend>
+											<InputGroup.Text>
+												<i className="nc-icon nc-paper-2"></i>
+											</InputGroup.Text>
+										</InputGroup.Prepend>
+										<Form.Control
+											name="search"
+											type="text"
+											value={search}
+											onChange={(e) => {
+												setSearch(e.target.value);
+											}}
+											placeholder="Search..."
+										/>
+									</InputGroup>
+								</Form.Group>
+							</Col>
+						</Row>
+					</Tab.Container>
+				</Card>
+			</Col>
+
+			{/* For xs screens */}
+			<Col className="mx-0 px-0 d-block d-sm-none">
+				<Card>
+					<Tab.Container id="left-tabs-types-bets">
+						<Row>
+							<Col xs={6} className="ml-2 mr-0">
+								<Nav variant="pills" className="flex-column">
+									{userBets.map((item, key) => {
+										return (
+											<Nav.Item
+												key={key}
+												onClick={() => {
+													setTab(item);
+												}}
+											>
+												<Nav.Link
+													className={item.type === tab.type ? "active" : ""}
+													eventKey={item.type}
+												>{`${item.type} Bets`}</Nav.Link>
+											</Nav.Item>
+										);
+									})}
+								</Nav>
+							</Col>
+							<Col xs={5} className="mx-0">
+								{tab.type === "Completed" ? (
+									<>
+										<Row className="align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													type="button"
+													variant="success"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Won"}
+												</h5>
+											</Col>
+										</Row>
+										<Row className="align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													type="button"
+													variant="danger"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Lost"}
+												</h5>
+											</Col>
+										</Row>
+									</>
+								) : (
+									<>
+										<Row className="my-2 align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													className={closingClass}
+													type="button"
+													variant="danger"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setClosingState(!closingState);
+													}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Closing Soon"}
+												</h5>
+											</Col>
+										</Row>
+
+										<Row className="my-2 align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													className={startingClass}
+													type="button"
+													variant="warning"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setStartingState(!startingState);
+													}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Starting Soon"}
+												</h5>
+											</Col>
+										</Row>
+
+										<Row className="my-2 align-items-center">
+											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
+												<Button
+													className={todayClass}
+													type="button"
+													variant="info"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setTodayState(!todayState);
+													}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Game Today"}
+												</h5>
+											</Col>
+										</Row>
+									</>
+								)}
+							</Col>
+						</Row>
+
+						<Row className="mx-1 my-2 justify-content-center">{sportButtons}</Row>
+
+						<Row>
+							<Col className="mx-3">
+								<Form.Group className={searchState ? "has-success" : "has-error"}>
+									<InputGroup>
+										<InputGroup.Prepend>
+											<InputGroup.Text>
+												<i className="nc-icon nc-paper-2"></i>
+											</InputGroup.Text>
+										</InputGroup.Prepend>
+										<Form.Control
+											name="search"
+											type="text"
+											value={search}
+											onChange={(e) => {
+												setSearch(e.target.value);
+											}}
+											placeholder="Search..."
+										/>
+									</InputGroup>
+								</Form.Group>
+							</Col>
+						</Row>
+					</Tab.Container>
+				</Card>
+			</Col>
+
+			<Col xs={12}>
+				<h4>{tab.type ? `${tab.type} Bets` : "Loading"}</h4>
+				<BetCards tabType={tab.type} tabBets={bets} currentUser={currentUser} />
+				{searchState ? null : <label className="error">No bets found.</label>}
+			</Col>
+		</Row>
 	);
 }
 
