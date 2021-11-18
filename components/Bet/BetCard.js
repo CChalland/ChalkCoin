@@ -1,12 +1,14 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Collapse, Button, InputGroup } from "react-bootstrap";
-import { BetDispatch } from "../contexts/Bets.Context";
+import { BetDispatch } from "../../contexts/Bets.Context";
 import BetScore from "./BetScore";
 import BetOdds from "./BetOdds";
 import BetWinner from "./BetWinner";
 import axios from "axios";
 import Select from "react-select";
 import moment from "moment";
+import { BetGameData } from "../../helpers/BetCard";
+import { EventFinder } from "../../helpers/EventsHelper";
 
 const makePercentage = (value) => (value * 100).toFixed(1);
 const styles = {
@@ -56,11 +58,21 @@ const styles = {
 	}),
 };
 
-function BetCard({ betData, currentUser }) {
+function BetCard({ acceptState, bet, currentUser }) {
 	const dispatch = useContext(BetDispatch);
+	const betData = BetGameData(bet, currentUser.id);
 	const [awayWinProb, setAwayWinProb] = useState(betData.away.winProb);
 	const [homeWinProb, setHomeWinProb] = useState(betData.home.winProb);
 	const [selectedMarket, setSelectedMarket] = useState("");
+	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
+	const gameTime = moment(betData.date);
+	const toggleMultipleExpandablePanels = (event, value) => {
+		if (multipleExpandablePanels.includes(value)) {
+			setMultipleExpandablePanels(multipleExpandablePanels.filter((prop) => prop !== value));
+		} else {
+			setMultipleExpandablePanels([...multipleExpandablePanels, value]);
+		}
+	};
 	const optionsMarket = betData.odds?.map((odd) => {
 		return {
 			value: odd.key,
@@ -68,18 +80,30 @@ function BetCard({ betData, currentUser }) {
 			odds: odd.market,
 		};
 	});
-	const betWinnerData = {
-		amount: betData.amount,
-		acceptingTeam: betData.away.requesterTeam ? betData.home : betData.away,
-	};
 	const handleBet = async (bet) => {
-		const betReqData = { betId: bet.id, currentUserId: currentUser.id };
-		await axios.post("http://localhost:4000/api/acceptBet", betReqData).then((res) => {
-			dispatch({ type: "ACCEPTED BET", bet: res.data });
-		});
+		if (acceptState) {
+			const betReqData = { betId: bet.id, currentUserId: currentUser.id };
+			const res = await axios.post(`/api/acceptBet`, betReqData);
+			dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
+		}
 	};
-	const gameTime = moment(betData.date);
-	let cardBorderColor, startTime;
+	const acceptButton = acceptState ? (
+		<Button
+			className="btn-round btn-wd"
+			type="button"
+			variant="success"
+			onClick={() => {
+				handleBet(betData);
+			}}
+		>
+			<span className="btn-label">
+				<i className="fas fa-plus"></i>
+			</span>
+			Accept
+		</Button>
+	) : null;
+
+	let cardBorder, startTime;
 	let matchupPredictor = { header: null, body: null, footer: null };
 	if (awayWinProb && homeWinProb) {
 		matchupPredictor.header = (
@@ -90,12 +114,12 @@ function BetCard({ betData, currentUser }) {
 			</Col>
 		);
 		matchupPredictor.body = (
-			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
+			<Col xs={11} sm={5} md={4} lg={5} xl={3} className="mx-0 px-0">
 				<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
 			</Col>
 		);
 		matchupPredictor.footer = (
-			<Col xs={5} md={4} lg={5} xl={3} className="mx-0 px-0">
+			<Col xs={11} sm={5} md={4} lg={5} xl={3} className="mx-0 px-0">
 				<InputGroup size="sm">
 					<InputGroup.Prepend>
 						<InputGroup.Text>
@@ -119,18 +143,24 @@ function BetCard({ betData, currentUser }) {
 			</Col>
 		);
 	}
-	if (betData.status.type.state === "post") startTime = "GAME ENDED";
+
+	if (betData.status.type.name === "STATUS_POSTPONED") startTime = betData.status.type.shortDetail;
+	else if (betData.status.type.name === "STATUS_FINAL") startTime = "GAME ENDED";
 	else if (betData.status.type.state === "in") startTime = "GAME STARTED";
 	else startTime = `@ ${gameTime.format("h:mm a")}`;
-	cardBorderColor = betData.openStatus;
 
+	if (betData.openStatus === "danger") cardBorder = "#FB404B";
+	else if (betData.openStatus === "warning") cardBorder = "#FFA534";
+	else if (betData.openStatus === "info") cardBorder = "#23CCEF";
+
+	// console.log("BetCard - bet", bet);
 	// console.log("BetCard - betData", betData);
 
 	return (
 		<Row>
 			{/* For extra lage screen */}
 			<Col xxl={{ span: 9, offset: 1 }} className="d-none d-xl-block">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
 							<Col xl={4}>
@@ -157,27 +187,15 @@ function BetCard({ betData, currentUser }) {
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col xl={4} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
+							<BetScore betGameScoreData={betData} screenSize={"xl"} />
 							{matchupPredictor.body}
 							<Col xl={3}>
-								<BetWinner betWinnerData={betWinnerData} />
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
 							<Col xl={1} className="mx-0 px-0 my-4">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
+								{acceptButton}
 							</Col>
 						</Row>
 					</Card.Body>
@@ -197,7 +215,7 @@ function BetCard({ betData, currentUser }) {
 
 			{/* For large screen */}
 			<Col className="mx-0 px-0 d-none d-lg-block d-xl-none">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
 							<Col lg={7}>
@@ -210,9 +228,7 @@ function BetCard({ betData, currentUser }) {
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col lg={7} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
+							<BetScore betGameScoreData={betData} screenSize={"lg"} />
 							{matchupPredictor.body}
 						</Row>
 					</Card.Body>
@@ -247,22 +263,12 @@ function BetCard({ betData, currentUser }) {
 					<Card.Body className="my-0 py-0">
 						<Row className="">
 							<Col lg={7}>
-								<BetWinner betWinnerData={betWinnerData} />
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
 							<Col lg={1} className="mx-0 px-0 my-4">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
+								{acceptButton}
 							</Col>
 						</Row>
 					</Card.Body>
@@ -271,7 +277,7 @@ function BetCard({ betData, currentUser }) {
 
 			{/* For medium screen */}
 			<Col className="mx-0 px-0 d-none d-md-block d-lg-none">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
 							<Col md={5}>
@@ -298,12 +304,12 @@ function BetCard({ betData, currentUser }) {
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col md={5} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
+							<BetScore betGameScoreData={betData} screenSize={"md"} />
 							{matchupPredictor.body}
 							<Col md={3} className="mx-0 px-0">
-								<BetWinner betWinnerData={betWinnerData} />
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
 						</Row>
 					</Card.Body>
@@ -315,21 +321,7 @@ function BetCard({ betData, currentUser }) {
 								</h4>
 							</Col>
 							{matchupPredictor.footer}
-							<Col>
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
-							</Col>
+							<Col>{acceptButton}</Col>
 						</Row>
 					</Card.Footer>
 				</Card>
@@ -337,7 +329,7 @@ function BetCard({ betData, currentUser }) {
 
 			{/* For small screen */}
 			<Col className="mx-0 px-0 d-none d-sm-block d-md-none">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
 							<Col sm={7}>
@@ -350,9 +342,7 @@ function BetCard({ betData, currentUser }) {
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
 						<Row className="">
-							<Col sm={7} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
+							<BetScore betGameScoreData={betData} screenSize={"sm"} />
 							{matchupPredictor.body}
 						</Row>
 					</Card.Body>
@@ -369,7 +359,7 @@ function BetCard({ betData, currentUser }) {
 					<Card.Header>
 						<Row className="">
 							<Col sm={7}>
-								<Row>
+								<Row className="justify-content-between">
 									<Col>
 										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 											AMOUNT
@@ -387,23 +377,11 @@ function BetCard({ betData, currentUser }) {
 					<Card.Body className="my-0 py-0">
 						<Row className="align-items-center ">
 							<Col sm={7}>
-								<BetWinner betWinnerData={betWinnerData} />
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
-							<Col className="">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
-							</Col>
+							<Col className="">{acceptButton}</Col>
 						</Row>
 					</Card.Body>
 				</Card>
@@ -411,45 +389,62 @@ function BetCard({ betData, currentUser }) {
 
 			{/* For xs screen */}
 			<Col className="mx-0 px-0 d-block d-sm-none">
-				<Card border={cardBorderColor}>
+				<Card style={{ border: `1px solid ${cardBorder}` }}>
 					<Card.Header className="my-0 py-0">
 						<Row className="">
-							<Col xs={7}>
+							<Col xs={12}>
 								<h4 className="my-0" style={{ fontSize: 16 }}>
 									{startTime}
 								</h4>
 							</Col>
-							{matchupPredictor.header}
 						</Row>
 					</Card.Header>
 					<Card.Body className="my-0 py-0">
-						<Row className="">
-							<Col xs={7} className="mx-0 px-0">
-								<BetScore betGameScoreData={betData} />
-							</Col>
-							{matchupPredictor.body}
-						</Row>
-					</Card.Body>
-					<Card.Footer className="my-0 py-0">
 						<Row>
-							<Col xs={7}>
+							<BetScore betGameScoreData={betData} screenSize={"xs"} />
+						</Row>
+						<Row className="justify-content-between">
+							<Col xs="auto">
 								<h4 className="my-0" style={{ fontSize: 14 }}>
 									{`${betData.venue.fullName}`}
 								</h4>
 							</Col>
-							{matchupPredictor.footer}
+							<Col xs="auto">
+								<Button
+									className="btn-round btn-outline"
+									type="button"
+									variant="info"
+									data-toggle="collapse"
+									aria-expanded={multipleExpandablePanels.includes(1)}
+									onClick={(e) => toggleMultipleExpandablePanels(e, 1)}
+								>
+									<span className="btn-label">
+										<i className="nc-icon nc-notes"></i>
+									</span>
+								</Button>
+							</Col>
 						</Row>
-					</Card.Footer>
-					<Card.Header>
+
+						<Collapse
+							className="collapse my-0 py-0"
+							id="collapseOne"
+							in={multipleExpandablePanels.includes(1)}
+						>
+							<Row className="justify-content-center">
+								{matchupPredictor.body}
+								{matchupPredictor.footer}
+							</Row>
+						</Collapse>
+
 						<Row className="">
-							<Col xs={7}>
+							<Col xs={12}>
 								<Row>
-									<Col>
+									<Col className="">
 										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 											AMOUNT
 										</h4>
 									</Col>
-									<Col>
+									<Col className="">
 										<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
 											TO WIN
 										</h4>
@@ -457,29 +452,19 @@ function BetCard({ betData, currentUser }) {
 								</Row>
 							</Col>
 						</Row>
-					</Card.Header>
-					<Card.Body className="my-0 py-0">
 						<Row className="align-items-center ">
-							<Col xs={7}>
-								<BetWinner betWinnerData={betWinnerData} />
-							</Col>
-							<Col className="">
-								<Button
-									className="btn-round btn-wd"
-									type="button"
-									variant="success"
-									onClick={() => {
-										handleBet(betData);
-									}}
-								>
-									<span className="btn-label">
-										<i className="fas fa-plus"></i>
-									</span>
-									Accept
-								</Button>
+							<Col xs={12}>
+								<BetWinner
+									betWinnerData={{ amount: betData.amount, acceptingTeam: betData.displayedWinner }}
+								/>
 							</Col>
 						</Row>
 					</Card.Body>
+					<Card.Footer>
+						<Row>
+							<Col xs={{ span: 4, offset: 2 }}>{acceptButton}</Col>
+						</Row>
+					</Card.Footer>
 				</Card>
 			</Col>
 		</Row>

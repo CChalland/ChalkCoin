@@ -15,49 +15,70 @@ export default async (req, res) => {
 					const winnerId = bet.details.winner === winner ? bet.requesterId : bet.accepterId;
 					const transactionBody = {
 						amount: bet.amount,
-						sender: bet.details.winner === winner ? bet.requester.walletAddress : bet.accepter.walletAddress,
+						sender: bet.details.winner === winner ? bet.accepter.walletAddress : bet.requester.walletAddress,
 						recipient:
-							bet.details.winner === winner ? bet.accepter.walletAddress : bet.requester.walletAddress,
+							bet.details.winner === winner ? bet.requester.walletAddress : bet.accepter.walletAddress,
 						details: {
-							sport: bet.details.displayName,
-							gameId: bet.details.id,
+							sport: bet.details.sport,
+							betId: bet.id,
+							gameId: bet.details.gameId,
 							date: bet.details.date,
 							name: bet.details.name,
 							winner: winner,
 						},
 					};
 
-					let transactionData;
-					await axios.post("http://localhost:3001/transaction/broadcast", transactionBody).then((res) => {
-						transactionData = res.data.transactionData;
-					});
-
-					return await prisma.bet.update({
-						where: {
-							id: bet.id,
-						},
-						data: {
-							completed: true,
-							transactionId: transactionData.transactionId,
-							winner: {
-								connect: {
-									id: winnerId,
+					const res = await axios.post(
+						`${process.env.BLOCKCHAIN_URL}/transaction/broadcast`,
+						transactionBody
+					);
+					if (res.data.transactionData) {
+						let transactionData = res.data.transactionData;
+						return await prisma.bet.update({
+							where: {
+								id: bet.id,
+							},
+							data: {
+								completed: true,
+								transactionId: transactionData.transactionId,
+								winner: {
+									connect: {
+										id: winnerId,
+									},
 								},
 							},
-						},
-						include: {
-							accepter: {
-								select: {
-									walletAddress: true,
+							include: {
+								accepter: {
+									select: {
+										walletAddress: true,
+									},
+								},
+								requester: {
+									select: {
+										walletAddress: true,
+									},
 								},
 							},
-							requester: {
-								select: {
-									walletAddress: true,
+						});
+					} else {
+						return await prisma.bet.findUnique({
+							where: {
+								id: bet.id,
+							},
+							include: {
+								accepter: {
+									select: {
+										walletAddress: true,
+									},
+								},
+								requester: {
+									select: {
+										walletAddress: true,
+									},
 								},
 							},
-						},
-					});
+						});
+					}
 				})
 			);
 		} catch (err) {

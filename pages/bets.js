@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
 import { getSession } from "next-auth/client";
 import { BetContext } from "../contexts/Bets.Context";
-import { BetGameData } from "../helpers/BetCard";
-import BetCard from "../components/BetCard";
+import BetCard from "../components/Bet/BetCard";
 
 function Bets({ currentUser }) {
 	const sportWithBets = useContext(BetContext);
@@ -24,6 +23,7 @@ function Bets({ currentUser }) {
 	const [ncaabState, setNCAABState] = useState(false);
 	const [nhlState, setNHLState] = useState(false);
 	const [wnbaState, setWNBAState] = useState(false);
+	const [mlsState, setMLSState] = useState(false);
 	const [closingState, setClosingState] = useState(false);
 	const [startingState, setStartingState] = useState(false);
 	const [todayState, setTodayState] = useState(false);
@@ -43,6 +43,8 @@ function Bets({ currentUser }) {
 			buttonClass = nhlState ? "btn-round" : "btn-outline btn-round";
 		} else if (sport.displayName === "WNBA") {
 			buttonClass = wnbaState ? "btn-round" : "btn-outline btn-round";
+		} else if (sport.displayName === "MLS") {
+			buttonClass = mlsState ? "btn-round" : "btn-outline btn-round";
 		}
 		return (
 			<Col xs={"auto"} key={key}>
@@ -64,6 +66,8 @@ function Bets({ currentUser }) {
 							setNHLState(!nhlState);
 						} else if (sport.displayName === "WNBA") {
 							setWNBAState(!wnbaState);
+						} else if (sport.displayName === "MLS") {
+							setMLSState(!mlsState);
 						}
 					}}
 				>
@@ -75,10 +79,12 @@ function Bets({ currentUser }) {
 	const closingClass = closingState ? "" : "btn-outline";
 	const startingClass = startingState ? "" : "btn-outline";
 	const todayClass = todayState ? "" : "btn-outline";
-	const betCards = bets.map((bet, key) => {
+	const closingSoon = bets?.some((bet) => bet.openStatus === "danger");
+	const startSoon = bets?.some((bet) => bet.openStatus === "warning");
+	const gameDay = bets?.some((bet) => bet.openStatus === "info");
+	const betCards = bets.map((bet) => {
 		if (bet.event) {
-			const betData = BetGameData(bet);
-			return <BetCard betData={betData} currentUser={currentUser} key={key} />;
+			return <BetCard acceptState={true} bet={bet} currentUser={currentUser} key={bet.id} />;
 		}
 	});
 
@@ -96,6 +102,7 @@ function Bets({ currentUser }) {
 			!ncaabState &&
 			!nhlState &&
 			!wnbaState &&
+			!mlsState &&
 			!closingState &&
 			!startingState &&
 			!todayState
@@ -104,45 +111,56 @@ function Bets({ currentUser }) {
 		} else {
 			if (ncaafState) {
 				const ncaafBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NCAA Football";
+					return bet.details.sport === "NCAA Football";
 				});
 				filteredBetsData = [...filteredBetsData, ...ncaafBets];
 			}
 			if (nflState) {
 				const nflBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NFL";
+					return bet.details.sport === "NFL";
 				});
 				filteredBetsData = [...filteredBetsData, ...nflBets];
 			}
 			if (mlbState) {
 				const mlbBets = openBets.filter((bet) => {
-					return bet.details.displayName === "MLB";
+					return bet.details.sport === "MLB";
 				});
 				filteredBetsData = [...filteredBetsData, ...mlbBets];
 			}
 			if (nbaState) {
 				const nbaBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NBA";
+					return bet.details.sport === "NBA";
 				});
 				filteredBetsData = [...filteredBetsData, ...nbaBets];
 			}
 			if (ncaabState) {
 				const ncaabBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NCAA Men's Basketball";
+					return bet.details.sport === "NCAA Men's Basketball";
 				});
 				filteredBetsData = [...filteredBetsData, ...ncaabBets];
 			}
 			if (nhlState) {
 				const nhlBets = openBets.filter((bet) => {
-					return bet.details.displayName === "NHL";
+					return bet.details.sport === "NHL";
 				});
 				filteredBetsData = [...filteredBetsData, ...nhlBets];
 			}
 			if (wnbaState) {
 				const wnbaBets = openBets.filter((bet) => {
-					return bet.details.displayName === "WNBA";
+					return bet.details.sport === "WNBA";
 				});
 				filteredBetsData = [...filteredBetsData, ...wnbaBets];
+			}
+			if (mlsState) {
+				const mlsBets = tab.bets
+					?.map((sport) => {
+						return sport.bets;
+					})
+					.flat()
+					.filter((bet) => {
+						return bet.details.sport === "MLS";
+					});
+				filteredBetsData = [...filteredBetsData, ...mlsBets];
 			}
 			if (closingState) {
 				const closingBets = openBets.filter((bet) => {
@@ -166,7 +184,7 @@ function Bets({ currentUser }) {
 
 		const searchedBets = filteredBetsData.filter((bet) => {
 			return (
-				bet?.details.displayName.toLowerCase().includes(search.toLowerCase()) ||
+				bet?.details.sport.toLowerCase().includes(search.toLowerCase()) ||
 				bet?.details.name.toLowerCase().includes(search.toLowerCase())
 			);
 		});
@@ -188,6 +206,7 @@ function Bets({ currentUser }) {
 		ncaabState,
 		nhlState,
 		wnbaState,
+		mlsState,
 		closingState,
 		startingState,
 		todayState,
@@ -200,15 +219,115 @@ function Bets({ currentUser }) {
 	return (
 		<Container fluid>
 			<Row className="justify-content-center">
-				<Col xs="auto">
+				{/* For md, lg, xl and up screens */}
+				<Col md={10} xl={8} className="d-none d-md-block d-xl-block">
+					<Form>
+						<Card>
+							<Card.Body>
+								<Row>
+									<Col md={8}>
+										<Row>
+											<Col>
+												<Form.Group className={searchState ? "has-success" : "has-error"}>
+													<InputGroup>
+														<InputGroup.Prepend>
+															<InputGroup.Text>
+																<i className="nc-icon nc-paper-2"></i>
+															</InputGroup.Text>
+														</InputGroup.Prepend>
+														<Form.Control
+															name="search"
+															type="text"
+															value={search}
+															onChange={(e) => {
+																setSearch(e.target.value);
+															}}
+															placeholder="Search..."
+														/>
+													</InputGroup>
+												</Form.Group>
+											</Col>
+										</Row>
+										<Row className="justify-content-center">{sportButtons}</Row>
+									</Col>
+
+									<Col md={4}>
+										{closingSoon ? (
+											<Row className="align-items-center">
+												<Col sm={"auto"} className="mt-1">
+													<Button
+														className={closingClass}
+														type="button"
+														variant="danger"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setClosingState(!closingState);
+														}}
+													></Button>
+												</Col>
+												<Col sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Closing Soon"}
+													</h5>
+												</Col>
+											</Row>
+										) : null}
+
+										{startSoon ? (
+											<Row className="align-items-center">
+												<Col sm={"auto"} className="mt-1 mr-0 pr-0">
+													<Button
+														className={startingClass}
+														type="button"
+														variant="warning"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setStartingState(!startingState);
+														}}
+													></Button>
+												</Col>
+												<Col sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Game Starting Soon"}
+													</h5>
+												</Col>
+											</Row>
+										) : null}
+
+										{gameDay ? (
+											<Row className="align-items-center">
+												<Col sm={"auto"} className="mt-1 mr-0 pr-0">
+													<Button
+														className={todayClass}
+														type="button"
+														variant="info"
+														style={{ width: "1.5rem", height: "1.5rem" }}
+														onClick={() => {
+															setTodayState(!todayState);
+														}}
+													></Button>
+												</Col>
+												<Col sm={8} className="ml-1 pl-1">
+													<h5 className="my-0" style={{ fontSize: 15 }}>
+														{"Game Today"}
+													</h5>
+												</Col>
+											</Row>
+										) : null}
+									</Col>
+								</Row>
+							</Card.Body>
+						</Card>
+					</Form>
+				</Col>
+
+				{/* For xs & sm screens */}
+				<Col className="mx-0 px-0 d-block d-md-none">
 					<Form>
 						<Card>
 							<Card.Header className="mx-2">
 								<Row className="mt-2 justify-content-center align-items-center">
-									<Col xs={"auto"} className="">
-										<h2 className="mt-0 pt-0">{"BETS: "}</h2>
-									</Col>
-									<Col xs={7} className="mx-0 px-0">
+									<Col className="mx-0 px-0">
 										<Form.Group className={searchState ? "has-success" : "has-error"}>
 											<InputGroup>
 												<InputGroup.Prepend>
@@ -232,68 +351,68 @@ function Bets({ currentUser }) {
 							</Card.Header>
 							<Card.Body className="mx-2">
 								<Row className="justify-content-center">{sportButtons}</Row>
-								<Row className="justify-content-center align-items-center">
-									<Col>
-										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-												<Button
-													className={closingClass}
-													type="button"
-													variant="danger"
-													style={{ width: "1.5rem", height: "1.5rem" }}
-													onClick={() => {
-														setClosingState(!closingState);
-													}}
-												></Button>
-											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												<h5 className="my-0" style={{ fontSize: 15 }}>
-													{"Closing Soon"}
-												</h5>
-											</Col>
-										</Row>
-									</Col>
-									<Col>
-										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-												<Button
-													className={startingClass}
-													type="button"
-													variant="warning"
-													style={{ width: "1.5rem", height: "1.5rem" }}
-													onClick={() => {
-														setStartingState(!startingState);
-													}}
-												></Button>
-											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												<h5 className="my-0" style={{ fontSize: 15 }}>
-													{"Game Starting Soon"}
-												</h5>
-											</Col>
-										</Row>
-									</Col>
-									<Col>
-										<Row className="align-items-center">
-											<Col xs={4} sm="auto" className="mt-1 mr-0 pr-0">
-												<Button
-													className={todayClass}
-													type="button"
-													variant="info"
-													style={{ width: "1.5rem", height: "1.5rem" }}
-													onClick={() => {
-														setTodayState(!todayState);
-													}}
-												></Button>
-											</Col>
-											<Col xs={7} sm={8} className="ml-1 pl-1">
-												<h5 className="my-0" style={{ fontSize: 15 }}>
-													{"Game Today"}
-												</h5>
-											</Col>
-										</Row>
-									</Col>
-								</Row>
+								{closingSoon ? (
+									<Row className="align-items-center">
+										<Col xs={"auto"} className="mt-1 mr-0 pr-0">
+											<Button
+												className={closingClass}
+												type="button"
+												variant="danger"
+												style={{ width: "1.5rem", height: "1.5rem" }}
+												onClick={() => {
+													setClosingState(!closingState);
+												}}
+											></Button>
+										</Col>
+										<Col xs={7} sm={8} className="ml-1 pl-1">
+											<h5 className="my-0" style={{ fontSize: 15 }}>
+												{"Closing Soon"}
+											</h5>
+										</Col>
+									</Row>
+								) : null}
+
+								{startSoon ? (
+									<Row className="align-items-center">
+										<Col xs={"auto"} className="mt-1 mr-0 pr-0">
+											<Button
+												className={startingClass}
+												type="button"
+												variant="warning"
+												style={{ width: "1.5rem", height: "1.5rem" }}
+												onClick={() => {
+													setStartingState(!startingState);
+												}}
+											></Button>
+										</Col>
+										<Col xs={7} sm={8} className="ml-1 pl-1">
+											<h5 className="my-0" style={{ fontSize: 15 }}>
+												{"Game Starting Soon"}
+											</h5>
+										</Col>
+									</Row>
+								) : null}
+
+								{gameDay ? (
+									<Row className="align-items-center">
+										<Col xs={"auto"} className="mt-1 mr-0 pr-0">
+											<Button
+												className={todayClass}
+												type="button"
+												variant="info"
+												style={{ width: "1.5rem", height: "1.5rem" }}
+												onClick={() => {
+													setTodayState(!todayState);
+												}}
+											></Button>
+										</Col>
+										<Col xs={7} sm={8} className="ml-1 pl-1">
+											<h5 className="my-0" style={{ fontSize: 15 }}>
+												{"Game Today"}
+											</h5>
+										</Col>
+									</Row>
+								) : null}
 							</Card.Body>
 						</Card>
 					</Form>

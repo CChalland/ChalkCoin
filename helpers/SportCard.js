@@ -91,11 +91,11 @@ export function GameScoreHelper(game, sportName) {
 	};
 }
 
-export function GamePlayHelper(game) {
+export function GamePlayHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay, team;
-	away = { name: awayTeam[0].team.displayName.split(" ").pop(), links: [] };
-	home = { name: homeTeam[0].team.displayName.split(" ").pop(), links: [] };
+	away = { id: awayTeam[0].team.id, name: awayTeam[0].team.displayName.split(" ").pop(), links: [] };
+	home = { id: homeTeam[0].team.id, name: homeTeam[0].team.displayName.split(" ").pop(), links: [] };
 
 	if (game.weather) {
 		weather = game.weather;
@@ -125,13 +125,40 @@ export function GamePlayHelper(game) {
 				game.competitions[0].situation.lastPlay.team.id === homeTeam[0].team.id
 					? homeTeam[0].team
 					: awayTeam[0].team;
-		lastPlay = {
-			athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
-			text: game.competitions[0].situation.lastPlay.text,
-			type: game.competitions[0].situation.lastPlay.type,
-			team,
-		};
+		if (sportName === "NFL") {
+			lastPlay = {
+				...game.competitions[0].situation.lastPlay,
+				team,
+			};
+		} else {
+			lastPlay = {
+				athletes: game.competitions[0].situation.lastPlay.athletesInvolved,
+				text: game.competitions[0].situation.lastPlay.text,
+				type: game.competitions[0].situation.lastPlay.type,
+				team,
+			};
+		}
+		situation = { ...situation, lastPlay };
 	}
+
+	if (game.status.type.state === "post") {
+		if (game.competitions[0].situation?.lastPlay.team)
+			team =
+				game.competitions[0].situation?.lastPlay.team.id === homeTeam[0].team.id
+					? homeTeam[0].team
+					: awayTeam[0].team;
+		if (sportName === "NFL") {
+			lastPlay = {
+				...game.competitions[0].situation?.lastPlay,
+				team:
+					game.competitions[0].situation?.lastPlay.team.id === homeTeam[0].team.id
+						? homeTeam[0].team
+						: awayTeam[0].team,
+			};
+			situation = { ...situation, lastPlay };
+		}
+	}
+
 	return { away, home, status, situation, headlines, venue, tickets, weather, odds, lastPlay };
 }
 
@@ -396,12 +423,12 @@ export function GameLeadersHelper(game, sportName) {
 	};
 }
 
-export function BetDataHelper(game, sportName) {
+export function BetModalHelper(game, sportName) {
 	return {
+		...GameScoreHelper(game, sportName),
 		id: game.id,
 		date: game.date,
 		name: game.name,
 		odds: game.competitions[0].odds,
-		displayName: sportName,
 	};
 }

@@ -1,123 +1,240 @@
-import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
+import prisma from "../../contexts/prisma";
 
-const betSorter = (bets) => {
+const betSorter = async (bets) => {
 	let sportWithBets = [];
 	const ncaafBets = bets
-		.filter((bet) => bet.details.displayName === "NCAA Football")
+		.filter((bet) => bet.details.sport === "NCAA Football")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const nflBets = bets
-		.filter((bet) => bet.details.displayName === "NFL")
+		.filter((bet) => bet.details.sport === "NFL")
 		.sort((a, b) => {
 			new Date(a.details.date) - new Date(b.details.date);
 		});
 	const mlbBets = bets
-		.filter((bet) => bet.details.displayName === "MLB")
+		.filter((bet) => bet.details.sport === "MLB")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const nbaBets = bets
-		.filter((bet) => bet.details.displayName === "NBA")
+		.filter((bet) => bet.details.sport === "NBA")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const ncaabBets = bets
-		.filter((bet) => bet.details.displayName === "NCAA Men's Basketball")
+		.filter((bet) => bet.details.sport === "NCAA Men's Basketball")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const nhlBets = bets
-		.filter((bet) => bet.details.displayName === "NHL")
+		.filter((bet) => bet.details.sport === "NHL")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 	const wnbaBets = bets
-		.filter((bet) => bet.details.displayName === "WNBA")
+		.filter((bet) => bet.details.sport === "WNBA")
 		.sort((a, b) => {
 			return new Date(a.details.date) - new Date(b.details.date);
 		});
 
-	if (ncaafBets.length > 0) sportWithBets.push({ displayName: "NCAA Football", icon: 1, bets: ncaafBets });
-	if (nflBets.length > 0) sportWithBets.push({ displayName: "NFL", icon: 2, bets: nflBets });
-	if (mlbBets.length > 0) sportWithBets.push({ displayName: "MLB", icon: 3, bets: mlbBets });
-	if (nbaBets.length > 0) sportWithBets.push({ displayName: "NBA", icon: 4, bets: nbaBets });
+	const mlsBets = bets
+		.filter((bet) => bet.details.sport === "WNBA")
+		.sort((a, b) => {
+			return new Date(a.details.date) - new Date(b.details.date);
+		});
+
+	if (ncaafBets.length > 0)
+		sportWithBets.push({
+			icon: 1,
+			abbrv: "NCAAF",
+			sport: "football",
+			displayName: "NCAA Football",
+			league_name: "college-football",
+			bets: ncaafBets,
+		});
+	if (nflBets.length > 0)
+		sportWithBets.push({
+			icon: 2,
+			abbrv: "NFL",
+			sport: "football",
+			displayName: "NFL",
+			league_name: "nfl",
+			bets: nflBets,
+		});
+	if (mlbBets.length > 0)
+		sportWithBets.push({
+			icon: 3,
+			abbrv: "MLB",
+			sport: "baseball",
+			displayName: "MLB",
+			league_name: "mlb",
+			bets: mlbBets,
+		});
+	if (nbaBets.length > 0)
+		sportWithBets.push({
+			icon: 4,
+			abbrv: "NBA",
+			sport: "basketball",
+			displayName: "NBA",
+			league_name: "nba",
+			bets: nbaBets,
+		});
 	if (ncaabBets.length > 0)
-		sportWithBets.push({ displayName: "NCAA Men's Basketball", icon: 5, bets: ncaabBets });
-	if (nhlBets.length > 0) sportWithBets.push({ displayName: "NHL", icon: 6, bets: nhlBets });
-	if (wnbaBets.length > 0) sportWithBets.push({ displayName: "WNBA", icon: 8, bets: wnbaBets });
+		sportWithBets.push({
+			icon: 5,
+			abbrv: "NCAAB",
+			sport: "basketball",
+			displayName: "NCAA Men's Basketball",
+			league_name: "mens-college-basketball",
+			bets: ncaabBets,
+		});
+	if (nhlBets.length > 0)
+		sportWithBets.push({
+			icon: 6,
+			abbrv: "NHL",
+			sport: "hockey",
+			displayName: "NHL",
+			league_name: "nhl",
+			bets: nhlBets,
+		});
+	if (wnbaBets.length > 0)
+		sportWithBets.push({
+			icon: 8,
+			abbrv: "WNBA",
+			sport: "basketball",
+			displayName: "WNBA",
+			league_name: "wnba",
+			bets: wnbaBets,
+		});
+	if (mlsBets.length > 0)
+		sportWithBets.push({
+			icon: 10,
+			abbrv: "MLS",
+			sport: "soccer",
+			displayName: "MLS",
+			league_name: "mls",
+			bets: mlsBets,
+		});
 
 	return sportWithBets;
 };
 
 export default async (req, res) => {
 	const session = await getSession({ req });
-
 	if (req.method !== "GET") {
 		return res.status(405).json({ message: "Method not allowed" });
 	} else if (req.method === "GET") {
-		const openBets = await prisma.bet.findMany({
-			where: {
-				AND: [{ accepted: false }, { recipientId: null }],
-			},
-		});
-		const recipientBets = await prisma.bet.findMany({
-			where: {
-				accepted: false,
-				NOT: {
-					recipientId: null,
+		let openBets, recipientBets, acceptedBets, completedBets;
+		if (req.query.type === "currentUser") {
+			if (session) {
+				openBets = await prisma.bet.findMany({
+					where: { AND: [{ accepted: false, requesterId: session.user.id }] },
+				});
+				recipientBets = await prisma.bet.findMany({
+					where: { AND: [{ accepted: false, recipientId: session.user.id }] },
+				});
+				acceptedBets = await prisma.bet.findMany({
+					where: {
+						OR: [{ requesterId: session.user.id }, { accepterId: session.user.id }],
+						AND: [{ accepted: true }, { completed: false }],
+					},
+					include: {
+						accepter: {
+							select: {
+								walletAddress: true,
+							},
+						},
+						requester: {
+							select: {
+								walletAddress: true,
+							},
+						},
+					},
+				});
+				completedBets = await prisma.bet.findMany({
+					where: {
+						AND: [
+							{ completed: true },
+							{ OR: [{ requesterId: session.user.id }, { accepterId: session.user.id }] },
+						],
+					},
+					include: {
+						accepter: {
+							select: {
+								walletAddress: true,
+							},
+						},
+						requester: {
+							select: {
+								walletAddress: true,
+							},
+						},
+					},
+				});
+
+				return res.json({
+					pendingBets: { openBets: await betSorter(openBets), recipientBets: await betSorter(recipientBets) },
+					acceptedBets: await betSorter(acceptedBets),
+					completedBets: await betSorter(completedBets),
+				});
+			} else {
+				return res.json({ error: true, message: "You are not logged in." });
+			}
+		} else if (req.query.type === "all") {
+			openBets = await prisma.bet.findMany({
+				where: {
+					AND: [{ accepted: false }, { recipientId: null }],
 				},
-			},
-		});
-		const acceptedBets = await prisma.bet.findMany({
-			where: {
-				AND: [{ accepted: true }, { completed: false }],
-			},
-			include: {
-				accepter: {
-					select: {
-						walletAddress: true,
+			});
+			recipientBets = await prisma.bet.findMany({
+				where: {
+					accepted: false,
+					NOT: {
+						recipientId: null,
 					},
 				},
-				requester: {
-					select: {
-						walletAddress: true,
+			});
+			acceptedBets = await prisma.bet.findMany({
+				where: {
+					AND: [{ accepted: true }, { completed: false }],
+				},
+				include: {
+					accepter: {
+						select: {
+							walletAddress: true,
+						},
+					},
+					requester: {
+						select: {
+							walletAddress: true,
+						},
 					},
 				},
-			},
-		});
-		const completedBets = await prisma.bet.findMany({
-			where: {
-				AND: [{ completed: true }, { transactionId: null }],
-			},
-			include: {
-				accepter: {
-					select: {
-						walletAddress: true,
+			});
+			completedBets = await prisma.bet.findMany({
+				where: {
+					AND: [{ completed: true }, { transactionId: null }],
+				},
+				include: {
+					accepter: {
+						select: {
+							walletAddress: true,
+						},
+					},
+					requester: {
+						select: {
+							walletAddress: true,
+						},
 					},
 				},
-				requester: {
-					select: {
-						walletAddress: true,
-					},
-				},
-			},
-		});
-		if (req.query.type === "all") {
+			});
 			return res.json({
-				pendingBets: { openBets: betSorter(openBets), recipientBets: betSorter(recipientBets) },
-				acceptedBets: betSorter(acceptedBets),
+				pendingBets: { openBets: await betSorter(openBets), recipientBets: await betSorter(recipientBets) },
+				acceptedBets: await betSorter(acceptedBets),
 				completedBets: completedBets,
 			});
-		} else if (req.query.type === "open") {
-			return res.json({ openBets: betSorter(openBets) });
-		} else if (req.query.type === "recipient") {
-			return res.json({ recipientBets: betSorter(recipientBets) });
-		} else if (req.query.type === "accepted") {
-			return res.json({ acceptedBets: betSorter(acceptedBets) });
-		} else if (req.query.type === "completed") {
-			return res.json({ completedBets: betSorter(completedBets) });
 		}
 	}
 };

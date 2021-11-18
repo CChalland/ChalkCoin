@@ -8,7 +8,7 @@ const rp = require("request-promise");
 
 const nodeAddress = uuid().split("-").join("");
 var corsOptions = {
-	origin: "http://localhost:4000",
+	origin: "http://192.168.4.27:4000",
 	optionsSuccessStatus: 200, // For legacy browser support
 };
 
@@ -30,32 +30,37 @@ app.post("/transaction", function (req, res) {
 });
 
 app.post("/transaction/broadcast", function (req, res) {
-	const newTransaction = betoken.createNewTransaction(
-		req.body.amount,
-		req.body.sender,
-		req.body.recipient,
-		req.body.details
-	);
-	const { transactionData } = betoken.addTransactionToPendingTransactions(newTransaction);
+	if (!betoken.pendingTransactions.some((bet) => bet.details.betId === req.body.details.betId)) {
+		const newTransaction = betoken.createNewTransaction(
+			req.body.amount,
+			req.body.sender,
+			req.body.recipient,
+			req.body.details
+		);
+		const { transactionData } = betoken.addTransactionToPendingTransactions(newTransaction);
 
-	const requestPromises = [];
-	betoken.networkNodes.forEach((networkNodeUrl) => {
-		const requestOptions = {
-			uri: networkNodeUrl + "/transaction",
-			method: "POST",
-			body: newTransaction,
-			json: true,
-		};
+		const requestPromises = [];
+		betoken.networkNodes.forEach((networkNodeUrl) => {
+			const requestOptions = {
+				uri: networkNodeUrl + "/transaction",
+				method: "POST",
+				body: newTransaction,
+				json: true,
+			};
 
-		requestPromises.push(rp(requestOptions));
-	});
+			requestPromises.push(rp(requestOptions));
+		});
 
-	Promise.all(requestPromises).then((data) => {
-		res.json({ transactionData, note: "Transaction created and broadcast successfully." });
-	});
+		Promise.all(requestPromises).then((data) => {
+			res.json({ transactionData, note: "Transaction created and broadcast successfully." });
+		});
+	} else {
+		res.json({ error: true, note: "Transaction already broadcast" });
+	}
 });
 
-app.get("/mine", function (req, res) {
+app.post("/mine", function (req, res) {
+	const minerAddress = req.body.address;
 	const lastBlock = betoken.getLastBlock();
 	const previousBlockHash = lastBlock["hash"];
 	const currentBlockData = {
@@ -86,7 +91,7 @@ app.get("/mine", function (req, res) {
 				body: {
 					amount: 12.5,
 					sender: "00",
-					recipient: nodeAddress,
+					recipient: minerAddress,
 					details: { type: "Mine Reward" },
 				},
 				json: true,
@@ -98,6 +103,7 @@ app.get("/mine", function (req, res) {
 			res.json({
 				note: "New block mined & broadcast successfully",
 				block: newBlock,
+				mineTransaction: data.transactionData,
 			});
 		});
 });

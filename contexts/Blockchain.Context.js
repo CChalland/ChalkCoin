@@ -1,6 +1,13 @@
-import React, { createContext, useReducer, useEffect, useContext } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import blockchainReducer from "../reducers/Blockchain.Reducer";
+import { EventsFinder } from "../helpers/EventsHelper";
+
+Date.prototype.yyyymmdd = function () {
+	var mm = this.getMonth() + 1; // getMonth() is zero-based
+	var dd = this.getDate();
+	return [this.getFullYear(), (mm > 9 ? "" : "0") + mm, (dd > 9 ? "" : "0") + dd].join("");
+};
 
 export const BlockchainContext = createContext();
 export const BlockchainDispatch = createContext();
@@ -10,16 +17,30 @@ export function BlockchainProvider(props) {
 		pendingTransactions: [],
 		currentNodeUrl: "",
 		networkNodes: [],
+		initialized: false,
+		selectedBlock: [],
 	});
-
-	// console.log("blockchain in blockchain context", blockchain);
 
 	useEffect(() => {
 		async function getBlockchainData() {
 			try {
-				const getNode1 = `http://localhost:3001/blockchain`;
-				await axios.get(getNode1).then((res) => {
-					dispatch({ type: "INIT", blockchain: res.data });
+				const getNode1 = `http://192.168.4.27:3001/blockchain`;
+				const res = await axios.get(getNode1);
+
+				dispatch({
+					type: "INIT",
+					data: {
+						...res.data,
+						pendingTransactions: await EventsFinder(res.data.pendingTransactions, "blockchain"),
+						initialized: true,
+						selectedBlock: {
+							...res.data.chain[res.data.chain.length - 1],
+							transactions: await EventsFinder(
+								res.data.chain[res.data.chain.length - 1].transactions,
+								"blockchain"
+							),
+						},
+					},
 				});
 			} catch (err) {
 				console.log(err.message);
@@ -27,10 +48,6 @@ export function BlockchainProvider(props) {
 		}
 		getBlockchainData();
 	}, []);
-
-	useEffect(() => {}, []);
-
-	// console.log("blockchain provider context", blockchain);
 
 	return (
 		<BlockchainContext.Provider value={blockchain}>

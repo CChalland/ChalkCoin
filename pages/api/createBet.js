@@ -34,7 +34,7 @@ export default async (req, res) => {
 	} else if (req.method === "POST") {
 		const bet = req.body;
 		if (session) {
-			const oddsKey = oddsSportKeys.find((sport) => sport.displayName === bet.details.displayName);
+			const oddsKey = oddsSportKeys.find((sport) => sport.displayName === bet.details.sport);
 			let sportOdds, betOdds;
 			if (oddsKey.key) {
 				sportOdds = await fetchData(oddsKey.key);

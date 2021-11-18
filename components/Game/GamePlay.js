@@ -94,6 +94,8 @@ function GamePlay(props) {
 		// let progressBar = document.querySelector(".progress");
 		// let progressBarWidth = progressBar?.clientWidth;
 
+		console.log("footballHelper - situation", situation);
+
 		return (
 			<Container fluid>
 				<section className="sb-detail">
@@ -101,17 +103,17 @@ function GamePlay(props) {
 						<div className="drivechart">
 							<span className="football-bar"></span>
 							<div className="football-progress-wrap">
-								<span className="football-progress" style={{ left: "1%", right: "1%" }}></span>
-								<div className="football-logo-wrap away" style={{ left: "55%" }}>
+								<span className="football-progress" style={{ left: "1%", right: "60%" }}></span>
+								<div className="football-logo-wrap away" style={{ left: "40%" }}>
 									<div className="football-logo">
-										<div className="football-front">
+										<div className="football-back">
 											<img
 												className="focus-image scoreboard-logo-home imageLoaded"
 												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/chi.png&amp;w=35&amp;h=35"
 											/>
 											<div className="football-logo-placeholder">CHI</div>
 										</div>
-										<div className="football-back">
+										<div className="football-front">
 											<img
 												className="focus-image scoreboard-logo-away imageLoaded"
 												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/buf.png&amp;w=35&amp;h=35"
@@ -119,7 +121,7 @@ function GamePlay(props) {
 											<div className="football-logo-placeholder">BUF</div>
 										</div>
 									</div>
-									<span className="football-arrow left"></span>
+									<span className="football-arrow right"></span>
 								</div>
 							</div>
 
@@ -139,14 +141,12 @@ function GamePlay(props) {
 						</div>
 
 						<div className="down" style={{ display: "block" }}>
-							1st &amp; 10 at CHI 45
+							{situation?.downDistanceText}
 						</div>
 
 						<p className="last-play" style={{ display: "block" }}>
 							<span className="title">Last Play:</span>
-							<span className="text">
-								(8:34) (Shotgun) J.Fields pass short middle to D.Newsome to CHI 45 for 7 yards (M.Lee).
-							</span>
+							<span className="text">{situation?.lastPlay.text}</span>
 						</p>
 					</div>
 				</section>
@@ -288,8 +288,9 @@ function GamePlay(props) {
 		}
 	} else if (gamePlayData.status.type.completed) {
 		// if (sportName === "NFL") {
+		// 	// testing
 		// 	lastPlay = footballHelper(gamePlayData.situation);
-		// } else
+		// }
 		if (gamePlayData.headlines) {
 			if (sportName && gamePlayData.headlines.video) {
 				headline = videoHelper(gamePlayData.headlines);
@@ -338,6 +339,8 @@ function GamePlay(props) {
 			);
 		}
 	}
+
+	// console.log("GamePlay - gamePlayData", gamePlayData);
 
 	return (
 		<>

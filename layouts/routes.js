@@ -1,5 +1,4 @@
 /*!
-
 =========================================================
 * BEToken - v1.0.0
 =========================================================
@@ -7,9 +6,7 @@
 * Coded by Cole Challand
 
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 
 var routes = [
@@ -17,6 +14,11 @@ var routes = [
 		path: "/bets",
 		name: "Bets",
 		icon: "nc-icon nc-money-coins",
+	},
+	{
+		path: "/blockchain",
+		name: "Blockchain",
+		icon: "nc-icon nc-bank",
 	},
 	{
 		collapse: true,

@@ -6,17 +6,37 @@ export default async (req, res) => {
 	const session = await getSession({ req });
 
 	if (req.method === "GET") {
-		const user = await prisma.user.findUnique({
-			where: {
-				id: session.user.id,
-			},
-			include: {
-				requester: true,
-				accepter: true,
-				recipient: true,
-			},
-		});
-		return res.json(user);
+		if (session) {
+			let user;
+			if (req.query.type === "layout") {
+				user = await prisma.user.findUnique({
+					where: {
+						id: session.user.id,
+					},
+					select: {
+						id: true,
+						username: true,
+						image: true,
+						balance: true,
+					},
+				});
+				return res.json(user);
+			} else {
+				user = await prisma.user.findUnique({
+					where: {
+						id: session.user.id,
+					},
+					include: {
+						requester: true,
+						accepter: true,
+						recipient: true,
+					},
+				});
+				return res.json(user);
+			}
+		} else {
+			return res.json({ error: true, message: "Not logged in." });
+		}
 	} else if (req.method === "POST") {
 		const user = req.body;
 		delete user.balance;

@@ -8,6 +8,12 @@
   bottom: -22px;
 }
 
+.truncate-hash {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 div.diamond.second-base {
   border: 19.5px solid transparent;
   border-bottom: 19.5px solid #CBCCCE;
@@ -1283,4 +1289,8 @@ span.text {
   margin: 0;
   padding: 0;
   vertical-align: baseline;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #23CCEF !important;
 }

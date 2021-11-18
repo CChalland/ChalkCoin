@@ -1,41 +1,100 @@
-const betsReducer = (state, action) => {
-	const gamesAddedtoBets = (bets, games) => {
-		return bets.map((sport) => {
-			const bet = sport.bets.map((bet) => {
-				const sportGames = games.find((item) => item.display_name === sport.displayName);
-				const event = sportGames.data.events?.find((event) => event.id === bet.details.id);
-				bet.event = event;
-				if (event?.status.type.state === "post") {
-					bet.openStatus = "Ended";
-				} else if (event?.status.type.state === "in") {
-					bet.openStatus = event.status.period <= 1 ? "danger" : "Closed";
-				} else if (event?.status.type.state === "pre") {
-					const now = new Date();
-					const gameTime = new Date(bet.event.date);
-					const timeDiff = (gameTime.getTime() - now.getTime()) / (3600 * 1000);
-					if (gameTime.getDate() === now.getDate() && gameTime.getMonth() === now.getMonth()) {
-						bet.openStatus = timeDiff <= 2 ? "warning" : "info";
-					}
+const gamesAddedtoBets = (bets, games) => {
+	return bets.map((sport) => {
+		const bet = sport.bets.map((bet) => {
+			const sportGames = games.find((item) => item.display_name === sport.displayName);
+			const event = sportGames.data.events?.find((event) => event.id === bet.details.gameId);
+			bet.event = event;
+			if (event?.status.type.state === "post") {
+				bet.openStatus = "Ended";
+			} else if (event?.status.type.state === "in") {
+				bet.openStatus = event.status.period <= 1 ? "danger" : "Closed";
+			} else if (event?.status.type.state === "pre") {
+				const now = new Date();
+				const gameTime = new Date(bet.event.date);
+				const timeDiff = (gameTime.getTime() - now.getTime()) / (3600 * 1000);
+				if (gameTime.getDate() === now.getDate() && gameTime.getMonth() === now.getMonth()) {
+					bet.openStatus = timeDiff <= 2 ? "warning" : "info";
 				}
-				return bet;
-			});
-			return { ...sport, bets: bet };
+			}
+			return bet;
 		});
-	};
+		return { ...sport, bets: bet };
+	});
+};
+
+const betsReducer = (state, action) => {
+	const sportIcons = [
+		{
+			icon: 1,
+			abbrv: "NCAAF",
+			sport: "football",
+			displayName: "NCAA Football",
+			league_name: "college-football",
+			bets: [],
+		},
+		{
+			icon: 2,
+			abbrv: "NFL",
+			sport: "football",
+			displayName: "NFL",
+			league_name: "nfl",
+			bets: [],
+		},
+		{
+			icon: 3,
+			abbrv: "MLB",
+			sport: "baseball",
+			displayName: "MLB",
+			league_name: "mlb",
+			bets: [],
+		},
+		{
+			icon: 4,
+			abbrv: "NBA",
+			sport: "basketball",
+			displayName: "NBA",
+			league_name: "nba",
+			bets: [],
+		},
+		{
+			icon: 5,
+			abbrv: "NCAAB",
+			sport: "basketball",
+			displayName: "NCAA Men's Basketball",
+			league_name: "mens-college-basketball",
+			bets: [],
+		},
+		{
+			icon: 6,
+			abbrv: "NHL",
+			sport: "hockey",
+			displayName: "NHL",
+			league_name: "nhl",
+			bets: [],
+		},
+		{
+			icon: 8,
+			abbrv: "WNBA",
+			sport: "basketball",
+			displayName: "WNBA",
+			league_name: "wnba",
+			bets: [],
+		},
+		{
+			icon: 10,
+			abbrv: "MLS",
+			sport: "soccer",
+			displayName: "MLS",
+			league_name: "mls",
+			bets: [],
+		},
+	];
 
 	switch (action.type) {
 		case "ADD BET":
-			const sportIcons = [
-				{ displayName: "NFL", icon: 2, bets: [] },
-				{ displayName: "MLB", icon: 3, bets: [] },
-				{ displayName: "NBA", icon: 4, bets: [] },
-				{ displayName: "NCAA Men's Basketball", icon: 5, bets: [] },
-				{ displayName: "NHL", icon: 6, bets: [] },
-				{ displayName: "WNBA", icon: 8, bets: [] },
-			];
 			if (action.recipient) {
 				const index = state.pendingBets.recipientBets.findIndex(
-					(sport) => sport.displayName === action.bet.details.displayName
+					(sport) => sport.displayName === action.bet.details.sport
 				);
 				if (index === -1) {
 					return {
@@ -45,7 +104,7 @@ const betsReducer = (state, action) => {
 							recipientBets: [
 								...state.pendingBets.recipientBets,
 								{
-									...sportIcons.find((sport) => sport.displayName === action.bet.details.displayName),
+									...sportIcons.find((sport) => sport.displayName === action.bet.details.sport),
 									bets: [action.bet],
 								},
 							],
@@ -57,7 +116,7 @@ const betsReducer = (state, action) => {
 						pendingBets: {
 							openBets: state.pendingBets.openBets,
 							recipientBets: state.pendingBets.recipientBets.map((sport) =>
-								sport.displayName === action.bet.details.displayName
+								sport.displayName === action.bet.details.sport
 									? { ...sport, bets: [...sport.bets, action.bet] }
 									: sport
 							),
@@ -66,7 +125,7 @@ const betsReducer = (state, action) => {
 				}
 			} else {
 				const index = state.pendingBets.openBets.findIndex(
-					(sport) => sport.displayName === action.bet.details.displayName
+					(sport) => sport.displayName === action.bet.details.sport
 				);
 				if (index === -1) {
 					return {
@@ -75,7 +134,7 @@ const betsReducer = (state, action) => {
 							openBets: [
 								...state.pendingBets.openBets,
 								{
-									...sportIcons.find((sport) => sport.displayName === action.bet.details.displayName),
+									...sportIcons.find((sport) => sport.displayName === action.bet.details.sport),
 									bets: [action.bet],
 								},
 							],
@@ -87,7 +146,7 @@ const betsReducer = (state, action) => {
 						...state,
 						pendingBets: {
 							openBets: state.pendingBets.openBets.map((sport) =>
-								sport.displayName === action.bet.details.displayName
+								sport.displayName === action.bet.details.sport
 									? { ...sport, bets: [...sport.bets, action.bet] }
 									: sport
 							),
@@ -98,26 +157,52 @@ const betsReducer = (state, action) => {
 			}
 
 		case "ACCEPTED BET":
-			return {
-				...state,
-				pendingBets: {
-					openBets: state.pendingBets.openBets.map((sport) =>
-						sport.displayName === action.bet.details.displayName
-							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
+			const index = state.acceptedBets.findIndex((sport) => sport.displayName === action.bet.details.sport);
+			if (index === -1) {
+				return {
+					...state,
+					pendingBets: {
+						openBets: state.pendingBets.openBets.map((sport) =>
+							sport.displayName === action.bet.details.sport
+								? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
+								: sport
+						),
+						recipientBets: state.pendingBets.recipientBets.map((sport) =>
+							sport.displayName === action.bet.details.sport
+								? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
+								: sport
+						),
+					},
+					acceptedBets: [
+						...state.acceptedBets,
+						{
+							...sportIcons.find((sport) => sport.displayName === action.bet.details.sport),
+							bets: [action.bet],
+						},
+					],
+				};
+			} else {
+				return {
+					...state,
+					pendingBets: {
+						openBets: state.pendingBets.openBets.map((sport) =>
+							sport.displayName === action.bet.details.sport
+								? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
+								: sport
+						),
+						recipientBets: state.pendingBets.recipientBets.map((sport) =>
+							sport.displayName === action.bet.details.sport
+								? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
+								: sport
+						),
+					},
+					acceptedBets: state.acceptedBets.map((sport) =>
+						sport.displayName === action.bet.details.sport
+							? { ...sport, bets: [...sport.bets, action.bet] }
 							: sport
 					),
-					recipientBets: state.pendingBets.recipientBets.map((sport) =>
-						sport.displayName === action.bet.details.displayName
-							? { ...sport, bets: sport.bets.filter((bet) => bet.id !== action.bet.id) }
-							: sport
-					),
-				},
-				acceptedBets: state.acceptedBets.map((sport) =>
-					sport.displayName === action.bet.details.displayName
-						? { ...sport, bets: [...sport.bets, action.bet] }
-						: sport
-				),
-			};
+				};
+			}
 
 		case "COMPLETED BET":
 			return {
@@ -125,27 +210,24 @@ const betsReducer = (state, action) => {
 				acceptedBets: state.acceptedBets.map((sport) => {
 					return {
 						...sport,
-						bets: sport.bets.filter((bet) => !action.bets.some((actBet) => actBet.id === bet.id)),
+						bets: sport.bets.filter((bet) => {
+							return bet.event.status.type.state !== "post";
+						}),
 					};
 				}),
 				completedBets: [...state.completedBets, ...action.bets],
 			};
 
-		case "REMOVE BETS":
-			return {
-				...state,
-				completedBets: [],
-			};
-
 		case "INIT":
 			return {
 				pendingBets: {
-					openBets: gamesAddedtoBets(action.bets.pendingBets.openBets, action.games),
-					recipientBets: gamesAddedtoBets(action.bets.pendingBets.recipientBets, action.games),
+					openBets: action.bets.pendingBets.openBets,
+					recipientBets: action.bets.pendingBets.recipientBets,
 				},
-				acceptedBets: gamesAddedtoBets(action.bets.acceptedBets, action.games),
+				acceptedBets: action.bets.acceptedBets,
 				completedBets: action.bets.completedBets,
 				initialized: action.initialized,
+				userBets: action.userBets,
 			};
 
 		case "GAME UPDATE":
@@ -157,9 +239,6 @@ const betsReducer = (state, action) => {
 				},
 				acceptedBets: gamesAddedtoBets(state.acceptedBets, action.games),
 			};
-
-		// default:
-		// 	return state;
 	}
 };
 

@@ -252,6 +252,7 @@ function GameLeader(props) {
 					</>
 				);
 			} else {
+				let playerStats = athlete.displayValue.split(",");
 				title = (
 					<Row className="mt-2 text-secondary" key={key}>
 						{athlete.title}
@@ -259,23 +260,15 @@ function GameLeader(props) {
 				);
 
 				player = (
-					<Col xs={12} md={4} xl={12} key={key}>
-						<Row className="my-1 align-items-center">
-							<Col xs={3} className="text-secondary">
-								{athlete.position}
+					<Col xs={12} md={6} xl={12} key={key}>
+						<Row className="mb-2 align-items-center">
+							<Col xs="auto">
+								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
 							</Col>
-							<Col xs={9} className="border-left">
-								<Row>
-									<Col xs="auto" className="mx-0 font-weight-bold">
-										{athlete.displayName}
-									</Col>
-									<Col xs="auto" className="px-0 text-secondary">
-										{athlete.team}
-									</Col>
-								</Row>
-								<Row>
-									<Col className="text-secondary">{athlete.displayValue}</Col>
-								</Row>
+							<Col xs="auto">
+								<Row className="mb-0 h6">{athlete.displayName}</Row>
+								<Row className="mb-0 text-secondary">{`${athlete.team} - ${athlete.position}`}</Row>
+								<Row className="mb-0 text-secondary">{`${playerStats[0]},${playerStats[1]},${playerStats[2]}`}</Row>
 							</Col>
 						</Row>
 					</Col>
@@ -317,7 +310,7 @@ function GameLeader(props) {
 		const { title, player, rowStyle } = leadersHelper(athlete, sportName, key);
 		gameTitle = title;
 
-		return player;
+		return <div key={key}>{player}</div>;
 	});
 
 	return (
