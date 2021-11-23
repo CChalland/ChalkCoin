@@ -5,13 +5,14 @@ import { BlockchainContext, BlockchainDispatch } from "../contexts/Blockchain.Co
 import TransactionCard from "../components/Blockchain/TransactionCard";
 import BlockCard from "../components/Blockchain/BlockCard";
 import axios from "axios";
+import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 
 function Blockchain({ currentUser }) {
 	const blockchainData = useContext(BlockchainContext);
 	const dispatch = useContext(BlockchainDispatch);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchainData.pendingTransactions);
 	const [selectedBlock, setSelectedBlock] = useState(blockchainData.selectedBlock);
-	const [disableMineState, setDisableMineState] = useState(true);
+	const [mineState, setMineState] = useState(false);
 	const blockchainBlocks = [
 		...blockchainData.chain.slice(Math.max(blockchainData.chain.length - 5, 1)),
 	].reverse();
@@ -36,8 +37,8 @@ function Blockchain({ currentUser }) {
 	}, [blockchainData.pendingTransactions]);
 
 	useEffect(() => {
-		if (pendingTransactions.length > 10) setDisableMineState(false);
-		else setDisableMineState(true);
+		if (pendingTransactions.length > 10) setMineState(true);
+		else setMineState(false);
 	}, [pendingTransactions]);
 
 	useEffect(() => {
@@ -57,40 +58,41 @@ function Blockchain({ currentUser }) {
 						<Col xs={"auto"}>
 							<h2 className="my-2">Pending Transactions</h2>
 						</Col>
-						<Col sm="auto" className="">
-							<Row className="justify-content-start">
-								<Col xs={"auto"}>
-									<OverlayTrigger
-										placement="bottom"
-										overlay={<Tooltip>If your mine is completed, you'll receive tokens.</Tooltip>}
-									>
-										{({ ref, ...triggerHandler }) => (
-											<Button
-												variant="light"
-												{...triggerHandler}
-												className="btn-social btn-round btn-outline"
-											>
-												<i ref={ref} className="fas fa-exclamation"></i>
-											</Button>
-										)}
-									</OverlayTrigger>
-								</Col>
-								<Col xs={"auto"}>
-									<Button
-										className="btn-wd align-items-center"
-										type="button"
-										variant="info"
-										disabled={disableMineState}
-										onClick={() => {
-											handleMine();
-										}}
-									>
-										<i className="nc-icon nc-atom mr-2"></i>
-										Mine
-									</Button>
-								</Col>
-							</Row>
-						</Col>
+						{mineState ? (
+							<Col sm="auto" className="">
+								<Row className="justify-content-start">
+									<Col xs={"auto"}>
+										<OverlayTrigger
+											placement="bottom"
+											overlay={<Tooltip>If your mine is completed, you'll receive tokens.</Tooltip>}
+										>
+											{({ ref, ...triggerHandler }) => (
+												<Button
+													variant="light"
+													{...triggerHandler}
+													className="btn-social btn-round btn-outline"
+												>
+													<i ref={ref} className="fas fa-exclamation"></i>
+												</Button>
+											)}
+										</OverlayTrigger>
+									</Col>
+									<Col xs={"auto"}>
+										<Button
+											className="btn-wd align-items-center"
+											type="button"
+											variant="info"
+											onClick={() => {
+												handleMine();
+											}}
+										>
+											<i className="nc-icon nc-atom mr-2"></i>
+											Mine
+										</Button>
+									</Col>
+								</Row>
+							</Col>
+						) : null}
 					</Row>
 					{pendingTransactions.map((transaction, key) => {
 						return (
@@ -108,8 +110,11 @@ function Blockchain({ currentUser }) {
 			<Row>
 				<Col>
 					<Row>
-						<h2>Recent Blocks</h2>
+						<h2>Blockchain</h2>
 					</Row>
+
+					<Row></Row>
+
 					{blockchainBlocks.map((block, key) => {
 						return (
 							<BlockCard
