@@ -83,6 +83,7 @@ export function BetProvider(props) {
 			let betsData;
 			try {
 				const res = await axios.post(`/api/completedBets`, completedAcceptedBets);
+				console.log("completedBets", res);
 				betsData = res.data.map((bet) => {
 					const event = completedAcceptedBets.find((acptBet) => acptBet.event.id === bet.details.gameId);
 					return { ...bet, event: event.event };

@@ -98,8 +98,8 @@ function BlockCard({ blockData, selected, genesisState }) {
 				</a>
 			</Col>
 
-			{/* For xs & sm screens */}
-			<Col className="mx-0 px-0 d-block d-md-none">
+			{/* For sm screen */}
+			<Col className="mx-0 px-0 d-none d-sm-block d-md-none">
 				<a
 					style={{ cursor: "pointer" }}
 					onClick={() => {
@@ -193,6 +193,96 @@ function BlockCard({ blockData, selected, genesisState }) {
 											<h1 className="my-0" style={{ fontSize: 18 }}>
 												Size
 											</h1>
+										</Col>
+									</Row>
+								</Col>
+							</Row>
+						</Card.Body>
+					</Card>
+				</a>
+			</Col>
+
+			{/* For xs screen */}
+			<Col className="mx-0 px-0 d-block d-sm-none">
+				<a
+					style={{ cursor: "pointer" }}
+					onClick={() => {
+						handleSelectedBlock();
+					}}
+				>
+					<Card border={selected ? "secondary" : null} className="">
+						<Card.Header className="">
+							<Row className="align-items-center">
+								<Col xs={"auto"}>
+									<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+										Hash
+									</h4>
+								</Col>
+								<Col xs={10}>
+									<h1 className="my-0 truncate-hash" style={{ fontSize: 18 }}>
+										{blockData.hash}
+									</h1>
+								</Col>
+							</Row>
+						</Card.Header>
+						<Card.Body className="">
+							<Row className="justify-content-center">
+								<Col xs={"auto"}>
+									<Row className="align-items-center justify-content-center">
+										<Col xs={"auto"} className="mr-1 pr-1">
+											<h1 className="my-0" style={{ fontSize: 18 }}>
+												{blockData.index}
+											</h1>
+										</Col>
+										<Col xs={"auto"} className="ml-0 pl-0">
+											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+												{"ID"}
+											</h4>
+										</Col>
+									</Row>
+								</Col>
+								<Col xs={"auto"}>
+									<Row className="align-items-center justify-content-center">
+										<Col xs={"auto"} className="mr-1 pr-1">
+											<h1 className="my-0" style={{ fontSize: 18 }}>
+												{blockData.transactions.length}
+											</h1>
+										</Col>
+										<Col xs={"auto"} className="ml-0 pl-0">
+											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+												{"# of Transactions"}
+											</h4>
+										</Col>
+									</Row>
+								</Col>
+								<Col xs={"auto"}>
+									<Row className="align-items-center">
+										<Col xs={"auto"} className="mr-1 pr-1">
+											<h1 className="my-0" style={{ fontSize: 18 }}>
+												$
+												{blockData.transactions.reduce((previous, current) => {
+													return previous + current.amount;
+												}, 0)}
+											</h1>
+										</Col>
+										<Col xs={"auto"} className="ml-0 pl-0">
+											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+												Sent
+											</h4>
+										</Col>
+									</Row>
+								</Col>
+								<Col xs={"auto"}>
+									<Row className="align-items-center justify-content-center">
+										<Col xs={"auto"} className="mr-1 pr-1">
+											<h1 className="my-0" style={{ fontSize: 18 }}>
+												$
+											</h1>
+										</Col>
+										<Col xs={"auto"} className="ml-0 pl-0">
+											<h4 className="my-0 text-secondary" style={{ fontSize: 14 }}>
+												Fees
+											</h4>
 										</Col>
 									</Row>
 								</Col>
