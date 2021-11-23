@@ -142,11 +142,11 @@ function TransactionCard({ transactionData, userAddress, panelKey }) {
 									</h1>
 								</Col>
 							</Row>
-							<Row className="my-0 py-0">
-								<Col xs={{ span: 1, offset: 4 }}>
+							<Row className="justify-content-center">
+								<Col xs={"auto"}>
 									<Image height={40} src="../../static/media/arrow_down.png" />
 								</Col>
-								<Col xs={3} className="mx-0 px-0">
+								<Col xs={"auto"}>
 									<h1 className="my-0" style={{ fontSize: 36 }}>
 										${transactionData.amount}
 									</h1>

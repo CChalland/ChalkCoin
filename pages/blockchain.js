@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { getSession } from "next-auth/client";
 import { BlockchainContext, BlockchainDispatch } from "../contexts/Blockchain.Context";
 import TransactionCard from "../components/Blockchain/TransactionCard";
@@ -11,6 +11,7 @@ function Blockchain({ currentUser }) {
 	const dispatch = useContext(BlockchainDispatch);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchainData.pendingTransactions);
 	const [selectedBlock, setSelectedBlock] = useState(blockchainData.selectedBlock);
+	const [disableMineState, setDisableMineState] = useState(true);
 	const blockchainBlocks = [
 		...blockchainData.chain.slice(Math.max(blockchainData.chain.length - 5, 1)),
 	].reverse();
@@ -35,6 +36,11 @@ function Blockchain({ currentUser }) {
 	}, [blockchainData.pendingTransactions]);
 
 	useEffect(() => {
+		if (pendingTransactions.length > 10) setDisableMineState(false);
+		else setDisableMineState(true);
+	}, [pendingTransactions]);
+
+	useEffect(() => {
 		setSelectedBlock(blockchainData.selectedBlock);
 	}, [blockchainData.selectedBlock]);
 
@@ -48,23 +54,42 @@ function Blockchain({ currentUser }) {
 			<Row>
 				<Col xs={12}>
 					<Row className="align-items-center">
-						<Col xs="auto">
-							<h2>Pending Transactions</h2>
+						<Col xs={"auto"}>
+							<h2 className="my-2">Pending Transactions</h2>
 						</Col>
-						<Col xs="auto" className="mt-4">
-							<Button
-								className="btn-wd"
-								type="button"
-								variant="success"
-								onClick={() => {
-									handleMine();
-								}}
-							>
-								<span className="btn-label">
-									<i className="fas fa-plus"></i>
-								</span>
-								Mine
-							</Button>
+						<Col sm="auto" className="">
+							<Row className="justify-content-start">
+								<Col xs={"auto"}>
+									<OverlayTrigger
+										placement="bottom"
+										overlay={<Tooltip>If your mine is completed, you'll receive tokens.</Tooltip>}
+									>
+										{({ ref, ...triggerHandler }) => (
+											<Button
+												variant="light"
+												{...triggerHandler}
+												className="btn-social btn-round btn-outline"
+											>
+												<i ref={ref} className="fas fa-exclamation"></i>
+											</Button>
+										)}
+									</OverlayTrigger>
+								</Col>
+								<Col xs={"auto"}>
+									<Button
+										className="btn-wd align-items-center"
+										type="button"
+										variant="info"
+										disabled={disableMineState}
+										onClick={() => {
+											handleMine();
+										}}
+									>
+										<i className="nc-icon nc-atom mr-2"></i>
+										Mine
+									</Button>
+								</Col>
+							</Row>
 						</Col>
 					</Row>
 					{pendingTransactions.map((transaction, key) => {
