@@ -113,8 +113,6 @@ function Blockchain({ currentUser }) {
 						<h2>Blockchain</h2>
 					</Row>
 
-					<Row></Row>
-
 					{blockchainBlocks.map((block, key) => {
 						return (
 							<BlockCard
@@ -132,10 +130,14 @@ function Blockchain({ currentUser }) {
 				<Col>
 					<Row className="">
 						<Col xs={5} md={3} lg={4} xl={2} className="mx-0 px-0">
-							<h2 className="truncate-hash">{selectedBlock.hash}</h2>
+							<h2 className="my-0 truncate-hash">{selectedBlock.hash}</h2>
 						</Col>
+						<Col xs={"auto"} className="ml-0 pl-0">
+							<h2 className="my-0">'s</h2>
+						</Col>
+
 						<Col xs={"auto"} className="mx-0 px-0"></Col>
-						<h2>'s Transactions</h2>
+						<h2 className="my-0">Transactions</h2>
 					</Row>
 					{selectedBlock.transactions?.map((transaction, key) => {
 						return (
