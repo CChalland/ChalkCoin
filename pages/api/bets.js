@@ -130,10 +130,10 @@ export default async (req, res) => {
 		if (req.query.type === "currentUser") {
 			if (session) {
 				openBets = await prisma.bet.findMany({
-					where: { AND: [{ accepted: false, requesterId: session.user.id }] },
+					where: { AND: [{ accepted: false, completed: false, requesterId: session.user.id }] },
 				});
 				recipientBets = await prisma.bet.findMany({
-					where: { AND: [{ accepted: false, recipientId: session.user.id }] },
+					where: { AND: [{ accepted: false, completed: false, recipientId: session.user.id }] },
 				});
 				acceptedBets = await prisma.bet.findMany({
 					where: {
@@ -156,7 +156,7 @@ export default async (req, res) => {
 				completedBets = await prisma.bet.findMany({
 					where: {
 						AND: [
-							{ completed: true },
+							{ accepted: true, completed: true },
 							{ OR: [{ requesterId: session.user.id }, { accepterId: session.user.id }] },
 						],
 					},
@@ -185,12 +185,13 @@ export default async (req, res) => {
 		} else if (req.query.type === "all") {
 			openBets = await prisma.bet.findMany({
 				where: {
-					AND: [{ accepted: false }, { recipientId: null }],
+					AND: [{ accepted: false, completed: false }, { recipientId: null }],
 				},
 			});
 			recipientBets = await prisma.bet.findMany({
 				where: {
 					accepted: false,
+					completed: false,
 					NOT: {
 						recipientId: null,
 					},
@@ -215,7 +216,7 @@ export default async (req, res) => {
 			});
 			completedBets = await prisma.bet.findMany({
 				where: {
-					AND: [{ completed: true }, { transactionId: null }],
+					AND: [{ accepted: true, completed: true }, { transactionId: null }],
 				},
 				include: {
 					accepter: {

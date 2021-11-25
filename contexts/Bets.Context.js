@@ -23,6 +23,20 @@ export function BetProvider(props) {
 			});
 		})
 		.flat();
+	const completedOpenBets = bets.pendingBets.openBets
+		.map((sport) => {
+			return sport.bets?.filter((bet) => {
+				return bet.event?.status.type.name === "STATUS_FINAL";
+			});
+		})
+		.flat();
+	const completedRecipientBets = bets.pendingBets.recipientBets
+		.map((sport) => {
+			return sport.bets?.filter((bet) => {
+				return bet.event?.status.type.name === "STATUS_FINAL";
+			});
+		})
+		.flat();
 
 	useEffect(() => {
 		async function betEventFinder() {
@@ -79,10 +93,46 @@ export function BetProvider(props) {
 	}, []);
 
 	useEffect(() => {
+		async function handlingOpenGames() {
+			let betsData;
+			try {
+				const res = await axios.post(`/api/completedBets?type=open`, completedOpenBets);
+				console.log("completedOpenBets", res);
+				betsData = res.data.map((bet) => {
+					const event = completedOpenBets.find((acptBet) => acptBet.event.id === bet.details.gameId);
+					return { ...bet, event: event.event };
+				});
+				dispatch({ type: "COMPLETED OPEN BET", bets: betsData });
+			} catch (err) {
+				console.log(err.message);
+			}
+		}
+		if (completedOpenBets.length > 0) handlingOpenGames();
+	}, [completedOpenBets]);
+
+	useEffect(() => {
+		async function handlingRecipientGames() {
+			let betsData;
+			try {
+				const res = await axios.post(`/api/completedBets?type=recipient`, completedRecipientBets);
+				console.log("completedRecipientBets", res);
+				betsData = res.data.map((bet) => {
+					const event = completedRecipientBets.find((acptBet) => acptBet.event.id === bet.details.gameId);
+					return { ...bet, event: event.event };
+				});
+				dispatch({ type: "COMPLETED RECIPIENT BET", bets: betsData });
+			} catch (err) {
+				console.log(err.message);
+			}
+		}
+		if (completedRecipientBets.length > 0) handlingRecipientGames();
+	}, [completedRecipientBets]);
+
+	useEffect(() => {
 		async function handlingAcceptedGames() {
 			let betsData;
 			try {
-				const res = await axios.post(`/api/completedBets`, completedAcceptedBets);
+				const res = await axios.post(`/api/completedBets?type=accepted`, completedAcceptedBets);
 				console.log("completedBets", res);
 				betsData = res.data.map((bet) => {
 					const event = completedAcceptedBets.find((acptBet) => acptBet.event.id === bet.details.gameId);
@@ -103,6 +153,8 @@ export function BetProvider(props) {
 
 	// console.log("in Bets.Context", bets);
 	// console.log("completedAcceptedBets", completedAcceptedBets);
+	// console.log("completedOpenBets", completedOpenBets);
+	// console.log("completedRecipientBets", completedRecipientBets);
 
 	return (
 		<BetContext.Provider value={bets}>

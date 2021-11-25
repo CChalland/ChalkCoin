@@ -5,13 +5,14 @@ import { BlockchainContext, BlockchainDispatch } from "../contexts/Blockchain.Co
 import TransactionCard from "../components/Blockchain/TransactionCard";
 import BlockCard from "../components/Blockchain/BlockCard";
 import axios from "axios";
+import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 
 function Blockchain({ currentUser }) {
 	const blockchainData = useContext(BlockchainContext);
 	const dispatch = useContext(BlockchainDispatch);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchainData.pendingTransactions);
 	const [selectedBlock, setSelectedBlock] = useState(blockchainData.selectedBlock);
-	const [disableMineState, setDisableMineState] = useState(true);
+	const [mineState, setMineState] = useState(false);
 	const blockchainBlocks = [
 		...blockchainData.chain.slice(Math.max(blockchainData.chain.length - 5, 1)),
 	].reverse();
@@ -36,8 +37,8 @@ function Blockchain({ currentUser }) {
 	}, [blockchainData.pendingTransactions]);
 
 	useEffect(() => {
-		if (pendingTransactions.length > 10) setDisableMineState(false);
-		else setDisableMineState(true);
+		if (pendingTransactions.length > 10) setMineState(true);
+		else setMineState(false);
 	}, [pendingTransactions]);
 
 	useEffect(() => {
@@ -57,40 +58,41 @@ function Blockchain({ currentUser }) {
 						<Col xs={"auto"}>
 							<h2 className="my-2">Pending Transactions</h2>
 						</Col>
-						<Col sm="auto" className="">
-							<Row className="justify-content-start">
-								<Col xs={"auto"}>
-									<OverlayTrigger
-										placement="bottom"
-										overlay={<Tooltip>If your mine is completed, you'll receive tokens.</Tooltip>}
-									>
-										{({ ref, ...triggerHandler }) => (
-											<Button
-												variant="light"
-												{...triggerHandler}
-												className="btn-social btn-round btn-outline"
-											>
-												<i ref={ref} className="fas fa-exclamation"></i>
-											</Button>
-										)}
-									</OverlayTrigger>
-								</Col>
-								<Col xs={"auto"}>
-									<Button
-										className="btn-wd align-items-center"
-										type="button"
-										variant="info"
-										disabled={disableMineState}
-										onClick={() => {
-											handleMine();
-										}}
-									>
-										<i className="nc-icon nc-atom mr-2"></i>
-										Mine
-									</Button>
-								</Col>
-							</Row>
-						</Col>
+						{mineState ? (
+							<Col sm="auto" className="">
+								<Row className="justify-content-start">
+									<Col xs={"auto"}>
+										<OverlayTrigger
+											placement="bottom"
+											overlay={<Tooltip>If your mine is completed, you'll receive tokens.</Tooltip>}
+										>
+											{({ ref, ...triggerHandler }) => (
+												<Button
+													variant="light"
+													{...triggerHandler}
+													className="btn-social btn-round btn-outline"
+												>
+													<i ref={ref} className="fas fa-exclamation"></i>
+												</Button>
+											)}
+										</OverlayTrigger>
+									</Col>
+									<Col xs={"auto"}>
+										<Button
+											className="btn-wd align-items-center"
+											type="button"
+											variant="info"
+											onClick={() => {
+												handleMine();
+											}}
+										>
+											<i className="nc-icon nc-atom mr-2"></i>
+											Mine
+										</Button>
+									</Col>
+								</Row>
+							</Col>
+						) : null}
 					</Row>
 					{pendingTransactions.map((transaction, key) => {
 						return (
@@ -108,8 +110,9 @@ function Blockchain({ currentUser }) {
 			<Row>
 				<Col>
 					<Row>
-						<h2>Recent Blocks</h2>
+						<h2>Blockchain</h2>
 					</Row>
+
 					{blockchainBlocks.map((block, key) => {
 						return (
 							<BlockCard
@@ -127,10 +130,14 @@ function Blockchain({ currentUser }) {
 				<Col>
 					<Row className="">
 						<Col xs={5} md={3} lg={4} xl={2} className="mx-0 px-0">
-							<h2 className="truncate-hash">{selectedBlock.hash}</h2>
+							<h2 className="my-0 truncate-hash">{selectedBlock.hash}</h2>
 						</Col>
+						<Col xs={"auto"} className="ml-0 pl-0">
+							<h2 className="my-0">'s</h2>
+						</Col>
+
 						<Col xs={"auto"} className="mx-0 px-0"></Col>
-						<h2>'s Transactions</h2>
+						<h2 className="my-0">Transactions</h2>
 					</Row>
 					{selectedBlock.transactions?.map((transaction, key) => {
 						return (

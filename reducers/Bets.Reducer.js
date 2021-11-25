@@ -204,14 +204,48 @@ const betsReducer = (state, action) => {
 				};
 			}
 
-		case "COMPLETED BET":
+		case "COMPLETED OPEN BET":
+			return {
+				...state,
+				pendingBets: {
+					openBets: state.pendingBets.openBets.map((sport) => {
+						return {
+							...sport,
+							bets: sport.bets.filter((bet) => {
+								return bet.event.status.type.name !== "STATUS_FINAL";
+							}),
+						};
+					}),
+					recipientBets: state.pendingBets.recipientBets,
+				},
+				completedBets: [...state.completedBets, ...action.bets],
+			};
+
+		case "COMPLETED RECIPIENT BET":
+			return {
+				...state,
+				pendingBets: {
+					openBets: state.pendingBets.openBets,
+					recipientBets: state.pendingBets.recipientBets((sport) => {
+						return {
+							...sport,
+							bets: sport.bets.filter((bet) => {
+								return bet.event.status.type.name !== "STATUS_FINAL";
+							}),
+						};
+					}),
+				},
+				completedBets: [...state.completedBets, ...action.bets],
+			};
+
+		case "COMPLETED ACCEPTED BET":
 			return {
 				...state,
 				acceptedBets: state.acceptedBets.map((sport) => {
 					return {
 						...sport,
 						bets: sport.bets.filter((bet) => {
-							return bet.event.status.type.state !== "post";
+							return bet.event.status.type.name !== "STATUS_FINAL";
 						}),
 					};
 				}),
