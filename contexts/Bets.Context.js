@@ -151,10 +151,10 @@ export function BetProvider(props) {
 	// 	if (bets.initialized) dispatch({ type: "GAME UPDATE", games: sportsData });
 	// }, [sportsData]);
 
-	console.log("in Bets.Context", bets);
+	// console.log("in Bets.Context", bets);
 	// console.log("completedAcceptedBets", completedAcceptedBets);
-	console.log("completedOpenBets", completedOpenBets);
-	console.log("completedRecipientBets", completedRecipientBets);
+	// console.log("completedOpenBets", completedOpenBets);
+	// console.log("completedRecipientBets", completedRecipientBets);
 
 	return (
 		<BetContext.Provider value={bets}>
