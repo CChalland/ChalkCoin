@@ -5,6 +5,11 @@ import { BlockchainContext, BlockchainDispatch } from "../contexts/Blockchain.Co
 import TransactionCard from "../components/Blockchain/TransactionCard";
 import BlockCard from "../components/Blockchain/BlockCard";
 import axios from "axios";
+// Styles
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "assets/scss/betoken-bootstrap-react.scss?v=2.0.0";
+import "assets/css/Custom.css";
 
 function Blockchain({ currentUser }) {
 	const blockchainData = useContext(BlockchainContext);

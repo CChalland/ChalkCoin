@@ -5,6 +5,11 @@ import GameCard from "../components/Game/GameCard";
 import prisma from "../contexts/prisma";
 import axios from "axios";
 import { getSession } from "next-auth/client";
+// Styles
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "assets/scss/betoken-bootstrap-react.scss?v=2.0.0";
+import "assets/css/Custom.css";
 
 function Games(props) {
 	const { sportsData } = useContext(SportContext);
