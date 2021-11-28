@@ -1,20 +1,7 @@
 import React from "react";
 
 // react-bootstrap components
-import {
-	Badge,
-	Button,
-	ButtonGroup,
-	Card,
-	Form,
-	InputGroup,
-	Navbar,
-	Nav,
-	Pagination,
-	Container,
-	Row,
-	Col,
-} from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 function AdminFooter() {
 	return (

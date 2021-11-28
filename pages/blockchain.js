@@ -5,7 +5,6 @@ import { BlockchainContext, BlockchainDispatch } from "../contexts/Blockchain.Co
 import TransactionCard from "../components/Blockchain/TransactionCard";
 import BlockCard from "../components/Blockchain/BlockCard";
 import axios from "axios";
-import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 
 function Blockchain({ currentUser }) {
 	const blockchainData = useContext(BlockchainContext);

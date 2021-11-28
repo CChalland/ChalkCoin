@@ -4,11 +4,12 @@ import { Provider } from "next-auth/client";
 import { BlockchainProvider } from "../contexts/Blockchain.Context";
 import { SportProvider } from "../contexts/Sports.Context";
 import { BetProvider } from "../contexts/Bets.Context";
+import Admin from "../layouts/Admin";
+// Styles
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "assets/scss/betoken-bootstrap-react.scss?v=2.0.0";
 import "assets/css/Custom.css";
-import Admin from "../layouts/Admin";
 
 class MyApp extends App {
 	// Only uncomment this method if you have blocking data requirements for
