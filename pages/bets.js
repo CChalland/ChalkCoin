@@ -3,11 +3,6 @@ import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "reac
 import { getSession } from "next-auth/client";
 import { BetContext } from "../contexts/Bets.Context";
 import BetCard from "../components/Bet/BetCard";
-// Styles
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "assets/scss/betoken-bootstrap-react.scss?v=2.0.0";
-import "assets/css/Custom.css";
 
 function Bets({ currentUser }) {
 	const sportWithBets = useContext(BetContext);
