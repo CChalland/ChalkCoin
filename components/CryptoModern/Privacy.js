@@ -6,7 +6,7 @@ import Illustration from "../../assets/image/illustration1.png";
 export default function Privacy() {
 	return (
 		<Container>
-			<Row className="align-items-center">
+			<Row className="align-items-center my-5">
 				<Col>
 					<Row>
 						<Col>

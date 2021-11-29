@@ -8,13 +8,13 @@ import featureIcon4 from "../../assets/image/feature-4.png";
 
 export default function Features() {
 	const data = [
-		{
-			id: 1,
-			icon: featureIcon1,
-			title: "Great Market Value",
-			description:
-				"The leading digital currency by market capitalization, has grown in value by more than 10 times.",
-		},
+		// {
+		// 	id: 1,
+		// 	icon: featureIcon1,
+		// 	title: "Great Market Value",
+		// 	description:
+		// 		"The leading digital currency by market capitalization, has grown in value by more than 10 times.",
+		// },
 		{
 			id: 2,
 			icon: featureIcon2,
@@ -38,12 +38,12 @@ export default function Features() {
 
 	return (
 		<Container>
-			<Row className="justify-content-center">
+			<Row className="justify-content-center mt-5">
 				<Fade up delay={100}>
-					<h1>Why choose BEToken</h1>
+					<h1>Why BEToken</h1>
 				</Fade>
 			</Row>
-			<Row className="justify-content-center">
+			<Row className="justify-content-center mb-4">
 				<Fade up delay={200}>
 					<h5 className="text-secondary">
 						Lorem ipsum dolor sit amet consectetur adipisicing elit sed eiu Lorem ipsum dolor Lorem ipsum
@@ -52,18 +52,24 @@ export default function Features() {
 				</Fade>
 			</Row>
 
-			<Row>
+			<Row className="justify-content-center mb-3">
 				{data.map((item) => {
 					return (
-						<Col key={item.id}>
+						<Col key={item.id} xs={12} sm={6} md={3}>
 							<Row className="justify-content-center">
-								<Image fluid src={item.icon} alt={item.tittle} />
+								<Col className="text-center">
+									<Image fluid src={item.icon} alt={item.tittle} />
+								</Col>
 							</Row>
 							<Row className="justify-content-center">
-								<h4>{item.title}</h4>
+								<Col className="text-center">
+									<h4>{item.title}</h4>
+								</Col>
 							</Row>
 							<Row className="justify-content-center">
-								<h5 className="text-center text-secondary">{item.description}</h5>
+								<Col className="text-center">
+									<h5 className="text-secondary">{item.description}</h5>
+								</Col>
 							</Row>
 						</Col>
 					);
