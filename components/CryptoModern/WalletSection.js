@@ -13,12 +13,12 @@ export default function WalletSection() {
 		{
 			id: 1,
 			icon: walletIcon1,
-			title: "Secure transfers with verified Casinos.",
+			title: "Secure transfers with verified Markets.",
 		},
 		{
 			id: 2,
 			icon: walletIcon2,
-			title: "Easily buy and sell CLV within the wallet",
+			title: "Easy to create and accept bets within the wallet",
 		},
 		{
 			id: 3,
@@ -30,20 +30,21 @@ export default function WalletSection() {
 	return (
 		<Container>
 			<Row className="align-items-center">
-				<Col>
+				<Col className="d-none d-md-block d-xl-block">
 					<Image fluid src={WalletImg} alt="Wallet Image" />
 				</Col>
+
 				<Col>
 					<Row>
 						<Col>
-							<h1>Our wallet is built for the cryptocurrency beginner</h1>
+							<h1>Our wallet is built for the crypto beginner</h1>
 						</Col>
 					</Row>
 					<Row>
 						<Col>
 							<h5 className="text-secondary">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit sed eiu Lorem ipsum dolor sit elit sed
-								eiu Lorem ipsum dolor sit .
+								BEToken's wallet stores the bets transactions. In addition to this basic function of storing
+								the keys, our wallet offers the functionality of encrypting and/or signing information.
 							</h5>
 						</Col>
 					</Row>
@@ -62,8 +63,8 @@ export default function WalletSection() {
 						})}
 					</Fade>
 					<Row className="justify-content-start">
-						<Col xs={"auto"}>
-							<Button className="btn-outline btn-wd" variant="default">
+						<Col xs={6} sm={"auto"} className="mx-0 px-1">
+							<Button className="btn-outline" variant="default">
 								<Row className="align-items-center">
 									<Col xs={"auto"}>
 										<Image fluid src={AppleIcon} alt="Apple" />
@@ -72,8 +73,8 @@ export default function WalletSection() {
 								</Row>
 							</Button>
 						</Col>
-						<Col xs={"atuo"}>
-							<Button className="btn-outline btn-wd" variant="default">
+						<Col xs={6} sm={"auto"} className="mx-0 px-1">
+							<Button className="btn-outline" variant="default">
 								<Row className="align-items-center">
 									<Col xs={"auto"}>
 										<Image fluid src={PlayIcon} alt="Play" />

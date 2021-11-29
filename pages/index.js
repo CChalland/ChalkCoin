@@ -15,7 +15,7 @@ function IndexPage({ currentUser }) {
 			<Banner user={currentUser} />
 			<Features />
 			<Privacy />
-			{/* <WalletSection /> */}
+			<WalletSection />
 			<FaqSection />
 		</Container>
 	);
