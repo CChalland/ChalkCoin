@@ -59,7 +59,7 @@ export default function Features() {
 			<Row className="justify-content-center mb-3">
 				{data.map((item) => {
 					return (
-						<Col key={item.id} xs={12} sm={6} md={3}>
+						<Col key={item.id} xs={12} sm={6} md={4}>
 							<Row className="justify-content-center">
 								<Col className="text-center">
 									<Image fluid src={item.icon} alt={item.tittle} />
