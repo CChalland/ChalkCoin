@@ -1,18 +1,20 @@
 import { signIn, signOut, useSession, getSession } from "next-auth/client";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
-import Banner from "../components/CryptoModern/Banner";
-import Features from "../components/CryptoModern/Features";
-import Privacy from "../components/CryptoModern/Privacy";
-import WalletSection from "../components/CryptoModern/WalletSection";
-import FaqSection from "../components/CryptoModern/FaqSection";
+import Banner from "../components/Index/CryptoModern/Banner";
+import Features from "../components/Index/CryptoModern/Features";
+import Privacy from "../components/Index/CryptoModern/Privacy";
+import WalletSection from "../components/Index/CryptoModern/WalletSection";
+import FaqSection from "../components/Index/CryptoModern/FaqSection";
+// User Components
+import UserCard from "../components/Index/User/UserCard";
 
 function IndexPage({ currentUser }) {
 	useEffect(() => {}, []);
 
 	return (
 		<Container>
-			<Banner user={currentUser} />
+			<Banner />
 			<Features />
 			<Privacy />
 			{/* <WalletSection /> */}

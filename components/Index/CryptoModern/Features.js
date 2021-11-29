@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
-import featureIcon1 from "../../assets/image/feature-1.png";
-import featureIcon2 from "../../assets/image/feature-2.png";
-import featureIcon3 from "../../assets/image/feature-3.png";
-import featureIcon4 from "../../assets/image/feature-4.png";
+import featureIcon1 from "../../../assets/image/feature-1.png";
+import featureIcon2 from "../../../assets/image/feature-2.png";
+import featureIcon3 from "../../../assets/image/feature-3.png";
+import featureIcon4 from "../../../assets/image/feature-4.png";
 
 export default function Features() {
 	const data = [

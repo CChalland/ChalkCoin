@@ -1,12 +1,12 @@
 import React from "react";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
-import WalletImg from "../../assets/image/illustration2.png";
-import AppleIcon from "../../assets/image/apple.png";
-import PlayIcon from "../../assets/image/playstore.png";
-import walletIcon1 from "../../assets/image/wallet1.png";
-import walletIcon2 from "../../assets/image/wallet2.png";
-import walletIcon3 from "../../assets/image/wallet3.png";
+import WalletImg from "../../../assets/image/illustration2.png";
+import AppleIcon from "../../../assets/image/apple.png";
+import PlayIcon from "../../../assets/image/playstore.png";
+import walletIcon1 from "../../../assets/image/wallet1.png";
+import walletIcon2 from "../../../assets/image/wallet2.png";
+import walletIcon3 from "../../../assets/image/wallet3.png";
 
 export default function WalletSection() {
 	const data = [
