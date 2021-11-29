@@ -9,15 +9,15 @@ export default function Privacy() {
 			<Row className="align-items-center my-5">
 				<Col>
 					<Row>
-						<Col>
+						<Col className="text-center">
 							<h1>Privacy Preserving Anonymous Funds Protocol</h1>
 						</Col>
 					</Row>
 					<Row>
-						<Col>
+						<Col className="text-center">
 							<h5 className="text-secondary">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit sed eiu Lorem ipsum dolor sit amet
-								consectetur adipisicing elit sed eiu
+								BEToken is designed to add a layer of privacy to the benefits and functionality of crypto. It
+								can keep information about its users hidden.
 							</h5>
 						</Col>
 					</Row>
