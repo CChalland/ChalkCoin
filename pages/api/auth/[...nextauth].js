@@ -78,7 +78,7 @@ const options = {
 				if (!("accepter" in user) || !("recipient" in user) || !("requester" in user)) {
 					const currentUser = await prisma.user.findFirst({
 						where: {
-							id: user.id,
+							id: parseInt(user.id),
 						},
 						include: {
 							requester: {
@@ -111,10 +111,10 @@ const options = {
 		},
 	},
 	pages: {
-		signIn: "/LoginRegister",
-		error: "/LoginRegister",
-		verifyRequest: "/LoginRegister?verifyRequest=true",
-		newUser: "/UserPage?newUser=true",
+		signIn: "/login",
+		error: "/login",
+		verifyRequest: "/login?verifyRequest=true",
+		newUser: "/user?newUser=true",
 	},
 	// @ts-ignore
 	adapter: Adapters.Prisma.Adapter({

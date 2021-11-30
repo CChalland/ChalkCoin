@@ -7,7 +7,7 @@ import axios from "axios";
 import { getSession } from "next-auth/client";
 
 function Games(props) {
-	const { sportsData } = useContext(SportContext);
+	const sportsData = useContext(SportContext);
 	const dispatch = useContext(SportDispatch);
 	let sportData = sportsData.find((sport) => {
 		return sport.abbrv === props.query.sport.toUpperCase();

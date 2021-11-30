@@ -73,7 +73,6 @@ export function SportProvider(props) {
 		// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {}, reload: false },
 	];
 	const [sportsData, dispatch] = useReducer(sportsReducer, initialSportsData);
-	const [fetchedSportData, setFetchedSportData] = useState(false);
 
 	useEffect(() => {
 		async function getSportsData() {
@@ -129,14 +128,13 @@ export function SportProvider(props) {
 			}
 
 			dispatch({ type: "ALL", data: sportData });
-			// setFetchedSportData(true);
 		}
 
 		getSportsData();
-	}, [fetchedSportData]);
+	}, []);
 
 	return (
-		<SportContext.Provider value={{ sportsData, fetchedSportData }}>
+		<SportContext.Provider value={sportsData}>
 			<SportDispatch.Provider value={dispatch}>{props.children}</SportDispatch.Provider>
 		</SportContext.Provider>
 	);

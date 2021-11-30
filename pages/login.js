@@ -136,22 +136,21 @@ function LoginRegister({ providers, csrfToken }) {
 					<Tab.Content>
 						<Tab.Pane eventKey="login-page">
 							<Card>
-								<Card.Header className="text-center">
-									<Card.Title as="h4">Login</Card.Title>
-									<br />
-									{loginAlert}
-								</Card.Header>
 								<Card.Body>
+									<Row>
+										<Col>{loginAlert}</Col>
+									</Row>
 									<Row>
 										<Col className="mx-auto" xl={8}>
 											<Form id="LoginValidation" method="post" action="/api/auth/callback/credentials">
-												<Card>
-													<Card.Header>
-														<Card.Title as="h4" className="text-center">
-															Login Form
-														</Card.Title>
-													</Card.Header>
-													<Card.Body>
+												<Row>
+													<Col>
+														<h4 className="text-center">Login Form</h4>
+													</Col>
+												</Row>
+
+												<Row>
+													<Col>
 														<Form.Group
 															className={"has-label " + (loginEmailState ? "has-success" : "has-error")}
 														>
@@ -176,6 +175,11 @@ function LoginRegister({ providers, csrfToken }) {
 																<label className="error">Please enter a email.</label>
 															)}
 														</Form.Group>
+													</Col>
+												</Row>
+
+												<Row>
+													<Col>
 														<Form.Group
 															className={"has-label " + (loginPasswordState ? "has-success" : "has-error")}
 														>
@@ -199,12 +203,20 @@ function LoginRegister({ providers, csrfToken }) {
 																<label className="error">This field is required.</label>
 															)}
 														</Form.Group>
+													</Col>
+												</Row>
+
+												<Row>
+													<Col>
 														<div className="card-category form-category">
 															<span className="star">*</span>
 															Required fields
 														</div>
-													</Card.Body>
-													<Card.Footer className="text-center">
+													</Col>
+												</Row>
+
+												<Row className="mt-4">
+													<Col className="text-center">
 														<Button
 															className="btn-fill btn-wd"
 															variant="info"
@@ -213,31 +225,36 @@ function LoginRegister({ providers, csrfToken }) {
 														>
 															Login
 														</Button>
-													</Card.Footer>
-												</Card>
+													</Col>
+												</Row>
 											</Form>
+											<Row>
+												<Col className="text-center">{"OR"}</Col>
+											</Row>
 											{signInButtons}
 										</Col>
 									</Row>
 								</Card.Body>
 							</Card>
 						</Tab.Pane>
+
 						<Tab.Pane eventKey="register-page">
 							<Card>
-								<Card.Header className="text-center">
-									<Card.Title as="h4">Register</Card.Title>
-									<br />
-									{registerAlert}
-								</Card.Header>
 								<Card.Body>
+									<Row>
+										<Col>{registerAlert}</Col>
+									</Row>
 									<Row>
 										<Col className="mx-auto" xl={8}>
 											<Form id="RegisterValidation" method="post" action="/api/auth/signin/email">
-												<Card>
-													<Card.Header className="text-center">
-														<Card.Title as="h4">Register Form</Card.Title>
-													</Card.Header>
-													<Card.Body>
+												<Row>
+													<Col>
+														<h4 className="text-center">Register Form</h4>
+													</Col>
+												</Row>
+
+												<Row>
+													<Col>
 														<Form.Group
 															className={"has-label " + (registerEmailState ? "has-success" : "has-error")}
 														>
@@ -262,12 +279,20 @@ function LoginRegister({ providers, csrfToken }) {
 																<label className="error">This field is required.</label>
 															)}
 														</Form.Group>
+													</Col>
+												</Row>
+
+												<Row>
+													<Col>
 														<div className="card-category form-category">
 															<span className="star">*</span>
 															Required fields
 														</div>
-													</Card.Body>
-													<Card.Footer className="text-center">
+													</Col>
+												</Row>
+
+												<Row className="mt-4">
+													<Col className="text-center">
 														<Button
 															className="btn-fill pull-right"
 															variant="info"
@@ -276,10 +301,13 @@ function LoginRegister({ providers, csrfToken }) {
 														>
 															Register with Email
 														</Button>
-														<div className="clearfix"></div>
-													</Card.Footer>
-												</Card>
+													</Col>
+													<div className="clearfix"></div>
+												</Row>
 											</Form>
+											<Row>
+												<Col className="text-center">{"OR"}</Col>
+											</Row>
 											{signInButtons}
 										</Col>
 									</Row>

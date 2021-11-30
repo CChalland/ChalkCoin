@@ -68,7 +68,7 @@ function AdminNavbar() {
 											</Dropdown.Toggle>
 											<Dropdown.Menu alignRight aria-labelledby="navbarDropdownMenuLink">
 												<Dropdown.Item>
-													<Link href="/UserPage">
+													<Link href="/user">
 														<span>
 															<i className="nc-icon nc-settings-90"></i>
 															Settings
@@ -104,7 +104,7 @@ function AdminNavbar() {
 							<Col className="d-block d-lg-none">
 								<Row className="">
 									<Col className="text-right">
-										<Link href="UserPage">
+										<Link href="/user">
 											<Button
 												className="btn-wd btn-outline"
 												type="button"

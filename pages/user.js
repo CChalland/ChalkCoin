@@ -76,7 +76,7 @@ function UserPage({ session }) {
 				setUpdateSuccessState(true);
 				setNewUserState(false);
 				setUpdateErrorState(false);
-				router.replace("/UserPage", undefined, { shallow: true });
+				router.replace("/user", undefined, { shallow: true });
 			} else if (response.data.error) {
 				setErrorMessage(response.data.error);
 				setUpdateErrorState(true);

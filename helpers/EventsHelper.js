@@ -78,7 +78,7 @@ export async function EventFinder(transaction) {
 		event = response.data;
 	}
 
-	if (event?.status.type.state === "post") {
+	if (event?.status.type.name === "STATUS_FINAL") {
 		openStatus = "Ended";
 	} else if (event?.status.type.state === "in") {
 		openStatus = event.status.period <= 1 ? "danger" : "Closed";
@@ -123,7 +123,7 @@ export async function EventsFinder(transactions, type) {
 						event = response.data;
 					}
 
-					if (event?.status.type.state === "post") {
+					if (event?.status.type.name === "STATUS_FINAL") {
 						openStatus = "Ended";
 					} else if (event?.status.type.state === "in") {
 						openStatus = event.status.period <= 1 ? "danger" : "Closed";
