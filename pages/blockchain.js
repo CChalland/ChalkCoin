@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { getSession } from "next-auth/client";
 import { BlockchainContext, BlockchainDispatch } from "../contexts/Blockchain.Context";

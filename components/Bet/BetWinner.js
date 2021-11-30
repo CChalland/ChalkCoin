@@ -1,4 +1,3 @@
-import React from "react";
 import { Col, Container, Row, Image } from "react-bootstrap";
 
 function BetWinner({ betWinnerData }) {

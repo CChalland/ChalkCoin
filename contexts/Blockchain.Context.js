@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import blockchainReducer from "../reducers/Blockchain.Reducer";
 import { EventsFinder } from "../helpers/EventsHelper";

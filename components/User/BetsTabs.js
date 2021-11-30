@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, Form, Nav, Container, Row, Col, Tab, InputGroup, Image } from "react-bootstrap";
 import BetCards from "./BetCards";
 

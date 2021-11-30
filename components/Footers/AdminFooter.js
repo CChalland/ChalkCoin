@@ -1,6 +1,3 @@
-import React from "react";
-
-// react-bootstrap components
 import { Container } from "react-bootstrap";
 
 function AdminFooter() {

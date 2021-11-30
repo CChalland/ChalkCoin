@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
 
 function GamePlay(props) {

@@ -1,7 +1,7 @@
+import { useState } from "react";
+import Link from "next/link";
 // react-bootstrap components
 import { Button, Dropdown, Navbar, Nav, Container, Row, Col } from "react-bootstrap";
-import React, { useState } from "react";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/client";
 
 function AdminNavbar() {

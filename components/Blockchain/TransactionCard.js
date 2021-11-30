@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Row, Col, Card, Collapse, Image } from "react-bootstrap";
 import GameCard from "../Game/GameCard";
 

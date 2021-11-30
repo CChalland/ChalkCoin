@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { providers, signIn, getSession, csrfToken } from "next-auth/client";
 import { Button, Card, Tab, Form, Nav, Container, Row, Col, Alert } from "react-bootstrap";

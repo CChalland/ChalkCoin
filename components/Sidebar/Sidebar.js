@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 // react-bootstrap components
 import { Collapse, Nav, Container, Row, Col, Image } from "react-bootstrap";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
 import WalletImg from "../../../assets/image/illustration2.png";

@@ -1,4 +1,3 @@
-import React from "react";
 import App from "next/app";
 import { Provider } from "next-auth/client";
 import { BlockchainProvider } from "../contexts/Blockchain.Context";
