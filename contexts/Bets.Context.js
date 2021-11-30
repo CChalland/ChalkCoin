@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useContext } from "react";
+import { createContext, useReducer, useEffect, useContext } from "react";
 import axios from "axios";
 import betsReducer from "../reducers/Bets.Reducer";
 import { EventsFinder } from "../helpers/EventsHelper";

@@ -1,4 +1,3 @@
-import React from "react";
 import BetCard from "../Bet/BetCard";
 import TransactionCard from "../Blockchain/TransactionCard";
 

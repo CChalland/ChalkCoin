@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
 import featureIcon1 from "../../../assets/image/feature-1.png";

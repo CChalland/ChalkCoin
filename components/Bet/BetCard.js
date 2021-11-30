@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useEffect, useState } from "react";
+import { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Collapse, Button, InputGroup } from "react-bootstrap";
 import { BetDispatch } from "../../contexts/Bets.Context";
 import BetScore from "./BetScore";

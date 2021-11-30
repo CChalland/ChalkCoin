@@ -1,4 +1,3 @@
-import React from "react";
 import { Row, Col, Image } from "react-bootstrap";
 
 function GameScore({ gameScoreCardData, screenSize }) {

@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/client";
-import { useEffect, useContext, useState } from "react";
+import { useContext } from "react";
 import { Container } from "react-bootstrap";
 import { BetContext } from "../contexts/Bets.Context";
 import { SportContext } from "../contexts/Sports.Context";
@@ -14,23 +14,16 @@ import ExpiringBets from "../components/Index/User/ExpiringBets";
 import UpcomingGames from "../components/Index/User/UpcomingGames";
 
 function IndexPage({ currentUser }) {
-	const sportWithBets = useContext(BetContext);
-	const sportsGames = useContext(SportContext);
-	const [expiringBets, setExpiringBets] = useState([]);
-	const [upcomingGames, setUpcomingGames] = useState([]);
-
-	useEffect(() => {}, [sportWithBets.pendingBets.openBets]);
-
-	console.log("sportWithBets", sportWithBets);
-	console.log("sportsGames", sportsGames);
+	const bets = useContext(BetContext);
+	const games = useContext(SportContext);
 
 	return (
 		<Container fluid>
 			{currentUser.id ? (
 				<>
 					<UserCard user={currentUser} />
-					<ExpiringBets bets={expiringBets} />
-					<UpcomingGames games={upcomingGames} />
+					<ExpiringBets bets={bets.pendingBets.openBets} />
+					<UpcomingGames games={games} />
 				</>
 			) : (
 				<>

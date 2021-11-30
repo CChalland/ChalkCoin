@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Row, Col, Button, Collapse, Carousel, Card } from "react-bootstrap";
 import GameScore from "./GameScore";
 import GamePlay from "./GamePlay";

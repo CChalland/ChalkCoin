@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useEffect, useState } from "react";
+import { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import { SportContext, SportDispatch } from "../contexts/Sports.Context";
 import GameCard from "../components/Game/GameCard";

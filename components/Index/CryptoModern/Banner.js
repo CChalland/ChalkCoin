@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 import { Container, Row, Col, Image, Button, Card } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
 import bannerImg from "../../../assets/image/banner-bg.png";
