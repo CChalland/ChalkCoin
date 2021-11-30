@@ -2,8 +2,8 @@ import React from "react";
 import { Container, Row, Col, Image, Card } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
 
-export default function ExpiringBets({ user }) {
-	console.log("ExpiringBets - user", user);
+export default function ExpiringBets({ bets }) {
+	console.log("ExpiringBets - bets", bets);
 
 	return (
 		<Container>

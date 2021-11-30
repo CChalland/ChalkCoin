@@ -78,7 +78,7 @@ const options = {
 				if (!("accepter" in user) || !("recipient" in user) || !("requester" in user)) {
 					const currentUser = await prisma.user.findFirst({
 						where: {
-							id: user.id,
+							id: parseInt(user.id),
 						},
 						include: {
 							requester: {

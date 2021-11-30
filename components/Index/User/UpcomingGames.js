@@ -2,8 +2,8 @@ import React from "react";
 import { Container, Row, Col, Image, Card } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
 
-export default function UpcomingGames({ user }) {
-	console.log("UpcomingGames - user", user);
+export default function UpcomingGames({ games }) {
+	console.log("UpcomingGames - games", games);
 
 	return (
 		<Container>

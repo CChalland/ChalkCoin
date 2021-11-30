@@ -4,7 +4,7 @@ const gamesAddedtoBets = (bets, games) => {
 			const sportGames = games.find((item) => item.display_name === sport.displayName);
 			const event = sportGames.data.events?.find((event) => event.id === bet.details.gameId);
 			bet.event = event;
-			if (event?.status.type.state === "post") {
+			if (event?.status.type.name === "STATUS_FINAL") {
 				bet.openStatus = "Ended";
 			} else if (event?.status.type.state === "in") {
 				bet.openStatus = event.status.period <= 1 ? "danger" : "Closed";
