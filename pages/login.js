@@ -327,11 +327,11 @@ export async function getServerSideProps(context) {
 	const { req, res } = context;
 	const session = await getSession({ req });
 
-	// if (session) {
-	// 	res.writeHead(302, { Location: "/" });
-	// 	res.end();
-	// 	return { props: {} };
-	// }
+	if (session) {
+		res.writeHead(302, { Location: "/" });
+		res.end();
+		return { props: {} };
+	}
 	return {
 		props: {
 			providers: await providers(context),
