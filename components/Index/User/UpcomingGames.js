@@ -10,8 +10,8 @@ export default function UpcomingGames({ games, currentUser, users }) {
 		setUpcomingGames(games.sort((a, b) => new Date(a.date) - new Date(b.date)));
 	}, [games]);
 
-	console.log("UpcomingGames - games", games);
-	console.log("UpcomingGames - upcomingGames", upcomingGames);
+	// console.log("UpcomingGames - games", games);
+	// console.log("UpcomingGames - upcomingGames", upcomingGames);
 
 	return (
 		<Container fluid className="mx-0 px-0">

@@ -21,7 +21,7 @@ function IndexPage({ currentUser, users }) {
 		<Container fluid>
 			{currentUser.id ? (
 				<Row>
-					<UserCard user={currentUser} />
+					<UserCard user={currentUser} bets={bets.userBets} />
 					<ExpiringBets
 						user={currentUser}
 						bets={bets.pendingBets.openBets
