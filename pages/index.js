@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/client";
 import { useContext } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import { BetContext } from "../contexts/Bets.Context";
 import { SportContext } from "../contexts/Sports.Context";
 import Banner from "../components/Index/CryptoModern/Banner";
@@ -20,7 +20,7 @@ function IndexPage({ currentUser, users }) {
 	return (
 		<Container fluid>
 			{currentUser.id ? (
-				<>
+				<Row>
 					<UserCard user={currentUser} />
 					<ExpiringBets
 						user={currentUser}
@@ -43,7 +43,7 @@ function IndexPage({ currentUser, users }) {
 						currentUser={currentUser}
 						users={users}
 					/>
-				</>
+				</Row>
 			) : (
 				<>
 					<Banner />

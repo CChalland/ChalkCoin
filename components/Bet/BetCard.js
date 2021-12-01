@@ -58,7 +58,7 @@ const styles = {
 	}),
 };
 
-function BetCard({ acceptState, bet, currentUser }) {
+function BetCard({ acceptState, bet, currentUser, index = false }) {
 	const dispatch = useContext(BetDispatch);
 	const betData = BetGameData(bet, currentUser.id);
 	const [awayWinProb, setAwayWinProb] = useState(betData.away.winProb);
@@ -157,7 +157,7 @@ function BetCard({ acceptState, bet, currentUser }) {
 	// console.log("BetCard - betData", betData);
 
 	return (
-		<Row>
+		<Row className={index ? "mx-0 px-0" : ""}>
 			{/* For extra lage screen */}
 			<Col xxl={{ span: 9, offset: 1 }} className="d-none d-xl-block">
 				<Card style={{ border: `1px solid ${cardBorder}` }}>
