@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Card } from "react-bootstrap";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { Fade } from "react-awesome-reveal";
 import BetCard from "../../Bet/BetCard";
 

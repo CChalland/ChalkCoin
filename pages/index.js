@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/client";
-import { useContext } from "react";
-import { Container, Row } from "react-bootstrap";
+import { useContext, useState } from "react";
+import { Alert, Container, Col, Row } from "react-bootstrap";
 import { BetContext } from "../contexts/Bets.Context";
 import { SportContext } from "../contexts/Sports.Context";
 import Banner from "../components/Index/CryptoModern/Banner";
@@ -16,34 +16,63 @@ import UpcomingGames from "../components/Index/User/UpcomingGames";
 function IndexPage({ currentUser, users }) {
 	const bets = useContext(BetContext);
 	const games = useContext(SportContext);
+	const [welcomeState, setWelcomeState] = useState(true);
+	let welcomeAlert;
+
+	if (welcomeState) {
+		welcomeAlert = (
+			<Alert className="alert-with-icon" variant="primary">
+				<button
+					aria-hidden={true}
+					className="close"
+					data-dismiss="alert"
+					type="button"
+					onClick={() => {
+						setWelcomeState(false);
+					}}
+				>
+					<i className="nc-icon nc-simple-remove"></i>
+				</button>
+				<span data-notify="icon" className="nc-icon nc-bell-55"></span>
+				<span data-notify="message">
+					{"Please keep in mind that this is a personal project and has no company backing it."}
+				</span>
+			</Alert>
+		);
+	}
 
 	return (
 		<Container fluid>
 			{currentUser.id ? (
-				<Row>
-					<UserCard user={currentUser} bets={bets.userBets} />
-					<ExpiringBets
-						user={currentUser}
-						bets={bets.pendingBets.openBets
-							.map((sport) => {
-								return sport.bets;
-							})
-							.flat()
-							.filter((bet) => bet.requesterId !== currentUser.id)}
-					/>
-					<UpcomingGames
-						games={games
-							.map((sport) => {
-								return sport.data.events?.map((event) => {
-									return { ...event, sport: sport.display_name };
-								});
-							})
-							.flat()
-							.filter((event) => event?.status.type.state === "pre")}
-						currentUser={currentUser}
-						users={users}
-					/>
-				</Row>
+				<>
+					<Row>
+						<Col>{welcomeAlert}</Col>
+					</Row>
+					<Row>
+						<UserCard user={currentUser} bets={bets.userBets} />
+						<ExpiringBets
+							user={currentUser}
+							bets={bets.pendingBets.openBets
+								.map((sport) => {
+									return sport.bets;
+								})
+								.flat()
+								.filter((bet) => bet.requesterId !== currentUser.id)}
+						/>
+						<UpcomingGames
+							games={games
+								.map((sport) => {
+									return sport.data.events?.map((event) => {
+										return { ...event, sport: sport.display_name };
+									});
+								})
+								.flat()
+								.filter((event) => event?.status.type.state === "pre")}
+							currentUser={currentUser}
+							users={users}
+						/>
+					</Row>
+				</>
 			) : (
 				<>
 					<Banner />

@@ -17,7 +17,7 @@ export default function UserCard({ user, bets }) {
 	}, [bets]);
 
 	return (
-		<Container>
+		<Container fluid>
 			<Row>
 				<Col>
 					<Card>
