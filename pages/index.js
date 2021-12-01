@@ -13,7 +13,7 @@ import UserCard from "../components/Index/User/UserCard";
 import ExpiringBets from "../components/Index/User/ExpiringBets";
 import UpcomingGames from "../components/Index/User/UpcomingGames";
 
-function IndexPage({ currentUser }) {
+function IndexPage({ currentUser, users }) {
 	const bets = useContext(BetContext);
 	const games = useContext(SportContext);
 
@@ -22,8 +22,27 @@ function IndexPage({ currentUser }) {
 			{currentUser.id ? (
 				<>
 					<UserCard user={currentUser} />
-					<ExpiringBets bets={bets.pendingBets.openBets} />
-					<UpcomingGames games={games} />
+					<ExpiringBets
+						user={currentUser}
+						bets={bets.pendingBets.openBets
+							.map((sport) => {
+								return sport.bets;
+							})
+							.flat()
+							.filter((bet) => bet.requesterId !== currentUser.id)}
+					/>
+					<UpcomingGames
+						games={games
+							.map((sport) => {
+								return sport.data.events?.map((event) => {
+									return { ...event, sport: sport.display_name };
+								});
+							})
+							.flat()
+							.filter((event) => event?.status.type.state === "pre")}
+						currentUser={currentUser}
+						users={users}
+					/>
 				</>
 			) : (
 				<>
@@ -44,6 +63,7 @@ export async function getServerSideProps(context) {
 	const { req, res } = context;
 	const session = await getSession({ req });
 	let currentUser = {};
+	let users = [];
 	if (session) {
 		currentUser = await prisma.user.findUnique({
 			where: {
@@ -66,9 +86,25 @@ export async function getServerSideProps(context) {
 		delete currentUser.emailVerified;
 		delete currentUser.createdAt;
 		delete currentUser.updatedAt;
+
+		users = await prisma.user.findMany();
+		users = users
+			.map((user) => {
+				delete user.password;
+				delete user.balance;
+				delete user.paypal;
+				delete user.emailVerified;
+				delete user.createdAt;
+				delete user.updatedAt;
+
+				return user;
+			})
+			.filter((user) => {
+				return user.id !== currentUser.id;
+			});
 	}
 
 	return {
-		props: { currentUser },
+		props: { currentUser, users },
 	};
 }
