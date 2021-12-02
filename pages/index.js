@@ -1,8 +1,9 @@
 import { getSession } from "next-auth/client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Alert, Container, Col, Row } from "react-bootstrap";
 import { BetContext } from "../contexts/Bets.Context";
 import { SportContext } from "../contexts/Sports.Context";
+import { BlockchainContext } from "../contexts/Blockchain.Context";
 import Banner from "../components/Index/CryptoModern/Banner";
 import Features from "../components/Index/CryptoModern/Features";
 import Privacy from "../components/Index/CryptoModern/Privacy";
@@ -12,12 +13,25 @@ import FaqSection from "../components/Index/CryptoModern/FaqSection";
 import UserCard from "../components/Index/User/UserCard";
 import ExpiringBets from "../components/Index/User/ExpiringBets";
 import UpcomingGames from "../components/Index/User/UpcomingGames";
+import PendingTransactions from "../components/User/PendingTransactions";
 
 function IndexPage({ currentUser, users }) {
 	const bets = useContext(BetContext);
 	const games = useContext(SportContext);
+	const blockchain = useContext(BlockchainContext);
+	const [pendingTransactions, setPendingTransactions] = useState(blockchain.pendingTransactions);
 	const [welcomeState, setWelcomeState] = useState(true);
-	let welcomeAlert;
+	const [mineState, setMineState] = useState(false);
+	let welcomeAlert, mineAlert;
+
+	useEffect(() => {
+		setPendingTransactions(blockchain.pendingTransactions);
+	}, [blockchain.pendingTransactions]);
+
+	useEffect(() => {
+		if (pendingTransactions.length > 10) setMineState(true);
+		else setMineState(false);
+	}, [pendingTransactions]);
 
 	if (welcomeState) {
 		welcomeAlert = (
@@ -40,6 +54,27 @@ function IndexPage({ currentUser, users }) {
 			</Alert>
 		);
 	}
+	if (mineState) {
+		mineAlert = (
+			<Alert className="alert-with-icon" variant="success">
+				<button
+					aria-hidden={true}
+					className="close"
+					data-dismiss="alert"
+					type="button"
+					onClick={() => {
+						setMineState(false);
+					}}
+				>
+					<i className="nc-icon nc-simple-remove"></i>
+				</button>
+				<span data-notify="icon" className="nc-icon nc-bell-55"></span>
+				<span data-notify="message">{"There's enough pending transactions to be mined."}</span>
+			</Alert>
+		);
+	}
+
+	console.log("bets", currentUser);
 
 	return (
 		<Container fluid>
@@ -47,6 +82,9 @@ function IndexPage({ currentUser, users }) {
 				<>
 					<Row>
 						<Col>{welcomeAlert}</Col>
+					</Row>
+					<Row>
+						<Col>{mineAlert}</Col>
 					</Row>
 					<Row>
 						<UserCard user={currentUser} bets={bets.userBets} />
@@ -70,6 +108,11 @@ function IndexPage({ currentUser, users }) {
 								.filter((event) => event?.status.type.state === "pre")}
 							currentUser={currentUser}
 							users={users}
+						/>
+						<PendingTransactions
+							pendingTransactions={pendingTransactions}
+							mineState={mineState}
+							user={currentUser}
 						/>
 					</Row>
 				</>

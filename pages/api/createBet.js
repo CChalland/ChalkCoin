@@ -29,9 +29,7 @@ export default async (req, res) => {
 		{ displayName: "MLS", key: "soccer_usa_mls" },
 	];
 
-	if (req.method !== "POST") {
-		return res.status(405).json({ message: "Method not allowed" });
-	} else if (req.method === "POST") {
+	if (req.method === "POST") {
 		const bet = req.body;
 		if (session) {
 			const oddsKey = oddsSportKeys.find((sport) => sport.displayName === bet.details.sport);
@@ -69,5 +67,7 @@ export default async (req, res) => {
 				// throw e;
 			}
 		}
+	} else {
+		return res.status(405).json({ message: "Method not allowed" });
 	}
 };

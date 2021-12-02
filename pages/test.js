@@ -9,7 +9,7 @@ function Test(props) {
 	const getBetsData = async () => {
 		let data;
 		try {
-			await axios.get(`${process.env.APP_URL}/api/bets?type=currentUser`).then((res) => {
+			await axios.get(`/api/bets?type=currentUser`).then((res) => {
 				data = res.data;
 				console.log(data);
 			});

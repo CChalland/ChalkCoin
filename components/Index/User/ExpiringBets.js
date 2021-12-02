@@ -14,7 +14,9 @@ export default function ExpiringBets({ bets, user }) {
 		<Container fluid className="mx-0 px-0">
 			<Row>
 				<Col>
-					<h1>Expiring Bets</h1>
+					<h1 className="mb-2" style={{ fontSize: 32 }}>
+						Expiring Bets
+					</h1>
 				</Col>
 			</Row>
 

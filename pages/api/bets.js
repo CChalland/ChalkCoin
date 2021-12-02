@@ -123,9 +123,7 @@ const betSorter = async (bets) => {
 
 export default async (req, res) => {
 	const session = await getSession({ req });
-	if (req.method !== "GET") {
-		return res.status(405).json({ message: "Method not allowed" });
-	} else if (req.method === "GET") {
+	if (req.method === "GET") {
 		let openBets, recipientBets, acceptedBets, completedBets;
 		if (req.query.type === "currentUser") {
 			if (session) {
@@ -237,5 +235,7 @@ export default async (req, res) => {
 				completedBets: completedBets,
 			});
 		}
+	} else {
+		return res.status(405).json({ message: "Method not allowed" });
 	}
 };

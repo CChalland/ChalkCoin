@@ -17,7 +17,9 @@ export default function UpcomingGames({ games, currentUser, users }) {
 		<Container fluid className="mx-0 px-0">
 			<Row>
 				<Col>
-					<h1>Upcoming Games</h1>
+					<h1 className="mb-0" style={{ fontSize: 32 }}>
+						Upcoming Games
+					</h1>
 				</Col>
 			</Row>
 
