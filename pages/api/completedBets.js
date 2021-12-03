@@ -17,9 +17,9 @@ export default async (req, res) => {
 						const transactionBody = {
 							amount: bet.amount,
 							sender:
-								bet.details.winner === winner ? bet.requester.walletAddress : bet.accepter.walletAddress,
-							recipient:
 								bet.details.winner === winner ? bet.accepter.walletAddress : bet.requester.walletAddress,
+							recipient:
+								bet.details.winner === winner ? bet.requester.walletAddress : bet.accepter.walletAddress,
 							details: {
 								sport: bet.details.sport,
 								betId: bet.id,

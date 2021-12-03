@@ -29,7 +29,7 @@ function IndexPage({ currentUser, users }) {
 	}, [blockchain.pendingTransactions]);
 
 	useEffect(() => {
-		if (pendingTransactions.length > 10) setMineState(true);
+		if (pendingTransactions.length >= 10) setMineState(true);
 		else setMineState(false);
 	}, [pendingTransactions]);
 

@@ -138,7 +138,7 @@ export function BetProvider(props) {
 					const event = completedAcceptedBets.find((acptBet) => acptBet.event.id === bet.details.gameId);
 					return { ...bet, event: event.event };
 				});
-				dispatch({ type: "COMPLETED BET", bets: betsData });
+				dispatch({ type: "COMPLETED ACCEPTED BET", bets: betsData });
 				blockchainDispatch({ type: "ADD PENDING", bets: betsData });
 			} catch (err) {
 				console.log(err.message);

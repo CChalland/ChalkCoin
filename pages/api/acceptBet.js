@@ -1,12 +1,11 @@
 import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
+import { UserBalance } from "../../helpers/UserBalance";
 
 export default async (req, res) => {
 	const session = await getSession({ req });
 
-	if (req.method !== "POST") {
-		return res.status(405).json({ message: "Method not allowed" });
-	} else if (req.method === "POST") {
+	if (req.method === "POST") {
 		const body = req.body;
 		if (session) {
 			try {
@@ -54,5 +53,7 @@ export default async (req, res) => {
 				// throw e;
 			}
 		}
+	} else {
+		return res.status(405).json({ message: "Method not allowed" });
 	}
 };

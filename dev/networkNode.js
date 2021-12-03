@@ -245,9 +245,7 @@ app.get("/transaction/:transactionId", function (req, res) {
 app.get("/address/:address", function (req, res) {
 	const address = req.params.address;
 	const addressData = betoken.getAddressData(address);
-	res.json({
-		addressData: addressData,
-	});
+	res.json({ ...addressData });
 });
 
 app.listen(port, function () {

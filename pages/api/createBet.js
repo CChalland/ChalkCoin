@@ -1,6 +1,7 @@
 import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
 import axios from "axios";
+import { UserBalance } from "../../helpers/UserBalance";
 
 const fetchData = async (sportKey) =>
 	await axios
@@ -42,29 +43,37 @@ export default async (req, res) => {
 			}
 			console.log(betOdds);
 
-			try {
-				let betData = {
-					amount: parseFloat(bet.amount),
-					details: bet.details,
-					currency: bet.currency,
-					requester: {
-						connect: {
-							id: session.user.id,
-						},
-					},
-				};
-				if (betOdds) betData.odds = await betOdds;
-				if (bet.recipientId) betData.recipient = { connect: { id: bet.recipientId } };
-				const createdBet = await prisma.bet.create({
-					data: betData,
-				});
-				return res.json(createdBet);
-			} catch (e) {
-				console.log(e);
-				// if (e.code === "P2002") {
-				// 	return res.json({ error: `There's already an bet with that ${e.meta.target[0]}` });
-				// }
-				// throw e;
+			const userBalance = await UserBalance(session, prisma);
+
+			if (userBalance - parseFloat(bet.amount) >= 0) {
+				try {
+					if (balance > 0) {
+						let betData = {
+							amount: parseFloat(bet.amount),
+							details: bet.details,
+							currency: bet.currency,
+							requester: {
+								connect: {
+									id: session.user.id,
+								},
+							},
+						};
+						if (betOdds) betData.odds = await betOdds;
+						if (bet.recipientId) betData.recipient = { connect: { id: bet.recipientId } };
+						const createdBet = await prisma.bet.create({
+							data: betData,
+						});
+						return res.json(createdBet);
+					}
+				} catch (e) {
+					console.log(e);
+					// if (e.code === "P2002") {
+					// 	return res.json({ error: `There's already an bet with that ${e.meta.target[0]}` });
+					// }
+					// throw e;
+				}
+			} else {
+				return res.json({ message: "You don't have enough funds!" });
 			}
 		}
 	} else {
