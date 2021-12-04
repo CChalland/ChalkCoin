@@ -34,6 +34,7 @@ function BetModal(props) {
 	const [recipientState, setRecipientState] = useState(false);
 	const [submitBetState, setSubmitBetState] = useState(false);
 	const [betButtonState, setBetButtonState] = useState(true);
+	const [fundsError, setFundsError] = useState(false);
 
 	const minValue = (value, min) => min < value;
 	// const data = {
@@ -141,9 +142,12 @@ function BetModal(props) {
 				requesterId: currentUser.id,
 			};
 			if (betType === "recipient") submitBet.recipientId = recipient.id;
-			await axios.post(`/api/createBet`, submitBet).then((res) => {
+			const res = await axios.post(`/api/createBet`, submitBet);
+			if (res.data.message === "You don't have enough funds!") {
+				setFundsError(true);
+			} else if (res.data) {
 				dispatch({ type: "ADD BET", bet: res.data, recipient: recipient.id });
-			});
+			}
 		}
 	};
 

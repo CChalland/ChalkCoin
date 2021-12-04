@@ -43,28 +43,31 @@ export default async (req, res) => {
 			}
 			console.log(betOdds);
 
-			const userBalance = await UserBalance(session, prisma);
+			const userData = await prisma.user.findUnique({
+				where: { id: session.user.id },
+				select: { id: true, walletAddress: true, balance: true },
+			});
 
-			if (userBalance - parseFloat(bet.amount) >= 0) {
+			const user = await UserBalance(userData, prisma);
+
+			if (user.balance - parseFloat(bet.amount) >= 0) {
 				try {
-					if (balance > 0) {
-						let betData = {
-							amount: parseFloat(bet.amount),
-							details: bet.details,
-							currency: bet.currency,
-							requester: {
-								connect: {
-									id: session.user.id,
-								},
+					let betData = {
+						amount: parseFloat(bet.amount),
+						details: bet.details,
+						currency: bet.currency,
+						requester: {
+							connect: {
+								id: user.id,
 							},
-						};
-						if (betOdds) betData.odds = await betOdds;
-						if (bet.recipientId) betData.recipient = { connect: { id: bet.recipientId } };
-						const createdBet = await prisma.bet.create({
-							data: betData,
-						});
-						return res.json(createdBet);
-					}
+						},
+					};
+					if (betOdds) betData.odds = await betOdds;
+					if (bet.recipientId) betData.recipient = { connect: { id: bet.recipientId } };
+					const createdBet = await prisma.bet.create({
+						data: betData,
+					});
+					return res.json(createdBet);
 				} catch (e) {
 					console.log(e);
 					// if (e.code === "P2002") {

@@ -10,23 +10,29 @@ export default async (req, res) => {
 			try {
 				bets = await Promise.all(
 					bets.map(async (bet) => {
-						const winner = bet.event.competitions[0].competitors[0].winner
+						const winnerTeam = bet.event.competitions[0].competitors[0].winner
 							? bet.event.competitions[0].competitors[0].team.shortDisplayName
 							: bet.event.competitions[0].competitors[1].team.shortDisplayName;
-						const winnerId = bet.details.winner === winner ? bet.requesterId : bet.accepterId;
+						const winnerUser =
+							bet.details.winner === winnerTeam
+								? { id: bet.requesterId, walletAddress: bet.requester.walletAddress }
+								: { id: bet.accepterId, walletAddress: bet.accepter.walletAddress };
+						const loserUser =
+							bet.details.winner === winnerTeam
+								? { id: bet.accepterId, walletAddress: bet.accepter.walletAddress }
+								: { id: bet.requesterId, walletAddress: bet.requester.walletAddress };
+						const winnerId = bet.details.winner === winnerTeam ? bet.requesterId : bet.accepterId;
 						const transactionBody = {
 							amount: bet.amount,
-							sender:
-								bet.details.winner === winner ? bet.accepter.walletAddress : bet.requester.walletAddress,
-							recipient:
-								bet.details.winner === winner ? bet.requester.walletAddress : bet.accepter.walletAddress,
+							sender: loserUser.walletAddress,
+							recipient: winnerUser.walletAddress,
 							details: {
 								sport: bet.details.sport,
 								betId: bet.id,
 								gameId: bet.details.gameId,
 								date: bet.details.date,
 								name: bet.details.name,
-								winner: winner,
+								winner: winnerTeam,
 							},
 						};
 

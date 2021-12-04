@@ -10,7 +10,12 @@ export default async (req, res) => {
 		const bet = req.body;
 		if (session) {
 			try {
-				let userBalance = await UserBalance(session, prisma);
+				const user = await prisma.user.findUnique({
+					where: { id: session.user.id },
+					select: { id: true, walletAddress: true, balance: true },
+				});
+
+				let userBalance = await UserBalance(user, prisma);
 				return res.json(userBalance);
 			} catch (e) {
 				console.log(e);
