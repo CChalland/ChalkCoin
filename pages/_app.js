@@ -3,6 +3,7 @@ import { Provider } from "next-auth/client";
 import { BlockchainProvider } from "../contexts/Blockchain.Context";
 import { SportProvider } from "../contexts/Sports.Context";
 import { BetProvider } from "../contexts/Bets.Context";
+import { UserProvider } from "../contexts/User.Context";
 import Layout from "../components/Layout/Layout";
 // Styles
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -30,9 +31,11 @@ class MyApp extends App {
 				<BlockchainProvider>
 					<SportProvider>
 						<BetProvider>
-							<Layout>
-								<Component {...pageProps} />
-							</Layout>
+							<UserProvider>
+								<Layout>
+									<Component {...pageProps} />
+								</Layout>
+							</UserProvider>
 						</BetProvider>
 					</SportProvider>
 				</BlockchainProvider>
