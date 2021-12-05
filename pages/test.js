@@ -9,7 +9,7 @@ function Test(props) {
 	const getData = async () => {
 		let data;
 		try {
-			await axios.post(`/api/test`, { amount: "1" }).then((res) => {
+			await axios.post(`/api/test`, { id: 1, amount: 1.5 }).then((res) => {
 				data = res.data;
 				console.log(data);
 			});

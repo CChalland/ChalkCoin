@@ -1,7 +1,7 @@
 import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
 import axios from "axios";
-import { UserBalance } from "../../helpers/UserBalance";
+import { UserWallet } from "../../helpers/UserWallet";
 
 const fetchData = async (sportKey) =>
 	await axios
@@ -48,7 +48,7 @@ export default async (req, res) => {
 				select: { id: true, walletAddress: true, balance: true },
 			});
 
-			const user = await UserBalance(userData, prisma);
+			const user = await UserWallet(userData, prisma);
 
 			if (user.balance - parseFloat(bet.amount) >= 0) {
 				try {
@@ -76,7 +76,7 @@ export default async (req, res) => {
 					// throw e;
 				}
 			} else {
-				return res.json({ message: "You don't have enough funds!" });
+				return res.json({ error: true, message: "You don't have enough funds!" });
 			}
 		}
 	} else {

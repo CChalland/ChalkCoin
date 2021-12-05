@@ -1,5 +1,6 @@
 import prisma from "../../contexts/prisma";
 import axios from "axios";
+import { UserWallet } from "../../helpers/UserWallet";
 
 export default async (req, res) => {
 	if (req.method !== "POST") {
@@ -15,17 +16,16 @@ export default async (req, res) => {
 							: bet.event.competitions[0].competitors[1].team.shortDisplayName;
 						const winnerUser =
 							bet.details.winner === winnerTeam
-								? { id: bet.requesterId, walletAddress: bet.requester.walletAddress }
-								: { id: bet.accepterId, walletAddress: bet.accepter.walletAddress };
+								? await UserWallet({ id: bet.requesterId }, prisma)
+								: await UserWallet({ id: bet.accepterId }, prisma);
 						const loserUser =
 							bet.details.winner === winnerTeam
-								? { id: bet.accepterId, walletAddress: bet.accepter.walletAddress }
-								: { id: bet.requesterId, walletAddress: bet.requester.walletAddress };
-						const winnerId = bet.details.winner === winnerTeam ? bet.requesterId : bet.accepterId;
+								? await UserWallet({ id: bet.accepterId }, prisma)
+								: await UserWallet({ id: bet.requesterId }, prisma);
 						const transactionBody = {
 							amount: bet.amount,
-							sender: loserUser.walletAddress,
-							recipient: winnerUser.walletAddress,
+							sender: loserUser.address,
+							recipient: winnerUser.address,
 							details: {
 								sport: bet.details.sport,
 								betId: bet.id,
@@ -51,7 +51,7 @@ export default async (req, res) => {
 									transactionId: transactionData.transactionId,
 									winner: {
 										connect: {
-											id: winnerId,
+											id: winnerUser.id,
 										},
 									},
 								},

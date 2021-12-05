@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function UserBalance(user, prisma) {
+export async function UserWallet(user, prisma) {
 	try {
 		const winningBets = await prisma.bet.findMany({
 			where: {
@@ -39,7 +39,7 @@ export async function UserBalance(user, prisma) {
 			select: { id: true, balance: true, walletAddress: true },
 		});
 
-		return { ...userData, winningBets, losingBets };
+		return { id: userData.id, balance: userData.balance, address: userData.walletAddress };
 	} catch (error) {
 		return error;
 	}

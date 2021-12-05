@@ -82,8 +82,8 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 	});
 	const handleBet = async (bet) => {
 		if (acceptState) {
-			const betReqData = { betId: bet.id, currentUserId: currentUser.id };
-			const res = await axios.post(`/api/acceptBet`, betReqData);
+			const res = await axios.post(`/api/acceptBet`, { id: bet.id, amount: bet.amount });
+			console.log("accepted bet - res", res);
 			dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
 		}
 	};
