@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button, Dropdown, Navbar, Nav, Container, Row, Col } from "react-bootstrap";
 import { signIn, signOut, useSession } from "next-auth/client";
 
-function AdminNavbar() {
+export default function UserNavbar() {
 	const [session, loading] = useSession();
 	const [collapseOpen, setCollapseOpen] = useState(false);
 
@@ -70,5 +70,3 @@ function AdminNavbar() {
 		</>
 	);
 }
-
-export default AdminNavbar;
