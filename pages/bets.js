@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
-import { getSession } from "next-auth/client";
+import { UserContext } from "../contexts/User.Context";
 import { BetContext } from "../contexts/Bets.Context";
 import BetCard from "../components/Bet/BetCard";
 
-function Bets({ currentUser }) {
+function Bets() {
+	const currentUser = useContext(UserContext);
 	const sportWithBets = useContext(BetContext);
 	const betSorted = sportWithBets.pendingBets.openBets
 		.map((sport) => {
@@ -425,36 +426,3 @@ function Bets({ currentUser }) {
 }
 
 export default Bets;
-
-export async function getServerSideProps(context) {
-	const { req, res } = context;
-	const session = await getSession({ req });
-	let currentUser = {};
-	if (session) {
-		currentUser = await prisma.user.findUnique({
-			where: {
-				id: session.user.id,
-			},
-			include: {
-				requester: {
-					select: { id: true },
-				},
-				accepter: {
-					select: { id: true },
-				},
-				recipient: {
-					select: { id: true },
-				},
-			},
-		});
-		delete currentUser.password;
-		delete currentUser.paypal;
-		delete currentUser.emailVerified;
-		delete currentUser.createdAt;
-		delete currentUser.updatedAt;
-	}
-
-	return {
-		props: { currentUser },
-	};
-}

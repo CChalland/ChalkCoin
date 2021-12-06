@@ -1,6 +1,7 @@
 import { getSession } from "next-auth/client";
 import { useContext, useEffect, useState } from "react";
 import { Alert, Container, Col, Row } from "react-bootstrap";
+import { UserContext } from "../contexts/User.Context";
 import { BetContext } from "../contexts/Bets.Context";
 import { SportContext } from "../contexts/Sports.Context";
 import { BlockchainContext } from "../contexts/Blockchain.Context";
@@ -15,7 +16,8 @@ import ExpiringBets from "../components/Index/User/ExpiringBets";
 import UpcomingGames from "../components/Index/User/UpcomingGames";
 import PendingTransactions from "../components/User/PendingTransactions";
 
-function IndexPage({ currentUser, users }) {
+function IndexPage({ users }) {
+	const currentUser = useContext(UserContext);
 	const bets = useContext(BetContext);
 	const games = useContext(SportContext);
 	const blockchain = useContext(BlockchainContext);
@@ -74,7 +76,7 @@ function IndexPage({ currentUser, users }) {
 		);
 	}
 
-	console.log("bets", currentUser);
+	// console.log("bets", currentUser);
 
 	return (
 		<Container fluid>
@@ -134,31 +136,8 @@ export default IndexPage;
 export async function getServerSideProps(context) {
 	const { req, res } = context;
 	const session = await getSession({ req });
-	let currentUser = {};
 	let users = [];
 	if (session) {
-		currentUser = await prisma.user.findUnique({
-			where: {
-				id: session.user.id,
-			},
-			include: {
-				requester: {
-					select: { id: true },
-				},
-				accepter: {
-					select: { id: true },
-				},
-				recipient: {
-					select: { id: true },
-				},
-			},
-		});
-		delete currentUser.password;
-		delete currentUser.paypal;
-		delete currentUser.emailVerified;
-		delete currentUser.createdAt;
-		delete currentUser.updatedAt;
-
 		users = await prisma.user.findMany();
 		users = users
 			.map((user) => {
@@ -172,11 +151,11 @@ export async function getServerSideProps(context) {
 				return user;
 			})
 			.filter((user) => {
-				return user.id !== currentUser.id;
+				return user.id !== session.user.id;
 			});
 	}
 
 	return {
-		props: { currentUser, users },
+		props: { users },
 	};
 }

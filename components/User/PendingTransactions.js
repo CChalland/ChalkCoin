@@ -22,7 +22,7 @@ export default function PendingTransactions({ pendingTransactions, mineState, us
 			});
 	};
 
-	console.log("pendingTransactions", pendingTransactions);
+	// console.log("pendingTransactions", pendingTransactions);
 
 	return (
 		<Container fluid className="mx-0 px-0">

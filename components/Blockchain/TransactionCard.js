@@ -15,7 +15,7 @@ function TransactionCard({ transactionData, userAddress, panelKey }) {
 	const cursorStyle = gameState ? { cursor: "pointer" } : {};
 	const transactionBorder = transactionData.recipient === userAddress ? "#87CB16" : "#FB404B";
 
-	console.log({ transactionData, userAddress, panelKey });
+	// console.log({ transactionData, userAddress, panelKey });
 	return (
 		<Row className="my-3 mx-0 px-0">
 			{/* For md, lg, xl and up screens */}

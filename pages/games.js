@@ -1,16 +1,17 @@
 import { useContext, useCallback, useEffect, useState } from "react";
+import { getSession } from "next-auth/client";
 import { Container, Row } from "react-bootstrap";
 import { SportContext, SportDispatch } from "../contexts/Sports.Context";
-import GameCard from "../components/Game/GameCard";
-import prisma from "../contexts/prisma";
+import { UserContext } from "../contexts/User.Context";
 import axios from "axios";
-import { getSession } from "next-auth/client";
+import GameCard from "../components/Game/GameCard";
 
-function Games(props) {
+function Games({ query, users }) {
+	const currentUser = useContext(UserContext);
 	const sportsData = useContext(SportContext);
 	const dispatch = useContext(SportDispatch);
 	let sportData = sportsData.find((sport) => {
-		return sport.abbrv === props.query.sport.toUpperCase();
+		return sport.abbrv === query.sport.toUpperCase();
 	});
 
 	const getData = useCallback(async () => {
@@ -67,8 +68,8 @@ function Games(props) {
 						panelKey={key}
 						gameData={game}
 						sportName={sportData.display_name}
-						users={props.users}
-						currentUser={props.currentUser}
+						users={users}
+						currentUser={currentUser}
 						completed={game.status.type.completed}
 					/>
 				</Row>
@@ -91,20 +92,8 @@ export default Games;
 export async function getServerSideProps(context) {
 	const { req, res } = context;
 	const session = await getSession({ req });
-	let currentUser = {};
 	let users = [];
 	if (session) {
-		currentUser = await prisma.user.findUnique({
-			where: {
-				id: session.user.id,
-			},
-		});
-		delete currentUser.password;
-		delete currentUser.paypal;
-		delete currentUser.emailVerified;
-		delete currentUser.createdAt;
-		delete currentUser.updatedAt;
-
 		users = await prisma.user.findMany();
 		users = users
 			.map((user) => {
@@ -118,11 +107,11 @@ export async function getServerSideProps(context) {
 				return user;
 			})
 			.filter((user) => {
-				return user.id !== currentUser.id;
+				return user.id !== session.user.id;
 			});
 	}
 
 	return {
-		props: { query: context.query, users, currentUser },
+		props: { query: context.query, users },
 	};
 }

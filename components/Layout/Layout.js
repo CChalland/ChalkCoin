@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import { BetContext } from "../../contexts/Bets.Context.js";
+import { UserContext } from "../../contexts/User.Context.js";
+import axios from "axios";
 // core components
 import Sidebar from "../Sidebar/Sidebar.js";
 import UserNavbar from "./Navbar.js";
@@ -71,55 +72,41 @@ let routes = [
 ];
 
 export default function Layout(props) {
-	const bets = useContext(BetContext);
-	const [user, setUser] = useState();
+	const user = useContext(UserContext);
+	const [currentUser, setCurrentUser] = useState({
+		id: user?.id,
+		username: user?.username,
+		image: user?.image,
+		balance: user?.balance,
+		openLength: user?.openBets?.length,
+		acceptedLength: user?.acceptedBets?.length,
+		completedLength: user?.completedBets?.length,
+	});
 
 	useEffect(() => {
-		async function getUserData() {
-			let res = await axios.get(`/api/currentUser?type=layout`);
-			if (res.data && !res.data.error) {
-				setUser({ ...res.data });
-			}
-		}
-		getUserData();
-	}, []);
+		setCurrentUser({
+			id: user?.id,
+			username: user?.username,
+			image: user?.image,
+			balance: user?.balance,
+			openBetsLength: user?.openBets?.length,
+			acceptedBetsLength: user?.acceptedBets?.length,
+			completedLength: user?.completedBets?.length,
+		});
+	}, [user]);
 
-	useEffect(() => {
-		const openBets = [
-			bets.userBets?.pendingBets?.openBets
-				.map((sport) => {
-					return sport.bets;
-				})
-				.flat(),
-			bets.userBets?.pendingBets?.recipientBets
-				.map((sport) => {
-					return sport.bets;
-				})
-				.flat(),
-		].flat();
-		const acceptedBets = bets.userBets?.acceptedBets
-			?.map((sport) => {
-				return sport.bets;
-			})
-			.flat();
-
-		setUser({ ...user, openBetsLength: openBets?.length, acceptedBetsLength: acceptedBets?.length });
-	}, [bets]);
+	// console.log("Layout - user", user);
+	// console.log("Layout - currentUser", currentUser);
 
 	return (
-		<>
-			<div className="wrapper">
-				<Sidebar currentUser={user} routes={routes} image={image} background={"black"} />
-				<div className="main-panel">
-					<UserNavbar />
-					<div className="content">{props.children}</div>
-					<Footer />
-					<div
-						className="close-layer"
-						onClick={() => document.documentElement.classList.toggle("nav-open")}
-					/>
-				</div>
+		<div className="wrapper">
+			<Sidebar currentUser={currentUser} routes={routes} image={image} background={"black"} />
+			<div className="main-panel">
+				<UserNavbar />
+				<div className="content">{props.children}</div>
+				<Footer />
+				<div className="close-layer" onClick={() => document.documentElement.classList.toggle("nav-open")} />
 			</div>
-		</>
+		</div>
 	);
 }

@@ -5,16 +5,11 @@ import { Fade } from "react-awesome-reveal";
 export default function UserCard({ user, bets }) {
 	const [totalBets, setTotalBets] = useState(0);
 
+	console.log("UserCard - bets", user);
+
 	useEffect(() => {
-		if (bets.pendingBets) {
-			setTotalBets(
-				bets.acceptedBets?.length +
-					bets.completedBets?.length +
-					bets.pendingBets?.openBets.length +
-					bets.pendingBets?.recipientBets.length
-			);
-		}
-	}, [bets]);
+		setTotalBets(user.openBets?.length + user.acceptedBets?.length + user.completedBets?.length);
+	}, [user]);
 
 	return (
 		<Container fluid>
