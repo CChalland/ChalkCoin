@@ -5,7 +5,7 @@ import { Fade } from "react-awesome-reveal";
 export default function UserCard({ user, bets }) {
 	const [totalBets, setTotalBets] = useState(0);
 
-	console.log("UserCard - bets", user);
+	// console.log("UserCard - bets", user);
 
 	useEffect(() => {
 		setTotalBets(user.openBets?.length + user.acceptedBets?.length + user.completedBets?.length);

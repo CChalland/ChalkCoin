@@ -10,11 +10,7 @@ export function UserProvider(props) {
 	// const getData = useCallback(async () => {
 	// 	try {
 	// 		const res = await axios.get("/api/currentUser?type=layout");
-	// 		console.log("getData - res", res);
-	// 		dispatch({
-	// 			type: "INIT",
-	// 			data: res.data,
-	// 		});
+	// 		dispatch({ type: "INIT", data: res.data });
 	// 	} catch (err) {
 	// 		console.log(err.message);
 	// 	}
@@ -34,11 +30,7 @@ export function UserProvider(props) {
 		async function getUserData() {
 			try {
 				const res = await axios.get("/api/currentUser?type=layout");
-				console.log("getData - res", res);
-				dispatch({
-					type: "INIT",
-					data: res.data,
-				});
+				dispatch({ type: "INIT", data: res.data });
 			} catch (err) {
 				console.log(err.message);
 			}

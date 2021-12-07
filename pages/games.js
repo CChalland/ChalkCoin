@@ -1,62 +1,15 @@
-import { useContext, useCallback, useEffect, useState } from "react";
+import { useContext } from "react";
 import { getSession } from "next-auth/client";
 import { Container, Row } from "react-bootstrap";
-import { SportContext, SportDispatch } from "../contexts/Sports.Context";
+import { SportContext } from "../contexts/Sports.Context";
 import { UserContext } from "../contexts/User.Context";
-import axios from "axios";
 import GameCard from "../components/Game/GameCard";
 
 function Games({ query, users }) {
 	const currentUser = useContext(UserContext);
 	const sportsData = useContext(SportContext);
-	const dispatch = useContext(SportDispatch);
 	let sportData = sportsData.find((sport) => {
 		return sport.abbrv === query.sport.toUpperCase();
-	});
-
-	const getData = useCallback(async () => {
-		let preGames,
-			inGames,
-			postGames,
-			leagueData,
-			sortedGames = [];
-
-		if (sportData.reload) {
-			axios
-				.get(
-					`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
-				)
-				.then((response) => {
-					leagueData = response.data;
-					inGames = response.data.events.filter((game) => {
-						sportData.reload = true;
-						return game.status.type.state === "in";
-					});
-					postGames = response.data.events.filter((game) => {
-						return game.status.type.state === "post";
-					});
-					preGames = response.data.events.filter((game) => {
-						return game.status.type.state === "pre";
-					});
-
-					if (inGames.length === 0) sportData.reload = false;
-					sortedGames.push(inGames, postGames, preGames);
-					leagueData.events = sortedGames.flat();
-					dispatch({ type: sportData.display_name, data: leagueData, reload: sportData.reload });
-
-					console.log(sortedGames.flat());
-				});
-		}
-	});
-
-	useEffect(() => {
-		const timeOut = setTimeout(() => {
-			getData();
-		}, 15000);
-
-		return () => {
-			clearTimeout(timeOut);
-		};
 	});
 
 	let gameItems;
