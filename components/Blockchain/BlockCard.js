@@ -3,7 +3,7 @@ import { Row, Col, Card } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
 import { EventsFinder } from "../../helpers/EventsHelper";
 
-function BlockCard({ blockData, selected, genesisState }) {
+export default function BlockCard({ blockData, selected, genesisState }) {
 	const dispatch = useContext(BlockchainDispatch);
 	const cursorStyle = genesisState ? null : { cursor: "pointer" };
 
@@ -294,5 +294,3 @@ function BlockCard({ blockData, selected, genesisState }) {
 		</Row>
 	);
 }
-
-export default BlockCard;
