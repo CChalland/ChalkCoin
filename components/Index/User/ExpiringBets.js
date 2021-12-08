@@ -12,13 +12,15 @@ export default function ExpiringBets({ bets, user }) {
 
 	return (
 		<Container fluid className="mx-0 px-0">
-			<Row>
-				<Col>
-					<h1 className="mb-2" style={{ fontSize: 32 }}>
-						Expiring Bets
-					</h1>
-				</Col>
-			</Row>
+			{expiringBets.length !== 0 ? (
+				<Row>
+					<Col>
+						<h1 className="mb-2" style={{ fontSize: 32 }}>
+							Expiring Bets
+						</h1>
+					</Col>
+				</Row>
+			) : null}
 
 			<div className="mx-0 px-0" style={{ overflowY: "auto", maxHeight: "500px" }}>
 				{expiringBets.map((bet) => (

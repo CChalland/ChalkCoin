@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Image, Card } from "react-bootstrap";
+import { Container, Row, Col, Image, Card, Spinner } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
 
 export default function UserCard({ user, bets }) {
@@ -47,7 +47,11 @@ export default function UserCard({ user, bets }) {
 									</Row>
 									<Row>
 										<Col>
-											<h1 className="my-0">${user?.balance}</h1>
+											{user.balance ? (
+												<h1 className="my-0">${user?.balance}</h1>
+											) : (
+												<Spinner animation="border" variant="info" />
+											)}
 										</Col>
 									</Row>
 								</Col>
@@ -62,7 +66,11 @@ export default function UserCard({ user, bets }) {
 									</Row>
 									<Row>
 										<Col>
-											<h1 className="my-0">{totalBets}</h1>
+											{user.openBets ? (
+												<h1 className="my-0">{totalBets}</h1>
+											) : (
+												<Spinner animation="border" variant="info" />
+											)}
 										</Col>
 									</Row>
 								</Col>

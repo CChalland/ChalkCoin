@@ -5,6 +5,8 @@ import { UserContext } from "../contexts/User.Context";
 import { BetContext } from "../contexts/Bets.Context";
 import { SportContext } from "../contexts/Sports.Context";
 import { BlockchainContext } from "../contexts/Blockchain.Context";
+// Components
+import Loading from "../components/Utility/Loading";
 import Banner from "../components/Index/CryptoModern/Banner";
 import Features from "../components/Index/CryptoModern/Features";
 import Privacy from "../components/Index/CryptoModern/Privacy";
@@ -14,21 +16,45 @@ import FaqSection from "../components/Index/CryptoModern/FaqSection";
 import UserCard from "../components/Index/User/UserCard";
 import ExpiringBets from "../components/Index/User/ExpiringBets";
 import UpcomingGames from "../components/Index/User/UpcomingGames";
-import PendingTransactions from "../components/User/PendingTransactions";
+import PendingTransactions from "../components/Index/User/PendingTransactions";
 
 function IndexPage({ users }) {
 	const currentUser = useContext(UserContext);
 	const bets = useContext(BetContext);
 	const games = useContext(SportContext);
 	const blockchain = useContext(BlockchainContext);
+	const [expiringBets, setExpiringBets] = useState([]);
+	const [expiringBetsState, setExpiringBetsState] = useState(false);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchain.pendingTransactions);
+	const [pendingTransactionsState, setPendingTransactionsState] = useState(false);
 	const [welcomeState, setWelcomeState] = useState(true);
 	const [mineState, setMineState] = useState(false);
 	let welcomeAlert, mineAlert;
 
 	useEffect(() => {
 		setPendingTransactions(blockchain.pendingTransactions);
+		if (blockchain.pendingTransactions.length > 0) setPendingTransactionsState(true);
 	}, [blockchain.pendingTransactions]);
+
+	useEffect(() => {
+		setExpiringBets(
+			bets.pendingBets.openBets
+				.map((sport) => {
+					return sport.bets;
+				})
+				.flat()
+				.filter((bet) => bet.requesterId !== currentUser.id)
+		);
+		if (
+			bets.pendingBets.openBets
+				.map((sport) => {
+					return sport.bets;
+				})
+				.flat()
+				.filter((bet) => bet.requesterId !== currentUser.id).length > 0
+		)
+			setExpiringBetsState(true);
+	}, [bets.pendingBets.openBets]);
 
 	useEffect(() => {
 		if (pendingTransactions.length >= 10) setMineState(true);
@@ -76,8 +102,6 @@ function IndexPage({ users }) {
 		);
 	}
 
-	// console.log("bets", currentUser);
-
 	return (
 		<Container fluid>
 			{currentUser.id ? (
@@ -90,15 +114,7 @@ function IndexPage({ users }) {
 					</Row>
 					<Row>
 						<UserCard user={currentUser} bets={bets.userBets} />
-						<ExpiringBets
-							user={currentUser}
-							bets={bets.pendingBets.openBets
-								.map((sport) => {
-									return sport.bets;
-								})
-								.flat()
-								.filter((bet) => bet.requesterId !== currentUser.id)}
-						/>
+						{expiringBetsState ? <ExpiringBets user={currentUser} bets={expiringBets} /> : <Loading />}
 						<UpcomingGames
 							games={games
 								.map((sport) => {
@@ -111,11 +127,15 @@ function IndexPage({ users }) {
 							currentUser={currentUser}
 							users={users}
 						/>
-						<PendingTransactions
-							pendingTransactions={pendingTransactions}
-							mineState={mineState}
-							user={currentUser}
-						/>
+						{pendingTransactionsState ? (
+							<PendingTransactions
+								pendingTransactions={pendingTransactions}
+								mineState={mineState}
+								user={currentUser}
+							/>
+						) : (
+							<Loading />
+						)}
 					</Row>
 				</>
 			) : (

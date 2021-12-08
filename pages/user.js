@@ -6,11 +6,6 @@ import { BetContext } from "../contexts/Bets.Context";
 import BetsTabs from "../components/User/BetsTabs";
 import axios from "axios";
 import prisma from "../contexts/prisma";
-// Styles
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "assets/scss/betoken-bootstrap-react.scss?v=2.0.0";
-import "assets/css/Custom.css";
 
 const emailValidation = (value) =>
 	/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value);

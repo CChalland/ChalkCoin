@@ -1,10 +1,8 @@
 import { useState, useEffect, useContext } from "react";
-import { BetContext } from "../../contexts/Bets.Context.js";
 import { UserContext } from "../../contexts/User.Context.js";
 import { SportContext } from "../../contexts/Sports.Context.js";
-import axios from "axios";
 // core components
-import Sidebar from "../Sidebar/Sidebar.js";
+import Sidebar from "./Sidebar.js";
 import UserNavbar from "./Navbar.js";
 import Footer from "./Footer.js";
 import image from "../../static/img/full-screen-image-3.jpg";
