@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState, useEffect, useContext } from "react";
 import {
 	Container,
@@ -18,8 +19,8 @@ import { BetDispatch } from "../../contexts/Bets.Context";
 import GameScore from "../Game/GameScore";
 import axios from "axios";
 
-function BetModal(props) {
-	const { gameBetData, users, currentUser } = props;
+function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
+	const router = useRouter();
 	const dispatch = useContext(BetDispatch);
 	const [modal, setModal] = useState(false);
 	const [selectedWinner, setSelectedWinner] = useState("");
@@ -34,7 +35,6 @@ function BetModal(props) {
 	const [recipientState, setRecipientState] = useState(false);
 	const [submitBetState, setSubmitBetState] = useState(false);
 	const [betButtonState, setBetButtonState] = useState(true);
-	const [fundsError, setFundsError] = useState(false);
 
 	const minValue = (value, min) => min < value;
 	// const data = {
@@ -143,8 +143,15 @@ function BetModal(props) {
 			};
 			if (betType === "recipient") submitBet.recipientId = recipient.id;
 			const res = await axios.post(`/api/createBet`, submitBet);
-			if (res.data.message === "You don't have enough funds!") {
-				setFundsError(true);
+			if (res.data.error) {
+				router.push(
+					{
+						pathname: router.pathname,
+						query: { ...router.query, error: res.data.message },
+					},
+					undefined,
+					{ shallow: true }
+				);
 			} else if (res.data) {
 				dispatch({ type: "ADD BET", bet: res.data, recipient: recipient.id });
 			}
@@ -174,7 +181,7 @@ function BetModal(props) {
 		<>
 			{betButtonState ? (
 				<Button
-					className={props.buttonClassName}
+					className={buttonClassName}
 					type="button"
 					variant="success"
 					onClick={() => setModal(!modal)}

@@ -1,11 +1,13 @@
+import { useRouter } from "next/router";
 import { getSession } from "next-auth/client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { Alert, Container, Col, Row } from "react-bootstrap";
 import { UserContext } from "../contexts/User.Context";
 import { BetContext } from "../contexts/Bets.Context";
 import { SportContext } from "../contexts/Sports.Context";
 import { BlockchainContext } from "../contexts/Blockchain.Context";
 // Components
+import NotificationAlert from "react-notification-alert";
 import Loading from "../components/Utility/Loading";
 import Banner from "../components/Index/CryptoModern/Banner";
 import Features from "../components/Index/CryptoModern/Features";
@@ -18,7 +20,8 @@ import ExpiringBets from "../components/Index/User/ExpiringBets";
 import UpcomingGames from "../components/Index/User/UpcomingGames";
 import PendingTransactions from "../components/Index/User/PendingTransactions";
 
-function IndexPage({ users }) {
+export default function IndexPage({ users }) {
+	const router = useRouter();
 	const currentUser = useContext(UserContext);
 	const bets = useContext(BetContext);
 	const games = useContext(SportContext);
@@ -29,7 +32,30 @@ function IndexPage({ users }) {
 	const [pendingTransactionsState, setPendingTransactionsState] = useState(false);
 	const [welcomeState, setWelcomeState] = useState(true);
 	const [mineState, setMineState] = useState(false);
-	let welcomeAlert, mineAlert;
+	const notificationAlertRef = useRef(null);
+	const notify = (errMsg) => {
+		let options = {
+			place: "tc",
+			message: (
+				<div>
+					<div>
+						<b>{errMsg}</b>
+					</div>
+				</div>
+			),
+			type: "danger",
+			icon: "nc-icon nc-bell-55",
+			autoDismiss: 7,
+		};
+		notificationAlertRef.current.notificationAlert(options);
+		router.replace("/", undefined, { shallow: true });
+	};
+
+	useEffect(() => {
+		if (router.query.error) {
+			notify(router.query.error);
+		}
+	}, [router.query.error]);
 
 	useEffect(() => {
 		setPendingTransactions(blockchain.pendingTransactions);
@@ -61,6 +87,7 @@ function IndexPage({ users }) {
 		else setMineState(false);
 	}, [pendingTransactions]);
 
+	let welcomeAlert, mineAlert;
 	if (welcomeState) {
 		welcomeAlert = (
 			<Alert className="alert-with-icon" variant="primary">
@@ -103,55 +130,58 @@ function IndexPage({ users }) {
 	}
 
 	return (
-		<Container fluid>
-			{currentUser.id ? (
-				<>
-					<Row>
-						<Col>{welcomeAlert}</Col>
-					</Row>
-					<Row>
-						<Col>{mineAlert}</Col>
-					</Row>
-					<Row>
-						<UserCard user={currentUser} bets={bets.userBets} />
-						{expiringBetsState ? <ExpiringBets user={currentUser} bets={expiringBets} /> : <Loading />}
-						<UpcomingGames
-							games={games
-								.map((sport) => {
-									return sport.data.events?.map((event) => {
-										return { ...event, sport: sport.display_name };
-									});
-								})
-								.flat()
-								.filter((event) => event?.status.type.state === "pre")}
-							currentUser={currentUser}
-							users={users}
-						/>
-						{pendingTransactionsState ? (
-							<PendingTransactions
-								pendingTransactions={pendingTransactions}
-								mineState={mineState}
-								user={currentUser}
+		<>
+			<div className="rna-container">
+				<NotificationAlert ref={notificationAlertRef} />
+			</div>
+			<Container fluid>
+				{currentUser.id ? (
+					<>
+						<Row>
+							<Col>{welcomeAlert}</Col>
+						</Row>
+						<Row>
+							<Col>{mineAlert}</Col>
+						</Row>
+						<Row>
+							<UserCard user={currentUser} bets={bets.userBets} />
+							<ExpiringBets user={currentUser} bets={expiringBets} loaded={expiringBetsState} />
+							<UpcomingGames
+								games={games
+									.map((sport) => {
+										return sport.data.events?.map((event) => {
+											return { ...event, sport: sport.display_name };
+										});
+									})
+									.flat()
+									.filter((event) => event?.status.type.state === "pre")}
+								currentUser={currentUser}
+								users={users}
 							/>
-						) : (
-							<Loading />
-						)}
-					</Row>
-				</>
-			) : (
-				<>
-					<Banner />
-					<Features />
-					<Privacy />
-					{/* <WalletSection /> */}
-					<FaqSection />
-				</>
-			)}
-		</Container>
+							{pendingTransactionsState ? (
+								<PendingTransactions
+									pendingTransactions={pendingTransactions}
+									mineState={mineState}
+									user={currentUser}
+								/>
+							) : (
+								<Loading />
+							)}
+						</Row>
+					</>
+				) : (
+					<>
+						<Banner />
+						<Features />
+						<Privacy />
+						{/* <WalletSection /> */}
+						<FaqSection />
+					</>
+				)}
+			</Container>
+		</>
 	);
 }
-
-export default IndexPage;
 
 export async function getServerSideProps(context) {
 	const { req, res } = context;

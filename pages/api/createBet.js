@@ -33,25 +33,22 @@ export default async (req, res) => {
 	if (req.method === "POST") {
 		const bet = req.body;
 		if (session) {
-			const oddsKey = oddsSportKeys.find((sport) => sport.displayName === bet.details.sport);
-			let sportOdds, betOdds;
-			if (oddsKey.key) {
-				sportOdds = await fetchData(oddsKey.key);
-				betOdds = await sportOdds.odds.find(
-					(game) => bet.details.name.includes(game.away_team) && bet.details.name.includes(game.home_team)
-				);
-			}
-			console.log(betOdds);
-
 			const userData = await prisma.user.findUnique({
 				where: { id: session.user.id },
 				select: { id: true, walletAddress: true, balance: true },
 			});
-
 			const user = await UserWallet(userData, prisma);
 
 			if (user.balance - parseFloat(bet.amount) >= 0) {
 				try {
+					const oddsKey = oddsSportKeys.find((sport) => sport.displayName === bet.details.sport);
+					let sportOdds, betOdds;
+					if (oddsKey.key) {
+						sportOdds = await fetchData(oddsKey.key);
+						betOdds = await sportOdds.odds.find(
+							(game) => bet.details.name.includes(game.away_team) && bet.details.name.includes(game.home_team)
+						);
+					}
 					let betData = {
 						amount: parseFloat(bet.amount),
 						details: bet.details,
@@ -67,6 +64,8 @@ export default async (req, res) => {
 					const createdBet = await prisma.bet.create({
 						data: betData,
 					});
+
+					console.log(betOdds);
 					return res.json(createdBet);
 				} catch (e) {
 					console.log(e);

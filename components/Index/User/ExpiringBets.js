@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Card } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
 import BetCard from "../../Bet/BetCard";
+import Loading from "../../Utility/Loading";
 
-export default function ExpiringBets({ bets, user }) {
+export default function ExpiringBets({ bets, user, loaded }) {
 	const [expiringBets, setExpiringBets] = useState([]);
 
 	useEffect(() => {
 		setExpiringBets(bets.sort((a, b) => new Date(a.event.date) - new Date(b.event.date)));
 	}, [bets]);
 
-	return (
+	return loaded ? (
 		<Container fluid className="mx-0 px-0">
 			{expiringBets.length !== 0 ? (
 				<Row>
@@ -28,5 +29,7 @@ export default function ExpiringBets({ bets, user }) {
 				))}
 			</div>
 		</Container>
+	) : (
+		<Loading />
 	);
 }

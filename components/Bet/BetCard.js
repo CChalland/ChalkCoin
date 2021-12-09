@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Collapse, Button, InputGroup } from "react-bootstrap";
 import { BetDispatch } from "../../contexts/Bets.Context";
@@ -59,6 +60,7 @@ const styles = {
 };
 
 function BetCard({ acceptState, bet, currentUser, index = false }) {
+	const router = useRouter();
 	const dispatch = useContext(BetDispatch);
 	const betData = BetGameData(bet, currentUser.id);
 	const [awayWinProb, setAwayWinProb] = useState(betData.away.winProb);
@@ -84,7 +86,18 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 		if (acceptState) {
 			const res = await axios.post(`/api/acceptBet`, { id: bet.id, amount: bet.amount });
 			console.log("accepted bet - res", res);
-			dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
+			if (res.data.id) {
+				dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
+			} else if (res.data.error) {
+				router.push(
+					{
+						pathname: router.pathname,
+						query: { error: res.data.message },
+					},
+					undefined,
+					{ shallow: true }
+				);
+			}
 		}
 	};
 	const acceptButton = acceptState ? (
