@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
 import axios from "axios";
 import TransactionCard from "./TransactionCard";
 import Loading from "../Utility/Loading";
 
-export default function PendingTransactions({ pendingTransactions, currentUser, loaded }) {
+export default function PendingTransactions({ pendingTransactions, mineState, currentUser, loaded }) {
 	const dispatch = useContext(BlockchainDispatch);
-	const [mineState, setMineState] = useState(false);
 	const handleMine = async () => {
 		await axios
 			.post(`http://192.168.4.27:3001/mine`, {
@@ -22,11 +21,6 @@ export default function PendingTransactions({ pendingTransactions, currentUser, 
 				});
 			});
 	};
-
-	useEffect(() => {
-		if (pendingTransactions.length >= 10) setMineState(true);
-		else setMineState(false);
-	}, [pendingTransactions]);
 
 	return loaded ? (
 		<Row>

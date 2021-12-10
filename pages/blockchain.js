@@ -73,6 +73,7 @@ export default function Blockchain() {
 			</Row>
 			<PendingTransactions
 				pendingTransactions={pendingTransactions}
+				mineState={mineState}
 				currentUser={currentUser}
 				loaded={pendingTransactionsState}
 			/>
