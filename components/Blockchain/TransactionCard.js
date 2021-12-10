@@ -15,10 +15,11 @@ function TransactionCard({ transactionData, userAddress, panelKey }) {
 	const cursorStyle = gameState ? { cursor: "pointer" } : {};
 	const transactionBorder = transactionData.recipient === userAddress ? "#87CB16" : "#FB404B";
 
+	// console.log({ transactionData, userAddress, panelKey });
 	return (
-		<Row className="my-3">
+		<Row className="my-3 mx-0 px-0">
 			{/* For md, lg, xl and up screens */}
-			<Col className="d-none d-md-block d-xl-block">
+			<Col className="d-none d-md-block d-xl-block mx-0 px-0 ">
 				<a
 					style={cursorStyle}
 					data-toggle="collapse"
@@ -103,7 +104,7 @@ function TransactionCard({ transactionData, userAddress, panelKey }) {
 			</Col>
 
 			{/* For xs & sm screens */}
-			<Col className="mx-0 px-0 d-block d-md-none">
+			<Col className="d-block d-md-none mx-0 px-0 ">
 				<a
 					style={cursorStyle}
 					data-toggle="collapse"

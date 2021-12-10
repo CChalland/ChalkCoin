@@ -12,8 +12,8 @@ const blockchainReducer = (state, action) => {
 						details: { ...bet.details, betId: bet.id },
 						event: bet.event,
 						recipient:
-							bet.details.winner === winner ? bet.accepter.walletAddress : bet.requester.walletAddress,
-						sender: bet.details.winner === winner ? bet.requester.walletAddress : bet.accepter.walletAddress,
+							bet.details.winner === winner ? bet.requester.walletAddress : bet.accepter.walletAddress,
+						sender: bet.details.winner === winner ? bet.accepter.walletAddress : bet.requester.walletAddress,
 						transactionId: bet.transactionId,
 					};
 				});

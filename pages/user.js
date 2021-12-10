@@ -6,11 +6,6 @@ import { BetContext } from "../contexts/Bets.Context";
 import BetsTabs from "../components/User/BetsTabs";
 import axios from "axios";
 import prisma from "../contexts/prisma";
-// Styles
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "assets/scss/betoken-bootstrap-react.scss?v=2.0.0";
-import "assets/css/Custom.css";
 
 const emailValidation = (value) =>
 	/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value);
@@ -29,7 +24,7 @@ const isRequired = (value) => value !== null && value !== "" && value;
 const equalTo = (value1, value2) => value1 === value2;
 const minLength = (value, length) => value.length >= length;
 
-function UserPage({ session }) {
+export default function UserPage({ session }) {
 	const bets = useContext(BetContext);
 	const [userBets, setUserBets] = useState([]);
 	const [user, setUser] = useState({
@@ -177,7 +172,7 @@ function UserPage({ session }) {
 		<Container fluid>
 			<Row>
 				<Col className="">
-					<Tab.Container defaultActiveKey="user-page-bets">
+					<Tab.Container defaultActiveKey="user-page-settings">
 						<div className="nav-container">
 							<Nav role="tablist" variant="tabs" className="justify-content-start border-0 nav-icons">
 								<Nav.Item>
@@ -428,8 +423,6 @@ function UserPage({ session }) {
 		</Container>
 	);
 }
-
-export default UserPage;
 
 export async function getServerSideProps(context) {
 	const { req, res } = context;

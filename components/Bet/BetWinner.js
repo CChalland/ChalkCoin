@@ -5,9 +5,11 @@ function BetWinner({ betWinnerData }) {
 		<Row className="mt-2 justify-content-between">
 			<Col xs={{ span: 6, offset: 0 }} className="mx-2">
 				<Row>
-					<h1 className="my-0" style={{ fontSize: 64 }}>
-						${betWinnerData.amount}
-					</h1>
+					<Col>
+						<h1 className="my-0" style={{ fontSize: 64 }}>
+							${betWinnerData.amount}
+						</h1>
+					</Col>
 				</Row>
 			</Col>
 			<Col className="mx-2">

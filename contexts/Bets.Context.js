@@ -133,12 +133,12 @@ export function BetProvider(props) {
 			let betsData;
 			try {
 				const res = await axios.post(`/api/completedBets?type=accepted`, completedAcceptedBets);
-				console.log("completedBets", res);
+				console.log("completedAcceptedBets", res);
 				betsData = res.data.map((bet) => {
 					const event = completedAcceptedBets.find((acptBet) => acptBet.event.id === bet.details.gameId);
 					return { ...bet, event: event.event };
 				});
-				dispatch({ type: "COMPLETED BET", bets: betsData });
+				dispatch({ type: "COMPLETED ACCEPTED BET", bets: betsData });
 				blockchainDispatch({ type: "ADD PENDING", bets: betsData });
 			} catch (err) {
 				console.log(err.message);

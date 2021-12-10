@@ -129,6 +129,11 @@ Blockchain.prototype.getTransaction = function (transactionId) {
 
 Blockchain.prototype.getAddressData = function (address) {
 	const addressTransactions = [];
+	this.pendingTransactions.forEach((transaction) => {
+		if (transaction.sender === address || transaction.recipient === address) {
+			addressTransactions.push(transaction);
+		}
+	});
 	this.chain.forEach((block) => {
 		block.transactions.forEach((transaction) => {
 			if (transaction.sender === address || transaction.recipient === address) {

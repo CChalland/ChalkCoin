@@ -3,7 +3,7 @@ import { Row, Col, Card } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
 import { EventsFinder } from "../../helpers/EventsHelper";
 
-function BlockCard({ blockData, selected, genesisState }) {
+export default function BlockCard({ blockData, selected, genesisState }) {
 	const dispatch = useContext(BlockchainDispatch);
 	const cursorStyle = genesisState ? null : { cursor: "pointer" };
 
@@ -13,9 +13,9 @@ function BlockCard({ blockData, selected, genesisState }) {
 	};
 
 	return (
-		<Row className="">
+		<Row className="mx-0 px-0">
 			{/* For md, lg, xl and up screens */}
-			<Col className="d-none d-md-block d-xl-block">
+			<Col className="d-none d-md-block d-xl-block mx-0 px-0">
 				<a
 					style={cursorStyle}
 					onClick={() => {
@@ -99,7 +99,7 @@ function BlockCard({ blockData, selected, genesisState }) {
 			</Col>
 
 			{/* For sm screen */}
-			<Col className="mx-0 px-0 d-none d-sm-block d-md-none">
+			<Col className="d-none d-sm-block d-md-none mx-0 px-0">
 				<a
 					style={{ cursor: "pointer" }}
 					onClick={() => {
@@ -203,7 +203,7 @@ function BlockCard({ blockData, selected, genesisState }) {
 			</Col>
 
 			{/* For xs screen */}
-			<Col className="mx-0 px-0 d-block d-sm-none">
+			<Col className="d-block d-sm-none mx-0 px-0 ">
 				<a
 					style={{ cursor: "pointer" }}
 					onClick={() => {
@@ -294,5 +294,3 @@ function BlockCard({ blockData, selected, genesisState }) {
 		</Row>
 	);
 }
-
-export default BlockCard;

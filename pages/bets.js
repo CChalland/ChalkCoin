@@ -1,10 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
-import { getSession } from "next-auth/client";
+import { UserContext } from "../contexts/User.Context";
 import { BetContext } from "../contexts/Bets.Context";
 import BetCard from "../components/Bet/BetCard";
+import Loading from "../components/Utility/Loading";
+import NotificationAlert from "react-notification-alert";
 
-function Bets({ currentUser }) {
+export default function Bets() {
+	const router = useRouter();
+	const currentUser = useContext(UserContext);
 	const sportWithBets = useContext(BetContext);
 	const betSorted = sportWithBets.pendingBets.openBets
 		.map((sport) => {
@@ -27,6 +32,8 @@ function Bets({ currentUser }) {
 	const [closingState, setClosingState] = useState(false);
 	const [startingState, setStartingState] = useState(false);
 	const [todayState, setTodayState] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const notificationAlertRef = useRef(null);
 	const sportButtons = sportWithBets.pendingBets.openBets.map((sport, key) => {
 		let buttonClass;
 		if (sport.displayName === "NCAA Football") {
@@ -88,8 +95,33 @@ function Bets({ currentUser }) {
 		}
 	});
 
+	const notify = (errMsg) => {
+		let options = {
+			place: "tc",
+			message: (
+				<div>
+					<div>
+						<b>{errMsg}</b>
+					</div>
+				</div>
+			),
+			type: "danger",
+			icon: "nc-icon nc-bell-55",
+			autoDismiss: 7,
+		};
+		notificationAlertRef.current.notificationAlert(options);
+		router.replace("/bets", undefined, { shallow: true });
+	};
+
+	useEffect(() => {
+		if (router.query.error) {
+			notify(router.query.error);
+		}
+	}, [router.query.error]);
+
 	useEffect(() => {
 		setOpenBets(betSorted);
+		setLoading(true);
 	}, [sportWithBets]);
 
 	useEffect(() => {
@@ -216,245 +248,225 @@ function Bets({ currentUser }) {
 	// console.log("betSorted", betSorted);
 	// console.log("openBets", openBets);
 	// console.log("bets", bets);
-	return (
-		<Container fluid>
-			<Row className="justify-content-center">
-				{/* For md, lg, xl and up screens */}
-				<Col md={10} xl={8} className="d-none d-md-block d-xl-block">
-					<Form>
-						<Card>
-							<Card.Body>
-								<Row>
-									<Col md={8}>
-										<Row>
-											<Col>
-												<Form.Group className={searchState ? "has-success" : "has-error"}>
-													<InputGroup>
-														<InputGroup.Prepend>
-															<InputGroup.Text>
-																<i className="nc-icon nc-paper-2"></i>
-															</InputGroup.Text>
-														</InputGroup.Prepend>
-														<Form.Control
-															name="search"
-															type="text"
-															value={search}
-															onChange={(e) => {
-																setSearch(e.target.value);
-															}}
-															placeholder="Search..."
-														/>
-													</InputGroup>
-												</Form.Group>
+	return loading ? (
+		<>
+			<div className="rna-container">
+				<NotificationAlert ref={notificationAlertRef} />
+			</div>
+			<Container fluid>
+				{betSorted.length > 0 ? (
+					<Row className="justify-content-center">
+						{/* For md, lg, xl and up screens */}
+						<Col md={10} xl={8} className="d-none d-md-block d-xl-block">
+							<Card>
+								<Card.Body>
+									<Row>
+										<Col>
+											<Row>
+												<Col>
+													<Form.Group className={searchState ? "has-success" : "has-error"}>
+														<InputGroup>
+															<InputGroup.Prepend>
+																<InputGroup.Text>
+																	<i className="nc-icon nc-paper-2"></i>
+																</InputGroup.Text>
+															</InputGroup.Prepend>
+															<Form.Control
+																name="search"
+																type="text"
+																value={search}
+																onChange={(e) => {
+																	setSearch(e.target.value);
+																}}
+																placeholder="Search..."
+															/>
+														</InputGroup>
+													</Form.Group>
+												</Col>
+											</Row>
+											<Row className="justify-content-center">{sportButtons}</Row>
+										</Col>
+
+										{closingSoon || startSoon || gameDay ? (
+											<Col md={4}>
+												{closingSoon ? (
+													<Row className="align-items-center">
+														<Col sm={"auto"} className="mt-1">
+															<Button
+																className={closingClass}
+																type="button"
+																variant="danger"
+																style={{ width: "1.5rem", height: "1.5rem" }}
+																onClick={() => {
+																	setClosingState(!closingState);
+																}}
+															></Button>
+														</Col>
+														<Col sm={8} className="ml-1 pl-1">
+															<h5 className="my-0" style={{ fontSize: 15 }}>
+																{"Closing Soon"}
+															</h5>
+														</Col>
+													</Row>
+												) : null}
+
+												{startSoon ? (
+													<Row className="align-items-center">
+														<Col sm={"auto"} className="mt-1 mr-0 pr-0">
+															<Button
+																className={startingClass}
+																type="button"
+																variant="warning"
+																style={{ width: "1.5rem", height: "1.5rem" }}
+																onClick={() => {
+																	setStartingState(!startingState);
+																}}
+															></Button>
+														</Col>
+														<Col sm={8} className="ml-1 pl-1">
+															<h5 className="my-0" style={{ fontSize: 15 }}>
+																{"Game Starting Soon"}
+															</h5>
+														</Col>
+													</Row>
+												) : null}
+
+												{gameDay ? (
+													<Row className="align-items-center">
+														<Col sm={"auto"} className="mt-1 mr-0 pr-0">
+															<Button
+																className={todayClass}
+																type="button"
+																variant="info"
+																style={{ width: "1.5rem", height: "1.5rem" }}
+																onClick={() => {
+																	setTodayState(!todayState);
+																}}
+															></Button>
+														</Col>
+														<Col sm={8} className="ml-1 pl-1">
+															<h5 className="my-0" style={{ fontSize: 15 }}>
+																{"Game Today"}
+															</h5>
+														</Col>
+													</Row>
+												) : null}
+											</Col>
+										) : null}
+									</Row>
+								</Card.Body>
+							</Card>
+						</Col>
+
+						{/* For xs & sm screens */}
+						<Col className="mx-0 px-0 d-block d-md-none">
+							<Card>
+								<Card.Header className="mx-2">
+									<Row className="mt-2 justify-content-center align-items-center">
+										<Col className="mx-0 px-0">
+											<Form.Group className={searchState ? "has-success" : "has-error"}>
+												<InputGroup>
+													<InputGroup.Prepend>
+														<InputGroup.Text>
+															<i className="nc-icon nc-money-coins"></i>
+														</InputGroup.Text>
+													</InputGroup.Prepend>
+													<Form.Control
+														name="search"
+														type="text"
+														value={search}
+														onChange={(e) => {
+															setSearch(e.target.value);
+														}}
+														placeholder="Search..."
+													/>
+												</InputGroup>
+											</Form.Group>
+										</Col>
+									</Row>
+								</Card.Header>
+								<Card.Body className="mx-2">
+									<Row className="justify-content-center">{sportButtons}</Row>
+									{closingSoon ? (
+										<Row className="align-items-center">
+											<Col xs={"auto"} className="mt-1 mr-0 pr-0">
+												<Button
+													className={closingClass}
+													type="button"
+													variant="danger"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setClosingState(!closingState);
+													}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Closing Soon"}
+												</h5>
 											</Col>
 										</Row>
-										<Row className="justify-content-center">{sportButtons}</Row>
-									</Col>
+									) : null}
 
-									<Col md={4}>
-										{closingSoon ? (
-											<Row className="align-items-center">
-												<Col sm={"auto"} className="mt-1">
-													<Button
-														className={closingClass}
-														type="button"
-														variant="danger"
-														style={{ width: "1.5rem", height: "1.5rem" }}
-														onClick={() => {
-															setClosingState(!closingState);
-														}}
-													></Button>
-												</Col>
-												<Col sm={8} className="ml-1 pl-1">
-													<h5 className="my-0" style={{ fontSize: 15 }}>
-														{"Closing Soon"}
-													</h5>
-												</Col>
-											</Row>
-										) : null}
-
-										{startSoon ? (
-											<Row className="align-items-center">
-												<Col sm={"auto"} className="mt-1 mr-0 pr-0">
-													<Button
-														className={startingClass}
-														type="button"
-														variant="warning"
-														style={{ width: "1.5rem", height: "1.5rem" }}
-														onClick={() => {
-															setStartingState(!startingState);
-														}}
-													></Button>
-												</Col>
-												<Col sm={8} className="ml-1 pl-1">
-													<h5 className="my-0" style={{ fontSize: 15 }}>
-														{"Game Starting Soon"}
-													</h5>
-												</Col>
-											</Row>
-										) : null}
-
-										{gameDay ? (
-											<Row className="align-items-center">
-												<Col sm={"auto"} className="mt-1 mr-0 pr-0">
-													<Button
-														className={todayClass}
-														type="button"
-														variant="info"
-														style={{ width: "1.5rem", height: "1.5rem" }}
-														onClick={() => {
-															setTodayState(!todayState);
-														}}
-													></Button>
-												</Col>
-												<Col sm={8} className="ml-1 pl-1">
-													<h5 className="my-0" style={{ fontSize: 15 }}>
-														{"Game Today"}
-													</h5>
-												</Col>
-											</Row>
-										) : null}
-									</Col>
-								</Row>
-							</Card.Body>
-						</Card>
-					</Form>
-				</Col>
-
-				{/* For xs & sm screens */}
-				<Col className="mx-0 px-0 d-block d-md-none">
-					<Form>
-						<Card>
-							<Card.Header className="mx-2">
-								<Row className="mt-2 justify-content-center align-items-center">
-									<Col className="mx-0 px-0">
-										<Form.Group className={searchState ? "has-success" : "has-error"}>
-											<InputGroup>
-												<InputGroup.Prepend>
-													<InputGroup.Text>
-														<i className="nc-icon nc-money-coins"></i>
-													</InputGroup.Text>
-												</InputGroup.Prepend>
-												<Form.Control
-													name="search"
-													type="text"
-													value={search}
-													onChange={(e) => {
-														setSearch(e.target.value);
+									{startSoon ? (
+										<Row className="align-items-center">
+											<Col xs={"auto"} className="mt-1 mr-0 pr-0">
+												<Button
+													className={startingClass}
+													type="button"
+													variant="warning"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setStartingState(!startingState);
 													}}
-													placeholder="Search..."
-												/>
-											</InputGroup>
-										</Form.Group>
-									</Col>
-								</Row>
-							</Card.Header>
-							<Card.Body className="mx-2">
-								<Row className="justify-content-center">{sportButtons}</Row>
-								{closingSoon ? (
-									<Row className="align-items-center">
-										<Col xs={"auto"} className="mt-1 mr-0 pr-0">
-											<Button
-												className={closingClass}
-												type="button"
-												variant="danger"
-												style={{ width: "1.5rem", height: "1.5rem" }}
-												onClick={() => {
-													setClosingState(!closingState);
-												}}
-											></Button>
-										</Col>
-										<Col xs={7} sm={8} className="ml-1 pl-1">
-											<h5 className="my-0" style={{ fontSize: 15 }}>
-												{"Closing Soon"}
-											</h5>
-										</Col>
-									</Row>
-								) : null}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Game Starting Soon"}
+												</h5>
+											</Col>
+										</Row>
+									) : null}
 
-								{startSoon ? (
-									<Row className="align-items-center">
-										<Col xs={"auto"} className="mt-1 mr-0 pr-0">
-											<Button
-												className={startingClass}
-												type="button"
-												variant="warning"
-												style={{ width: "1.5rem", height: "1.5rem" }}
-												onClick={() => {
-													setStartingState(!startingState);
-												}}
-											></Button>
-										</Col>
-										<Col xs={7} sm={8} className="ml-1 pl-1">
-											<h5 className="my-0" style={{ fontSize: 15 }}>
-												{"Game Starting Soon"}
-											</h5>
-										</Col>
-									</Row>
-								) : null}
+									{gameDay ? (
+										<Row className="align-items-center">
+											<Col xs={"auto"} className="mt-1 mr-0 pr-0">
+												<Button
+													className={todayClass}
+													type="button"
+													variant="info"
+													style={{ width: "1.5rem", height: "1.5rem" }}
+													onClick={() => {
+														setTodayState(!todayState);
+													}}
+												></Button>
+											</Col>
+											<Col xs={7} sm={8} className="ml-1 pl-1">
+												<h5 className="my-0" style={{ fontSize: 15 }}>
+													{"Game Today"}
+												</h5>
+											</Col>
+										</Row>
+									) : null}
+								</Card.Body>
+							</Card>
+						</Col>
+					</Row>
+				) : null}
 
-								{gameDay ? (
-									<Row className="align-items-center">
-										<Col xs={"auto"} className="mt-1 mr-0 pr-0">
-											<Button
-												className={todayClass}
-												type="button"
-												variant="info"
-												style={{ width: "1.5rem", height: "1.5rem" }}
-												onClick={() => {
-													setTodayState(!todayState);
-												}}
-											></Button>
-										</Col>
-										<Col xs={7} sm={8} className="ml-1 pl-1">
-											<h5 className="my-0" style={{ fontSize: 15 }}>
-												{"Game Today"}
-											</h5>
-										</Col>
-									</Row>
-								) : null}
-							</Card.Body>
-						</Card>
-					</Form>
-				</Col>
-			</Row>
-			{searchState ? null : <label className="error">No bets found.</label>}
-			{betCards}
-		</Container>
+				{searchState ? null : (
+					<Row>
+						<Col className="ml-5">
+							<h2>No bets found.</h2>
+						</Col>
+					</Row>
+				)}
+
+				{betCards}
+			</Container>
+		</>
+	) : (
+		<Loading />
 	);
-}
-
-export default Bets;
-
-export async function getServerSideProps(context) {
-	const { req, res } = context;
-	const session = await getSession({ req });
-	let currentUser = {};
-	if (session) {
-		currentUser = await prisma.user.findUnique({
-			where: {
-				id: session.user.id,
-			},
-			include: {
-				requester: {
-					select: { id: true },
-				},
-				accepter: {
-					select: { id: true },
-				},
-				recipient: {
-					select: { id: true },
-				},
-			},
-		});
-		delete currentUser.password;
-		delete currentUser.paypal;
-		delete currentUser.emailVerified;
-		delete currentUser.createdAt;
-		delete currentUser.updatedAt;
-	}
-
-	return {
-		props: { currentUser },
-	};
 }

@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 
-function AdminFooter() {
+export default function Footer() {
 	return (
 		<>
 			<footer className="footer">
@@ -33,5 +33,3 @@ function AdminFooter() {
 		</>
 	);
 }
-
-export default AdminFooter;

@@ -6,10 +6,10 @@ import axios from "axios";
 
 function Test(props) {
 	const bets = useContext(BetContext);
-	const getBetsData = async () => {
+	const getData = async () => {
 		let data;
 		try {
-			await axios.get(`${process.env.APP_URL}/api/bets?type=currentUser`).then((res) => {
+			await axios.post(`/api/test`, { id: 1, amount: 1.5 }).then((res) => {
 				data = res.data;
 				console.log(data);
 			});
@@ -18,7 +18,7 @@ function Test(props) {
 		}
 		return data;
 	};
-	// getBetsData();
+	getData();
 
 	// console.log(bets);
 

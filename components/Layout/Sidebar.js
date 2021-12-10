@@ -163,14 +163,20 @@ function Sidebar({ currentUser, routes, image, background, pathname }) {
 											</li>
 											<li>
 												<a className="profile-dropdown">
-													<span className="sidebar-mini">{currentUser?.openBetsLength}</span>
+													<span className="sidebar-mini">{currentUser.openLength ?? 0}</span>
 													<span className="sidebar-normal">Open Bets</span>
 												</a>
 											</li>
 											<li>
 												<a className="profile-dropdown">
-													<span className="sidebar-mini">{currentUser?.acceptedBetsLength}</span>
-													<span className="sidebar-normal">Accept Bets</span>
+													<span className="sidebar-mini">{currentUser.acceptedLength ?? 0}</span>
+													<span className="sidebar-normal">Accepted Bets</span>
+												</a>
+											</li>
+											<li>
+												<a className="profile-dropdown">
+													<span className="sidebar-mini">{currentUser.completedLength ?? 0}</span>
+													<span className="sidebar-normal">Completed Bets</span>
 												</a>
 											</li>
 										</Nav>

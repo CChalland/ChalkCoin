@@ -7,32 +7,53 @@ export default async (req, res) => {
 
 	if (req.method === "GET") {
 		if (session) {
-			let user;
 			if (req.query.type === "layout") {
-				user = await prisma.user.findUnique({
+				const user = await prisma.user.findUnique({
 					where: {
 						id: session.user.id,
 					},
 					select: {
 						id: true,
 						username: true,
+						email: true,
+						name: true,
 						image: true,
 						balance: true,
-					},
-				});
-				return res.json(user);
-			} else {
-				user = await prisma.user.findUnique({
-					where: {
-						id: session.user.id,
-					},
-					include: {
-						requester: true,
+						walletAddress: true,
 						accepter: true,
 						recipient: true,
+						requester: true,
 					},
 				});
-				return res.json(user);
+				return res.json({
+					id: user.id,
+					username: user.username,
+					email: user.email,
+					name: user.name,
+					image: user.image,
+					balance: user.balance,
+					walletAddress: user.walletAddress,
+					openBets: [...user.recipient, ...user.requester].filter((bet) => !bet.accepted && !bet.completed),
+					acceptedBets: [...user.accepter, ...user.recipient, ...user.requester].filter(
+						(bet) => bet.accepted && !bet.completed
+					),
+					completedBets: [...user.accepter, ...user.recipient, ...user.requester].filter(
+						(bet) => bet.accepted && bet.completed
+					),
+				});
+			} else {
+				return res.json(
+					await prisma.user.findUnique({
+						where: {
+							id: session.user.id,
+						},
+						include: {
+							requester: true,
+							accepter: true,
+							recipient: true,
+						},
+					})
+				);
 			}
 		} else {
 			return res.json({ error: true, message: "Not logged in." });

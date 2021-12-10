@@ -161,16 +161,16 @@ function GamePlay(props) {
 			let conditionId = gamePlayData.weather.conditionId;
 			if (parseInt(conditionId) < 10) conditionId = "0" + conditionId;
 			weather = (
-				<Col className="ml-auto">
+				<Col xs={"auto"} className="ml-auto ">
 					<Row>
-						<Col xs={3} className="px-0">
+						<Col xs={"auto"} className="px-0">
 							<Image
 								width={20}
 								height={20}
 								src={`https://a.espncdn.com/redesign/assets/img/icons/accuWeather/${conditionId}.png`}
 							/>
 						</Col>
-						<Col xs={9}>{`${gamePlayData.weather.temperature} °F`}</Col>
+						<Col xs={"auto"}>{`${gamePlayData.weather.temperature} °F`}</Col>
 					</Row>
 				</Col>
 			);
@@ -186,7 +186,7 @@ function GamePlay(props) {
 			);
 
 		venue = (
-			<Col xs={8} className="mr-auto">
+			<Col xs={"auto"} className="mr-auto">
 				<Row className="mb-0 h6">{gamePlayData.venue?.fullName}</Row>
 				<Row>{`${gamePlayData.venue?.address.city}, ${gamePlayData.venue?.address.state}`}</Row>
 			</Col>

@@ -1,110 +1,86 @@
-import { useContext, useCallback, useEffect, useState } from "react";
-import { Container, Row } from "react-bootstrap";
-import { SportContext, SportDispatch } from "../contexts/Sports.Context";
-import GameCard from "../components/Game/GameCard";
-import prisma from "../contexts/prisma";
-import axios from "axios";
+import { useRouter } from "next/router";
+import { useContext, useRef, useEffect } from "react";
 import { getSession } from "next-auth/client";
+import { Container, Row } from "react-bootstrap";
+import { SportContext } from "../contexts/Sports.Context";
+import { UserContext } from "../contexts/User.Context";
+import GameCard from "../components/Game/GameCard";
+import NotificationAlert from "react-notification-alert";
+import Loading from "../components/Utility/Loading";
 
-function Games(props) {
+export default function Games({ query, users }) {
+	const router = useRouter();
+	const currentUser = useContext(UserContext);
 	const sportsData = useContext(SportContext);
-	const dispatch = useContext(SportDispatch);
+	const notificationAlertRef = useRef(null);
 	let sportData = sportsData.find((sport) => {
-		return sport.abbrv === props.query.sport.toUpperCase();
+		return sport.abbrv === query.sport?.toUpperCase();
 	});
 
-	const getData = useCallback(async () => {
-		let preGames,
-			inGames,
-			postGames,
-			leagueData,
-			sortedGames = [];
-
-		if (sportData.reload) {
-			axios
-				.get(
-					`http://site.api.espn.com/apis/site/v2/sports/${sportData.sport}/${sportData.league_name}/scoreboard`
-				)
-				.then((response) => {
-					leagueData = response.data;
-					inGames = response.data.events.filter((game) => {
-						sportData.reload = true;
-						return game.status.type.state === "in";
-					});
-					postGames = response.data.events.filter((game) => {
-						return game.status.type.state === "post";
-					});
-					preGames = response.data.events.filter((game) => {
-						return game.status.type.state === "pre";
-					});
-
-					if (inGames.length === 0) sportData.reload = false;
-					sortedGames.push(inGames, postGames, preGames);
-					leagueData.events = sortedGames.flat();
-					dispatch({ type: sportData.display_name, data: leagueData, reload: sportData.reload });
-
-					console.log(sortedGames.flat());
-				});
-		}
-	});
+	const notify = (errMsg) => {
+		let options = {
+			place: "tc",
+			message: (
+				<div>
+					<div>
+						<b>{errMsg}</b>
+					</div>
+				</div>
+			),
+			type: "danger",
+			icon: "nc-icon nc-bell-55",
+			autoDismiss: 7,
+		};
+		notificationAlertRef.current.notificationAlert(options);
+		router.replace(`${router.pathname}?sport=${query.sport}`, undefined, { shallow: true });
+	};
 
 	useEffect(() => {
-		const timeOut = setTimeout(() => {
-			getData();
-		}, 15000);
+		if (router.query.error) {
+			notify(router.query.error);
+		}
+		if (!sportData || !router.query.sport) {
+			router.replace("/", undefined, { shallow: true });
+		}
+	}, [router]);
 
-		return () => {
-			clearTimeout(timeOut);
-		};
-	});
-
-	let gameItems;
-	if (sportData.data.events) {
-		gameItems = sportData.data.events.map((game, key) => {
+	let gameItems = sportData?.data.events ? (
+		sportData.data.events.map((game, key) => {
 			return (
 				<Row className="my-3" key={game.id}>
 					<GameCard
 						panelKey={key}
 						gameData={game}
-						sportName={sportData.display_name}
-						users={props.users}
-						currentUser={props.currentUser}
+						sportName={sportData?.display_name}
+						users={users}
+						currentUser={currentUser}
 						completed={game.status.type.completed}
 					/>
 				</Row>
 			);
-		});
-	} else {
-		gameItems = <h1>Loading</h1>;
-	}
+		})
+	) : (
+		<Loading />
+	);
 
 	return (
-		<Container fluid>
-			<h1>{sportData.display_name}</h1>
-			{gameItems}
-		</Container>
+		<>
+			<div className="rna-container">
+				<NotificationAlert ref={notificationAlertRef} />
+			</div>
+			<Container fluid>
+				<h1>{sportData?.display_name}</h1>
+				{gameItems}
+			</Container>
+		</>
 	);
 }
-
-export default Games;
 
 export async function getServerSideProps(context) {
 	const { req, res } = context;
 	const session = await getSession({ req });
-	let currentUser = {};
 	let users = [];
 	if (session) {
-		currentUser = await prisma.user.findUnique({
-			where: {
-				id: session.user.id,
-			},
-		});
-		delete currentUser.password;
-		delete currentUser.paypal;
-		delete currentUser.emailVerified;
-		delete currentUser.createdAt;
-		delete currentUser.updatedAt;
-
 		users = await prisma.user.findMany();
 		users = users
 			.map((user) => {
@@ -118,11 +94,11 @@ export async function getServerSideProps(context) {
 				return user;
 			})
 			.filter((user) => {
-				return user.id !== currentUser.id;
+				return user.id !== session.user.id;
 			});
 	}
 
 	return {
-		props: { query: context.query, users, currentUser },
+		props: { query: context.query, users },
 	};
 }
