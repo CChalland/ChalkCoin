@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import BlockCard from "./BlockCard";
+import Loading from "../Utility/Loading";
 
-export default function Chain({ blocks, selectedBlock }) {
-	return (
+export default function Chain({ blocks, selectedBlock, loaded }) {
+	return loaded ? (
 		<Row>
 			<Col>
 				<Row>
@@ -24,5 +24,7 @@ export default function Chain({ blocks, selectedBlock }) {
 				</div>
 			</Col>
 		</Row>
+	) : (
+		<Loading />
 	);
 }

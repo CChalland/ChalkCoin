@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import TransactionCard from "./TransactionCard";
+import Loading from "../Utility/Loading";
 
-export default function SelectedBlock({ selectedBlock, currentUser }) {
-	return (
+export default function SelectedBlock({ selectedBlock, currentUser, loaded }) {
+	return loaded ? (
 		<Row>
 			<Col>
 				<Row className="">
@@ -31,5 +31,7 @@ export default function SelectedBlock({ selectedBlock, currentUser }) {
 				</div>
 			</Col>
 		</Row>
+	) : (
+		<Loading />
 	);
 }

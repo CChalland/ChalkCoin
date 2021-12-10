@@ -3,8 +3,9 @@ import { Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
 import axios from "axios";
 import TransactionCard from "./TransactionCard";
+import Loading from "../Utility/Loading";
 
-export default function PendingTransactions({ pendingTransactions, currentUser }) {
+export default function PendingTransactions({ pendingTransactions, currentUser, loaded }) {
 	const dispatch = useContext(BlockchainDispatch);
 	const [mineState, setMineState] = useState(false);
 	const handleMine = async () => {
@@ -27,16 +28,16 @@ export default function PendingTransactions({ pendingTransactions, currentUser }
 		else setMineState(false);
 	}, [pendingTransactions]);
 
-	return (
+	return loaded ? (
 		<Row>
 			<Col xs={12}>
-				<Row className="align-items-center">
+				<Row className="align-items-center mt-4">
 					<Col xs={"auto"}>
-						<h2 className="my-2">Pending Transactions</h2>
+						<h2 className="mt-0 mb-1">Pending Transactions</h2>
 					</Col>
 					{mineState ? (
 						<Col sm="auto" className="">
-							<Row className="justify-content-start">
+							<Row className="justify-content-start align-items-center">
 								<Col xs={"auto"}>
 									<OverlayTrigger
 										placement="bottom"
@@ -84,5 +85,7 @@ export default function PendingTransactions({ pendingTransactions, currentUser }
 				</div>
 			</Col>
 		</Row>
+	) : (
+		<Loading />
 	);
 }
