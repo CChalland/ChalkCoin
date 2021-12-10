@@ -6,6 +6,7 @@ import { SportContext } from "../contexts/Sports.Context";
 import { UserContext } from "../contexts/User.Context";
 import GameCard from "../components/Game/GameCard";
 import NotificationAlert from "react-notification-alert";
+import Loading from "../components/Utility/Loading";
 
 export default function Games({ query, users }) {
 	const router = useRouter();
@@ -38,11 +39,13 @@ export default function Games({ query, users }) {
 		if (router.query.error) {
 			notify(router.query.error);
 		}
-	}, [router.query.error]);
+		if (!sportData || !router.query.sport) {
+			router.replace("/", undefined, { shallow: true });
+		}
+	}, [router]);
 
-	let gameItems;
-	if (sportData?.data.events) {
-		gameItems = sportData.data.events.map((game, key) => {
+	let gameItems = sportData?.data.events ? (
+		sportData.data.events.map((game, key) => {
 			return (
 				<Row className="my-3" key={game.id}>
 					<GameCard
@@ -55,10 +58,10 @@ export default function Games({ query, users }) {
 					/>
 				</Row>
 			);
-		});
-	} else {
-		gameItems = <h1>Loading</h1>;
-	}
+		})
+	) : (
+		<Loading />
+	);
 
 	return (
 		<>

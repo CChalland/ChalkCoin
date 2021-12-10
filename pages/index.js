@@ -27,9 +27,7 @@ export default function IndexPage({ users }) {
 	const games = useContext(SportContext);
 	const blockchain = useContext(BlockchainContext);
 	const [expiringBets, setExpiringBets] = useState([]);
-	const [expiringBetsState, setExpiringBetsState] = useState(false);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchain.pendingTransactions);
-	const [pendingTransactionsState, setPendingTransactionsState] = useState(false);
 	const [welcomeState, setWelcomeState] = useState(true);
 	const [mineState, setMineState] = useState(false);
 	const notificationAlertRef = useRef(null);
@@ -59,7 +57,8 @@ export default function IndexPage({ users }) {
 
 	useEffect(() => {
 		setPendingTransactions(blockchain.pendingTransactions);
-		if (blockchain.pendingTransactions.length > 0) setPendingTransactionsState(true);
+		if (pendingTransactions.length >= 10) setMineState(true);
+		else setMineState(false);
 	}, [blockchain.pendingTransactions]);
 
 	useEffect(() => {
@@ -71,21 +70,7 @@ export default function IndexPage({ users }) {
 				.flat()
 				.filter((bet) => bet.requesterId !== currentUser.id)
 		);
-		if (
-			bets.pendingBets.openBets
-				.map((sport) => {
-					return sport.bets;
-				})
-				.flat()
-				.filter((bet) => bet.requesterId !== currentUser.id).length > 0
-		)
-			setExpiringBetsState(true);
 	}, [bets.pendingBets.openBets]);
-
-	useEffect(() => {
-		if (pendingTransactions.length >= 10) setMineState(true);
-		else setMineState(false);
-	}, [pendingTransactions]);
 
 	let welcomeAlert, mineAlert;
 	if (welcomeState) {
@@ -145,7 +130,7 @@ export default function IndexPage({ users }) {
 						</Row>
 						<Row>
 							<UserCard user={currentUser} bets={bets.userBets} />
-							<ExpiringBets user={currentUser} bets={expiringBets} loaded={expiringBetsState} />
+							<ExpiringBets user={currentUser} bets={expiringBets} loaded={bets.initialized} />
 							<UpcomingGames
 								games={games
 									.map((sport) => {
@@ -158,15 +143,12 @@ export default function IndexPage({ users }) {
 								currentUser={currentUser}
 								users={users}
 							/>
-							{pendingTransactionsState ? (
-								<PendingTransactions
-									pendingTransactions={pendingTransactions}
-									mineState={mineState}
-									user={currentUser}
-								/>
-							) : (
-								<Loading />
-							)}
+							<PendingTransactions
+								pendingTransactions={pendingTransactions}
+								mineState={mineState}
+								user={currentUser}
+								loaded={blockchain.initialized}
+							/>
 						</Row>
 					</>
 				) : (

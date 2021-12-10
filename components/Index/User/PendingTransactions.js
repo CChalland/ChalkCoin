@@ -3,8 +3,9 @@ import { Container, Row, Col, Button, OverlayTrigger, Tooltip } from "react-boot
 import { BlockchainDispatch } from "../../../contexts/Blockchain.Context";
 import axios from "axios";
 import TransactionCard from "../../Blockchain/TransactionCard";
+import Loading from "../../Utility/Loading";
 
-export default function PendingTransactions({ pendingTransactions, mineState, user }) {
+export default function PendingTransactions({ pendingTransactions, mineState, user, loaded }) {
 	const dispatch = useContext(BlockchainDispatch);
 
 	const handleMine = async () => {
@@ -22,9 +23,7 @@ export default function PendingTransactions({ pendingTransactions, mineState, us
 			});
 	};
 
-	// console.log("pendingTransactions", pendingTransactions);
-
-	return (
+	return loaded ? (
 		<Container fluid className="mx-0 px-0">
 			{pendingTransactions.length !== 0 ? (
 				<Row className="align-items-center">
@@ -84,5 +83,7 @@ export default function PendingTransactions({ pendingTransactions, mineState, us
 				})}
 			</div>
 		</Container>
+	) : (
+		<Loading />
 	);
 }
