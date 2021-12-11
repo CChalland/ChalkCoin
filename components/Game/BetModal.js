@@ -25,7 +25,6 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 	const [modal, setModal] = useState(false);
 	const [selectedWinner, setSelectedWinner] = useState("");
 	const [selectedWinnerState, setSelectedWinnerState] = useState(false);
-	const [currency, setCurrency] = useState("");
 	const [amount, setAmount] = useState("");
 	const [amountState, setAmountState] = useState(false);
 	const [openButtonState, setOpenButtonState] = useState(false);
@@ -98,8 +97,6 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 		</components.Option>
 	);
 
-	let betokenButtonClass = currency === "BEToken" ? "btn-round" : "btn-round btn-outline";
-	let bitcoinButtonClass = currency === "Bitcoin" ? "btn-round" : "btn-round btn-outline";
 	let openButtonClass = openButtonState ? "btn-round" : "btn-round btn-outline";
 	let friendButtonClass = recipientButtonState ? "btn-round" : "btn-round btn-outline";
 	let sumbitButtonClass = submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
@@ -138,7 +135,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 					name: gameBetData.name,
 					winner: selectedWinner.label,
 				},
-				currency,
+				currency: "BEToken",
 				requesterId: currentUser.id,
 			};
 			if (betType === "recipient") submitBet.recipientId = recipient.id;
@@ -272,67 +269,34 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 												</Col>
 											</Row>
 
-											<Tab.Container id="bet-modal-currency" defaultActiveKey="">
-												<div className="nav-container">
-													<Nav className="border-0">
-														<h5 className="mt-3 mr-5">Currency: </h5>
-														<Nav.Link eventKey="amount-tab" className="border-0 bg-transparent">
-															<Button
-																className={betokenButtonClass}
-																variant="default"
-																onClick={() => setCurrency("BEToken")}
-															>
-																BEToken
-															</Button>
-														</Nav.Link>
-														<Nav.Link eventKey="amount-tab" className="border-0 bg-transparent">
-															<Button
-																className={bitcoinButtonClass}
-																variant="default"
-																onClick={() => setCurrency("Bitcoin")}
-																disabled
-															>
-																Bitcoin
-															</Button>
-														</Nav.Link>
-													</Nav>
-												</div>
-												<Tab.Content>
-													<Tab.Pane eventKey="amount-tab">
-														<Row>
-															<Col xs={3} lg={3} className="ml-3">
-																<h5 className="">Amount: ({currency}) </h5>
-															</Col>
-															<Col xs={8} lg={7}>
-																<Form.Group className={amountState ? "has-success" : "has-error"}>
-																	<InputGroup>
-																		<Form.Control name="curreny" type="hidden" value={currency} />
-																		<InputGroup.Text>$</InputGroup.Text>
-																		<InputGroup.Text>{"0.00"}</InputGroup.Text>
-																		<Form.Control
-																			name="amount"
-																			type="text"
-																			value={amount}
-																			onChange={(e) => {
-																				setAmount(e.target.value);
-																				if (minValue(e.target.value, 0)) {
-																					setAmountState(true);
-																				} else {
-																					setAmountState(false);
-																				}
-																			}}
-																			placeholder="Amount"
-																		/>
-																	</InputGroup>
-																	{amountState ? null : (
-																		<label className="error">Bet must be over value of 0.</label>
-																	)}
-																</Form.Group>
-															</Col>
-														</Row>
-													</Tab.Pane>
-												</Tab.Content>
-											</Tab.Container>
+											<Row>
+												<h5 className="mt-2 mx-3">Amount: </h5>
+												<Col>
+													<Form.Group className={amountState ? "has-success" : "has-error"}>
+														<InputGroup>
+															<InputGroup.Text>$</InputGroup.Text>
+															<InputGroup.Text>{"0.00"}</InputGroup.Text>
+															<Form.Control
+																name="amount"
+																type="text"
+																value={amount}
+																onChange={(e) => {
+																	setAmount(e.target.value);
+																	if (minValue(e.target.value, 0)) {
+																		setAmountState(true);
+																	} else {
+																		setAmountState(false);
+																	}
+																}}
+																placeholder="Amount"
+															/>
+														</InputGroup>
+														{amountState ? null : (
+															<label className="error">Bet must be over value of 0.</label>
+														)}
+													</Form.Group>
+												</Col>
+											</Row>
 
 											<Tab.Container id="bet-modal-recipient" defaultActiveKey="">
 												<div className="nav-container">
@@ -496,8 +460,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 									<Col xs={12} lg={8}>
 										<Form className="form-horizontal" id="RangeValidation">
 											<Row>
-												<h5 className="mt-2 mx-3">Select Winner: </h5>
-												<Col xs={12}>
+												<Col>
 													<Form.Group className={selectedWinnerState ? "has-success" : "has-error"}>
 														<InputGroup>
 															<InputGroup.Prepend>
@@ -525,64 +488,33 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 												</Col>
 											</Row>
 
-											<Tab.Container id="bet-modal-currency" defaultActiveKey="">
-												<div className="nav-container">
-													<Nav className="border-0">
-														<h5 className="mt-3 ">Currency: </h5>
-														<Nav.Link eventKey="amount-tab" className="border-0 bg-transparent">
-															<Button
-																className={betokenButtonClass}
-																variant="default"
-																onClick={() => setCurrency("BEToken")}
-															>
-																BEToken
-															</Button>
-														</Nav.Link>
-														{/* <Nav.Link eventKey="amount-tab" className="border-0 bg-transparent">
-														<Button
-															className={bitcoinButtonClass}
-															variant="default"
-															onClick={() => setCurrency("Bitcoin")}
-															disabled
-														>
-															Bitcoin
-														</Button>
-													</Nav.Link> */}
-													</Nav>
-												</div>
-												<Tab.Content>
-													<Tab.Pane eventKey="amount-tab">
-														<Row>
-															<Col xs={12} lg={7}>
-																<Form.Group className={amountState ? "has-success" : "has-error"}>
-																	<InputGroup>
-																		<Form.Control name="curreny" type="hidden" value={currency} />
-																		<InputGroup.Text>$</InputGroup.Text>
-																		<InputGroup.Text>{"0.00"}</InputGroup.Text>
-																		<Form.Control
-																			name="amount"
-																			type="text"
-																			value={amount}
-																			onChange={(e) => {
-																				setAmount(e.target.value);
-																				if (minValue(e.target.value, 0)) {
-																					setAmountState(true);
-																				} else {
-																					setAmountState(false);
-																				}
-																			}}
-																			placeholder="Amount"
-																		/>
-																	</InputGroup>
-																	{amountState ? null : (
-																		<label className="error">Bet must be over value of 0.</label>
-																	)}
-																</Form.Group>
-															</Col>
-														</Row>
-													</Tab.Pane>
-												</Tab.Content>
-											</Tab.Container>
+											<Row>
+												<Col>
+													<Form.Group className={amountState ? "has-success" : "has-error"}>
+														<InputGroup>
+															<InputGroup.Text>$</InputGroup.Text>
+															<InputGroup.Text>{"0.00"}</InputGroup.Text>
+															<Form.Control
+																name="amount"
+																type="text"
+																value={amount}
+																onChange={(e) => {
+																	setAmount(e.target.value);
+																	if (minValue(e.target.value, 0)) {
+																		setAmountState(true);
+																	} else {
+																		setAmountState(false);
+																	}
+																}}
+																placeholder="Amount"
+															/>
+														</InputGroup>
+														{amountState ? null : (
+															<label className="error">Bet must be over value of 0.</label>
+														)}
+													</Form.Group>
+												</Col>
+											</Row>
 
 											<Tab.Container id="bet-modal-recipient" defaultActiveKey="">
 												<div className="nav-container">
