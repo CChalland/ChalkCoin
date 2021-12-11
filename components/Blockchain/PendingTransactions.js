@@ -1,24 +1,30 @@
 import { useContext } from "react";
 import { Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
+import { UserDispatch } from "../../contexts/User.Context";
 import axios from "axios";
 import TransactionCard from "./TransactionCard";
 import Loading from "../Utility/Loading";
 
 export default function PendingTransactions({ pendingTransactions, mineState, currentUser, loaded }) {
-	const dispatch = useContext(BlockchainDispatch);
+	const blockchainDispatch = useContext(BlockchainDispatch);
+	const userDispatch = useContext(UserDispatch);
 	const handleMine = async () => {
 		await axios
 			.post(`http://192.168.4.27:3001/mine`, {
 				address: currentUser.walletAddress,
 			})
 			.then((res) => {
-				console.log(res.data);
-				dispatch({
-					type: "ADD BLOCK",
-					block: res.data.block,
-					mineTransaction: res.data.mineTransaction,
-				});
+				if (res.data) {
+					blockchainDispatch({
+						type: "ADD BLOCK",
+						block: res.data.block,
+						mineTransaction: res.data.mineTransaction,
+					});
+					axios.post("/api/mineTransaction", res.data.mineTransaction).then((res) => {
+						userDispatch({ type: "REWARD", balance: res.amount });
+					});
+				}
 			});
 	};
 

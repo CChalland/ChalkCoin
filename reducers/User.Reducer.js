@@ -3,6 +3,9 @@ const userReducer = (state, action) => {
 		case "INIT":
 			return action.data;
 
+		case "REWARD":
+			return { ...state, balance: state.balance + action.balance };
+
 		default:
 			return state;
 	}

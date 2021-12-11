@@ -11,15 +11,19 @@ export default function PendingTransactions({ pendingTransactions, mineState, us
 	const handleMine = async () => {
 		await axios
 			.post(`http://192.168.4.27:3001/mine`, {
-				address: user.walletAddress,
+				address: currentUser.walletAddress,
 			})
 			.then((res) => {
-				console.log(res.data);
-				dispatch({
-					type: "ADD BLOCK",
-					block: res.data.block,
-					mineTransaction: res.data.mineTransaction,
-				});
+				if (res.data) {
+					blockchainDispatch({
+						type: "ADD BLOCK",
+						block: res.data.block,
+						mineTransaction: res.data.mineTransaction,
+					});
+					axios.post("/api/mineTransaction", res.data.mineTransaction).then((res) => {
+						userDispatch({ type: "REWARD", balance: res.amount });
+					});
+				}
 			});
 	};
 
