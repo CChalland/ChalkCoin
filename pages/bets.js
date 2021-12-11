@@ -34,61 +34,64 @@ export default function Bets() {
 	const [todayState, setTodayState] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const notificationAlertRef = useRef(null);
-	const sportButtons = sportWithBets.pendingBets.openBets.map((sport, key) => {
-		let buttonClass;
-		if (sport.displayName === "NCAA Football") {
-			buttonClass = ncaafState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "NFL") {
-			buttonClass = nflState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "MLB") {
-			buttonClass = mlbState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "NBA") {
-			buttonClass = nbaState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "NCAA Men's Basketball") {
-			buttonClass = ncaabState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "NHL") {
-			buttonClass = nhlState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "WNBA") {
-			buttonClass = wnbaState ? "btn-round" : "btn-outline btn-round";
-		} else if (sport.displayName === "MLS") {
-			buttonClass = mlsState ? "btn-round" : "btn-outline btn-round";
-		}
-		return (
-			<Col xs={"auto"} key={key}>
-				<Button
-					className={`${buttonClass}`}
-					variant="default"
-					onClick={() => {
-						if (sport.displayName === "NCAA Football") {
-							setNCAAFState(!ncaafState);
-						} else if (sport.displayName === "NFL") {
-							setNFLState(!nflState);
-						} else if (sport.displayName === "MLB") {
-							setMLBState(!mlbState);
-						} else if (sport.displayName === "NBA") {
-							setNBAState(!nbaState);
-						} else if (sport.displayName === "NCAA Men's Basketball") {
-							setNCAABState(!ncaabState);
-						} else if (sport.displayName === "NHL") {
-							setNHLState(!nhlState);
-						} else if (sport.displayName === "WNBA") {
-							setWNBAState(!wnbaState);
-						} else if (sport.displayName === "MLS") {
-							setMLSState(!mlsState);
-						}
-					}}
-				>
-					<Image height={30} src={`../static/media/sports-icons/${sport.icon}.png`} rounded />
-				</Button>
-			</Col>
-		);
-	});
 	const closingClass = closingState ? "" : "btn-outline";
 	const startingClass = startingState ? "" : "btn-outline";
 	const todayClass = todayState ? "" : "btn-outline";
 	const closingSoon = bets?.some((bet) => bet.openStatus === "danger");
 	const startSoon = bets?.some((bet) => bet.openStatus === "warning");
 	const gameDay = bets?.some((bet) => bet.openStatus === "info");
+
+	const sportButtons = sportWithBets.pendingBets.openBets
+		.filter((sport) => sport.bets.some((bet) => bet.requesterId !== currentUser.id))
+		.map((sport, key) => {
+			let buttonClass;
+			if (sport.displayName === "NCAA Football") {
+				buttonClass = ncaafState ? "btn-round" : "btn-outline btn-round";
+			} else if (sport.displayName === "NFL") {
+				buttonClass = nflState ? "btn-round" : "btn-outline btn-round";
+			} else if (sport.displayName === "MLB") {
+				buttonClass = mlbState ? "btn-round" : "btn-outline btn-round";
+			} else if (sport.displayName === "NBA") {
+				buttonClass = nbaState ? "btn-round" : "btn-outline btn-round";
+			} else if (sport.displayName === "NCAA Men's Basketball") {
+				buttonClass = ncaabState ? "btn-round" : "btn-outline btn-round";
+			} else if (sport.displayName === "NHL") {
+				buttonClass = nhlState ? "btn-round" : "btn-outline btn-round";
+			} else if (sport.displayName === "WNBA") {
+				buttonClass = wnbaState ? "btn-round" : "btn-outline btn-round";
+			} else if (sport.displayName === "MLS") {
+				buttonClass = mlsState ? "btn-round" : "btn-outline btn-round";
+			}
+			return (
+				<Col xs={"auto"} key={key}>
+					<Button
+						className={`${buttonClass}`}
+						variant="default"
+						onClick={() => {
+							if (sport.displayName === "NCAA Football") {
+								setNCAAFState(!ncaafState);
+							} else if (sport.displayName === "NFL") {
+								setNFLState(!nflState);
+							} else if (sport.displayName === "MLB") {
+								setMLBState(!mlbState);
+							} else if (sport.displayName === "NBA") {
+								setNBAState(!nbaState);
+							} else if (sport.displayName === "NCAA Men's Basketball") {
+								setNCAABState(!ncaabState);
+							} else if (sport.displayName === "NHL") {
+								setNHLState(!nhlState);
+							} else if (sport.displayName === "WNBA") {
+								setWNBAState(!wnbaState);
+							} else if (sport.displayName === "MLS") {
+								setMLSState(!mlsState);
+							}
+						}}
+					>
+						<Image height={30} src={`../static/media/sports-icons/${sport.icon}.png`} rounded />
+					</Button>
+				</Col>
+			);
+		});
 	const betCards = bets.map((bet) => {
 		if (bet.event) {
 			return <BetCard acceptState={true} bet={bet} currentUser={currentUser} key={bet.id} />;
@@ -244,7 +247,6 @@ export default function Bets() {
 		todayState,
 	]);
 
-	// console.log("sportWithBets", sportWithBets);
 	// console.log("betSorted", betSorted);
 	// console.log("openBets", openBets);
 	// console.log("bets", bets);
