@@ -1,11 +1,8 @@
 import prisma from "../../contexts/prisma";
 import axios from "axios";
-import { UserWallet } from "../../helpers/UserWallet";
 
 export default async (req, res) => {
-	if (req.method !== "POST") {
-		return res.status(405).json({ message: "Method not allowed" });
-	} else if (req.method === "POST") {
+	if (req.method === "POST") {
 		let bets = req.body;
 		if (req.query.type === "accepted") {
 			try {
@@ -16,16 +13,30 @@ export default async (req, res) => {
 							: bet.event.competitions[0].competitors[1].team.shortDisplayName;
 						const winnerUser =
 							bet.details.winner === winnerTeam
-								? await UserWallet({ id: bet.requesterId }, prisma)
-								: await UserWallet({ id: bet.accepterId }, prisma);
+								? await prisma.user.update({
+										where: { id: bet.requesterId },
+										data: { balance: { increment: parseFloat(bet.amount) } },
+										select: { id: true, balance: true, walletAddress: true },
+								  })
+								: await await prisma.user.update({
+										where: { id: bet.accepterId },
+										data: { balance: { increment: parseFloat(bet.amount) } },
+										select: { id: true, balance: true, walletAddress: true },
+								  });
 						const loserUser =
 							bet.details.winner === winnerTeam
-								? await UserWallet({ id: bet.accepterId }, prisma)
-								: await UserWallet({ id: bet.requesterId }, prisma);
+								? await await prisma.user.findUnique({
+										where: { id: bet.accepterId },
+										select: { id: true, balance: true, walletAddress: true },
+								  })
+								: await prisma.user.findUnique({
+										where: { id: bet.requesterId },
+										select: { id: true, balance: true, walletAddress: true },
+								  });
 						const transactionBody = {
 							amount: bet.amount,
-							sender: loserUser.address,
-							recipient: winnerUser.address,
+							sender: loserUser.walletAddress,
+							recipient: winnerUser.walletAddress,
 							details: {
 								sport: bet.details.sport,
 								betId: bet.id,
@@ -41,14 +52,13 @@ export default async (req, res) => {
 							transactionBody
 						);
 						if (res.data.transactionData) {
-							let transactionData = res.data.transactionData;
 							return await prisma.bet.update({
 								where: {
 									id: bet.id,
 								},
 								data: {
 									completed: true,
-									transactionId: transactionData.transactionId,
+									transactionId: res.data.transactionData.transactionId,
 									winner: {
 										connect: {
 											id: winnerUser.id,
@@ -128,5 +138,7 @@ export default async (req, res) => {
 		} else {
 			res.json({ bets, message: "not a type listed" });
 		}
+	} else {
+		return res.status(405).json({ message: "Method not allowed" });
 	}
 };

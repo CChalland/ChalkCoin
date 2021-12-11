@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Container, Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BlockchainDispatch } from "../../../contexts/Blockchain.Context";
 import axios from "axios";
@@ -11,30 +11,34 @@ export default function PendingTransactions({ pendingTransactions, mineState, us
 	const handleMine = async () => {
 		await axios
 			.post(`http://192.168.4.27:3001/mine`, {
-				address: user.walletAddress,
+				address: currentUser.walletAddress,
 			})
 			.then((res) => {
-				console.log(res.data);
-				dispatch({
-					type: "ADD BLOCK",
-					block: res.data.block,
-					mineTransaction: res.data.mineTransaction,
-				});
+				if (res.data) {
+					blockchainDispatch({
+						type: "ADD BLOCK",
+						block: res.data.block,
+						mineTransaction: res.data.mineTransaction,
+					});
+					axios.post("/api/mineTransaction", res.data.mineTransaction).then((res) => {
+						userDispatch({ type: "REWARD", balance: res.amount });
+					});
+				}
 			});
 	};
 
 	return loaded ? (
-		<Container fluid className="mx-0 px-0">
+		<Container fluid className="mx-0 px-0 mt-4">
 			{pendingTransactions.length !== 0 ? (
 				<Row className="align-items-center">
 					<Col xs={"auto"}>
-						<h1 className="mb-0" style={{ fontSize: 32 }}>
+						<h1 className="mt-0 mb-1" style={{ fontSize: 32 }}>
 							Pending Transactions
 						</h1>
 					</Col>
 					{mineState ? (
 						<Col sm="auto" className="">
-							<Row className="justify-content-start">
+							<Row className="justify-content-start align-items-center">
 								<Col xs={"auto"}>
 									<OverlayTrigger
 										placement="bottom"

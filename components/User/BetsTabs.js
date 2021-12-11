@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Form, Nav, Container, Row, Col, Tab, InputGroup, Image } from "react-bootstrap";
 import BetCards from "./BetCards";
+import Loading from "../Utility/Loading";
 
-function BetsTabs({ userBets, currentUser }) {
+export default function BetsTabs({ userBets, currentUser }) {
 	const [tab, setTab] = useState({});
 	const [bets, setBets] = useState([]);
 	const [search, setSearch] = useState("");
@@ -259,11 +260,11 @@ function BetsTabs({ userBets, currentUser }) {
 	// const startSoon = bets?.some((bet) => bet.openStatus === "warning");
 	// const gameDay = bets?.some((bet) => bet.openStatus === "info");
 
-	// console.log("bets", bets);
+	console.log("betsTab - tab", tab);
 
-	return (
+	return tab.bets ? (
 		<Row>
-			{/* For sm, md, lg, xl and up screens */}
+			{/* For lg, xl and up screens */}
 			<Col className="d-none d-lg-block d-xl-block">
 				<Card>
 					<Tab.Container id="left-tabs-types-bets">
@@ -868,12 +869,20 @@ function BetsTabs({ userBets, currentUser }) {
 			</Col>
 
 			<Col xs={12}>
-				<h4>{tab.type ? `${tab.type} Bets` : "Loading"}</h4>
+				<h4>{`${tab.type} Bets`}</h4>
+
+				{searchState ? null : (
+					<Row>
+						<Col className="ml-5">
+							<h2>No bets found.</h2>
+						</Col>
+					</Row>
+				)}
+
 				<BetCards tabType={tab.type} tabBets={bets} currentUser={currentUser} />
-				{searchState ? null : <label className="error">No bets found.</label>}
 			</Col>
 		</Row>
+	) : (
+		<Loading />
 	);
 }
-
-export default BetsTabs;

@@ -1,5 +1,6 @@
 import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
+import { UserWallet } from "../../helpers/UserWallet";
 
 export default async (req, res) => {
 	const session = await getSession({ req });
@@ -8,17 +9,13 @@ export default async (req, res) => {
 		const bet = req.body;
 		if (session) {
 			try {
-				const userData = await prisma.user.findUnique({
-					where: { id: session.user.id },
-					select: { id: true, walletAddress: true, balance: true, requester: { select: { id: true } } },
-				});
-				const NotUsersBet = userData.requester.some((reqBet) => reqBet.id !== bet.id);
-
-				if (NotUsersBet) {
+				const userData = await UserWallet({ id: session.user.id }, prisma);
+				const usersBet = userData.requester.some((reqBet) => reqBet.id === bet.id);
+				if (!usersBet) {
 					if (userData.balance - parseFloat(bet.amount) >= 0) {
 						const user = await prisma.user.update({
 							where: { id: session.user.id },
-							data: { balance: userData.balance - parseFloat(bet.amount) },
+							data: { balance: { decrement: parseFloat(bet.amount) } },
 						});
 						const acceptedBet = await prisma.bet.update({
 							where: {

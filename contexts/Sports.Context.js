@@ -130,11 +130,10 @@ export function SportProvider(props) {
 					leagueData.events = sortedGames.flat();
 					dispatch({ type: league.display_name, data: leagueData, reload: league.reload });
 
-					console.log(sortedGames.flat());
+					// console.log(sortedGames.flat());
 				});
 		}
-
-		console.log("getData - league", league);
+		// console.log("getData - league", league);
 	});
 
 	useEffect(() => {

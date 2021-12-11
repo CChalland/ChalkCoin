@@ -47,11 +47,7 @@ export default function UserCard({ user, bets }) {
 									</Row>
 									<Row>
 										<Col>
-											{user.balance ? (
-												<h1 className="my-0">${user?.balance}</h1>
-											) : (
-												<Spinner animation="border" variant="info" />
-											)}
+											<h1 className="my-0">${user?.balance}</h1>
 										</Col>
 									</Row>
 								</Col>
@@ -66,11 +62,7 @@ export default function UserCard({ user, bets }) {
 									</Row>
 									<Row>
 										<Col>
-											{user.openBets ? (
-												<h1 className="my-0">{totalBets}</h1>
-											) : (
-												<Spinner animation="border" variant="info" />
-											)}
+											<h1 className="my-0">{totalBets}</h1>
 										</Col>
 									</Row>
 								</Col>

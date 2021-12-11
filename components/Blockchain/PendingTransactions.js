@@ -1,42 +1,43 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
+import { UserDispatch } from "../../contexts/User.Context";
 import axios from "axios";
 import TransactionCard from "./TransactionCard";
+import Loading from "../Utility/Loading";
 
-export default function PendingTransactions({ pendingTransactions, currentUser }) {
-	const dispatch = useContext(BlockchainDispatch);
-	const [mineState, setMineState] = useState(false);
+export default function PendingTransactions({ pendingTransactions, mineState, currentUser, loaded }) {
+	const blockchainDispatch = useContext(BlockchainDispatch);
+	const userDispatch = useContext(UserDispatch);
 	const handleMine = async () => {
 		await axios
 			.post(`http://192.168.4.27:3001/mine`, {
 				address: currentUser.walletAddress,
 			})
 			.then((res) => {
-				console.log(res.data);
-				dispatch({
-					type: "ADD BLOCK",
-					block: res.data.block,
-					mineTransaction: res.data.mineTransaction,
-				});
+				if (res.data) {
+					blockchainDispatch({
+						type: "ADD BLOCK",
+						block: res.data.block,
+						mineTransaction: res.data.mineTransaction,
+					});
+					axios.post("/api/mineTransaction", res.data.mineTransaction).then((res) => {
+						userDispatch({ type: "REWARD", balance: res.amount });
+					});
+				}
 			});
 	};
 
-	useEffect(() => {
-		if (pendingTransactions.length >= 10) setMineState(true);
-		else setMineState(false);
-	}, [pendingTransactions]);
-
-	return (
+	return loaded ? (
 		<Row>
 			<Col xs={12}>
-				<Row className="align-items-center">
+				<Row className="align-items-center mt-4">
 					<Col xs={"auto"}>
-						<h2 className="my-2">Pending Transactions</h2>
+						<h2 className="mt-0 mb-1">Pending Transactions</h2>
 					</Col>
 					{mineState ? (
 						<Col sm="auto" className="">
-							<Row className="justify-content-start">
+							<Row className="justify-content-start align-items-center">
 								<Col xs={"auto"}>
 									<OverlayTrigger
 										placement="bottom"
@@ -84,5 +85,7 @@ export default function PendingTransactions({ pendingTransactions, currentUser }
 				</div>
 			</Col>
 		</Row>
+	) : (
+		<Loading />
 	);
 }

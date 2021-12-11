@@ -28,6 +28,7 @@ export default function IndexPage({ users }) {
 	const blockchain = useContext(BlockchainContext);
 	const [expiringBets, setExpiringBets] = useState([]);
 	const [pendingTransactions, setPendingTransactions] = useState(blockchain.pendingTransactions);
+	const [pendingTransactionsState, setPendingTransactionsState] = useState(false);
 	const [welcomeState, setWelcomeState] = useState(true);
 	const [mineState, setMineState] = useState(false);
 	const notificationAlertRef = useRef(null);
@@ -57,8 +58,6 @@ export default function IndexPage({ users }) {
 
 	useEffect(() => {
 		setPendingTransactions(blockchain.pendingTransactions);
-		if (pendingTransactions.length >= 10) setMineState(true);
-		else setMineState(false);
 	}, [blockchain.pendingTransactions]);
 
 	useEffect(() => {
@@ -71,6 +70,12 @@ export default function IndexPage({ users }) {
 				.filter((bet) => bet.requesterId !== currentUser.id)
 		);
 	}, [bets.pendingBets.openBets]);
+
+	useEffect(() => {
+		if (blockchain.initialized) setPendingTransactionsState(true);
+		if (pendingTransactions.length >= 10) setMineState(true);
+		else setMineState(false);
+	}, [pendingTransactions]);
 
 	let welcomeAlert, mineAlert;
 	if (welcomeState) {
@@ -147,7 +152,7 @@ export default function IndexPage({ users }) {
 								pendingTransactions={pendingTransactions}
 								mineState={mineState}
 								user={currentUser}
-								loaded={blockchain.initialized}
+								loaded={pendingTransactionsState}
 							/>
 						</Row>
 					</>

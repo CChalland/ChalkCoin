@@ -33,11 +33,7 @@ export default async (req, res) => {
 	if (req.method === "POST") {
 		const bet = req.body;
 		if (session) {
-			const userData = await prisma.user.findUnique({
-				where: { id: session.user.id },
-				select: { id: true, walletAddress: true, balance: true },
-			});
-			const user = await UserWallet(userData, prisma);
+			const user = await UserWallet({ id: session.user.id }, prisma);
 
 			if (user.balance - parseFloat(bet.amount) >= 0) {
 				try {
@@ -53,17 +49,25 @@ export default async (req, res) => {
 						amount: parseFloat(bet.amount),
 						details: bet.details,
 						currency: bet.currency,
-						requester: {
-							connect: {
-								id: user.id,
-							},
-						},
 					};
 					if (betOdds) betData.odds = await betOdds;
 					if (bet.recipientId) betData.recipient = { connect: { id: bet.recipientId } };
-					const createdBet = await prisma.bet.create({
-						data: betData,
+
+					const getUser = await prisma.user.update({
+						where: { id: session.user.id },
+						data: {
+							balance: { decrement: parseFloat(bet.amount) },
+							requester: { create: betData },
+						},
+						include: {
+							requester: {
+								orderBy: {
+									id: "desc",
+								},
+							},
+						},
 					});
+					const createdBet = await getUser.requester[0];
 
 					console.log(betOdds);
 					return res.json(createdBet);

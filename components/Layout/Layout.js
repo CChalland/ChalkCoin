@@ -10,15 +10,7 @@ import image from "../../static/img/full-screen-image-3.jpg";
 export default function Layout(props) {
 	const user = useContext(UserContext);
 	const sports = useContext(SportContext);
-	const [currentUser, setCurrentUser] = useState({
-		id: user?.id,
-		username: user?.username,
-		image: user?.image,
-		balance: user?.balance,
-		openLength: user?.openBets?.length,
-		acceptedLength: user?.acceptedBets?.length,
-		completedLength: user?.completedBets?.length,
-	});
+	const [currentUser, setCurrentUser] = useState({});
 	let routes = [
 		{
 			path: "/bets",
@@ -43,19 +35,17 @@ export default function Layout(props) {
 	];
 
 	useEffect(() => {
-		setCurrentUser({
-			id: user?.id,
-			username: user?.username,
-			image: user?.image,
-			balance: user?.balance,
-			openBetsLength: user?.openBets?.length,
-			acceptedBetsLength: user?.acceptedBets?.length,
-			completedLength: user?.completedBets?.length,
-		});
+		if (user.id)
+			setCurrentUser({
+				id: user.id,
+				username: user.username,
+				image: user.image,
+				balance: user.balance,
+				openLength: user.openBets?.length,
+				acceptedLength: user.acceptedBets?.length,
+				completedLength: user.completedBets?.length,
+			});
 	}, [user]);
-
-	// console.log("Layout - user", user);
-	// console.log("Layout - currentUser", currentUser);
 
 	return (
 		<div className="wrapper">
