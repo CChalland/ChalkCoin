@@ -3,7 +3,7 @@ import { Col, Container, Row, Image } from "react-bootstrap";
 function BetWinner({ betWinnerData }) {
 	return (
 		<Row className="mt-2 justify-content-between">
-			<Col xs={{ span: 6, offset: 0 }} className="mx-2">
+			<Col xs={{ span: 6, offset: 0 }} className="">
 				<Row>
 					<Col>
 						<h1 className="my-0" style={{ fontSize: 64 }}>
@@ -12,7 +12,7 @@ function BetWinner({ betWinnerData }) {
 					</Col>
 				</Row>
 			</Col>
-			<Col className="mx-2">
+			<Col className="">
 				<Row className="">
 					<Image width={55} height={55} src={betWinnerData.acceptingTeam.logo} rounded />
 				</Row>

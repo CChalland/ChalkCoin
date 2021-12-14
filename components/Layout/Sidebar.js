@@ -121,80 +121,78 @@ function Sidebar({ currentUser, routes, image, background, pathname }) {
 	};
 
 	return (
-		<>
-			<div className="sidebar" data-color={background} data-image={image}>
-				<div className="sidebar-wrapper">
-					<div className="logo">
-						<a className="simple-text logo-mini" href="/">
-							<div className="logo-img">{/* <img src="" alt="react-logo" /> */}</div>
-						</a>
-						<a className="simple-text logo-normal" href="/">
-							BEToken
-						</a>
-					</div>
-					{currentUser?.id ? (
-						<div className="user">
-							<div className="photo">
-								<img alt="..." src={currentUser?.image}></img>
-							</div>
-							<div className="info">
-								<a
-									className={userCollapseState ? "collapsed" : ""}
-									data-toggle="collapse"
-									href="#pablo"
-									onClick={(e) => {
-										e.preventDefault();
-										setUserCollapseState(!userCollapseState);
-									}}
-									aria-expanded={userCollapseState}
-								>
-									<span>
-										{currentUser?.username} <b className="caret"></b>
-									</span>
-								</a>
-								<Collapse id="collapseExample" in={userCollapseState}>
-									<div>
-										<Nav as="ul" className="mt-2">
-											<li>
-												<a className="profile-dropdown">
-													<span className="sidebar-mini">${currentUser?.balance}</span>
-													<span className="sidebar-normal">Balance</span>
-												</a>
-											</li>
-											<li>
-												<a className="profile-dropdown">
-													<span className="sidebar-mini">{currentUser?.openLength}</span>
-													<span className="sidebar-normal">Open Bets</span>
-												</a>
-											</li>
-											<li>
-												<a className="profile-dropdown">
-													<span className="sidebar-mini">{currentUser?.acceptedLength}</span>
-													<span className="sidebar-normal">Accepted Bets</span>
-												</a>
-											</li>
-											<li>
-												<a className="profile-dropdown">
-													<span className="sidebar-mini">{currentUser?.completedLength}</span>
-													<span className="sidebar-normal">Completed Bets</span>
-												</a>
-											</li>
-										</Nav>
-									</div>
-								</Collapse>
-							</div>
-						</div>
-					) : null}
-					<Nav as="ul">{createLinks(routes)}</Nav>
+		<div className="sidebar" data-color={background} data-image={image}>
+			<div className="sidebar-wrapper">
+				<div className="logo">
+					<a className="simple-text logo-mini" href="/">
+						<div className="logo-img">{/* <img src="" alt="react-logo" /> */}</div>
+					</a>
+					<a className="simple-text logo-normal" href="/">
+						BEToken
+					</a>
 				</div>
-				<div
-					className="sidebar-background"
-					style={{
-						backgroundImage: "url('" + image + "')",
-					}}
-				></div>
+				{currentUser?.id ? (
+					<div className="user">
+						<div className="photo">
+							<img alt="..." src={currentUser?.image}></img>
+						</div>
+						<div className="info">
+							<a
+								className={userCollapseState ? "collapsed" : ""}
+								data-toggle="collapse"
+								href="#pablo"
+								onClick={(e) => {
+									e.preventDefault();
+									setUserCollapseState(!userCollapseState);
+								}}
+								aria-expanded={userCollapseState}
+							>
+								<span>
+									{currentUser?.username} <b className="caret"></b>
+								</span>
+							</a>
+							<Collapse id="collapseExample" in={userCollapseState}>
+								<div>
+									<Nav as="ul" className="mt-2">
+										<li>
+											<a className="profile-dropdown">
+												<span className="sidebar-mini">${currentUser?.balance}</span>
+												<span className="sidebar-normal">Balance</span>
+											</a>
+										</li>
+										<li>
+											<a className="profile-dropdown">
+												<span className="sidebar-mini">{currentUser?.openLength}</span>
+												<span className="sidebar-normal">Open Bets</span>
+											</a>
+										</li>
+										<li>
+											<a className="profile-dropdown">
+												<span className="sidebar-mini">{currentUser?.acceptedLength}</span>
+												<span className="sidebar-normal">Accepted Bets</span>
+											</a>
+										</li>
+										<li>
+											<a className="profile-dropdown">
+												<span className="sidebar-mini">{currentUser?.completedLength}</span>
+												<span className="sidebar-normal">Completed Bets</span>
+											</a>
+										</li>
+									</Nav>
+								</div>
+							</Collapse>
+						</div>
+					</div>
+				) : null}
+				<Nav as="ul">{createLinks(routes)}</Nav>
 			</div>
-		</>
+			<div
+				className="sidebar-background"
+				style={{
+					backgroundImage: "url('" + image + "')",
+				}}
+			></div>
+		</div>
 	);
 }
 
