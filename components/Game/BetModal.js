@@ -176,6 +176,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 
 	return (
 		<>
+			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 			{betButtonState ? (
 				<Button
 					className={buttonClassName}

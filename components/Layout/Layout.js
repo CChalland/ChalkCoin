@@ -53,7 +53,7 @@ export default function Layout(props) {
 			<div className="main-panel">
 				<UserNavbar />
 				<div className="content">{props.children}</div>
-				<Footer />
+				{/* <Footer /> */}
 				<div className="close-layer" onClick={() => document.documentElement.classList.toggle("nav-open")} />
 			</div>
 		</div>

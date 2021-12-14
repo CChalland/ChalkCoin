@@ -460,7 +460,7 @@ export default function Bets() {
 				{searchState ? null : (
 					<Row>
 						<Col className="ml-5">
-							<h2>No bets found.</h2>
+							<h2>No Open Bets.</h2>
 						</Col>
 					</Row>
 				)}
