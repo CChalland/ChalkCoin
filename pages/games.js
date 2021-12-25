@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useContext, useRef, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { getSession } from "next-auth/client";
 import { Container, Row } from "react-bootstrap";
 import { SportContext } from "../contexts/Sports.Context";
