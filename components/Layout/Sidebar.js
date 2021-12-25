@@ -128,7 +128,7 @@ function Sidebar({ currentUser, routes, image, background, pathname }) {
 						<div className="logo-img">{/* <img src="" alt="react-logo" /> */}</div>
 					</a>
 					<a className="simple-text logo-normal" href="/">
-						BEToken
+						ChalkCoin
 					</a>
 				</div>
 				{currentUser?.id ? (

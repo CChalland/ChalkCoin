@@ -20,9 +20,9 @@ export default function Banner() {
 						<Col>
 							<Fade up delay={200}>
 								<h5 className="text-secondary text-center">
-									BEToken is a blockchain ledger featuring bets on all your favorite games, including College
-									Football & Basketball, NFL, MLB, NBA, NHL, WNBA, and MLS. Sign Up to get tokens to START
-									BETTING!
+									ChalkCoin is a blockchain ledger featuring bets on all your favorite games, including
+									College Football & Basketball, NFL, MLB, NBA, NHL, WNBA, and MLS. Sign Up to get tokens to
+									START BETTING!
 								</h5>
 							</Fade>
 						</Col>

@@ -1,8 +1,8 @@
 {
 	"version": 3,
-	"file": "betoken-bootstrap-react.css",
+	"file": "chalkcoin.css",
 	"sources": [
-		"../scss/betoken-bootstrap-react.scss",
+		"../scss/chalkcoin.scss",
 		"../scss/lbd/_variables.scss",
 		"../scss/lbd/_mixins.scss",
 		"../scss/lbd/mixins/_transparency.scss",

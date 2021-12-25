@@ -1,5 +1,5 @@
 {
-  "name": "betoken",
+  "name": "chalkcoin",
   "version": "1.0.0",
   "description": "Bets stored on the blockchain",
   "main": "index.js",
@@ -24,14 +24,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CChalland/BEToken.git"
+    "url": "git+https://github.com/CChalland/ChalkCoin.git"
   },
   "author": "CChalland",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CChalland/BEToken/issues"
+    "url": "https://github.com/CChalland/ChalkCoin/issues"
   },
-  "homepage": "https://github.com/CChalland/BEToken#readme",
+  "homepage": "https://github.com/CChalland/ChalkCoin#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.2",
     "@prisma/client": "^3.1.1",
