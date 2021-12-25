@@ -15,7 +15,7 @@ export default async (req, res) => {
 						rewards: {
 							create: {
 								amount: reward.amount,
-								currency: "BEToken",
+								currency: "ChalkCoin",
 								details: reward.details,
 								transactionId: reward.transactionId,
 							},

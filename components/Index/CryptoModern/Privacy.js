@@ -15,8 +15,8 @@ export default function Privacy() {
 					<Row>
 						<Col className="text-center">
 							<h5 className="text-secondary">
-								BEToken is designed to add a layer of privacy to the benefits and functionality of crypto. It
-								can keep information about its users hidden.
+								ChalkCoin is designed to add a layer of privacy to the benefits and functionality of crypto.
+								It can keep information about its users hidden.
 							</h5>
 						</Col>
 					</Row>

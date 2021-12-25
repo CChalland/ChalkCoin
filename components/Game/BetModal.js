@@ -135,7 +135,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 					name: gameBetData.name,
 					winner: selectedWinner.label,
 				},
-				currency: "BEToken",
+				currency: "ChalkCoin",
 				requesterId: currentUser.id,
 			};
 			if (betType === "recipient") submitBet.recipientId = recipient.id;

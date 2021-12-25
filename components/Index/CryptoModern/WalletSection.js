@@ -42,7 +42,7 @@ export default function WalletSection() {
 					<Row>
 						<Col>
 							<h5 className="text-secondary">
-								BEToken's wallet stores the bets transactions. In addition to this basic function of storing
+								ChalkCoin's wallet stores the bets transactions. In addition to this basic function of storing
 								the keys, our wallet offers the functionality of encrypting and/or signing information.
 							</h5>
 						</Col>
