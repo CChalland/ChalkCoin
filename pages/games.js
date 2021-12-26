@@ -17,6 +17,7 @@ export default function Games({ query, users }) {
 	const currentUser = useContext(UserContext);
 	const sportsData = useContext(SportContext);
 	const notificationAlertRef = useRef(null);
+	const [activeIndex, setActiveIndex] = useState(7);
 	const [selectedDate, setSelectedDate] = useState({});
 	let sportData = sportsData.find((sport) => {
 		return sport.abbrv === query.sport?.toUpperCase();
@@ -84,19 +85,27 @@ export default function Games({ query, users }) {
 
 	const datesData = () => {
 		const days = [];
-		const dateStart = moment();
+		const today = moment().format("YYYYMMDD");
+		const dateStart = moment().subtract(7, "days");
 		const dateEnd = moment().add(90, "days");
 		while (dateEnd.diff(dateStart, "days") >= 0) {
 			const str = dateStart.format("ddd,MMM,Do,YYYYMMDD").split(",");
-			days.push({ day: str[0], month: str[1], date: str[2], value: str[3] });
+			days.push({
+				day: str[0],
+				month: str[1],
+				date: str[2],
+				value: str[3],
+				today: today === str[3] ? true : false,
+			});
 			dateStart.add(1, "days");
 		}
 		return days;
 	};
 
-	// console.log("datesData", datesData());
+	console.log("games - selectedDate", selectedDate);
+	console.log("games - activeIndex", activeIndex);
 	// console.log("sportData", sportData);
-	console.log("sportsData", sportsData);
+	// console.log("sportsData", sportsData);
 
 	return (
 		<>
@@ -115,9 +124,9 @@ export default function Games({ query, users }) {
 						<Swiper
 							spaceBetween={5}
 							slidesPerView={7}
+							initialSlide={7}
 							breakpoints={{ 480: { slidesPerView: 7 }, 1400: { slidesPerView: 7 } }}
-							onSlideChange={() => console.log("slide change")}
-							onSwiper={(swiper) => console.log()}
+							onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
 						>
 							{datesData().map((item, key) => {
 								return (
