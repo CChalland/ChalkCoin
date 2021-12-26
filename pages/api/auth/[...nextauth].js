@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import Adapters from "next-auth/adapters";
+import DiscordProvider from "next-auth/providers/discord";
+import LinkedInProvider from "next-auth/providers/linkedin";
 import prisma from "../../../contexts/prisma";
 import { compareSync } from "bcrypt";
 
@@ -57,6 +59,14 @@ const options = {
 		Providers.GitHub({
 			clientId: process.env.GITHUB_ID,
 			clientSecret: process.env.GITHUB_SECRET,
+		}),
+		DiscordProvider({
+			clientId: process.env.DISCORD_CLIENT_ID,
+			clientSecret: process.env.DISCORD_CLIENT_SECRET,
+		}),
+		LinkedInProvider({
+			clientId: process.env.LINKEDIN_CLIENT_ID,
+			clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
 		}),
 	],
 	session: {
