@@ -522,7 +522,6 @@ input:focus {
 }
 
 .sidebar .logo .simple-text {
-  text-transform: uppercase;
   padding: 5px 0px;
   display: inline-block;
   font-size: 1.125rem;
