@@ -108,14 +108,14 @@ export default function Games({ query, users }) {
 	}, [sportsData]);
 
 	useEffect(() => {
-		if (league.data?.days.length > 0) {
+		if (league?.data?.days.length > 0) {
 			const selected = league.data?.days.find((day) => day.date === selectedDate);
 			if (selected.events.length > 0) {
 				setGames(selected.events);
 			} else {
 				setGames([]);
 			}
-		} else if (league.data?.events) setGames(league.data.events);
+		} else if (league?.data?.events) setGames(league.data.events);
 		else {
 			setGames([]);
 		}
@@ -157,7 +157,7 @@ export default function Games({ query, users }) {
 			<Container fluid>
 				<Row>
 					<Col>
-						<h1>{league.display_name}</h1>
+						<h1>{league?.display_name}</h1>
 					</Col>
 				</Row>
 
@@ -220,8 +220,8 @@ export default function Games({ query, users }) {
 								);
 							})}
 						</Swiper>
-						<div class="swiper-button-prev"></div>
-						<div class="swiper-button-next"></div>
+						<div className="swiper-button-prev"></div>
+						<div className="swiper-button-next"></div>
 					</Col>
 				</Row>
 
