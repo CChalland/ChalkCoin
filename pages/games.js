@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useCallback, useContext, useState, useRef, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { getSession } from "next-auth/client";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { SportContext, SportDispatch } from "../contexts/Sports.Context";
@@ -10,6 +9,9 @@ import axios from "axios";
 import GameCard from "../components/Game/GameCard";
 import NotificationAlert from "react-notification-alert";
 import Loading from "../components/Utility/Loading";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Autoplay, EffectFade, Navigation, Pagination } from "swiper";
+SwiperCore.use([Pagination, Navigation, Autoplay, EffectFade]);
 
 export default function Games({ query, users }) {
 	const router = useRouter();
@@ -160,14 +162,15 @@ export default function Games({ query, users }) {
 				</Row>
 
 				<Row>
-					<Col lg={11} xl={10}>
+					<Col lg={11} xl={10} className="swiper-container">
 						<Swiper
-							className=""
+							className="swiper-wrapper"
+							enabled={true}
+							slidesPerView={1}
 							spaceBetween={5}
-							slidesPerView={2}
 							initialSlide={swiperIndex}
 							breakpoints={{
-								260: { slidesPerView: 3 },
+								240: { slidesPerView: 3 },
 								320: { slidesPerView: 5 },
 								480: { slidesPerView: 7 },
 								720: { slidesPerView: 9 },
@@ -176,6 +179,7 @@ export default function Games({ query, users }) {
 								1400: { slidesPerView: 14 },
 								1600: { slidesPerView: 16 },
 							}}
+							navigation={true}
 							onSlideChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
 						>
 							{datesData().map((item, key) => {
@@ -184,6 +188,7 @@ export default function Games({ query, users }) {
 								return (
 									<SwiperSlide
 										key={key}
+										className=""
 										onClick={() => {
 											setSelectedIndex(key);
 											setSelectedDate(item);
