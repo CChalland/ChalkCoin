@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
 import { useCallback, useContext, useState, useRef, useEffect } from "react";
-import { Virtual } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { getSession } from "next-auth/client";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { SportContext } from "../contexts/Sports.Context";
+import { SportContext, SportDispatch } from "../contexts/Sports.Context";
 import { UserContext } from "../contexts/User.Context";
 import moment from "moment";
 import axios from "axios";
@@ -16,13 +15,58 @@ export default function Games({ query, users }) {
 	const router = useRouter();
 	const currentUser = useContext(UserContext);
 	const sportsData = useContext(SportContext);
+	const dispatch = useContext(SportDispatch);
 	const notificationAlertRef = useRef(null);
+	const [league, setLeague] = useState({});
+	const [games, setGames] = useState([]);
 	const [swiperIndex, setSwiperIndex] = useState(7);
 	const [selectedIndex, setSelectedIndex] = useState(7);
 	const [selectedDate, setSelectedDate] = useState({});
-	let sportData = sportsData.find((sport) => {
-		return sport.abbrv === query.sport?.toUpperCase();
+
+	const getData = useCallback(async (league, date) => {
+		axios
+			.get(
+				`http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard?dates=${date.value}`
+			)
+			.then((response) => {
+				console.log(response.data);
+				dispatch({
+					type: "SELECTED DATE",
+					data: response.data,
+					date: selectedDate,
+					sport: league.display_name,
+				});
+			});
 	});
+
+	useEffect(() => {
+		if (selectedDate.value) getData(league, selectedDate);
+	}, [selectedDate]);
+
+	useEffect(() => {
+		if (router.query.error) {
+			notify(router.query.error);
+		}
+		if (!league || !router.query.sport) {
+			router.replace("/", undefined, { shallow: true });
+		}
+	}, [router]);
+
+	useEffect(() => {
+		const gameData = sportsData.find((sport) => {
+			return sport.abbrv === query.sport?.toUpperCase();
+		});
+		setLeague(gameData);
+		if (gameData.data.days.length > 0) {
+			const selected = gameData.data.days.find((day) => day.date === selectedDate);
+			console.log("games - selected", selected);
+			setGames(selected.events);
+		} else if (gameData.data.events) setGames(gameData.data.events);
+		else setGames([]);
+	}, [sportsData]);
+
+	console.log("games - games", games);
+
 	const notify = (errMsg) => {
 		let options = {
 			place: "tc",
@@ -40,49 +84,6 @@ export default function Games({ query, users }) {
 		notificationAlertRef.current.notificationAlert(options);
 		router.replace(`${router.pathname}?sport=${query.sport}`, undefined, { shallow: true });
 	};
-
-	const getData = useCallback(async (league, date) => {
-		axios
-			.get(
-				`http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard?dates=${date.value}`
-			)
-			.then((response) => {
-				console.log(response.data);
-			});
-	});
-
-	useEffect(() => {
-		if (selectedDate.value) getData(sportData, selectedDate);
-	}, [selectedDate]);
-
-	useEffect(() => {
-		if (router.query.error) {
-			notify(router.query.error);
-		}
-		if (!sportData || !router.query.sport) {
-			router.replace("/", undefined, { shallow: true });
-		}
-	}, [router]);
-
-	let gameItems = sportData?.data.events ? (
-		sportData.data.events.map((game, key) => {
-			return (
-				<Row className="my-3" key={game.id}>
-					<GameCard
-						panelKey={key}
-						gameData={game}
-						sportName={sportData?.display_name}
-						users={users}
-						currentUser={currentUser}
-						completed={game.status.type.completed}
-					/>
-				</Row>
-			);
-		})
-	) : (
-		<Loading />
-	);
-
 	const datesData = () => {
 		const days = [];
 		const today = moment().format("YYYYMMDD");
@@ -102,11 +103,6 @@ export default function Games({ query, users }) {
 		return days;
 	};
 
-	console.log("games - selectedDate", selectedDate);
-	console.log("games - swiperIndex", swiperIndex);
-	// console.log("sportData", sportData);
-	// console.log("sportsData", sportsData);
-
 	return (
 		<>
 			<div className="rna-container">
@@ -115,7 +111,7 @@ export default function Games({ query, users }) {
 			<Container fluid>
 				<Row>
 					<Col>
-						<h1>{sportData?.display_name}</h1>
+						<h1>{league.display_name}</h1>
 					</Col>
 				</Row>
 
@@ -173,7 +169,22 @@ export default function Games({ query, users }) {
 					</Col>
 				</Row>
 
-				{gameItems}
+				{games ? (
+					games.map((game, key) => (
+						<Row className="my-3" key={game.id}>
+							<GameCard
+								panelKey={key}
+								gameData={game}
+								sportName={league?.display_name}
+								users={users}
+								currentUser={currentUser}
+								completed={game.status.type.completed}
+							/>
+						</Row>
+					))
+				) : (
+					<Loading />
+				)}
 			</Container>
 		</>
 	);
