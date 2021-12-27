@@ -165,7 +165,8 @@ export function GamePlayHelper(game, sportName) {
 export function GameLeadersHelper(game, sportName) {
 	const { homeTeam, awayTeam } = homeAwayHelper(game);
 	let athletes = [];
-	let awayAthlete, homeAthlete;
+	let awayAthlete = {},
+		homeAthlete = {};
 
 	if (awayTeam[0].leaders) {
 		let athlete = awayTeam[0].leaders[awayTeam[0].leaders.length - 1];
