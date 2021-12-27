@@ -186,7 +186,14 @@ export default function Games({ query, users }) {
 							onSlideChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
 						>
 							{datesData().map((item, key) => {
-								// console.log("games - datesData() - item", item);
+								let selectedClass, monthClass;
+								if (item.past) {
+									selectedClass = selectedIndex === key ? "text-info" : "text-muted";
+									monthClass = "text-danger-muted";
+								} else {
+									selectedClass = selectedIndex === key ? "text-info" : "";
+									monthClass = "text-danger";
+								}
 
 								return (
 									<SwiperSlide
@@ -198,24 +205,14 @@ export default function Games({ query, users }) {
 									>
 										<Row>
 											<Col>
-												<p className={`${selectedIndex === key ? "" : "text-muted"} mb-1 py-0 ml-2`}>
-													{item.day}
-												</p>
+												<p className={`${selectedClass} mb-1 py-0 ml-2`}>{item.day}</p>
 											</Col>
 										</Row>
 										<Row>
 											<Col>
 												<Card border="secondary" className="mr-1" style={{ width: "3rem", height: "4rem" }}>
-													<p
-														className={`${
-															selectedIndex === key ? "text-danger" : "text-danger-muted"
-														} text-center my-1 border-bottom`}
-													>
-														{item.month}
-													</p>
-													<p className={`${selectedIndex === key ? "" : "text-muted"} text-center my-1`}>
-														{item.date}
-													</p>
+													<p className={`${monthClass} text-center my-1 border-bottom`}>{item.month}</p>
+													<p className={`${selectedClass} text-center my-1`}>{item.date}</p>
 												</Card>
 											</Col>
 										</Row>
