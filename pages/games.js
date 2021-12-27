@@ -22,60 +22,6 @@ export default function Games({ query, users }) {
 	const [swiperIndex, setSwiperIndex] = useState(7);
 	const [selectedIndex, setSelectedIndex] = useState(-1);
 	const [selectedDate, setSelectedDate] = useState({});
-
-	const getData = useCallback(async (league, date) => {
-		axios
-			.get(
-				`http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard?dates=${date.value}`
-			)
-			.then((response) => {
-				console.log(response.data);
-				dispatch({
-					type: "SELECTED DATE",
-					data: response.data,
-					date: selectedDate,
-					sport: league.display_name,
-				});
-			});
-	});
-
-	useEffect(() => {
-		if (selectedDate.value) getData(league, selectedDate);
-	}, [selectedDate]);
-
-	useEffect(() => {
-		if (router.query.error) {
-			notify(router.query.error);
-		} else if (!league || !router.query.sport) {
-			setSelectedIndex(-1);
-			router.replace("/", undefined, { shallow: true });
-		} else if (router.query.sport.toUpperCase() !== league.abbrv) {
-			setSelectedIndex(-1);
-			setLeague(
-				sportsData.find((sport) => {
-					return sport.abbrv === router.query.sport.toUpperCase();
-				})
-			);
-		}
-	}, [router]);
-
-	useEffect(() => {
-		setLeague(
-			sportsData.find((sport) => {
-				return sport.abbrv === query.sport?.toUpperCase();
-			})
-		);
-	}, [sportsData]);
-
-	useEffect(() => {
-		if (league.data?.days.length > 0) {
-			const selected = league.data?.days.find((day) => day.date === selectedDate);
-			console.log("games - selected", selected);
-			setGames(selected?.events);
-		} else if (league.data?.events) setGames(league.data.events);
-		else setGames([]);
-	}, [league]);
-
 	const notify = (errMsg) => {
 		let options = {
 			place: "tc",
@@ -112,7 +58,93 @@ export default function Games({ query, users }) {
 		return days;
 	};
 
-	console.log("games - games", games);
+	const getData = useCallback(async (league, date) => {
+		axios
+			.get(
+				`http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard?dates=${date.value}`
+			)
+			.then((response) => {
+				console.log(response.data);
+				dispatch({
+					type: "SELECTED DATE",
+					data: response.data,
+					date: selectedDate,
+					sport: league.display_name,
+				});
+			});
+	});
+
+	useEffect(() => {
+		if (selectedDate.value) getData(league, selectedDate);
+	}, [selectedDate]);
+
+	useEffect(() => {
+		if (router.query.error) {
+			notify(router.query.error);
+		} else if (!league || !router.query.sport) {
+			setSelectedIndex(-1);
+			setSelectedDate({});
+			router.replace("/", undefined, { shallow: true });
+		} else if (router.query.sport.toUpperCase() !== league.abbrv) {
+			setSelectedIndex(-1);
+			setSelectedDate({});
+			setLeague(
+				sportsData.find((sport) => {
+					return sport.abbrv === router.query.sport.toUpperCase();
+				})
+			);
+		}
+	}, [router]);
+
+	useEffect(() => {
+		setLeague(
+			sportsData.find((sport) => {
+				return sport.abbrv === router.query.sport.toUpperCase();
+			})
+		);
+	}, [sportsData]);
+
+	useEffect(() => {
+		if (league.data?.days.length > 0) {
+			const selected = league.data?.days.find((day) => day.date === selectedDate);
+			if (selected.events.length > 0) {
+				setGames(selected.events);
+			} else {
+				setGames([]);
+			}
+		} else if (league.data?.events) setGames(league.data.events);
+		else {
+			setGames([]);
+		}
+	}, [league]);
+
+	let gameCards;
+	if (games.length > 0)
+		gameCards = games.map((game, key) => (
+			<Row className="my-3" key={game.id}>
+				<GameCard
+					panelKey={key}
+					gameData={game}
+					sportName={league?.display_name}
+					users={users}
+					currentUser={currentUser}
+					completed={game.status.type.completed}
+				/>
+			</Row>
+		));
+	else if (selectedDate.value)
+		gameCards = (
+			<Row>
+				<Col>
+					<h3>No Events Found</h3>
+				</Col>
+			</Row>
+		);
+	else gameCards = <Loading />;
+
+	// console.log("games - selectedDate", selectedDate);
+	// console.log("games - league", league);
+	// console.log("games -  games", games);
 
 	return (
 		<>
@@ -180,22 +212,7 @@ export default function Games({ query, users }) {
 					</Col>
 				</Row>
 
-				{games ? (
-					games.map((game, key) => (
-						<Row className="my-3" key={game.id}>
-							<GameCard
-								panelKey={key}
-								gameData={game}
-								sportName={league?.display_name}
-								users={users}
-								currentUser={currentUser}
-								completed={game.status.type.completed}
-							/>
-						</Row>
-					))
-				) : (
-					<Loading />
-				)}
+				{gameCards}
 			</Container>
 		</>
 	);
