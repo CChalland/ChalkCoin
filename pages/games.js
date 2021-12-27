@@ -20,7 +20,7 @@ export default function Games({ query, users }) {
 	const [league, setLeague] = useState({});
 	const [games, setGames] = useState([]);
 	const [swiperIndex, setSwiperIndex] = useState(7);
-	const [selectedIndex, setSelectedIndex] = useState(7);
+	const [selectedIndex, setSelectedIndex] = useState(-1);
 	const [selectedDate, setSelectedDate] = useState({});
 
 	const getData = useCallback(async (league, date) => {
@@ -46,26 +46,35 @@ export default function Games({ query, users }) {
 	useEffect(() => {
 		if (router.query.error) {
 			notify(router.query.error);
-		}
-		if (!league || !router.query.sport) {
+		} else if (!league || !router.query.sport) {
+			setSelectedIndex(-1);
 			router.replace("/", undefined, { shallow: true });
+		} else if (router.query.sport.toUpperCase() !== league.abbrv) {
+			setSelectedIndex(-1);
+			setLeague(
+				sportsData.find((sport) => {
+					return sport.abbrv === router.query.sport.toUpperCase();
+				})
+			);
 		}
 	}, [router]);
 
 	useEffect(() => {
-		const gameData = sportsData.find((sport) => {
-			return sport.abbrv === query.sport?.toUpperCase();
-		});
-		setLeague(gameData);
-		if (gameData.data.days.length > 0) {
-			const selected = gameData.data.days.find((day) => day.date === selectedDate);
-			console.log("games - selected", selected);
-			setGames(selected.events);
-		} else if (gameData.data.events) setGames(gameData.data.events);
-		else setGames([]);
+		setLeague(
+			sportsData.find((sport) => {
+				return sport.abbrv === query.sport?.toUpperCase();
+			})
+		);
 	}, [sportsData]);
 
-	console.log("games - games", games);
+	useEffect(() => {
+		if (league.data?.days.length > 0) {
+			const selected = league.data?.days.find((day) => day.date === selectedDate);
+			console.log("games - selected", selected);
+			setGames(selected?.events);
+		} else if (league.data?.events) setGames(league.data.events);
+		else setGames([]);
+	}, [league]);
 
 	const notify = (errMsg) => {
 		let options = {
@@ -102,6 +111,8 @@ export default function Games({ query, users }) {
 		}
 		return days;
 	};
+
+	console.log("games - games", games);
 
 	return (
 		<>

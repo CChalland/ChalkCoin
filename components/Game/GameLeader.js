@@ -275,27 +275,29 @@ function GameLeader(props) {
 			}
 		} else if (athlete) {
 			if (athlete.type === "pre" || athlete.type === "in" || athlete.type === "completed") {
-				let playerStats = athlete.displayValue.split(",");
-				title = (
-					<Row className="mt-2 py-1 text-secondary" key={key}>
-						{athlete.title}
-					</Row>
-				);
-
-				player = (
-					<Col xs={12} md={6} xl={12} key={key}>
-						<Row className="mb-2 align-items-center">
-							<Col xs="auto">
-								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
-							</Col>
-							<Col xs="auto">
-								<Row className="mb-0 h6">{athlete.displayName}</Row>
-								<Row className="mb-0 text-secondary">{`${athlete.team} - ${athlete.position}`}</Row>
-								<Row className="mb-0 text-secondary">{`${playerStats[0]},${playerStats[1]},${playerStats[2]}`}</Row>
-							</Col>
+				if (athlete.displayValue) {
+					let playerStats = athlete.displayValue.split(",");
+					title = (
+						<Row className="mt-2 py-1 text-secondary" key={key}>
+							{athlete.title}
 						</Row>
-					</Col>
-				);
+					);
+
+					player = (
+						<Col xs={12} md={6} xl={12} key={key}>
+							<Row className="mb-2 align-items-center">
+								<Col xs="auto">
+									<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+								</Col>
+								<Col xs="auto">
+									<Row className="mb-0 h6">{athlete.displayName}</Row>
+									<Row className="mb-0 text-secondary">{`${athlete.team} - ${athlete.position}`}</Row>
+									<Row className="mb-0 text-secondary">{`${playerStats[0]},${playerStats[1]},${playerStats[2]}`}</Row>
+								</Col>
+							</Row>
+						</Col>
+					);
+				}
 			}
 		}
 		return { title, player, rowStyle };
