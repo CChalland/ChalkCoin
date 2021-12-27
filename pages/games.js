@@ -159,7 +159,7 @@ export default function Games({ query, users }) {
 				</Row>
 
 				<Row>
-					<Col lg={10}>
+					<Col lg={11} xl={10}>
 						<Swiper
 							className=""
 							spaceBetween={5}
@@ -169,7 +169,11 @@ export default function Games({ query, users }) {
 								260: { slidesPerView: 3 },
 								320: { slidesPerView: 5 },
 								480: { slidesPerView: 7 },
-								1400: { slidesPerView: 7 },
+								720: { slidesPerView: 9 },
+								940: { slidesPerView: 10 },
+								1200: { slidesPerView: 11 },
+								1400: { slidesPerView: 14 },
+								1600: { slidesPerView: 16 },
 							}}
 							onSlideChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
 						>
