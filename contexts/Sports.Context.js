@@ -11,7 +11,7 @@ let initialSportsData = [
 		sport: "football",
 		display_name: "NCAA Football",
 		league_name: "college-football",
-		data: {},
+		data: { days: [] },
 		reload: false,
 		path: "/games?sport=ncaaf",
 		name: "Football",
@@ -24,7 +24,7 @@ let initialSportsData = [
 		sport: "football",
 		display_name: "NFL",
 		league_name: "nfl",
-		data: {},
+		data: { days: [] },
 		reload: false,
 		path: "/games?sport=nfl",
 		name: "NFL",
@@ -37,7 +37,7 @@ let initialSportsData = [
 		sport: "baseball",
 		display_name: "MLB",
 		league_name: "mlb",
-		data: {},
+		data: { days: [] },
 		reload: false,
 		path: "/games?sport=mlb",
 		name: "MLB",
@@ -50,7 +50,7 @@ let initialSportsData = [
 		sport: "basketball",
 		display_name: "NBA",
 		league_name: "nba",
-		data: {},
+		data: { days: [] },
 		reload: false,
 		path: "/games?sport=nba",
 		name: "NBA",
@@ -63,7 +63,7 @@ let initialSportsData = [
 	// 	sport: "basketball",
 	// 	display_name: "NCAA Men's Basketball",
 	// 	league_name: "mens-college-basketball",
-	// 	data: {},
+	// 	data: {days: []},
 	// 	reload: false,
 	// 	path: "/games?sport=ncaab",
 	// 	name: "Basketball",
@@ -76,7 +76,7 @@ let initialSportsData = [
 		sport: "hockey",
 		display_name: "NHL",
 		league_name: "nhl",
-		data: {},
+		data: { days: [] },
 		reload: false,
 		path: "/games?sport=nhl",
 		name: "NHL",
@@ -89,14 +89,14 @@ let initialSportsData = [
 		sport: "basketball",
 		display_name: "WNBA",
 		league_name: "wnba",
-		data: {},
+		data: { days: [] },
 		reload: false,
 		path: "/games?sport=wnba",
 		name: "WNBA",
 		image: "../../static/media/sports-icons/8.png",
 		mini: "../../static/media/sports-icons/8.png",
 	},
-	// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {}, reload: false },
+	// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {days: []}, reload: false },
 ];
 
 export function SportProvider(props) {
@@ -128,7 +128,11 @@ export function SportProvider(props) {
 					if (inGames.length === 0) league.reload = false;
 					sortedGames.push(preGames, inGames, postGames);
 					leagueData.events = sortedGames.flat();
-					dispatch({ type: league.display_name, data: leagueData, reload: league.reload });
+					dispatch({
+						type: league.display_name,
+						data: { ...leagueData, days: league.days },
+						reload: league.reload,
+					});
 
 					// console.log(sortedGames.flat());
 				});
@@ -190,7 +194,7 @@ export function SportProvider(props) {
 								}
 							}.bind(this)
 						);
-						return { ...league, data: leagueData, reload: reloadData };
+						return { ...league, data: { ...leagueData, days: [] }, reload: reloadData };
 					})
 				);
 			} catch (err) {
