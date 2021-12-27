@@ -87,6 +87,9 @@ h1 .subtitle{
 .text-danger, .text-danger:hover{
     color: $danger-color !important;
 }
+.text-danger-muted, .text-danger-muted:hover {
+    color: $danger-muted-color !important;
+}
 
 .typo-line{
     padding-left: 140px;

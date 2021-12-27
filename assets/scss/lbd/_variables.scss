@@ -4,6 +4,7 @@
 $color-azure:           #23CCEF;
 $color-purple:          #9368E9;
 $color-red:             #FB404B;
+$color-red-muted:       #EF9A9A;
 $color-green:           #87CB16;
 $color-orange:          #FFA534;
 $color-blue:            #447DF7;
@@ -140,10 +141,13 @@ $warning-color:              $color-orange !default;
 $warning-bg:                 $color-orange !default;
 $warning-states-color:       darken($color-orange, 7%) !default;
 
-
 $danger-color:               $color-red !default;
 $danger-bg:                  $color-red !default;
 $danger-states-color:        darken($color-red, 8%) !default;
+
+$danger-muted-color:         $color-red-muted !default;
+$danger-muted-bg:            $color-red-muted !default;
+$danger-muted-states-color:  darken($color-red-muted, 8%) !default;
 
 $link-disabled-color:        #666666 !default;
 

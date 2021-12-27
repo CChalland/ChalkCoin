@@ -17,12 +17,12 @@ export default function Games({ query, users }) {
 	const currentUser = useContext(UserContext);
 	const sportsData = useContext(SportContext);
 	const notificationAlertRef = useRef(null);
-	const [activeIndex, setActiveIndex] = useState(7);
+	const [swiperIndex, setSwiperIndex] = useState(7);
+	const [selectedIndex, setSelectedIndex] = useState(7);
 	const [selectedDate, setSelectedDate] = useState({});
 	let sportData = sportsData.find((sport) => {
 		return sport.abbrv === query.sport?.toUpperCase();
 	});
-
 	const notify = (errMsg) => {
 		let options = {
 			place: "tc",
@@ -103,7 +103,7 @@ export default function Games({ query, users }) {
 	};
 
 	console.log("games - selectedDate", selectedDate);
-	console.log("games - activeIndex", activeIndex);
+	console.log("games - swiperIndex", swiperIndex);
 	// console.log("sportData", sportData);
 	// console.log("sportsData", sportsData);
 
@@ -120,26 +120,52 @@ export default function Games({ query, users }) {
 				</Row>
 
 				<Row>
-					<Col>
+					<Col lg={10}>
 						<Swiper
+							className=""
 							spaceBetween={5}
-							slidesPerView={7}
-							initialSlide={7}
-							breakpoints={{ 480: { slidesPerView: 7 }, 1400: { slidesPerView: 7 } }}
-							onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+							slidesPerView={2}
+							initialSlide={swiperIndex}
+							breakpoints={{
+								260: { slidesPerView: 3 },
+								320: { slidesPerView: 5 },
+								480: { slidesPerView: 7 },
+								1400: { slidesPerView: 7 },
+							}}
+							onSlideChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
 						>
 							{datesData().map((item, key) => {
 								return (
 									<SwiperSlide
 										key={key}
 										onClick={() => {
+											setSelectedIndex(key);
 											setSelectedDate(item);
 										}}
 									>
-										<Card border="secondary" className="mr-1" style={{ width: "4rem" }}>
-											<p className="text-danger text-center my-1 border-bottom">{item.month}</p>
-											<p className="text-center my-2">{item.date}</p>
-										</Card>
+										<Row>
+											<Col>
+												<p className={`${selectedIndex === key ? "" : "text-muted"} mb-1 py-0 ml-2`}>
+													{item.day}
+												</p>
+											</Col>
+										</Row>
+										<Row>
+											<Col>
+												<Card border="secondary" className="mr-1" style={{ width: "3rem", height: "4rem" }}>
+													<p
+														className={`${
+															selectedIndex === key ? "text-danger" : "text-danger-muted"
+														} text-center my-1 border-bottom`}
+													>
+														{item.month}
+													</p>
+													<p className={`${selectedIndex === key ? "" : "text-muted"} text-center my-1`}>
+														{item.date}
+													</p>
+												</Card>
+											</Col>
+										</Row>
 									</SwiperSlide>
 								);
 							})}
