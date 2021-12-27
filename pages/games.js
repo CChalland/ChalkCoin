@@ -52,6 +52,7 @@ export default function Games({ query, users }) {
 				date: str[2],
 				value: str[3],
 				today: today === str[3] ? true : false,
+				past: moment().diff(dateStart, "days") > 0 ? true : false,
 			});
 			dateStart.add(1, "days");
 		}
@@ -178,6 +179,8 @@ export default function Games({ query, users }) {
 							onSlideChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
 						>
 							{datesData().map((item, key) => {
+								// console.log("games - datesData() - item", item);
+
 								return (
 									<SwiperSlide
 										key={key}
