@@ -179,7 +179,10 @@ export default function Games({ query, users }) {
 								1400: { slidesPerView: 14 },
 								1600: { slidesPerView: 16 },
 							}}
-							navigation={true}
+							navigation={{
+								nextEl: ".swiper-button-next",
+								prevEl: ".swiper-button-prev",
+							}}
 							onSlideChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
 						>
 							{datesData().map((item, key) => {
@@ -188,7 +191,6 @@ export default function Games({ query, users }) {
 								return (
 									<SwiperSlide
 										key={key}
-										className=""
 										onClick={() => {
 											setSelectedIndex(key);
 											setSelectedDate(item);
@@ -221,6 +223,8 @@ export default function Games({ query, users }) {
 								);
 							})}
 						</Swiper>
+						<div class="swiper-button-prev"></div>
+						<div class="swiper-button-next"></div>
 					</Col>
 				</Row>
 
