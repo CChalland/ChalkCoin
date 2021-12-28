@@ -141,6 +141,13 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			} else if (res.data) {
 				dispatch({ type: "ADD BET", bet: res.data, recipient: recipient.id });
 			}
+			setSelectedWinner("");
+			setSelectedWinnerState(false);
+			setRecipientButtonState(false);
+			setOpenButtonState(false);
+			setBetType("");
+			setRecipient("");
+			setAmount("");
 		}
 	};
 
