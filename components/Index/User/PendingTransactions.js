@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { Container, Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BlockchainDispatch } from "../../../contexts/Blockchain.Context";
+import { UserDispatch } from "../../../contexts/User.Context";
 import axios from "axios";
 import TransactionCard from "../../Blockchain/TransactionCard";
 import Loading from "../../Utility/Loading";
 
 export default function PendingTransactions({ pendingTransactions, mineState, user, loaded }) {
-	const dispatch = useContext(BlockchainDispatch);
+	const blockchainDispatch = useContext(BlockchainDispatch);
+	const userDispatch = useContext(UserDispatch);
 
 	const handleMine = async () => {
 		await axios

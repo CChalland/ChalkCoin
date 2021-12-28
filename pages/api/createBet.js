@@ -67,12 +67,12 @@ export default async (req, res) => {
 							},
 						},
 					});
+
 					const createdBet = await getUser.requester[0];
 
-					console.log(betOdds);
 					return res.json(createdBet);
 				} catch (e) {
-					console.log(e);
+					return res.json({ error: true, message: `There's already an bet with that ${e.meta.target[0]}` });
 					// if (e.code === "P2002") {
 					// 	return res.json({ error: `There's already an bet with that ${e.meta.target[0]}` });
 					// }
@@ -81,6 +81,8 @@ export default async (req, res) => {
 			} else {
 				return res.json({ error: true, message: "You don't have enough funds!" });
 			}
+		} else {
+			return res.json({ error: true, message: "User is not signned in" });
 		}
 	} else {
 		return res.status(405).json({ message: "Method not allowed" });

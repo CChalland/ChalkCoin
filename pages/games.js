@@ -110,7 +110,7 @@ export default function Games({ query, users }) {
 	useEffect(() => {
 		if (league?.data?.days.length > 0) {
 			const selected = league.data?.days.find((day) => day.date === selectedDate);
-			if (selected.events.length > 0) {
+			if (selected?.events.length > 0) {
 				setGames(selected.events);
 			} else {
 				setGames([]);

@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useContext, useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Collapse, Button, InputGroup } from "react-bootstrap";
 import { BetDispatch } from "../../contexts/Bets.Context";
+import OddsChart from "../Utility/OddsChart";
 import BetScore from "./BetScore";
-import BetOdds from "./BetOdds";
 import BetWinner from "./BetWinner";
 import axios from "axios";
 import Select from "react-select";
@@ -85,7 +85,6 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 	const handleBet = async (bet) => {
 		if (acceptState) {
 			const res = await axios.post(`/api/acceptBet`, { id: bet.id, amount: bet.amount });
-			console.log("accepted bet - res", res);
 			if (res.data.id) {
 				dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
 			} else if (res.data.error) {
@@ -128,7 +127,12 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 		);
 		matchupPredictor.body = (
 			<Col xs={11} sm={5} md={4} lg={5} xl={3} className="mx-0 px-0">
-				<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
+				<OddsChart
+					home={betData.home}
+					away={betData.away}
+					awayWinProb={awayWinProb}
+					homeWinProb={homeWinProb}
+				/>
 			</Col>
 		);
 		matchupPredictor.footer = (
