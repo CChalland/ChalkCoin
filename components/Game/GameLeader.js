@@ -127,20 +127,20 @@ function GameLeader(props) {
 				);
 			} else if (!athlete.displayValue) {
 				// get a error rendering the page, saying that the filter mathod is undefined.
-				let goals = athlete.statistics.filter((stat) => {
+				let goals = athlete.statistics?.find((stat) => {
 					return stat.name === "goals";
 				});
-				let assists = athlete.statistics.filter((stat) => {
+				let assists = athlete.statistics?.find((stat) => {
 					return stat.name === "assists";
 				});
-				let plusMinus = athlete.statistics.filter((stat) => {
+				let plusMinus = athlete.statistics?.find((stat) => {
 					return stat.name === "plusMinus";
 				});
 				// athlete.displayValue = `${goals[0].displayValue} G, ${assists[0].displayValue} A, ${plusMinus[0].displayValue}`;
 				athlete.displayValue = (
 					<p>
-						<strong>{goals[0].displayValue}</strong> G, <strong>{assists[0].displayValue}</strong> A,{" "}
-						<strong>+{plusMinus[0].displayValue}</strong>
+						<strong>{goals?.displayValue}</strong> G, <strong>{assists?.displayValue}</strong> A,{" "}
+						<strong>+{plusMinus?.displayValue}</strong>
 					</p>
 				);
 			}
