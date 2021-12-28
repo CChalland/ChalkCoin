@@ -13,7 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, EffectFade, Navigation, Pagination } from "swiper";
 SwiperCore.use([Pagination, Navigation, Autoplay, EffectFade]);
 
-export default function Games({ query, users }) {
+export default function Games({ session, users }) {
 	const router = useRouter();
 	const currentUser = useContext(UserContext);
 	const sportsData = useContext(SportContext);
@@ -39,7 +39,7 @@ export default function Games({ query, users }) {
 			autoDismiss: 7,
 		};
 		notificationAlertRef.current.notificationAlert(options);
-		router.replace(`${router.pathname}?sport=${query.sport}`, undefined, { shallow: true });
+		router.replace(`${router.pathname}?sport=${router.query.sport}`, undefined, { shallow: true });
 	};
 	const datesData = () => {
 		const days = [];
@@ -231,8 +231,7 @@ export default function Games({ query, users }) {
 	);
 }
 
-export async function getServerSideProps(context) {
-	const { req, res } = context;
+export async function getServerSideProps({ req, res }) {
 	const session = await getSession({ req });
 	let users = [];
 	if (session) {
@@ -254,6 +253,6 @@ export async function getServerSideProps(context) {
 	}
 
 	return {
-		props: { query: context.query, users },
+		props: { users },
 	};
 }

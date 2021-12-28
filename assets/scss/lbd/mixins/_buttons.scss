@@ -25,7 +25,7 @@
     &.focus,
     &:active,
     &.active {
-      background-color: $transparent-bg;
+      background-color: darken($btn-color, 12%);
       border-color: $btn-color;
     }
   }

@@ -15,8 +15,8 @@ import {
 } from "react-bootstrap";
 import Select, { components } from "react-select";
 import { BetDispatch } from "../../contexts/Bets.Context";
-import OddsChart from "../Utility/OddsChart";
 import GameScore from "../Game/GameScore";
+import OddsChart from "../Utility/OddsChart";
 import axios from "axios";
 
 const minValue = (value, min) => min < value;
@@ -36,6 +36,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 	const [recipientState, setRecipientState] = useState(false);
 	const [submitBetState, setSubmitBetState] = useState(false);
 	const [betButtonState, setBetButtonState] = useState(true);
+
 	const optionsTeams = [
 		{
 			value: "away",
@@ -132,7 +133,6 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			};
 			if (betType === "recipient") submitBet.recipientId = recipient.id;
 			const res = await axios.post(`/api/createBet`, submitBet);
-			console.log("BetModal - res", res);
 			if (res.data.error) {
 				router.push(
 					{
@@ -145,19 +145,12 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			} else if (res.data) {
 				dispatch({ type: "ADD BET", bet: res.data, recipient: recipient.id });
 			}
-			setSelectedWinner("");
-			setSelectedWinnerState(false);
-			setRecipientButtonState(false);
-			setOpenButtonState(false);
-			setBetType("");
-			setRecipient("");
-			setAmount("");
 		}
 	};
 
 	useEffect(() => {
 		if (
-			gameBetData.status.type.state === "post" ||
+			gameBetData.status.type.completed ||
 			(gameBetData.status.type.state === "in" && gameBetData.status.period > 1)
 		)
 			setBetButtonState(false);
@@ -173,8 +166,6 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			setSubmitBetState(false);
 		}
 	}, [selectedWinnerState, amountState, openButtonState, recipientState]);
-
-	// console.log("BetModal - gameBetData", gameBetData);
 
 	return (
 		<>
@@ -584,23 +575,18 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 											</Tab.Container>
 										</Form>
 									</Col>
-									{/* <Col lg={3} className="d-none d-lg-block">
-								<Row>
-									<Col>
-										<div className="chart-relative">
-											<Doughnut data={data} height={100} width={100} options={{ cutoutPercentage: 80 }} />
-											<div className="chart-absolute-center chart-text-center">
-												<div className="data-chart">
-													<div className="inner-circle">
-														<span className="home-team">{gameBetData.home.abbreviation}</span>
-														<span className="away-team">{gameBetData.away.abbreviation}</span>
-													</div>
-												</div>
-											</div>
-										</div>
+									<Col lg={3} className="d-none d-lg-block">
+										<Row>
+											<Col>
+												<OddsChart
+													home={gameBetData.home}
+													away={gameBetData.away}
+													awayWinProb={gameBetData.away.winProbability}
+													homeWinProb={gameBetData.home.winProbability}
+												/>
+											</Col>
+										</Row>
 									</Col>
-								</Row>
-							</Col> */}
 								</Row>
 							</Container>
 						</Modal.Body>

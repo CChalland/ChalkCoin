@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BlockchainDispatch } from "../../contexts/Blockchain.Context";
 import { UserDispatch } from "../../contexts/User.Context";
@@ -9,6 +9,8 @@ import Loading from "../Utility/Loading";
 export default function PendingTransactions({ pendingTransactions, mineState, currentUser, loaded }) {
 	const blockchainDispatch = useContext(BlockchainDispatch);
 	const userDispatch = useContext(UserDispatch);
+	const [disabledState, setDisabledState] = useState(true);
+
 	const handleMine = async () => {
 		await axios
 			.post(`http://192.168.4.27:3001/mine`, {
@@ -27,6 +29,11 @@ export default function PendingTransactions({ pendingTransactions, mineState, cu
 				}
 			});
 	};
+
+	useEffect(() => {
+		if (currentUser.id) setDisabledState(false);
+		else setDisabledState(true);
+	}, [currentUser]);
 
 	return loaded ? (
 		<Row>
@@ -55,17 +62,30 @@ export default function PendingTransactions({ pendingTransactions, mineState, cu
 									</OverlayTrigger>
 								</Col>
 								<Col xs={"auto"}>
-									<Button
-										className="btn-wd align-items-center"
-										type="button"
-										variant="info"
-										onClick={() => {
-											handleMine();
-										}}
+									<OverlayTrigger
+										show={disabledState}
+										placement="top"
+										overlay={
+											<Tooltip id="tooltip-top">
+												You have to be signned in to Mine. <strong>Please Signin</strong>.
+											</Tooltip>
+										}
 									>
-										<i className="nc-icon nc-atom mr-2"></i>
-										Mine
-									</Button>
+										<span className="d-inline-block" style={{ minWidth: "100%", minHeight: "100%" }}>
+											<Button
+												className="btn-wd align-items-center"
+												disabled={disabledState}
+												type="button"
+												variant="info"
+												onClick={() => {
+													handleMine();
+												}}
+											>
+												<i className="nc-icon nc-atom mr-2"></i>
+												Mine
+											</Button>
+										</span>
+									</OverlayTrigger>
 								</Col>
 							</Row>
 						</Col>

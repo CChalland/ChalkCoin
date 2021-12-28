@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { useContext, useCallback, useEffect, useState } from "react";
-import { Container, Row, Col, Card, Collapse, Button, InputGroup } from "react-bootstrap";
+import { useContext, useEffect, useState } from "react";
+import { Row, Col, Card, Collapse, Button, InputGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BetDispatch } from "../../contexts/Bets.Context";
 import OddsChart from "../Utility/OddsChart";
 import BetScore from "./BetScore";
@@ -59,7 +59,7 @@ const styles = {
 	}),
 };
 
-function BetCard({ acceptState, bet, currentUser, index = false }) {
+function BetCard({ bet, currentUser, index = false }) {
 	const router = useRouter();
 	const dispatch = useContext(BetDispatch);
 	const betData = BetGameData(bet, currentUser.id);
@@ -67,6 +67,8 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 	const [homeWinProb, setHomeWinProb] = useState(betData.home.winProb);
 	const [selectedMarket, setSelectedMarket] = useState("");
 	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
+	const [acceptState, setAcceptState] = useState(false);
+	const [disabledState, setDisabledState] = useState(true);
 	const gameTime = moment(betData.date);
 	const toggleMultipleExpandablePanels = (event, value) => {
 		if (multipleExpandablePanels.includes(value)) {
@@ -100,20 +102,47 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 		}
 	};
 	const acceptButton = acceptState ? (
-		<Button
-			className="btn-round btn-wd"
-			type="button"
-			variant="success"
-			onClick={() => {
-				handleBet(betData);
-			}}
+		<OverlayTrigger
+			show={disabledState}
+			placement="top"
+			overlay={
+				<Tooltip id="tooltip-top">
+					You have to be signned in to accept this bet. <strong>Please Signin</strong>.
+				</Tooltip>
+			}
 		>
-			<span className="btn-label">
-				<i className="fas fa-plus"></i>
+			<span className="d-inline-block" style={{ minWidth: "100%", minHeight: "100%" }}>
+				<Button
+					className="btn-round btn-wd"
+					disabled={disabledState}
+					type="button"
+					variant="success"
+					onClick={() => {
+						handleBet(betData);
+					}}
+				>
+					<span className="btn-label">
+						<i className="fas fa-plus"></i>
+					</span>
+					Accept
+				</Button>
 			</span>
-			Accept
-		</Button>
+		</OverlayTrigger>
 	) : null;
+
+	useEffect(() => {
+		if (
+			bet.event.status.type.state === "post" ||
+			(bet.event.status.type.state === "in" && bet.event.status.period > 1)
+		)
+			setAcceptState(false);
+		else setAcceptState(true);
+	}, [bet]);
+
+	useEffect(() => {
+		if (currentUser.id) setDisabledState(false);
+		else setDisabledState(true);
+	}, [currentUser]);
 
 	let cardBorder, startTime;
 	let matchupPredictor = { header: null, body: null, footer: null };

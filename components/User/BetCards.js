@@ -25,7 +25,7 @@ function BetCards({ tabBets, tabType, currentUser }) {
 					/>
 				);
 			} else {
-				return <BetCard acceptState={false} bet={bet} currentUser={currentUser} key={bet.id} />;
+				return <BetCard bet={bet} currentUser={currentUser} key={bet.id} />;
 			}
 		});
 	} else {

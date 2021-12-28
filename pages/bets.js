@@ -94,7 +94,7 @@ export default function Bets() {
 		});
 	const betCards = bets.map((bet) => {
 		if (bet.event) {
-			return <BetCard acceptState={true} bet={bet} currentUser={currentUser} key={bet.id} />;
+			return <BetCard bet={bet} currentUser={currentUser} key={bet.id} />;
 		}
 	});
 
