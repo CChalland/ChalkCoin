@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useCallback, useContext, useState, useRef, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { getSession } from "next-auth/client";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { SportContext, SportDispatch } from "../contexts/Sports.Context";
@@ -10,6 +9,9 @@ import axios from "axios";
 import GameCard from "../components/Game/GameCard";
 import NotificationAlert from "react-notification-alert";
 import Loading from "../components/Utility/Loading";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Autoplay, EffectFade, Navigation, Pagination } from "swiper";
+SwiperCore.use([Pagination, Navigation, Autoplay, EffectFade]);
 
 export default function Games({ query, users }) {
 	const router = useRouter();
@@ -52,6 +54,7 @@ export default function Games({ query, users }) {
 				date: str[2],
 				value: str[3],
 				today: today === str[3] ? true : false,
+				past: moment().diff(dateStart, "days") > 0 ? true : false,
 			});
 			dateStart.add(1, "days");
 		}
@@ -105,14 +108,14 @@ export default function Games({ query, users }) {
 	}, [sportsData]);
 
 	useEffect(() => {
-		if (league.data?.days.length > 0) {
+		if (league?.data?.days.length > 0) {
 			const selected = league.data?.days.find((day) => day.date === selectedDate);
 			if (selected.events.length > 0) {
 				setGames(selected.events);
 			} else {
 				setGames([]);
 			}
-		} else if (league.data?.events) setGames(league.data.events);
+		} else if (league?.data?.events) setGames(league.data.events);
 		else {
 			setGames([]);
 		}
@@ -154,19 +157,20 @@ export default function Games({ query, users }) {
 			<Container fluid>
 				<Row>
 					<Col>
-						<h1>{league.display_name}</h1>
+						<h1>{league?.display_name}</h1>
 					</Col>
 				</Row>
 
 				<Row>
-					<Col lg={11} xl={10}>
+					<Col lg={11} xl={10} className="swiper-container">
 						<Swiper
-							className=""
+							className="swiper-wrapper"
+							enabled={true}
+							slidesPerView={1}
 							spaceBetween={5}
-							slidesPerView={2}
 							initialSlide={swiperIndex}
 							breakpoints={{
-								260: { slidesPerView: 3 },
+								240: { slidesPerView: 3 },
 								320: { slidesPerView: 5 },
 								480: { slidesPerView: 7 },
 								720: { slidesPerView: 9 },
@@ -175,9 +179,22 @@ export default function Games({ query, users }) {
 								1400: { slidesPerView: 14 },
 								1600: { slidesPerView: 16 },
 							}}
+							navigation={{
+								nextEl: ".swiper-button-next",
+								prevEl: ".swiper-button-prev",
+							}}
 							onSlideChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
 						>
 							{datesData().map((item, key) => {
+								let selectedClass, monthClass;
+								if (item.past) {
+									selectedClass = selectedIndex === key ? "text-info" : "text-muted";
+									monthClass = "text-danger-muted";
+								} else {
+									selectedClass = selectedIndex === key ? "text-info" : "";
+									monthClass = "text-danger";
+								}
+
 								return (
 									<SwiperSlide
 										key={key}
@@ -188,24 +205,14 @@ export default function Games({ query, users }) {
 									>
 										<Row>
 											<Col>
-												<p className={`${selectedIndex === key ? "" : "text-muted"} mb-1 py-0 ml-2`}>
-													{item.day}
-												</p>
+												<p className={`${selectedClass} mb-1 py-0 ml-2`}>{item.day}</p>
 											</Col>
 										</Row>
 										<Row>
 											<Col>
 												<Card border="secondary" className="mr-1" style={{ width: "3rem", height: "4rem" }}>
-													<p
-														className={`${
-															selectedIndex === key ? "text-danger" : "text-danger-muted"
-														} text-center my-1 border-bottom`}
-													>
-														{item.month}
-													</p>
-													<p className={`${selectedIndex === key ? "" : "text-muted"} text-center my-1`}>
-														{item.date}
-													</p>
+													<p className={`${monthClass} text-center my-1 border-bottom`}>{item.month}</p>
+													<p className={`${selectedClass} text-center my-1`}>{item.date}</p>
 												</Card>
 											</Col>
 										</Row>
@@ -213,6 +220,8 @@ export default function Games({ query, users }) {
 								);
 							})}
 						</Swiper>
+						<div className="swiper-button-prev"></div>
+						<div className="swiper-button-next"></div>
 					</Col>
 				</Row>
 

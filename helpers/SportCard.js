@@ -345,10 +345,10 @@ export function GameLeadersHelper(game, sportName) {
 		}
 	} else if (game.competitions[0].status.type.completed) {
 		if (sportName === "NHL") {
-			athletes = [...game.competitions[0].status.featuredAthletes];
-			let threeStars = athletes.splice(2, 5);
+			athletes = game.competitions[0].status.featuredAthletes;
+			let threeStars = athletes?.splice(2, 5);
 
-			athletes = threeStars.map((athlete) => {
+			athletes = threeStars?.map((athlete) => {
 				return {
 					title: athlete.shortDisplayName,
 					headshot: athlete.athlete.headshot,
