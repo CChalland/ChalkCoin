@@ -36,7 +36,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 	const [recipientState, setRecipientState] = useState(false);
 	const [submitBetState, setSubmitBetState] = useState(false);
 	const [betButtonState, setBetButtonState] = useState(true);
-
+	const [disabledState, setDisabledState] = useState(true);
 	const optionsTeams = [
 		{
 			value: "away",
@@ -89,10 +89,6 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			</Row>
 		</components.Option>
 	);
-
-	let openButtonClass = openButtonState ? "btn-round" : "btn-round btn-outline";
-	let friendButtonClass = recipientButtonState ? "btn-round" : "btn-round btn-outline";
-	let sumbitButtonClass = submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
 	let carouselItem = gameBetData.odds?.map((betOdds, key) => {
 		return (
 			<Carousel.Item key={key}>
@@ -150,7 +146,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 
 	useEffect(() => {
 		if (
-			gameBetData.status.type.completed ||
+			gameBetData.status.type.state === "post" ||
 			(gameBetData.status.type.state === "in" && gameBetData.status.period > 1)
 		)
 			setBetButtonState(false);
@@ -167,12 +163,18 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 		}
 	}, [selectedWinnerState, amountState, openButtonState, recipientState]);
 
+	useEffect(() => {
+		if (currentUser.id) setDisabledState(false);
+		else setDisabledState(true);
+	}, [currentUser]);
+
 	return (
 		<>
 			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 			{betButtonState ? (
 				<Button
-					className={buttonClassName}
+					className="btn-wd"
+					disabled={disabledState}
 					type="button"
 					variant="success"
 					onClick={() => setModal(!modal)}
@@ -294,7 +296,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 														<Nav.Item>
 															<Nav.Link eventKey="" className="border-0 bg-transparent">
 																<Button
-																	className={openButtonClass}
+																	className={openButtonState ? "btn-round" : "btn-round btn-outline"}
 																	variant="default"
 																	onClick={() => {
 																		setRecipientButtonState(false);
@@ -310,7 +312,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 														<Nav.Item>
 															<Nav.Link eventKey="find-user-tab" className="border-0 bg-transparent">
 																<Button
-																	className={friendButtonClass}
+																	className={recipientButtonState ? "btn-round" : "btn-round btn-outline"}
 																	variant="default"
 																	onClick={() => {
 																		setRecipientButtonState(true);
@@ -381,7 +383,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 
 						<div className="modal-footer">
 							<Button
-								className={sumbitButtonClass}
+								className={submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline"}
 								variant="success"
 								disabled={!submitBetState}
 								onClick={() => {
@@ -502,7 +504,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 															<Nav.Item>
 																<Nav.Link eventKey="" className="mx-1 px-0 border-0 bg-transparent">
 																	<Button
-																		className={openButtonClass}
+																		className={openButtonState ? "btn-round" : "btn-round btn-outline"}
 																		variant="default"
 																		onClick={() => {
 																			setRecipientButtonState(false);
@@ -521,7 +523,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 																	className="mx-1 px-0 border-0 bg-transparent"
 																>
 																	<Button
-																		className={friendButtonClass}
+																		className={recipientButtonState ? "btn-round" : "btn-round btn-outline"}
 																		variant="default"
 																		onClick={() => {
 																			setRecipientButtonState(true);
@@ -593,7 +595,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 
 						<div className="modal-footer mt-3">
 							<Button
-								className={sumbitButtonClass}
+								className={submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline"}
 								variant="success"
 								disabled={!submitBetState}
 								onClick={() => {
