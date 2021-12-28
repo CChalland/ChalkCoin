@@ -157,7 +157,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 
 	useEffect(() => {
 		if (
-			gameBetData.status.type.completed ||
+			gameBetData.status.type.state === "post" ||
 			(gameBetData.status.type.state === "in" && gameBetData.status.period > 1)
 		)
 			setBetButtonState(false);
