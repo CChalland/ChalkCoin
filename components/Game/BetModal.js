@@ -12,12 +12,16 @@ import {
 	Form,
 	InputGroup,
 	Image,
+	OverlayTrigger,
+	Tooltip,
 } from "react-bootstrap";
 import Select, { components } from "react-select";
-import { Doughnut } from "react-chartjs-2";
 import { BetDispatch } from "../../contexts/Bets.Context";
 import GameScore from "../Game/GameScore";
+import OddsChart from "../Utility/OddsChart";
 import axios from "axios";
+
+const minValue = (value, min) => min < value;
 
 function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 	const router = useRouter();
@@ -34,16 +38,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 	const [recipientState, setRecipientState] = useState(false);
 	const [submitBetState, setSubmitBetState] = useState(false);
 	const [betButtonState, setBetButtonState] = useState(true);
-
-	const minValue = (value, min) => min < value;
-	// const data = {
-	// 	datasets: [
-	// 		{
-	// 			data: [34.7, 65.0],
-	// 			backgroundColor: [`#${gameBetData.away.color}`, `#${gameBetData.home.color}`],
-	// 		},
-	// 	],
-	// };
+	const [disabledState, setDisabledState] = useState(true);
 	const optionsTeams = [
 		{
 			value: "away",
@@ -96,11 +91,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			</Row>
 		</components.Option>
 	);
-
-	let openButtonClass = openButtonState ? "btn-round" : "btn-round btn-outline";
-	let friendButtonClass = recipientButtonState ? "btn-round" : "btn-round btn-outline";
-	let sumbitButtonClass = submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline";
-	let carouselItem = gameBetData.odds?.map((betOdds, key) => {
+	const carouselItem = gameBetData.odds?.map((betOdds, key) => {
 		return (
 			<Carousel.Item key={key}>
 				<Row className="justify-content-center">
@@ -116,13 +107,28 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 						<small>{"Provider: "}</small>
 					</Col>
 					<Col>
-						<small>{betOdds.provider.name}</small>
+						<small>{betOdds.title}</small>
 					</Col>
 				</Row>
 				<br />
 			</Carousel.Item>
 		);
 	});
+	const betButton = betButtonState ? (
+		<Button
+			className="btn-wd"
+			disabled={disabledState}
+			type="button"
+			variant="success"
+			onClick={() => setModal(!modal)}
+			style={{ minWidth: "100%", minHeight: "100%", pointerEvents: "auto" }}
+		>
+			<span className="btn-label">
+				<i className="fas fa-plus"></i>
+			</span>
+			Place Bet
+		</Button>
+	) : null;
 
 	const submitBet = async () => {
 		if (submitBetState) {
@@ -152,12 +158,19 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			} else if (res.data) {
 				dispatch({ type: "ADD BET", bet: res.data, recipient: recipient.id });
 			}
+			setSelectedWinner("");
+			setSelectedWinnerState(false);
+			setRecipientButtonState(false);
+			setOpenButtonState(false);
+			setBetType("");
+			setRecipient("");
+			setAmount("");
 		}
 	};
 
 	useEffect(() => {
 		if (
-			gameBetData.status.type.completed ||
+			gameBetData.status.type.state === "post" ||
 			(gameBetData.status.type.state === "in" && gameBetData.status.period > 1)
 		)
 			setBetButtonState(false);
@@ -174,23 +187,15 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 		}
 	}, [selectedWinnerState, amountState, openButtonState, recipientState]);
 
+	useEffect(() => {
+		if (currentUser.id) setDisabledState(false);
+		else setDisabledState(true);
+	}, [currentUser]);
+
 	return (
 		<>
 			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-			{betButtonState ? (
-				<Button
-					className={buttonClassName}
-					type="button"
-					variant="success"
-					onClick={() => setModal(!modal)}
-					style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
-				>
-					<span className="btn-label">
-						<i className="fas fa-plus"></i>
-					</span>
-					Place Bet
-				</Button>
-			) : null}
+			{betButton}
 			<Row className="">
 				{/* Modal */}
 				<Modal className="" centered size="lg" onHide={() => setModal(!modal)} show={modal}>
@@ -223,19 +228,14 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 											</Carousel>
 										</Col>
 									) : null}
-									{/* <Col xs={5} className="">
-								<div className="chart-relative">
-									<Doughnut data={data} height={100} width={100} options={{ cutoutPercentage: 80 }} />
-									<div className="chart-absolute-center chart-text-center">
-										<div className="data-chart">
-											<div className="inner-circle">
-												<span className="home-team">{gameBetData.home.abbreviation}</span>
-												<span className="away-team">{gameBetData.away.abbreviation}</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</Col> */}
+									<Col xs={5} className="">
+										<OddsChart
+											home={gameBetData.home}
+											away={gameBetData.away}
+											awayWinProb={gameBetData.away.winProbability}
+											homeWinProb={gameBetData.home.winProbability}
+										/>
+									</Col>
 								</Row>
 								<Row className="justify-content-md-center">
 									<Col xs={12} lg={8}>
@@ -306,7 +306,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 														<Nav.Item>
 															<Nav.Link eventKey="" className="border-0 bg-transparent">
 																<Button
-																	className={openButtonClass}
+																	className={openButtonState ? "btn-round" : "btn-round btn-outline"}
 																	variant="default"
 																	onClick={() => {
 																		setRecipientButtonState(false);
@@ -322,7 +322,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 														<Nav.Item>
 															<Nav.Link eventKey="find-user-tab" className="border-0 bg-transparent">
 																<Button
-																	className={friendButtonClass}
+																	className={recipientButtonState ? "btn-round" : "btn-round btn-outline"}
 																	variant="default"
 																	onClick={() => {
 																		setRecipientButtonState(true);
@@ -375,30 +375,25 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 											</Tab.Container>
 										</Form>
 									</Col>
-									{/* <Col lg={3} className="d-none d-lg-block">
-								<Row>
-									<Col>
-										<div className="chart-relative">
-											<Doughnut data={data} height={100} width={100} options={{ cutoutPercentage: 80 }} />
-											<div className="chart-absolute-center chart-text-center">
-												<div className="data-chart">
-													<div className="inner-circle">
-														<span className="home-team">{gameBetData.home.abbreviation}</span>
-														<span className="away-team">{gameBetData.away.abbreviation}</span>
-													</div>
-												</div>
-											</div>
-										</div>
+									<Col lg={3} className="d-none d-lg-block">
+										<Row>
+											<Col>
+												<OddsChart
+													home={gameBetData.home}
+													away={gameBetData.away}
+													awayWinProb={gameBetData.away.winProbability}
+													homeWinProb={gameBetData.home.winProbability}
+												/>
+											</Col>
+										</Row>
 									</Col>
-								</Row>
-							</Col> */}
 								</Row>
 							</Container>
 						</Modal.Body>
 
 						<div className="modal-footer">
 							<Button
-								className={sumbitButtonClass}
+								className={submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline"}
 								variant="success"
 								disabled={!submitBetState}
 								onClick={() => {
@@ -443,19 +438,14 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 											</Carousel>
 										</Col>
 									) : null}
-									{/* <Col xs={5} className="">
-								<div className="chart-relative">
-									<Doughnut data={data} height={100} width={100} options={{ cutoutPercentage: 80 }} />
-									<div className="chart-absolute-center chart-text-center">
-										<div className="data-chart">
-											<div className="inner-circle">
-												<span className="home-team">{gameBetData.home.abbreviation}</span>
-												<span className="away-team">{gameBetData.away.abbreviation}</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</Col> */}
+									<Col xs={5} className="">
+										<OddsChart
+											home={gameBetData.home}
+											away={gameBetData.away}
+											awayWinProb={gameBetData.away.winProbability}
+											homeWinProb={gameBetData.home.winProbability}
+										/>
+									</Col>
 								</Row>
 								<Row className="justify-content-md-center">
 									<Col xs={12} lg={8}>
@@ -524,7 +514,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 															<Nav.Item>
 																<Nav.Link eventKey="" className="mx-1 px-0 border-0 bg-transparent">
 																	<Button
-																		className={openButtonClass}
+																		className={openButtonState ? "btn-round" : "btn-round btn-outline"}
 																		variant="default"
 																		onClick={() => {
 																			setRecipientButtonState(false);
@@ -543,7 +533,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 																	className="mx-1 px-0 border-0 bg-transparent"
 																>
 																	<Button
-																		className={friendButtonClass}
+																		className={recipientButtonState ? "btn-round" : "btn-round btn-outline"}
 																		variant="default"
 																		onClick={() => {
 																			setRecipientButtonState(true);
@@ -597,30 +587,25 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 											</Tab.Container>
 										</Form>
 									</Col>
-									{/* <Col lg={3} className="d-none d-lg-block">
-								<Row>
-									<Col>
-										<div className="chart-relative">
-											<Doughnut data={data} height={100} width={100} options={{ cutoutPercentage: 80 }} />
-											<div className="chart-absolute-center chart-text-center">
-												<div className="data-chart">
-													<div className="inner-circle">
-														<span className="home-team">{gameBetData.home.abbreviation}</span>
-														<span className="away-team">{gameBetData.away.abbreviation}</span>
-													</div>
-												</div>
-											</div>
-										</div>
+									<Col lg={3} className="d-none d-lg-block">
+										<Row>
+											<Col>
+												<OddsChart
+													home={gameBetData.home}
+													away={gameBetData.away}
+													awayWinProb={gameBetData.away.winProbability}
+													homeWinProb={gameBetData.home.winProbability}
+												/>
+											</Col>
+										</Row>
 									</Col>
-								</Row>
-							</Col> */}
 								</Row>
 							</Container>
 						</Modal.Body>
 
 						<div className="modal-footer mt-3">
 							<Button
-								className={sumbitButtonClass}
+								className={submitBetState ? "btn-round btn-wd" : "btn-round btn-wd btn-outline"}
 								variant="success"
 								disabled={!submitBetState}
 								onClick={() => {

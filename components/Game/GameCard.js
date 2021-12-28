@@ -7,8 +7,7 @@ import BetModal from "./BetModal";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper, BetModalHelper } from "../../helpers/SportCard";
 import { GetPlaysData, GamePlayHelperTest } from "../../test/footballHelperJSON";
 
-function GameCard(props) {
-	const { panelKey, gameData, sportName, users, currentUser, completed } = props;
+function GameCard({ panelKey, gameData, sportName, users, currentUser, completed }) {
 	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
 	const toggleMultipleExpandablePanels = (event, value) => {
 		if (multipleExpandablePanels.includes(value)) {
@@ -17,9 +16,7 @@ function GameCard(props) {
 			setMultipleExpandablePanels([...multipleExpandablePanels, value]);
 		}
 	};
-	let infoButtonClass = multipleExpandablePanels.includes(panelKey)
-		? "btn-round btn-wd btn-outline"
-		: "btn-round btn-wd";
+	let infoButtonClass = multipleExpandablePanels.includes(panelKey) ? "btn-wd btn-outline" : "btn-wd";
 
 	let tempGameData = completed
 		? {
@@ -45,8 +42,8 @@ function GameCard(props) {
 						</Col>
 
 						<Col lg={3} xxl={2} className="border-right">
-							{/* <GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} /> */}
-							<GamePlay gamePlayData={GamePlayHelper(tempGameData, sportName)} sportName={sportName} />
+							<GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} />
+							{/* <GamePlay gamePlayData={GamePlayHelper(tempGameData, sportName)} sportName={sportName} /> */}
 						</Col>
 
 						<Col lg={4} xxl={2} className="">
@@ -59,7 +56,6 @@ function GameCard(props) {
 						<BetModal
 							currentUser={currentUser}
 							users={users}
-							buttonClassName={"btn-wd"}
 							gameBetData={BetModalHelper(gameData, sportName)}
 						/>
 					</Row>
@@ -79,8 +75,7 @@ function GameCard(props) {
 						</Col>
 
 						<Col md={5} className="">
-							{/* <GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} /> */}
-							<GamePlay gamePlayData={GamePlayHelper(tempGameData, sportName)} sportName={sportName} />
+							<GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} />
 						</Col>
 
 						<Col md={12} className="text-center">
@@ -88,7 +83,6 @@ function GameCard(props) {
 								<BetModal
 									currentUser={currentUser}
 									users={users}
-									buttonClassName={"btn-round btn-wd"}
 									gameBetData={BetModalHelper(gameData, sportName)}
 								/>
 
@@ -138,8 +132,7 @@ function GameCard(props) {
 						</Col>
 
 						<Col md={5} className="">
-							{/* <GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} /> */}
-							<GamePlay gamePlayData={GamePlayHelper(tempGameData, sportName)} sportName={sportName} />
+							<GamePlay gamePlayData={GamePlayHelper(gameData, sportName)} sportName={sportName} />
 						</Col>
 
 						<Col md={12} className="text-center">
@@ -147,7 +140,6 @@ function GameCard(props) {
 								<BetModal
 									currentUser={currentUser}
 									users={users}
-									buttonClassName={"btn-round btn-wd"}
 									gameBetData={BetModalHelper(gameData, sportName)}
 								/>
 								<Button
@@ -200,7 +192,6 @@ function GameCard(props) {
 								<BetModal
 									currentUser={currentUser}
 									users={users}
-									buttonClassName={"btn-round btn-wd"}
 									gameBetData={BetModalHelper(gameData, sportName)}
 								/>
 								<Button
@@ -226,12 +217,8 @@ function GameCard(props) {
 										<Carousel.Item>
 											<Row className="justify-content-center">
 												<Col sm={9} className="">
-													{/* <GamePlay
-														gamePlayData={GamePlayHelper(gameData, sportName)}
-														sportName={sportName}
-													/> */}
 													<GamePlay
-														gamePlayData={GamePlayHelper(tempGameData, sportName)}
+														gamePlayData={GamePlayHelper(gameData, sportName)}
 														sportName={sportName}
 													/>
 												</Col>
@@ -240,14 +227,10 @@ function GameCard(props) {
 										<Carousel.Item>
 											<Row className="justify-content-center">
 												<Col sm={9} className="">
-													{/* <GameLeader
+													<GameLeader
 														gameLeadersData={GameLeadersHelper(gameData, sportName)}
 														sportName={sportName}
 														screenSize={"sm"}
-													/> */}
-													<GamePlay
-														gamePlayData={GamePlayHelper(tempGameData, sportName)}
-														sportName={sportName}
 													/>
 												</Col>
 											</Row>
@@ -277,7 +260,6 @@ function GameCard(props) {
 								<BetModal
 									currentUser={currentUser}
 									users={users}
-									buttonClassName={"btn-round btn-wd"}
 									gameBetData={BetModalHelper(gameData, sportName)}
 								/>
 								<Button
@@ -303,14 +285,10 @@ function GameCard(props) {
 										<Carousel.Item>
 											<Row className="justify-content-center">
 												<Col xs={9} className="">
-													{/* <GameLeader
+													<GameLeader
 														gameLeadersData={GameLeadersHelper(gameData, sportName)}
 														sportName={sportName}
 														screenSize={"sm"}
-													/> */}
-													<GamePlay
-														gamePlayData={GamePlayHelper(tempGameData, sportName)}
-														sportName={sportName}
 													/>
 												</Col>
 											</Row>
@@ -318,10 +296,9 @@ function GameCard(props) {
 										<Carousel.Item>
 											<Row className="justify-content-center">
 												<Col xs={9} className="">
-													<GameLeader
-														gameLeadersData={GameLeadersHelper(gameData, sportName)}
+													<GamePlay
+														gamePlayData={GamePlayHelper(gameData, sportName)}
 														sportName={sportName}
-														screenSize={"xs"}
 													/>
 												</Col>
 											</Row>

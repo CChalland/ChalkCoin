@@ -32,10 +32,11 @@ export default async (req, res) => {
 				const mineReward = await getUser.rewards[0];
 				return res.json(mineReward);
 			} catch (e) {
-				console.log(e);
+				// console.log(e);
+				return res.json({ error: true, message: "There was a problem with your request" });
 			}
 		} else {
-			return res.json({ message: "not logged in" });
+			return res.json({ error: true, message: "not logged in" });
 		}
 	} else {
 		return res.status(405).json({ message: "Method not allowed" });

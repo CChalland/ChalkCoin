@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import { useContext, useCallback, useEffect, useState } from "react";
-import { Container, Row, Col, Card, Collapse, Button, InputGroup } from "react-bootstrap";
+import { useContext, useEffect, useState } from "react";
+import { Row, Col, Card, Collapse, Button, InputGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BetDispatch } from "../../contexts/Bets.Context";
+import OddsChart from "../Utility/OddsChart";
 import BetScore from "./BetScore";
-import BetOdds from "./BetOdds";
 import BetWinner from "./BetWinner";
 import axios from "axios";
 import Select from "react-select";
@@ -59,7 +59,7 @@ const styles = {
 	}),
 };
 
-function BetCard({ acceptState, bet, currentUser, index = false }) {
+function BetCard({ bet, currentUser, index = false }) {
 	const router = useRouter();
 	const dispatch = useContext(BetDispatch);
 	const betData = BetGameData(bet, currentUser.id);
@@ -67,6 +67,8 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 	const [homeWinProb, setHomeWinProb] = useState(betData.home.winProb);
 	const [selectedMarket, setSelectedMarket] = useState("");
 	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
+	const [acceptState, setAcceptState] = useState(false);
+	const [disabledState, setDisabledState] = useState(true);
 	const gameTime = moment(betData.date);
 	const toggleMultipleExpandablePanels = (event, value) => {
 		if (multipleExpandablePanels.includes(value)) {
@@ -85,7 +87,6 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 	const handleBet = async (bet) => {
 		if (acceptState) {
 			const res = await axios.post(`/api/acceptBet`, { id: bet.id, amount: bet.amount });
-			console.log("accepted bet - res", res);
 			if (res.data.id) {
 				dispatch({ type: "ACCEPTED BET", bet: await EventFinder(res.data) });
 			} else if (res.data.error) {
@@ -103,8 +104,10 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 	const acceptButton = acceptState ? (
 		<Button
 			className="btn-round btn-wd"
+			disabled={disabledState}
 			type="button"
 			variant="success"
+			style={{ pointerEvents: "auto" }}
 			onClick={() => {
 				handleBet(betData);
 			}}
@@ -115,6 +118,20 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 			Accept
 		</Button>
 	) : null;
+
+	useEffect(() => {
+		if (
+			bet.event.status.type.state === "post" ||
+			(bet.event.status.type.state === "in" && bet.event.status.period > 1)
+		)
+			setAcceptState(false);
+		else setAcceptState(true);
+	}, [bet]);
+
+	useEffect(() => {
+		if (currentUser.id) setDisabledState(false);
+		else setDisabledState(true);
+	}, [currentUser]);
 
 	let cardBorder, startTime;
 	let matchupPredictor = { header: null, body: null, footer: null };
@@ -128,7 +145,12 @@ function BetCard({ acceptState, bet, currentUser, index = false }) {
 		);
 		matchupPredictor.body = (
 			<Col xs={11} sm={5} md={4} lg={5} xl={3} className="mx-0 px-0">
-				<BetOdds betGameOdds={betData} awayWinProb={awayWinProb} homeWinProb={homeWinProb} />
+				<OddsChart
+					home={betData.home}
+					away={betData.away}
+					awayWinProb={awayWinProb}
+					homeWinProb={homeWinProb}
+				/>
 			</Col>
 		);
 		matchupPredictor.footer = (

@@ -1,31 +1,40 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BlockchainDispatch } from "../../../contexts/Blockchain.Context";
+import { UserDispatch } from "../../../contexts/User.Context";
 import axios from "axios";
 import TransactionCard from "../../Blockchain/TransactionCard";
 import Loading from "../../Utility/Loading";
 
 export default function PendingTransactions({ pendingTransactions, mineState, user, loaded }) {
-	const dispatch = useContext(BlockchainDispatch);
+	const blockchainDispatch = useContext(BlockchainDispatch);
+	const userDispatch = useContext(UserDispatch);
+	const [disabledState, setDisabledState] = useState(true);
 
 	const handleMine = async () => {
-		await axios
-			.post(`http://192.168.4.27:3001/mine`, {
-				address: currentUser.walletAddress,
-			})
-			.then((res) => {
-				if (res.data) {
-					blockchainDispatch({
-						type: "ADD BLOCK",
-						block: res.data.block,
-						mineTransaction: res.data.mineTransaction,
-					});
-					axios.post("/api/mineTransaction", res.data.mineTransaction).then((res) => {
-						userDispatch({ type: "REWARD", balance: res.amount });
-					});
-				}
-			});
+		if (user.id) {
+			await axios
+				.post(`http://192.168.4.27:3001/mine`, {
+					address: currentUser.walletAddress,
+				})
+				.then((res) => {
+					if (res.data) {
+						blockchainDispatch({
+							type: "ADD BLOCK",
+							block: res.data.block,
+							mineTransaction: res.data.mineTransaction,
+						});
+						axios.post("/api/mineTransaction", res.data.mineTransaction).then((res) => {
+							userDispatch({ type: "REWARD", balance: res.amount });
+						});
+					}
+				});
+		}
 	};
+	useEffect(() => {
+		if (user.id) setDisabledState(false);
+		else setDisabledState(true);
+	}, [user]);
 
 	return loaded ? (
 		<Container fluid className="mx-0 px-0 mt-4">
@@ -56,17 +65,32 @@ export default function PendingTransactions({ pendingTransactions, mineState, us
 									</OverlayTrigger>
 								</Col>
 								<Col xs={"auto"}>
-									<Button
-										className="btn-wd align-items-center"
-										type="button"
-										variant="info"
-										onClick={() => {
-											handleMine();
-										}}
+									<OverlayTrigger
+										show={disabledState}
+										placement="top"
+										overlay={
+											<Tooltip id="tooltip-top">
+												You have to be signned in to Mine. <strong>Please Signin</strong>.
+											</Tooltip>
+										}
 									>
-										<i className="nc-icon nc-atom mr-2"></i>
-										Mine
-									</Button>
+										<span className="d-inline-block" style={{ minWidth: "100%", minHeight: "100%" }}>
+											<Button
+												className="btn-wd align-items-center"
+												disabled={disabledState}
+												type="button"
+												variant="info"
+												tyle={{ pointerEvents: "auto" }}
+												onClick={() => {
+													handleMine();
+												}}
+												s
+											>
+												<i className="nc-icon nc-atom mr-2"></i>
+												Mine
+											</Button>
+										</span>
+									</OverlayTrigger>
 								</Col>
 							</Row>
 						</Col>

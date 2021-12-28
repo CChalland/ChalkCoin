@@ -50,12 +50,17 @@ export default async (req, res) => {
 					return res.json({ error: true, message: "This bet belongs to current user" });
 				}
 			} catch (e) {
-				console.log(e);
+				// console.log(e);
 				if (e.code === "P2002") {
-					return res.json({ error: `There's already an account with that ${e.meta.target[0]}` });
+					return res.json({
+						error: true,
+						message: `There's already an account with that ${e.meta.target[0]}`,
+					});
 				}
-				// throw e;
+				return res.json({ error: true, message: "There was a problem with your request" });
 			}
+		} else {
+			return res.json({ error: true, message: "User is not signned in" });
 		}
 	} else {
 		return res.status(405).json({ message: "Method not allowed" });
