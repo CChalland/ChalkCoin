@@ -80,9 +80,11 @@ export default function PendingTransactions({ pendingTransactions, mineState, us
 												disabled={disabledState}
 												type="button"
 												variant="info"
+												tyle={{ pointerEvents: "auto" }}
 												onClick={() => {
 													handleMine();
 												}}
+												s
 											>
 												<i className="nc-icon nc-atom mr-2"></i>
 												Mine

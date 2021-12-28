@@ -648,32 +648,32 @@ export function BetModalHelper(game, sportName) {
 							gameScoreData.home.winProbability = spreadPercentages.ncaaf[20].favorite;
 							gameScoreData.away.winProbability = spreadPercentages.ncaaf[20].underdog;
 						} else {
-							gameScoreData.home.winProbability = spreadPercentages.ncaaf[Math.abs(favoriteValue)].favorite;
-							gameScoreData.away.winProbability = spreadPercentages.ncaaf[Math.abs(favoriteValue)].underdog;
+							gameScoreData.home.winProbability = spreadPercentages.ncaaf[Math.abs(favoriteValue)]?.favorite;
+							gameScoreData.away.winProbability = spreadPercentages.ncaaf[Math.abs(favoriteValue)]?.underdog;
 						}
 					} else if (sportName === "NFL") {
 						if (Math.abs(favoriteValue) >= 17) {
 							gameScoreData.home.winProbability = spreadPercentages.nfl[17].favorite;
 							gameScoreData.away.winProbability = spreadPercentages.nfl[17].underdog;
 						} else {
-							gameScoreData.home.winProbability = spreadPercentages.nfl[Math.abs(favoriteValue)].favorite;
-							gameScoreData.away.winProbability = spreadPercentages.nfl[Math.abs(favoriteValue)].underdog;
+							gameScoreData.home.winProbability = spreadPercentages.nfl[Math.abs(favoriteValue)]?.favorite;
+							gameScoreData.away.winProbability = spreadPercentages.nfl[Math.abs(favoriteValue)]?.underdog;
 						}
 					} else if (sportName === "NBA") {
 						if (Math.abs(favoriteValue) >= 13.5) {
 							gameScoreData.home.winProbability = spreadPercentages.nba[13.5].favorite;
 							gameScoreData.away.winProbability = spreadPercentages.nba[13.5].underdog;
 						} else {
-							gameScoreData.home.winProbability = spreadPercentages.nba[Math.abs(favoriteValue)].favorite;
-							gameScoreData.away.winProbability = spreadPercentages.nba[Math.abs(favoriteValue)].underdog;
+							gameScoreData.home.winProbability = spreadPercentages.nba[Math.abs(favoriteValue)]?.favorite;
+							gameScoreData.away.winProbability = spreadPercentages.nba[Math.abs(favoriteValue)]?.underdog;
 						}
 					} else if (sportName === "NCAA Men's Basketball") {
 						if (Math.abs(favoriteValue) >= 13) {
 							gameScoreData.home.winProbability = spreadPercentages.ncaab[13].favorite;
 							gameScoreData.away.winProbability = spreadPercentages.ncaab[13].underdog;
 						} else {
-							gameScoreData.home.winProbability = spreadPercentages.ncaab[Math.abs(favoriteValue)].favorite;
-							gameScoreData.away.winProbability = spreadPercentages.ncaab[Math.abs(favoriteValue)].underdog;
+							gameScoreData.home.winProbability = spreadPercentages.ncaab[Math.abs(favoriteValue)]?.favorite;
+							gameScoreData.away.winProbability = spreadPercentages.ncaab[Math.abs(favoriteValue)]?.underdog;
 						}
 					}
 				}

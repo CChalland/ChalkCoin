@@ -102,32 +102,21 @@ function BetCard({ bet, currentUser, index = false }) {
 		}
 	};
 	const acceptButton = acceptState ? (
-		<OverlayTrigger
-			show={disabledState}
-			placement="top"
-			overlay={
-				<Tooltip id="tooltip-top">
-					You have to be signned in to accept this bet. <strong>Please Signin</strong>.
-				</Tooltip>
-			}
+		<Button
+			className="btn-round btn-wd"
+			disabled={disabledState}
+			type="button"
+			variant="success"
+			style={{ pointerEvents: "auto" }}
+			onClick={() => {
+				handleBet(betData);
+			}}
 		>
-			<span className="d-inline-block" style={{ minWidth: "100%", minHeight: "100%" }}>
-				<Button
-					className="btn-round btn-wd"
-					disabled={disabledState}
-					type="button"
-					variant="success"
-					onClick={() => {
-						handleBet(betData);
-					}}
-				>
-					<span className="btn-label">
-						<i className="fas fa-plus"></i>
-					</span>
-					Accept
-				</Button>
+			<span className="btn-label">
+				<i className="fas fa-plus"></i>
 			</span>
-		</OverlayTrigger>
+			Accept
+		</Button>
 	) : null;
 
 	useEffect(() => {

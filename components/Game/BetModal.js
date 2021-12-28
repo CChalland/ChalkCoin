@@ -12,6 +12,8 @@ import {
 	Form,
 	InputGroup,
 	Image,
+	OverlayTrigger,
+	Tooltip,
 } from "react-bootstrap";
 import Select, { components } from "react-select";
 import { BetDispatch } from "../../contexts/Bets.Context";
@@ -89,7 +91,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			</Row>
 		</components.Option>
 	);
-	let carouselItem = gameBetData.odds?.map((betOdds, key) => {
+	const carouselItem = gameBetData.odds?.map((betOdds, key) => {
 		return (
 			<Carousel.Item key={key}>
 				<Row className="justify-content-center">
@@ -112,6 +114,21 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			</Carousel.Item>
 		);
 	});
+	const betButton = betButtonState ? (
+		<Button
+			className="btn-wd"
+			disabled={disabledState}
+			type="button"
+			variant="success"
+			onClick={() => setModal(!modal)}
+			style={{ minWidth: "100%", minHeight: "100%", pointerEvents: "auto" }}
+		>
+			<span className="btn-label">
+				<i className="fas fa-plus"></i>
+			</span>
+			Place Bet
+		</Button>
+	) : null;
 
 	const submitBet = async () => {
 		if (submitBetState) {
@@ -178,21 +195,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 	return (
 		<>
 			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-			{betButtonState ? (
-				<Button
-					className="btn-wd"
-					disabled={disabledState}
-					type="button"
-					variant="success"
-					onClick={() => setModal(!modal)}
-					style={{ minWidth: "100%", width: "100%", minHeight: "100%", height: "100%" }}
-				>
-					<span className="btn-label">
-						<i className="fas fa-plus"></i>
-					</span>
-					Place Bet
-				</Button>
-			) : null}
+			{betButton}
 			<Row className="">
 				{/* Modal */}
 				<Modal className="" centered size="lg" onHide={() => setModal(!modal)} show={modal}>

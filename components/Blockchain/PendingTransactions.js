@@ -62,30 +62,19 @@ export default function PendingTransactions({ pendingTransactions, mineState, cu
 									</OverlayTrigger>
 								</Col>
 								<Col xs={"auto"}>
-									<OverlayTrigger
-										show={disabledState}
-										placement="top"
-										overlay={
-											<Tooltip id="tooltip-top">
-												You have to be signned in to Mine. <strong>Please Signin</strong>.
-											</Tooltip>
-										}
+									<Button
+										className="btn-wd align-items-center"
+										disabled={disabledState}
+										type="button"
+										variant="info"
+										style={{ pointerEvents: "auto" }}
+										onClick={() => {
+											handleMine();
+										}}
 									>
-										<span className="d-inline-block" style={{ minWidth: "100%", minHeight: "100%" }}>
-											<Button
-												className="btn-wd align-items-center"
-												disabled={disabledState}
-												type="button"
-												variant="info"
-												onClick={() => {
-													handleMine();
-												}}
-											>
-												<i className="nc-icon nc-atom mr-2"></i>
-												Mine
-											</Button>
-										</span>
-									</OverlayTrigger>
+										<i className="nc-icon nc-atom mr-2"></i>
+										Mine
+									</Button>
 								</Col>
 							</Row>
 						</Col>
