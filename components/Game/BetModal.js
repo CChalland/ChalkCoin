@@ -12,12 +12,10 @@ import {
 	Form,
 	InputGroup,
 	Image,
-	OverlayTrigger,
-	Tooltip,
 } from "react-bootstrap";
 import Select, { components } from "react-select";
 import { BetDispatch } from "../../contexts/Bets.Context";
-import GameScore from "../Game/GameScore";
+import GameScore from "./GameScore";
 import OddsChart from "../Utility/OddsChart";
 import axios from "axios";
 
@@ -128,7 +126,9 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			</span>
 			Place Bet
 		</Button>
-	) : null;
+	) : (
+		""
+	);
 
 	const submitBet = async () => {
 		if (submitBetState) {

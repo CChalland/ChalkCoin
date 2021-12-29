@@ -56,7 +56,7 @@
     "react": "17.0.2",
     "react-awesome-reveal": "^3.8.1",
     "react-big-calendar": "^0.38.2",
-    "react-bootstrap": "^2.0.4",
+    "react-bootstrap": "1.4.3",
     "react-bootstrap-sweetalert": "^5.2.0",
     "react-bootstrap-wizard": "^0.0.9",
     "react-chartist": "^0.14.4",
