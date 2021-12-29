@@ -44,7 +44,7 @@ export function UserProvider(props) {
 		getUserData();
 	}, []);
 
-	console.log("UserContext - user", user);
+	// console.log("UserContext - user", user);
 
 	return (
 		<UserContext.Provider value={user}>
