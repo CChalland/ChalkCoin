@@ -5,12 +5,12 @@ import { SportContext } from "../../contexts/Sports.Context.js";
 import Sidebar from "./Sidebar.js";
 import UserNavbar from "./Navbar.js";
 import Footer from "./Footer.js";
-import image from "../../static/img/full-screen-image-3.jpg";
 
 export default function Layout(props) {
 	const user = useContext(UserContext);
 	const sports = useContext(SportContext);
 	const [currentUser, setCurrentUser] = useState({});
+	const image = "/img/full-screen-image-3.jpg";
 	let routes = [
 		{
 			path: "/bets",

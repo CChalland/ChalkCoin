@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Container, Row, Col, Image, Button, Card } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
-import bannerImg from "../../../assets/image/banner-bg.png";
 
 export default function Banner() {
 	return (
@@ -50,7 +49,7 @@ export default function Banner() {
 
 				<Col sm={"auto"} md={6}>
 					<Fade in delay={100}>
-						<Image fluid src={bannerImg} alt="Banner" />
+						<Image fluid src="/image/banner-bg.png" alt="Banner" />
 					</Fade>
 				</Col>
 			</Row>

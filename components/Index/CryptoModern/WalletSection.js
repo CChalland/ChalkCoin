@@ -1,27 +1,21 @@
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
-import WalletImg from "../../../assets/image/illustration2.png";
-import AppleIcon from "../../../assets/image/apple.png";
-import PlayIcon from "../../../assets/image/playstore.png";
-import walletIcon1 from "../../../assets/image/wallet1.png";
-import walletIcon2 from "../../../assets/image/wallet2.png";
-import walletIcon3 from "../../../assets/image/wallet3.png";
 
 export default function WalletSection() {
 	const data = [
 		{
 			id: 1,
-			icon: walletIcon1,
+			icon: "/image/wallet1.png",
 			title: "Secure transfers with verified Markets.",
 		},
 		{
 			id: 2,
-			icon: walletIcon2,
+			icon: "/image/wallet2.png",
 			title: "Easy to create and accept bets within the wallet",
 		},
 		{
 			id: 3,
-			icon: walletIcon3,
+			icon: "/image/wallet3.png",
 			title: "Pay as many as you want",
 		},
 	];
@@ -30,7 +24,7 @@ export default function WalletSection() {
 		<Container>
 			<Row className="align-items-center">
 				<Col className="d-none d-md-block d-xl-block">
-					<Image fluid src={WalletImg} alt="Wallet Image" />
+					<Image fluid src="/image/illustration2.png" alt="Wallet Image" />
 				</Col>
 
 				<Col>
@@ -66,7 +60,7 @@ export default function WalletSection() {
 							<Button className="btn-outline" variant="default">
 								<Row className="align-items-center">
 									<Col xs={"auto"}>
-										<Image fluid src={AppleIcon} alt="Apple" />
+										<Image fluid src="/image/apple.png" alt="Apple" />
 									</Col>
 									<Col className="ml-0 pl-0">APP STORE</Col>
 								</Row>
@@ -76,7 +70,7 @@ export default function WalletSection() {
 							<Button className="btn-outline" variant="default">
 								<Row className="align-items-center">
 									<Col xs={"auto"}>
-										<Image fluid src={PlayIcon} alt="Play" />
+										<Image fluid src="/image/playstore.png" alt="Play" />
 									</Col>
 									<Col className="ml-0 pl-0">PLAY STORE</Col>
 								</Row>

@@ -15,7 +15,7 @@ let initialSportsData = [
 		reload: false,
 		path: "/games?sport=ncaaf",
 		name: "Football",
-		image: "../../static/media/sports-icons/1.png",
+		image: "/media/sports-icons/1.png",
 		mini: "NCAAB",
 	},
 	{
@@ -28,7 +28,7 @@ let initialSportsData = [
 		reload: false,
 		path: "/games?sport=nfl",
 		name: "NFL",
-		image: "../../static/media/sports-icons/2.png",
+		image: "/media/sports-icons/2.png",
 		mini: "NFL",
 	},
 	{
@@ -41,8 +41,8 @@ let initialSportsData = [
 		reload: false,
 		path: "/games?sport=mlb",
 		name: "MLB",
-		image: "../../static/media/sports-icons/3.png",
-		mini: "../../static/media/sports-icons/3.png",
+		image: "/media/sports-icons/3.png",
+		mini: "/media/sports-icons/3.png",
 	},
 	{
 		id: 4,
@@ -54,8 +54,8 @@ let initialSportsData = [
 		reload: false,
 		path: "/games?sport=nba",
 		name: "NBA",
-		image: "../../static/media/sports-icons/4.png",
-		mini: "../../static/media/sports-icons/4.png",
+		image: "/media/sports-icons/4.png",
+		mini: "/media/sports-icons/4.png",
 	},
 	// {
 	// 	id: 5,
@@ -67,8 +67,8 @@ let initialSportsData = [
 	// 	reload: false,
 	// 	path: "/games?sport=ncaab",
 	// 	name: "Basketball",
-	// 	image: "../../static/media/sports-icons/5.png",
-	// 	mini: "../../static/media/sports-icons/5.png",
+	// 	image: "/media/sports-icons/5.png",
+	// 	mini: "/media/sports-icons/5.png",
 	// },
 	{
 		id: 6,
@@ -80,8 +80,8 @@ let initialSportsData = [
 		reload: false,
 		path: "/games?sport=nhl",
 		name: "NHL",
-		image: "../../static/media/sports-icons/6.png",
-		mini: "../../static/media/sports-icons/6.png",
+		image: "/media/sports-icons/6.png",
+		mini: "/media/sports-icons/6.png",
 	},
 	{
 		id: 8,
@@ -93,8 +93,8 @@ let initialSportsData = [
 		reload: false,
 		path: "/games?sport=wnba",
 		name: "WNBA",
-		image: "../../static/media/sports-icons/8.png",
-		mini: "../../static/media/sports-icons/8.png",
+		image: "/media/sports-icons/8.png",
+		mini: "/media/sports-icons/8.png",
 	},
 	// { id: 10, abbrv: "MLS", sport: "soccer", display_name: "MLS", league_name: "MLS", data: {days: []}, reload: false },
 ];

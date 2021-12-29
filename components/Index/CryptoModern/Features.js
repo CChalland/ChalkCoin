@@ -1,35 +1,31 @@
 import { Container, Row, Col, Image } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
-import featureIcon1 from "../../../assets/image/feature-1.png";
-import featureIcon2 from "../../../assets/image/feature-2.png";
-import featureIcon3 from "../../../assets/image/feature-3.png";
-import featureIcon4 from "../../../assets/image/feature-4.png";
 
 export default function Features() {
 	const data = [
 		// {
 		// 	id: 1,
-		// 	icon: featureIcon1,
+		// 	icon: "/image/feature-1.png",
 		// 	title: "Great Market Value",
 		// 	description:
 		// 		"The leading digital currency by market capitalization, has grown in value by more than 10 times.",
 		// },
 		{
 			id: 2,
-			icon: featureIcon2,
+			icon: "/image/feature-2.png",
 			title: "Verified Mining",
 			description: "Your mining rigs are already set up and running. As soon as you set up your account.",
 		},
 		{
 			id: 3,
-			icon: featureIcon3,
+			icon: "/image/feature-3.png",
 			title: "Fastest Miner",
 			description:
 				"Don’t wrestle with rig assembly and hot, noisy miners at home. We have the fastest bitcoin mining.",
 		},
 		{
 			id: 4,
-			icon: featureIcon4,
+			icon: "/image/feature-4.png",
 			title: "Secure Transactions",
 			description: "You can mine any cryptocurrency available in our catalogue! Switch your mining power.",
 		},
