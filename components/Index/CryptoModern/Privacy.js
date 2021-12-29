@@ -1,6 +1,5 @@
 import { Container, Row, Col, Image } from "react-bootstrap";
 import { Fade } from "react-awesome-reveal";
-import Illustration from "../../../assets/image/illustration1.png";
 
 export default function Privacy() {
 	return (
@@ -23,7 +22,7 @@ export default function Privacy() {
 				</Col>
 				<Col>
 					<Fade up>
-						<Image fluid src={Illustration} />
+						<Image fluid src="/image/illustration1.png" />
 					</Fade>
 				</Col>
 			</Row>

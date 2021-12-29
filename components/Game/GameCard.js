@@ -5,7 +5,7 @@ import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
 import BetModal from "./BetModal";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper, BetModalHelper } from "../../helpers/SportCard";
-import { GetPlaysData, GamePlayHelperTest } from "../../test/footballHelperJSON";
+import { GetPlaysData, GamePlayHelperTest } from "../../.mockup/test/footballHelperJSON";
 
 function GameCard({ panelKey, gameData, sportName, users, currentUser, completed }) {
 	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);

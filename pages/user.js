@@ -31,7 +31,7 @@ export default function UserPage({ session }) {
 		username: session.user.username ? session.user.username : "",
 		name: session.user.name ? session.user.name : "",
 		email: session.user.email ? session.user.email : "",
-		image: session.user.image ? session.user.image : "../static/img/faces/face-0.jpg",
+		image: session.user.image ? session.user.image : "../public/img/faces/face-0.jpg",
 	});
 	const [newUserState, setNewUserState] = useState(false);
 	const [updateSuccessState, setUpdateSuccessState] = useState(false);
@@ -391,7 +391,7 @@ export default function UserPage({ session }) {
 										<Card className="card-user">
 											<Card.Header className="no-padding">
 												<div className="card-image">
-													<img alt="..." src={"../static/img/full-screen-image-3.jpg"}></img>
+													<img alt="..." src={"../public/img/full-screen-image-3.jpg"}></img>
 												</div>
 											</Card.Header>
 											<Card.Body>
