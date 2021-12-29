@@ -9,9 +9,9 @@ import Layout from "../components/Layout/Layout";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "swiper/swiper.scss";
-import "assets/scss/chalkcoin.scss?v=2.0.0";
-import "assets/css/Custom.css";
-import "assets/css/swiper.css";
+import "../assets/scss/chalkcoin.scss?v=2.0.0";
+import "../assets/css/Custom.css";
+import "../assets/css/swiper.css";
 
 class MyApp extends App {
 	// Only uncomment this method if you have blocking data requirements for
