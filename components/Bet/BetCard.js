@@ -101,23 +101,24 @@ function BetCard({ bet, currentUser, index = false }) {
 			}
 		}
 	};
-	const acceptButton = acceptState ? (
-		<Button
-			className="btn-round btn-wd"
-			disabled={disabledState}
-			type="button"
-			variant="success"
-			style={{ pointerEvents: "auto" }}
-			onClick={() => {
-				handleBet(betData);
-			}}
-		>
-			<span className="btn-label">
-				<i className="fas fa-plus"></i>
-			</span>
-			Accept
-		</Button>
-	) : null;
+	const acceptButton =
+		acceptState && !bet.accepted && bet.requesterId !== currentUser.id ? (
+			<Button
+				className="btn-round btn-wd"
+				disabled={disabledState}
+				type="button"
+				variant="success"
+				style={{ pointerEvents: "auto" }}
+				onClick={() => {
+					handleBet(betData);
+				}}
+			>
+				<span className="btn-label">
+					<i className="fas fa-plus"></i>
+				</span>
+				Accept
+			</Button>
+		) : null;
 
 	useEffect(() => {
 		if (
@@ -188,7 +189,7 @@ function BetCard({ bet, currentUser, index = false }) {
 	else if (betData.openStatus === "warning") cardBorder = "#FFA534";
 	else if (betData.openStatus === "info") cardBorder = "#23CCEF";
 
-	// console.log("BetCard - bet", bet);
+	console.log("BetCard - bet", bet);
 	// console.log("BetCard - betData", betData);
 
 	return (

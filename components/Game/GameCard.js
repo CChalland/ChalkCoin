@@ -18,12 +18,12 @@ function GameCard({ panelKey, gameData, sportName, users, currentUser, completed
 	};
 	let infoButtonClass = multipleExpandablePanels.includes(panelKey) ? "btn-wd btn-outline" : "btn-wd";
 
-	let tempGameData = completed
-		? {
-				...gameData,
-				competitions: [{ ...gameData.competitions[0], situation: GetPlaysData()[12] }],
-		  }
-		: gameData;
+	// let tempGameData = completed
+	// 	? {
+	// 			...gameData,
+	// 			competitions: [{ ...gameData.competitions[0], situation: GetPlaysData()[12] }],
+	// 	  }
+	// 	: gameData;
 
 	// console.log("GameCard - gameData", gameData);
 

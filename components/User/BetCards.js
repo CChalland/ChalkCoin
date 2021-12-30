@@ -1,10 +1,10 @@
 import BetCard from "../Bet/BetCard";
 import TransactionCard from "../Blockchain/TransactionCard";
+import Loading from "../Utility/Loading";
 
 function BetCards({ tabBets, tabType, currentUser }) {
-	let betsCards;
 	if (tabBets) {
-		betsCards = tabBets.map((bet) => {
+		return tabBets.map((bet) => {
 			// console.log("BetCards - bet", bet);
 			if (tabType === "Completed") {
 				return (
@@ -29,10 +29,8 @@ function BetCards({ tabBets, tabType, currentUser }) {
 			}
 		});
 	} else {
-		betsCards = <h1>Loading</h1>;
+		return <Loading />;
 	}
-
-	return betsCards;
 }
 
 export default BetCards;
