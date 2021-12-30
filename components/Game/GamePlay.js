@@ -251,9 +251,7 @@ function GamePlay(props) {
 	) {
 		scheduled = scheduledHelper(gamePlayData);
 	} else if (gamePlayData.status.type.state === "in") {
-		if (sportName === "NFL") {
-			lastPlay = footballHelper(gamePlayData.situation);
-		} else if (sportName === "NHL") {
+		if (sportName === "NHL") {
 		} else if (sportName === "MLB") {
 			lastPlay = baseballHelper(gamePlayData.situation);
 		} else {
