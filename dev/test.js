@@ -1,4 +1,4 @@
-const Blockchain = require("./blockchain");
+const ChalkCoin = require("./blockchain");
 const chalkCoin = new ChalkCoin();
 
 const bc1 = {

@@ -13,7 +13,7 @@ export default function PendingTransactions({ pendingTransactions, mineState, cu
 
 	const handleMine = async () => {
 		await axios
-			.post(`http://192.168.4.27:3001/mine`, {
+			.post(`http://localhost:3001/mine`, {
 				address: currentUser.walletAddress,
 			})
 			.then((res) => {
