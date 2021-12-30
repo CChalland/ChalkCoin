@@ -8,7 +8,7 @@ const rp = require("request-promise");
 
 const nodeAddress = uuid().split("-").join("");
 var corsOptions = {
-	origin: "http://192.168.4.27:4000",
+	origin: "http://localhost:3000",
 	optionsSuccessStatus: 200, // For legacy browser support
 };
 
