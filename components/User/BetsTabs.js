@@ -234,7 +234,7 @@ export default function BetsTabs({ userBets, currentUser }) {
 								}
 							}}
 						>
-							<Image height={30} src={`../public/media/sports-icons/${sport.icon}.png`} rounded />
+							<Image height={30} src={`/media/sports-icons/${sport.icon}.png`} rounded />
 						</Button>
 					</Col>
 				);
@@ -260,7 +260,7 @@ export default function BetsTabs({ userBets, currentUser }) {
 	// const startSoon = bets?.some((bet) => bet.openStatus === "warning");
 	// const gameDay = bets?.some((bet) => bet.openStatus === "info");
 
-	console.log("betsTab - tab", tab);
+	// console.log("betsTab - tab", tab);
 
 	return tab.bets ? (
 		<Row>
@@ -874,7 +874,7 @@ export default function BetsTabs({ userBets, currentUser }) {
 				{searchState ? null : (
 					<Row>
 						<Col className="ml-5">
-							<h2>No bets found.</h2>
+							<h2>No Bets Found.</h2>
 						</Col>
 					</Row>
 				)}
@@ -883,6 +883,10 @@ export default function BetsTabs({ userBets, currentUser }) {
 			</Col>
 		</Row>
 	) : (
-		<Loading />
+		<Row>
+			<Col className="ml-5">
+				<h2>No Bets Found.</h2>
+			</Col>
+		</Row>
 	);
 }

@@ -27,11 +27,16 @@ function LoginRegister({ providers, csrfToken }) {
 		return (
 			<Row key={key}>
 				<Col className="text-center">
-					<Button className="btn-social" variant={provider.id} onClick={() => signIn(provider.id)}>
-						<>
+					<Button
+						className="btn-social"
+						variant={provider.id}
+						onClick={() => signIn(provider.id)}
+						style={{ minWidth: "200px" }}
+					>
+						<span className="align-items-center">
 							Sign In with <i className={`fab fa-${provider.id}`}></i>
 							{provider.name}
-						</>
+						</span>
 					</Button>
 				</Col>
 			</Row>
@@ -222,6 +227,7 @@ function LoginRegister({ providers, csrfToken }) {
 															variant="info"
 															type="submit"
 															disabled={loginButton}
+															style={{ minWidth: "200px" }}
 														>
 															Login
 														</Button>
@@ -298,6 +304,7 @@ function LoginRegister({ providers, csrfToken }) {
 															variant="info"
 															type="submit"
 															disabled={registerButton}
+															style={{ minWidth: "200px" }}
 														>
 															Register with Email
 														</Button>

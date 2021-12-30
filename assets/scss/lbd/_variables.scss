@@ -61,6 +61,10 @@ $black-color-top:	 	            #787878;
 $black-color-bottom: 	            #343434;
 
 
+$social-apple: 			        #F6F3ED;
+$social-states-apple: 			darken(#F6F3ED, 10%) !default;
+$social-apple-darken: 			        #7D7D7D;
+$social-states-apple-darken: 			darken(#7D7D7D, 10%) !default;
 $social-facebook: 			        #3b5998;
 $social-states-facebook: 			darken(#3b5998, 10%) !default;
 $social-twitter: 			        #55acee;
@@ -75,6 +79,8 @@ $social-dribbble: 			        #ea4c89;
 $social-states-dribble: 	        darken(#ea4c89, 10%) !default;
 $social-github: 			        #333333;
 $social-states-github: 		        darken(#333333, 10%) !default;
+$social-discord:              #7289DA;
+$social-states-discord:           darken(#7289DA, 10%) !default;
 $social-youtube: 			        #e52d27;
 $social-states-youtube: 	        darken(#e52d27, 10%) !default;
 $social-stumbleupon: 		        #eb4924;
@@ -400,6 +406,8 @@ $pink-color-bottom: 	            #ff2e2e;
 $black-color-top:	 	            #787878;
 $black-color-bottom: 	            #343434;
 
+$social-apple:        #F6F3ED;
+$social-apple-darken: #7D7D7D;
 $social-facebook: 			#3b5998;
 $social-twitter: 			#55acee;
 $social-pinterest: 			#cc2127;
@@ -407,11 +415,13 @@ $social-google: 			#dd4b39;
 $social-linkedin: 			#0976b4;
 $social-dribbble: 			#ea4c89;
 $social-github: 			#333333;
+$social-discord:      #7289DA;
 $social-youtube: 			#e52d27;
 $social-stumbleupon: 		#eb4924;
 $social-reddit: 			#ff4500;
 $social-tumblr: 			#35465c;
 $social-behance: 			#1769ff;
+
 
 
 $filter-blue:         darken($primary-color, 10%);

@@ -87,7 +87,7 @@ export default function Bets() {
 							}
 						}}
 					>
-						<Image height={30} src={`../public/media/sports-icons/${sport.icon}.png`} rounded />
+						<Image height={30} src={`/media/sports-icons/${sport.icon}.png`} rounded />
 					</Button>
 				</Col>
 			);

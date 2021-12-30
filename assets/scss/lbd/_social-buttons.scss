@@ -27,6 +27,14 @@
 
 }
 
+.btn-apple {
+	@include social-buttons-color($social-apple, $social-states-apple);
+}
+
+.btn-apple-darken {
+	@include social-buttons-color($social-apple-darken, $social-states-apple-darken);
+}
+
 .btn-facebook {
 	@include social-buttons-color($social-facebook, $social-states-facebook);
 }
@@ -53,6 +61,10 @@
 
 .btn-github {
 	@include social-buttons-color($social-github, $social-states-github);
+}
+
+.btn-discord {
+	@include social-buttons-color($social-discord, $social-states-discord);
 }
 
 .btn-youtube {
