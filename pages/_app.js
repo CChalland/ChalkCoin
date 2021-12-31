@@ -18,7 +18,7 @@ export default function MyApp({ Component, pageProps }) {
 	return (
 		<Fragment>
 			<Head>
-				{/* <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta> */}
+				<meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta>
 			</Head>
 			<Provider session={pageProps.session}>
 				<BlockchainProvider>

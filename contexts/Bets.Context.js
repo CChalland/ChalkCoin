@@ -97,7 +97,7 @@ export function BetProvider(props) {
 			let betsData;
 			try {
 				const res = await axios.post(`/api/completedBets?type=open`, completedOpenBets);
-				console.log("completedOpenBets", res);
+				// console.log("completedOpenBets", res);
 				betsData = res.data.map((bet) => {
 					const event = completedOpenBets.find((acptBet) => acptBet.event.id === bet.details.gameId);
 					return { ...bet, event: event.event };
@@ -115,7 +115,7 @@ export function BetProvider(props) {
 			let betsData;
 			try {
 				const res = await axios.post(`/api/completedBets?type=recipient`, completedRecipientBets);
-				console.log("completedRecipientBets", res);
+				// console.log("completedRecipientBets", res);
 				betsData = res.data.map((bet) => {
 					const event = completedRecipientBets.find((acptBet) => acptBet.event.id === bet.details.gameId);
 					return { ...bet, event: event.event };

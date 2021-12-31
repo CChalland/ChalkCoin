@@ -65,7 +65,7 @@ export default function UserPage({ session }) {
 
 		if (usernameState && emailState && passwordState && confirmPasswordState) {
 			let response = await axios.post(`/api/currentUser`, updatedUser);
-			console.log(response);
+			// console.log(response);
 			if (response.data.id) {
 				setUser(response.data);
 				setUpdateSuccessState(true);
