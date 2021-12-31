@@ -111,7 +111,7 @@ export function SportProvider(props) {
 
 		if (league.reload) {
 			axios
-				.get(`http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard`)
+				.get(`//site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard`)
 				.then((response) => {
 					leagueData = response.data;
 					inGames = response.data.events.filter((game) => {
@@ -168,7 +168,7 @@ export function SportProvider(props) {
 
 						await axios({
 							method: "GET",
-							url: `http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard`,
+							url: `//site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard`,
 						}).then(
 							function (response) {
 								if (response.data.events.length === 0) {

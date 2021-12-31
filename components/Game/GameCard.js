@@ -5,7 +5,6 @@ import GamePlay from "./GamePlay";
 import GameLeader from "./GameLeader";
 import BetModal from "./BetModal";
 import { GameScoreHelper, GamePlayHelper, GameLeadersHelper, BetModalHelper } from "../../helpers/SportCard";
-// import { GetPlaysData, GamePlayHelperTest } from "../../.mockup/test/footballHelperJSON";
 
 function GameCard({ panelKey, gameData, sportName, users, currentUser, completed }) {
 	const [multipleExpandablePanels, setMultipleExpandablePanels] = useState([]);
@@ -17,13 +16,6 @@ function GameCard({ panelKey, gameData, sportName, users, currentUser, completed
 		}
 	};
 	let infoButtonClass = multipleExpandablePanels.includes(panelKey) ? "btn-wd btn-outline" : "btn-wd";
-
-	// let tempGameData = completed
-	// 	? {
-	// 			...gameData,
-	// 			competitions: [{ ...gameData.competitions[0], situation: GetPlaysData()[12] }],
-	// 	  }
-	// 	: gameData;
 
 	// console.log("GameCard - gameData", gameData);
 

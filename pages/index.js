@@ -6,6 +6,7 @@ import { UserContext } from "../contexts/User.Context";
 import { BetContext } from "../contexts/Bets.Context";
 import { SportContext } from "../contexts/Sports.Context";
 import { BlockchainContext } from "../contexts/Blockchain.Context";
+import prisma from "../contexts/prisma";
 // Components
 import NotificationAlert from "react-notification-alert";
 import Loading from "../components/Utility/Loading";

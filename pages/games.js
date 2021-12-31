@@ -6,6 +6,7 @@ import { SportContext, SportDispatch } from "../contexts/Sports.Context";
 import { UserContext } from "../contexts/User.Context";
 import moment from "moment";
 import axios from "axios";
+import prisma from "../contexts/prisma";
 import GameCard from "../components/Game/GameCard";
 import NotificationAlert from "react-notification-alert";
 import Loading from "../components/Utility/Loading";
@@ -64,7 +65,7 @@ export default function Games({ session, users }) {
 	const getData = useCallback(async (league, date) => {
 		axios
 			.get(
-				`http://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard?dates=${date.value}`
+				`//site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard?dates=${date.value}`
 			)
 			.then((response) => {
 				console.log(response.data);

@@ -4,10 +4,17 @@ function GameScore({ gameScoreCardData, screenSize }) {
 	const style = screenSize === "xs" ? { fontSize: 14 } : null;
 
 	const scoreTableHelper = (scoreCardData) => {
-		let title, awayPeriods, awayScore, homePeriods, homeScore, awayFinalStyle, homeFinalStyle;
+		let title,
+			awayPeriods,
+			awayScore,
+			homePeriods,
+			homeScore,
+			awayFinalStyle,
+			homeFinalStyle,
+			awayRecord,
+			homeRecord,
+			index = 0;
 		const titleStyle = scoreCardData.status.type.state === "in" ? "text-danger" : "";
-
-		let index = 0;
 		const linescoresHeader = scoreCardData.away.periods.map((period, key) => {
 			index++;
 			if ((scoreCardData.sportName == "NHL" && index == 4) || index == 5) {
@@ -164,11 +171,45 @@ function GameScore({ gameScoreCardData, screenSize }) {
 			}
 		}
 
-		return { title, awayPeriods, homePeriods, awayScore, homeScore, awayFinalStyle, homeFinalStyle };
+		if (gameScoreCardData.away.records)
+			awayRecord =
+				"(" +
+				gameScoreCardData.away?.records[0].summary +
+				", " +
+				gameScoreCardData.away?.records[1].summary +
+				" Away)";
+		if (gameScoreCardData.home.records)
+			homeRecord =
+				"(" +
+				gameScoreCardData.home.records[0].summary +
+				", " +
+				gameScoreCardData.home.records[1].summary +
+				" Home)";
+
+		return {
+			title,
+			awayPeriods,
+			homePeriods,
+			awayScore,
+			homeScore,
+			awayFinalStyle,
+			homeFinalStyle,
+			awayRecord,
+			homeRecord,
+		};
 	};
 
-	const { title, awayPeriods, awayScore, homePeriods, homeScore, awayFinalStyle, homeFinalStyle } =
-		scoreTableHelper(gameScoreCardData);
+	const {
+		title,
+		awayPeriods,
+		awayScore,
+		homePeriods,
+		homeScore,
+		awayFinalStyle,
+		homeFinalStyle,
+		awayRecord,
+		homeRecord,
+	} = scoreTableHelper(gameScoreCardData);
 
 	return (
 		<Row>
@@ -185,11 +226,7 @@ function GameScore({ gameScoreCardData, screenSize }) {
 							<Col xs={8} md={8} lg={6} xl={6} className="">
 								<Row className="mb-0 h5">{gameScoreCardData.away.name}</Row>
 								<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
-									{"(" +
-										gameScoreCardData.away.records[0].summary +
-										", " +
-										gameScoreCardData.away.records[1].summary +
-										" Away)"}
+									{awayRecord}
 								</Row>
 							</Col>
 						</Row>
@@ -213,11 +250,7 @@ function GameScore({ gameScoreCardData, screenSize }) {
 							<Col xs={8} md={8} lg={6} xl={6} className="">
 								<Row className="mb-0 h5">{gameScoreCardData.home.name}</Row>
 								<Row className="mb-0 text-secondary" style={{ fontSize: 12 }}>
-									{"(" +
-										gameScoreCardData.home.records[0].summary +
-										", " +
-										gameScoreCardData.home.records[1].summary +
-										" Home)"}
+									{homeRecord}
 								</Row>
 							</Col>
 						</Row>
@@ -247,11 +280,7 @@ function GameScore({ gameScoreCardData, screenSize }) {
 									{gameScoreCardData.away.name}
 								</Row>
 								<Row className="mb-0 text-secondary" style={{ fontSize: 10 }}>
-									{"(" +
-										gameScoreCardData.away.records[0].summary +
-										", " +
-										gameScoreCardData.away.records[1].summary +
-										" Away)"}
+									{awayRecord}
 								</Row>
 							</Col>
 						</Row>
@@ -276,11 +305,7 @@ function GameScore({ gameScoreCardData, screenSize }) {
 									{gameScoreCardData.home.name}
 								</Row>
 								<Row className="mb-0 text-secondary" style={{ fontSize: 10 }}>
-									{"(" +
-										gameScoreCardData.home.records[0].summary +
-										", " +
-										gameScoreCardData.home.records[1].summary +
-										" Home)"}
+									{homeRecord}
 								</Row>
 							</Col>
 						</Row>

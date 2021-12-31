@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/blockchain", function (req, res) {
-	res.send(chalkCoin);
+	res.json(chalkCoin);
 });
 
 app.post("/transaction", function (req, res) {
