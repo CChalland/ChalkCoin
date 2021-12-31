@@ -100,7 +100,7 @@ function BetScores({ betGameScoreData, screenSize }) {
 				<Col xs={9} sm={8} className="">
 					<Row className="mt-1 mb-3">
 						<Col xs={"auto"} sm={4} lg={3} className="">
-							<Image width={35} height={35} src={betGameScoreData.away.logo} rounded />
+							<Image width={35} height={35} src={betGameScoreData.away.logo} alt="away" rounded />
 						</Col>
 						<Col xs={"auto"} sm={5} lg={6} className="">
 							<Row className="mb-0 h5" style={{ fontSize: 16 }}>
@@ -117,7 +117,7 @@ function BetScores({ betGameScoreData, screenSize }) {
 
 					<Row className="mt-3">
 						<Col xs={"auto"} sm={4} lg={3} className="">
-							<Image width={35} height={35} src={betGameScoreData.home.logo} rounded />
+							<Image width={35} height={35} src={betGameScoreData.home.logo} alt="home" rounded />
 						</Col>
 						<Col xs={"auto"} sm={5} lg={6} className="">
 							<Row className="mb-0 h5" style={{ fontSize: 16 }}>

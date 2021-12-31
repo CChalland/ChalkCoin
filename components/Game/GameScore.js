@@ -221,7 +221,13 @@ function GameScore({ gameScoreCardData, screenSize }) {
 					<Col xs={6}>
 						<Row>
 							<Col xs={4} md={4} lg={4} xl={4} className="text-right">
-								<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
+								<Image
+									width={40}
+									height={40}
+									src={gameScoreCardData.away.logo}
+									alt={gameScoreCardData.away.abbreviation}
+									rounded
+								/>
 							</Col>
 							<Col xs={8} md={8} lg={6} xl={6} className="">
 								<Row className="mb-0 h5">{gameScoreCardData.away.name}</Row>
@@ -245,7 +251,13 @@ function GameScore({ gameScoreCardData, screenSize }) {
 					<Col xs={6}>
 						<Row>
 							<Col xs={4} md={4} lg={4} xl={4} className="text-right">
-								<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
+								<Image
+									width={40}
+									height={40}
+									src={gameScoreCardData.home.logo}
+									alt={gameScoreCardData.home.abbreviation}
+									rounded
+								/>
 							</Col>
 							<Col xs={8} md={8} lg={6} xl={6} className="">
 								<Row className="mb-0 h5">{gameScoreCardData.home.name}</Row>
@@ -273,7 +285,13 @@ function GameScore({ gameScoreCardData, screenSize }) {
 					<Col xs={screenSize === "modal" ? "auto" : 6}>
 						<Row>
 							<Col xs={"5"} className="mx-0">
-								<Image width={40} height={40} src={gameScoreCardData.away.logo} rounded />
+								<Image
+									width={40}
+									height={40}
+									src={gameScoreCardData.away.logo}
+									alt={gameScoreCardData.away.abbreviation}
+									rounded
+								/>
 							</Col>
 							<Col xs={"7"} className="mx-0">
 								<Row className="mb-0 h5" style={style}>
@@ -298,7 +316,13 @@ function GameScore({ gameScoreCardData, screenSize }) {
 					<Col xs={screenSize === "modal" ? "auto" : 6}>
 						<Row>
 							<Col xs={"5"} className="mx-0">
-								<Image width={40} height={40} src={gameScoreCardData.home.logo} rounded />
+								<Image
+									width={40}
+									height={40}
+									src={gameScoreCardData.home.logo}
+									alt={gameScoreCardData.home.abbreviation}
+									rounded
+								/>
 							</Col>
 							<Col xs={"7"} className="mx-0">
 								<Row className="mb-0 h5" style={style}>

@@ -39,7 +39,7 @@ export default function UserNavbar() {
 							</Dropdown.Toggle>
 							<Dropdown.Menu alignRight aria-labelledby="navbarDropdownMenuLink">
 								<Dropdown.Item>
-									<Link href="/user">
+									<Link href="/user" passHref>
 										<span>
 											<i className="nc-icon nc-settings-90"></i>
 											Settings

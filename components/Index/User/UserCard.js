@@ -19,7 +19,7 @@ export default function UserCard({ user, bets }) {
 						<Card.Body>
 							<Row className="align-items-center ">
 								<Col xs={"auto"}>
-									<Image width={100} src={user?.image} thumbnail roundedCircle />
+									<Image width={100} src={user?.image} alt="avatar" thumbnail roundedCircle />
 								</Col>
 
 								<Col>

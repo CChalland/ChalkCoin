@@ -48,7 +48,7 @@ export default function PendingTransactions({ pendingTransactions, mineState, cu
 								<Col xs={"auto"}>
 									<OverlayTrigger
 										placement="bottom"
-										overlay={<Tooltip>If your mine is completed, you'll receive tokens.</Tooltip>}
+										overlay={<Tooltip>{"If your mine is completed, you'll receive tokens."}</Tooltip>}
 									>
 										{({ ref, ...triggerHandler }) => (
 											<Button

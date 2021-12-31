@@ -11,7 +11,7 @@ export default function SelectedBlock({ selectedBlock, currentUser, loaded }) {
 						<h2 className="my-0 truncate-hash">{selectedBlock.hash}</h2>
 					</Col>
 					<Col xs={"auto"} className="ml-0 pl-0">
-						<h2 className="my-0">'s</h2>
+						<h2 className="my-0">{"'s"}</h2>
 					</Col>
 
 					<Col xs={"auto"} className="mx-0 px-0"></Col>

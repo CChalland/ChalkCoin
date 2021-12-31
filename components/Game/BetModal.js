@@ -67,7 +67,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 		<components.Option {...props}>
 			<Row className="align-items-center">
 				<Col xs="auto">
-					<Image width={35} height={35} src={props.data.image} rounded />
+					<Image width={35} height={35} src={props.data.image} alt={props.data.value} rounded />
 				</Col>
 				<Col>
 					<Row>{props.data.label}</Row>
@@ -82,7 +82,7 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 		<components.Option {...props}>
 			<Row className="align-items-center">
 				<Col xs="auto">
-					<Image width={35} height={35} src={props.data.image} roundedCircle />
+					<Image width={35} height={35} src={props.data.image} alt={props.data.value} roundedCircle />
 				</Col>
 				<Col>
 					<Row>{props.data.value}</Row>

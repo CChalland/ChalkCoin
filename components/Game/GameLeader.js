@@ -28,7 +28,7 @@ function GameLeader(props) {
 					<Col xs={12} md={6} xl={12} key={key}>
 						<Row className="mb-3 align-items-center">
 							<Col xs="auto">
-								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+								<Image width={45} height={40} src={athlete.headshot} alt="headshot" roundedCircle />
 							</Col>
 							<Col xs="auto">
 								<Row className="mb-0">
@@ -55,7 +55,7 @@ function GameLeader(props) {
 					<Col xs={12} md={4} xl={12} key={key}>
 						<Row className="mb-2 align-items-center">
 							<Col xs="auto">
-								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+								<Image width={45} height={40} src={athlete.headshot} alt="headshot" roundedCircle />
 							</Col>
 							<Col xs="auto">
 								<Row className="mb-0 h6">{athlete.displayName}</Row>
@@ -70,7 +70,7 @@ function GameLeader(props) {
 						<Row className="mt-2 py-1 text-secondary">{athlete.title}</Row>
 						<Row className="mb-2 align-items-center">
 							<Col xs="auto">
-								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+								<Image width={45} height={40} src={athlete.headshot} alt="headshot" roundedCircle />
 							</Col>
 							<Col xs="auto">
 								<Row className="mb-0 h6">{athlete.displayName}</Row>
@@ -84,7 +84,7 @@ function GameLeader(props) {
 					<Col xs={12} md={6} xl={12} key={key}>
 						<Row className="mt-2 mb-1 align-items-center">
 							<Col xs={3} className="pl-0">
-								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+								<Image width={45} height={40} src={athlete.headshot} alt="headshot" roundedCircle />
 							</Col>
 							<Col xs={6} className="pl-0">
 								<Row className="mb-0 text-secondary">{athlete.title}</Row>
@@ -104,7 +104,7 @@ function GameLeader(props) {
 					<Col xs={12} md={6} xl={12} key={key}>
 						<Row className="mb-3 align-items-center">
 							<Col md="auto">
-								<Image width={45} height={40} src={null} roundedCircle />
+								<Image width={45} height={40} src={null} alt="headshot" roundedCircle />
 							</Col>
 							<Col md="auto">{"Undecided"}</Col>
 						</Row>
@@ -156,7 +156,7 @@ function GameLeader(props) {
 					<Col xs={12} md={6} xl={12} key={key}>
 						<Row className="mb-3 align-items-center">
 							<Col md="auto">
-								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+								<Image width={45} height={40} src={athlete.headshot} alt="headshot" roundedCircle />
 							</Col>
 							<Col md="auto">
 								<Row className="mb-0 h6">
@@ -198,7 +198,7 @@ function GameLeader(props) {
 								{stars[athlete.title.split(" ")[0].toLowerCase()]}
 							</Col>
 							<Col sm="auto">
-								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+								<Image width={45} height={40} src={athlete.headshot} alt="headshot" roundedCircle />
 							</Col>
 							<Col md="auto">
 								<Row className="mb-0 h6">
@@ -237,7 +237,7 @@ function GameLeader(props) {
 								{athlete.team.links.map((link, key) => {
 									return (
 										<Col xs="auto" key={key} className="text-center">
-											<a href={link.href} target="_blank">
+											<a href={link.href} target="_blank" rel="noreferrer">
 												{link.text}
 											</a>
 										</Col>
@@ -262,7 +262,7 @@ function GameLeader(props) {
 					<Col xs={12} md={6} xl={12} key={key}>
 						<Row className="mb-2 align-items-center">
 							<Col xs="auto">
-								<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+								<Image width={45} height={40} src={athlete.headshot} alt="headshot" roundedCircle />
 							</Col>
 							<Col xs="auto">
 								<Row className="mb-0 h6">{athlete.displayName}</Row>
@@ -287,7 +287,7 @@ function GameLeader(props) {
 						<Col xs={12} md={6} xl={12} key={key}>
 							<Row className="mb-2 align-items-center">
 								<Col xs="auto">
-									<Image width={45} height={40} src={athlete.headshot} roundedCircle />
+									<Image width={45} height={40} src={athlete.headshot} alt="headshot" roundedCircle />
 								</Col>
 								<Col xs="auto">
 									<Row className="mb-0 h6">{athlete.displayName}</Row>
