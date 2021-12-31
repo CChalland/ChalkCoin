@@ -68,7 +68,7 @@ export default function Games({ session, users }) {
 				`//site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.league_name}/scoreboard?dates=${date.value}`
 			)
 			.then((response) => {
-				console.log(response.data);
+				// console.log(response.data);
 				dispatch({
 					type: "SELECTED DATE",
 					data: response.data,

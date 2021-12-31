@@ -219,7 +219,13 @@ function GamePlay(props) {
 		return (
 			<>
 				<figure className="mx-0 my-3 position-relative" onClick={() => setModalShow(true)}>
-					<Image fluid src={headlines.video[0].thumbnail} alt="thumbnail" onClick={() => setModalShow(true)} rounded />
+					<Image
+						fluid
+						src={headlines.video[0].thumbnail}
+						alt="thumbnail"
+						onClick={() => setModalShow(true)}
+						rounded
+					/>
 					<span className="video-play-button">Play</span>
 					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
 				</figure>
@@ -264,9 +270,9 @@ function GamePlay(props) {
 				gamePlayData.lastPlay.type.text === "No Foul"
 			) {
 				lastPlay = <Row className="my-3 align-items-center h6">{gamePlayData.lastPlay.text}</Row>;
-				console.log("End Period - gamePlayData.lastPlay", gamePlayData.lastPlay);
+				// console.log("End Period - gamePlayData.lastPlay", gamePlayData.lastPlay);
 			} else {
-				console.log("else- gamePlayData.lastPlay", gamePlayData.lastPlay);
+				// console.log("else- gamePlayData.lastPlay", gamePlayData.lastPlay);
 				athletePic = gamePlayData.lastPlay.athletes
 					? gamePlayData.lastPlay.athletes[0].headshot
 					: gamePlayData.lastPlay.team.logo;

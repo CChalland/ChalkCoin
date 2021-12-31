@@ -189,7 +189,7 @@ function BetCard({ bet, currentUser, index = false }) {
 	else if (betData.openStatus === "warning") cardBorder = "#FFA534";
 	else if (betData.openStatus === "info") cardBorder = "#23CCEF";
 
-	console.log("BetCard - bet", bet);
+	// console.log("BetCard - bet", bet);
 	// console.log("BetCard - betData", betData);
 
 	return (
