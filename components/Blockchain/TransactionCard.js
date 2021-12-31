@@ -70,7 +70,7 @@ function TransactionCard({ transactionData, userAddress, panelKey }) {
 											</h1>
 										</Col>
 										<Col md={2} className="mx-0 px-0">
-											<Image height={35} src="../../public/media/arrow.png" />
+											<Image height={35} src="/media/arrow.png" />
 										</Col>
 										<Col md={5}>
 											<h1 className="my-0 text-success truncate-hash" style={{ fontSize: 20 }}>
@@ -145,7 +145,7 @@ function TransactionCard({ transactionData, userAddress, panelKey }) {
 							</Row>
 							<Row className="justify-content-center">
 								<Col xs={"auto"}>
-									<Image height={40} src="../../public/media/arrow_down.png" />
+									<Image height={40} src="/media/arrow_down.png" />
 								</Col>
 								<Col xs={"auto"}>
 									<h1 className="my-0" style={{ fontSize: 36 }}>

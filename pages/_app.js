@@ -1,4 +1,5 @@
-import App from "next/app";
+import Head from "next/head";
+import { Fragment } from "react";
 import { Provider } from "next-auth/client";
 import { BlockchainProvider } from "../contexts/Blockchain.Context";
 import { SportProvider } from "../contexts/Sports.Context";
@@ -13,22 +14,12 @@ import "../assets/scss/chalkcoin.scss?v=2.0.0";
 import "../assets/css/Custom.css";
 import "../assets/css/swiper.css";
 
-class MyApp extends App {
-	// Only uncomment this method if you have blocking data requirements for
-	// every single page in your application. This disables the ability to
-	// perform automatic static optimization, causing every page in your app to
-	// be server-side rendered.
-	//
-	// static async getInitialProps(appContext) {
-	//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-	//   const appProps = await App.getInitialProps(appContext);
-	//
-	//   return { ...appProps }
-	// }
-
-	render() {
-		const { Component, pageProps } = this.props;
-		return (
+export default function MyApp({ Component, pageProps }) {
+	return (
+		<Fragment>
+			<Head>
+				{/* <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta> */}
+			</Head>
 			<Provider session={pageProps.session}>
 				<BlockchainProvider>
 					<SportProvider>
@@ -42,8 +33,6 @@ class MyApp extends App {
 					</SportProvider>
 				</BlockchainProvider>
 			</Provider>
-		);
-	}
+		</Fragment>
+	);
 }
-
-export default MyApp;

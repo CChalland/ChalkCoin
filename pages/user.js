@@ -391,7 +391,7 @@ export default function UserPage({ session }) {
 										<Card className="card-user">
 											<Card.Header className="no-padding">
 												<div className="card-image">
-													<img alt="..." src={"../public/img/full-screen-image-3.jpg"}></img>
+													<img alt="..." src={"/img/full-screen-image-3.jpg"}></img>
 												</div>
 											</Card.Header>
 											<Card.Body>

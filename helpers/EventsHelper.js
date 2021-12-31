@@ -64,7 +64,7 @@ export async function EventFinder(transaction) {
 		event = leagues[leagueIndex].data.find((event) => event.id === transaction.details.gameId);
 	} else {
 		const response = await axios.get(
-			`http://site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard?dates=${yyyymmdd}`
+			`//site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard?dates=${yyyymmdd}`
 		);
 		leagues[leagueIndex].data = [...leagues[leagueIndex].data, ...response.data.events];
 		event = response.data.events.find((event) => event.id === transaction.details.gameId);
@@ -72,7 +72,7 @@ export async function EventFinder(transaction) {
 
 	if (!event) {
 		const response = await axios.get(
-			`http://site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard/${bet.details.gameId}`
+			`//site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard/${bet.details.gameId}`
 		);
 		leagues[leagueIndex].data = [...leagues[leagueIndex].data, response.data];
 		event = response.data;
@@ -109,7 +109,7 @@ export async function EventsFinder(transactions, type) {
 						event = leagues[leagueIndex].data.find((event) => event.id === bet.details.gameId);
 					} else {
 						const response = await axios.get(
-							`http://site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard?dates=${yyyymmdd}`
+							`//site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard?dates=${yyyymmdd}`
 						);
 						leagues[leagueIndex].data = [...leagues[leagueIndex].data, ...response.data.events];
 						event = response.data.events.find((event) => event.id === bet.details.gameId);
@@ -117,7 +117,7 @@ export async function EventsFinder(transactions, type) {
 
 					if (!event) {
 						const response = await axios.get(
-							`http://site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard/${bet.details.gameId}`
+							`//site.api.espn.com/apis/site/v2/sports/${leagues[leagueIndex].sport}/${leagues[leagueIndex].league_name}/scoreboard/${bet.details.gameId}`
 						);
 						leagues[leagueIndex].data = [...leagues[leagueIndex].data, response.data];
 						event = response.data;

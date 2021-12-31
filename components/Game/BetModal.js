@@ -42,13 +42,17 @@ function BetModal({ gameBetData, users, currentUser, buttonClassName }) {
 			value: "away",
 			image: gameBetData.away.logo,
 			label: gameBetData.away.name,
-			record: `(${gameBetData.away.records[0].summary}, ${gameBetData.away.records[1].summary} Away)`,
+			record: `(${gameBetData.away.records ? gameBetData.away.records[0].summary : ""}, ${
+				gameBetData.away.records ? gameBetData.away.records[1].summary : ""
+			} Away)`,
 		},
 		{
 			value: "home",
 			image: gameBetData.home.logo,
 			label: gameBetData.home.name,
-			record: `(${gameBetData.home.records[0].summary}, ${gameBetData.home.records[1].summary} Home)`,
+			record: `(${gameBetData.home.records ? gameBetData.home.records[0].summary : ""}, ${
+				gameBetData.home.records ? gameBetData.home.records[1].summary : ""
+			} Home)`,
 		},
 	];
 	const optionsUsers = users.map((user) => {
