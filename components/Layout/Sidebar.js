@@ -91,7 +91,7 @@ function Sidebar({ currentUser, routes, image, background, pathname }) {
 				<Container fluid>
 					<Row className="align-items-center">
 						<Col xs={4}>
-							<Image src={prop.image} fluid />
+							<Image src={prop.image} alt={prop.name} fluid />
 						</Col>
 						<Col>
 							<p>{prop.name}</p>
@@ -124,17 +124,19 @@ function Sidebar({ currentUser, routes, image, background, pathname }) {
 		<div className="sidebar" data-color={background} data-image={image}>
 			<div className="sidebar-wrapper">
 				<div className="logo">
-					<a className="simple-text logo-mini" href="/">
-						<div className="logo-img">{/* <img src="" alt="react-logo" /> */}</div>
-					</a>
-					<a className="simple-text logo-normal" href="/">
-						ChalkCoin
-					</a>
+					<Link href="/">
+						<a className="simple-text logo-mini">
+							<div className="logo-img">{/* <img src="" alt="react-logo" /> */}</div>
+						</a>
+					</Link>
+					<Link href="/">
+						<a className="simple-text logo-normal">ChalkCoin</a>
+					</Link>
 				</div>
 				{currentUser?.id ? (
 					<div className="user">
 						<div className="photo">
-							<img alt="..." src={currentUser?.image}></img>
+							<Image alt="avatar" src={currentUser?.image} />
 						</div>
 						<div className="info">
 							<a

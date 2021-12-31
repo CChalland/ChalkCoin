@@ -110,6 +110,7 @@ function GamePlay(props) {
 											<img
 												className="focus-image scoreboard-logo-home imageLoaded"
 												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/chi.png&amp;w=35&amp;h=35"
+												alt="chi"
 											/>
 											<div className="football-logo-placeholder">CHI</div>
 										</div>
@@ -117,6 +118,7 @@ function GamePlay(props) {
 											<img
 												className="focus-image scoreboard-logo-away imageLoaded"
 												src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/scoreboard/buf.png&amp;w=35&amp;h=35"
+												alt="buf"
 											/>
 											<div className="football-logo-placeholder">BUF</div>
 										</div>
@@ -168,6 +170,7 @@ function GamePlay(props) {
 								width={20}
 								height={20}
 								src={`https://a.espncdn.com/redesign/assets/img/icons/accuWeather/${conditionId}.png`}
+								alt="weather"
 							/>
 						</Col>
 						<Col xs={"auto"}>{`${gamePlayData.weather.temperature} °F`}</Col>
@@ -179,7 +182,7 @@ function GamePlay(props) {
 		if (gamePlayData.tickets)
 			tickets = (
 				<Row className="py-2 border-top border-bottom">
-					<a href={gamePlayData.tickets.links[0].href} target="_blank">
+					<a href={gamePlayData.tickets.links[0].href} target="_blank" rel="noreferrer">
 						{gamePlayData.tickets.summary}
 					</a>
 				</Row>
@@ -216,7 +219,7 @@ function GamePlay(props) {
 		return (
 			<>
 				<figure className="mx-0 my-3 position-relative" onClick={() => setModalShow(true)}>
-					<Image fluid src={headlines.video[0].thumbnail} onClick={() => setModalShow(true)} rounded />
+					<Image fluid src={headlines.video[0].thumbnail} alt="thumbnail" onClick={() => setModalShow(true)} rounded />
 					<span className="video-play-button">Play</span>
 					<figcaption className="highlightVideoText">{headlines.video[0].headline}</figcaption>
 				</figure>
@@ -274,7 +277,7 @@ function GamePlay(props) {
 						</Row>
 						<Row className="mb-3 align-items-center">
 							<Col sm={3}>
-								<Image width={45} height={40} src={athletePic} roundedCircle />
+								<Image width={45} height={40} src={athletePic} alt="athletePic" roundedCircle />
 							</Col>
 							<Col sm={9} className="px-0">
 								{`${gamePlayData.lastPlay.team.abbreviation} - ${gamePlayData.lastPlay.text}`}
@@ -296,7 +299,12 @@ function GamePlay(props) {
 				headline = (
 					<Container fluid>
 						<Row className="my-3">
-							<a className="my-0 h6 text-dark" href={gamePlayData.headlines.link[0].href} target="_blank">
+							<a
+								className="my-0 h6 text-dark"
+								href={gamePlayData.headlines.link[0].href}
+								target="_blank"
+								rel="noreferrer"
+							>
 								{gamePlayData.headlines.shortLinkText}
 							</a>
 							<div>{gamePlayData.headlines.description}</div>
@@ -313,7 +321,7 @@ function GamePlay(props) {
 						{gamePlayData.away.links.map((link, key) => {
 							return (
 								<Col xs={4} key={key} className="text-center">
-									<a href={link.href} target="_blank">
+									<a href={link.href} target="_blank" rel="noreferrer">
 										{link.text}
 									</a>
 								</Col>
@@ -326,7 +334,7 @@ function GamePlay(props) {
 						{gamePlayData.home.links.map((link, key) => {
 							return (
 								<Col xs={4} key={key} className="text-center">
-									<a href={link.href} target="_blank">
+									<a href={link.href} target="_blank" rel="noreferrer">
 										{link.text}
 									</a>
 								</Col>

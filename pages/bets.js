@@ -87,7 +87,12 @@ export default function Bets() {
 							}
 						}}
 					>
-						<Image height={30} src={`/media/sports-icons/${sport.icon}.png`} rounded />
+						<Image
+							height={30}
+							src={`/media/sports-icons/${sport.icon}.png`}
+							alt={sport.display_name}
+							rounded
+						/>
 					</Button>
 				</Col>
 			);
@@ -117,10 +122,8 @@ export default function Bets() {
 	};
 
 	useEffect(() => {
-		if (router.query.error) {
-			notify(router.query.error);
-		}
-	}, [router.query.error]);
+		if (router.query.error) notify(router.query.error);
+	}, [router.query]);
 
 	useEffect(() => {
 		setOpenBets(betSorted);

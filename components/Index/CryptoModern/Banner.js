@@ -30,14 +30,14 @@ export default function Banner() {
 					<Row className="justify-content-center">
 						<Fade up delay={300}>
 							<Col xs={6} className="ml-0 pl-0 mr-1 pr-1">
-								<Link href="/login">
+								<Link href="/login" passHref>
 									<Button className="" variant="primary" style={{ minWidth: "120px" }}>
 										GET TOKEN
 									</Button>
 								</Link>
 							</Col>
 							<Col xs={6} className="mr-0 pr-0 ml-1 pl-1">
-								<Link href="/bets">
+								<Link href="/bets" passHref>
 									<Button className="btn-outline" variant="default" style={{ minWidth: "120px" }}>
 										BETS
 									</Button>

@@ -234,7 +234,12 @@ export default function BetsTabs({ userBets, currentUser }) {
 								}
 							}}
 						>
-							<Image height={30} src={`/media/sports-icons/${sport.icon}.png`} rounded />
+							<Image
+								height={30}
+								src={`/media/sports-icons/${sport.icon}.png`}
+								alt={sport.displayName}
+								rounded
+							/>
 						</Button>
 					</Col>
 				);

@@ -14,7 +14,7 @@ function BetWinner({ betWinnerData }) {
 			</Col>
 			<Col className="">
 				<Row className="">
-					<Image width={55} height={55} src={betWinnerData.acceptingTeam.logo} rounded />
+					<Image width={55} height={55} src={betWinnerData.acceptingTeam.logo} alt="winner" rounded />
 				</Row>
 				<Row className="mb-0 h5 " style={{ fontSize: 16 }}>
 					{betWinnerData.acceptingTeam.name}
