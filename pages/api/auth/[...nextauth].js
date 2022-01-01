@@ -1,8 +1,6 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import Adapters from "next-auth/adapters";
-import DiscordProvider from "next-auth/providers/discord";
-import LinkedInProvider from "next-auth/providers/linkedin";
 import prisma from "../../../contexts/prisma";
 import { compareSync } from "bcrypt";
 
@@ -56,17 +54,30 @@ const options = {
 			},
 			from: process.env.SMTP_FROM,
 		}),
+		Providers.Apple({
+			clientId: process.env.APPLE_ID,
+			clientSecret: {
+				appleId: process.env.APPLE_ID,
+				teamId: process.env.APPLE_TEAM_ID,
+				privateKey: process.env.APPLE_PRIVATE_KEY,
+				keyId: process.env.APPLE_KEY_ID,
+			},
+		}),
 		Providers.GitHub({
 			clientId: process.env.GITHUB_ID,
 			clientSecret: process.env.GITHUB_SECRET,
 		}),
-		DiscordProvider({
-			clientId: process.env.DISCORD_CLIENT_ID,
-			clientSecret: process.env.DISCORD_CLIENT_SECRET,
-		}),
-		LinkedInProvider({
+		Providers.LinkedIn({
 			clientId: process.env.LINKEDIN_CLIENT_ID,
 			clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+		}),
+		Providers.Google({
+			clientId: process.env.GOOGLE_CLIENT_ID,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+		}),
+		Providers.Discord({
+			clientId: process.env.DISCORD_CLIENT_ID,
+			clientSecret: process.env.DISCORD_CLIENT_SECRET,
 		}),
 	],
 	session: {

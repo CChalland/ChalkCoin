@@ -27,8 +27,6 @@ export function BlockchainProvider(props) {
 				const getNode1 = `http://localhost:3001/blockchain`;
 				const res = await axios.get(getNode1);
 
-				console.log("res", res);
-
 				dispatch({
 					type: "INIT",
 					data: {
