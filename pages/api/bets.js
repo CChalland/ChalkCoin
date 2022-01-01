@@ -121,7 +121,7 @@ const betSorter = async (bets) => {
 	return sportWithBets;
 };
 
-export default async (req, res) => {
+export default Bets = async (req, res) => {
 	const session = await getSession({ req });
 	if (req.method === "GET") {
 		let openBets, recipientBets, acceptedBets, completedBets;

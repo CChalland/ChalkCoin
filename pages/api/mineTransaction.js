@@ -1,7 +1,7 @@
 import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
 
-export default async (req, res) => {
+export default MineTransaction = async (req, res) => {
 	const session = await getSession({ req });
 
 	if (req.method === "POST") {

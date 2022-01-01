@@ -19,8 +19,7 @@
     "node_6": "nodemon --watch dev -e js dev/networkNode.js 3006 http://localhost:3006",
     "start": "next start",
     "build": "next build",
-    "dev": "next dev",
-    "lint": "next lint"
+    "dev": "next dev"
   },
   "prisma": {
     "seed": "node ./prisma/seed.js"

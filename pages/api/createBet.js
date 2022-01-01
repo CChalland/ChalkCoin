@@ -17,7 +17,7 @@ const fetchData = async (sportKey) =>
 			odds: null,
 		}));
 
-export default async (req, res) => {
+export default CreateBet = async (req, res) => {
 	const session = await getSession({ req });
 	const oddsSportKeys = [
 		{ displayName: "NCAA Football", key: "americanfootball_ncaaf" },

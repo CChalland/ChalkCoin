@@ -2,7 +2,7 @@ import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
 import { UserWallet } from "../../helpers/UserWallet";
 
-export default async (req, res) => {
+export default AcceptBet = async (req, res) => {
 	const session = await getSession({ req });
 
 	if (req.method === "POST") {

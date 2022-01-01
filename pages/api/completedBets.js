@@ -1,7 +1,7 @@
 import prisma from "../../contexts/prisma";
 import axios from "axios";
 
-export default async (req, res) => {
+export default CompletedBets = async (req, res) => {
 	if (req.method === "POST") {
 		let bets = req.body;
 		if (req.query.type === "accepted") {
