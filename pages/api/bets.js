@@ -121,7 +121,7 @@ const betSorter = async (bets) => {
 	return sportWithBets;
 };
 
-export default Bets = async (req, res) => {
+const Bets = async (req, res) => {
 	const session = await getSession({ req });
 	if (req.method === "GET") {
 		let openBets, recipientBets, acceptedBets, completedBets;
@@ -239,3 +239,4 @@ export default Bets = async (req, res) => {
 		return res.status(405).json({ message: "Method not allowed" });
 	}
 };
+export default Bets;

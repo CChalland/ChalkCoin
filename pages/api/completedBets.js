@@ -1,7 +1,7 @@
 import prisma from "../../contexts/prisma";
 import axios from "axios";
 
-export default CompletedBets = async (req, res) => {
+const CompletedBets = async (req, res) => {
 	if (req.method === "POST") {
 		let bets = req.body;
 		if (req.query.type === "accepted") {
@@ -142,3 +142,4 @@ export default CompletedBets = async (req, res) => {
 		return res.status(405).json({ message: "Method not allowed" });
 	}
 };
+export default CompletedBets;
