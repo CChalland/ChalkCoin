@@ -2,7 +2,7 @@ import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
 import { hashSync } from "bcrypt";
 
-export default async (req, res) => {
+const CurrentUser = async (req, res) => {
 	const session = await getSession({ req });
 
 	if (req.method === "GET") {
@@ -81,3 +81,4 @@ export default async (req, res) => {
 		}
 	}
 };
+export default CurrentUser;

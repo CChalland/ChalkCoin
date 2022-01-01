@@ -17,7 +17,7 @@ const fetchData = async (sportKey) =>
 			odds: null,
 		}));
 
-export default async (req, res) => {
+const CreateBet = async (req, res) => {
 	const session = await getSession({ req });
 	const oddsSportKeys = [
 		{ displayName: "NCAA Football", key: "americanfootball_ncaaf" },
@@ -88,3 +88,4 @@ export default async (req, res) => {
 		return res.status(405).json({ message: "Method not allowed" });
 	}
 };
+export default CreateBet;

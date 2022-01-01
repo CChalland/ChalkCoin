@@ -7,9 +7,9 @@
   "main": "index.js",
   "scripts": {
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && rm -rf .next/ && rm -rf out/ && npm install && npm run dev",
-    "compile:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js assets/scss/nextjs-argon-dashboard.scss assets/css/nextjs-argon-dashboard.css",
-    "minify:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js assets/scss/nextjs-argon-dashboard.scss assets/css/nextjs-argon-dashboard.min.css --output-style compressed",
-    "map:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js assets/scss/nextjs-argon-dashboard.scss assets/css/nextjs-argon-dashboard.css --source-map true",
+    "compile:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js assets/scss/chalkcoin.scss assets/css/chalkcoin.css",
+    "minify:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js assets/scss/chalkcoin.scss assets/css/chalkcoin.min.css --output-style compressed",
+    "map:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js assets/scss/chalkcoin.scss assets/css/chalkcoin.css --source-map true",
     "build:scss": "npm run compile:scss && npm run minify:scss && npm run map:scss",
     "node_1": "nodemon --watch dev -e js dev/networkNode.js 3001 http://localhost:3001",
     "node_2": "nodemon --watch dev -e js dev/networkNode.js 3002 http://localhost:3002",

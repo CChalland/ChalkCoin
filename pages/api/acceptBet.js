@@ -2,7 +2,7 @@ import prisma from "../../contexts/prisma";
 import { getSession } from "next-auth/client";
 import { UserWallet } from "../../helpers/UserWallet";
 
-export default async (req, res) => {
+const AcceptBet = async (req, res) => {
 	const session = await getSession({ req });
 
 	if (req.method === "POST") {
@@ -66,3 +66,4 @@ export default async (req, res) => {
 		return res.status(405).json({ message: "Method not allowed" });
 	}
 };
+export default AcceptBet;

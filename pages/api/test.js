@@ -3,7 +3,7 @@ import { getSession } from "next-auth/client";
 import axios from "axios";
 import { UserWallet } from "../../helpers/UserWallet";
 
-export default async (req, res) => {
+const Test = async (req, res) => {
 	const session = await getSession({ req });
 
 	if (req.method === "POST") {
@@ -21,3 +21,4 @@ export default async (req, res) => {
 		return res.status(405).json({ message: "Method not allowed" });
 	}
 };
+export default Test;
