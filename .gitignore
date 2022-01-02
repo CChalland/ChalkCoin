@@ -3,7 +3,7 @@
 .mockup/
 /out/
 
-.docker-compose.yml
+docker-compose.yml
 
 # dependencies
 /node_modules
