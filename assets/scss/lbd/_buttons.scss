@@ -85,6 +85,10 @@
     min-width: 140px;
 }
 
+.btn-login {
+    min-width: calc(100% - 60px);
+}
+
 .btn-group.select{
     width: 100%;
 }
