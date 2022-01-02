@@ -3,6 +3,8 @@
 .mockup/
 /out/
 
+.docker-compose.yml
+
 # dependencies
 /node_modules
 package-lock.json
