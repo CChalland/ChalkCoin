@@ -25,14 +25,9 @@ function LoginRegister({ providers, csrfToken }) {
 	let signInButtons = Object.values(providers).map((provider, key) => {
 		if (provider.name === "Email" || provider.name === "Login") return;
 		return (
-			<Row key={key}>
-				<Col className="text-center">
-					<Button
-						className="btn-social"
-						variant={provider.id}
-						onClick={() => signIn(provider.id)}
-						style={{ minWidth: "270px" }}
-					>
+			<Row key={key} className="justify-content-center">
+				<Col className="text-center" lg={10} xl={9}>
+					<Button className="btn-social btn-login" variant={provider.id} onClick={() => signIn(provider.id)}>
 						<span className="align-items-center">
 							Sign In with <i className={`fab fa-${provider.id}`}></i>
 							{provider.name}
@@ -220,14 +215,13 @@ function LoginRegister({ providers, csrfToken }) {
 													</Col>
 												</Row>
 
-												<Row className="mt-4">
-													<Col className="text-center">
+												<Row className="mt-4 justify-content-center">
+													<Col className="text-center" lg={10} xl={9}>
 														<Button
-															className="btn-fill btn-wd"
+															className="btn-login btn-fill"
 															variant="info"
 															type="submit"
 															disabled={loginButton}
-															style={{ minWidth: "270px" }}
 														>
 															Login
 														</Button>
@@ -297,14 +291,13 @@ function LoginRegister({ providers, csrfToken }) {
 													</Col>
 												</Row>
 
-												<Row className="mt-4">
-													<Col className="text-center">
+												<Row className="mt-4 justify-content-center">
+													<Col className="text-center" lg={10} xl={9}>
 														<Button
-															className="btn-fill pull-right"
+															className="btn-login btn-fill pull-right"
 															variant="info"
 															type="submit"
 															disabled={registerButton}
-															style={{ minWidth: "270px" }}
 														>
 															Register with Email
 														</Button>
