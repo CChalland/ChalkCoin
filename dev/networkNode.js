@@ -7,9 +7,11 @@ const port = process.argv[2];
 const rp = require("request-promise");
 
 const nodeAddress = uuid().split("-").join("");
-var corsOptions = {
-	origin: "http://localhost:3000",
+
+const corsOptions = {
 	optionsSuccessStatus: 200, // For legacy browser support
+	credentials: true, // This is important.
+	origin: "https://chalkcoin.io",
 };
 
 const app = express();
