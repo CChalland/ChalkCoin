@@ -104,7 +104,7 @@ function GameLeader(props) {
 					<Col xs={12} md={6} xl={12} key={key}>
 						<Row className="mb-3 align-items-center">
 							<Col md="auto">
-								<Image width={45} height={40} src={null} alt="headshot" roundedCircle />
+								<Image width={45} height={40} src={"/img/faces/face-0.jpg"} alt="headshot" roundedCircle />
 							</Col>
 							<Col md="auto">{"Undecided"}</Col>
 						</Row>
