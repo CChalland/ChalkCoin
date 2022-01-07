@@ -10,7 +10,7 @@ export default function Layout(props) {
 	const user = useContext(UserContext);
 	const sports = useContext(SportContext);
 	const [currentUser, setCurrentUser] = useState({});
-	const image = "/img/full-screen-image-3.jpg";
+	const image = "/img/sidebar.png";
 	let routes = [
 		{
 			path: "/bets",
