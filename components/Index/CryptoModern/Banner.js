@@ -49,7 +49,7 @@ export default function Banner() {
 
 				<Col sm={"auto"} md={6}>
 					<Fade in delay={100}>
-						<Image fluid src="/image/banner-bg.png" alt="Banner" />
+						<Image fluid src="/img/icons/banner-bg.png" alt="Banner" />
 					</Fade>
 				</Col>
 			</Row>

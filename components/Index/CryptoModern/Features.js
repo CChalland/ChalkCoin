@@ -5,27 +5,27 @@ export default function Features() {
 	const data = [
 		// {
 		// 	id: 1,
-		// 	icon: "/image/feature-1.png",
+		// 	icon: "/img/icons/blue/feature-1.png",
 		// 	title: "Great Market Value",
 		// 	description:
 		// 		"The leading digital currency by market capitalization, has grown in value by more than 10 times.",
 		// },
 		{
 			id: 2,
-			icon: "/image/feature-2.png",
+			icon: "/img/icons/blue/feature-2.png",
 			title: "Verified Mining",
 			description: "Your mining rigs are already set up and running. As soon as you set up your account.",
 		},
 		{
 			id: 3,
-			icon: "/image/feature-3.png",
+			icon: "/img/icons/blue/feature-3.png",
 			title: "Fastest Miner",
 			description:
 				"Don’t wrestle with rig assembly and hot, noisy miners at home. We have the fastest bitcoin mining.",
 		},
 		{
 			id: 4,
-			icon: "/image/feature-4.png",
+			icon: "/img/icons/blue/feature-4.png",
 			title: "Secure Transactions",
 			description: "You can mine any cryptocurrency available in our catalogue! Switch your mining power.",
 		},
