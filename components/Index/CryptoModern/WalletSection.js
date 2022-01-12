@@ -5,17 +5,17 @@ export default function WalletSection() {
 	const data = [
 		{
 			id: 1,
-			icon: "/image/wallet1.png",
+			icon: "/img/icons/blue/wallet1.png",
 			title: "Secure transfers with verified Markets.",
 		},
 		{
 			id: 2,
-			icon: "/image/wallet2.png",
+			icon: "/img/icons/blue/wallet2.png",
 			title: "Easy to create and accept bets within the wallet",
 		},
 		{
 			id: 3,
-			icon: "/image/wallet3.png",
+			icon: "/img/icons/blue/wallet3.png",
 			title: "Pay as many as you want",
 		},
 	];
@@ -24,7 +24,7 @@ export default function WalletSection() {
 		<Container>
 			<Row className="align-items-center">
 				<Col className="d-none d-md-block d-xl-block">
-					<Image fluid src="/image/illustration2.png" alt="Wallet Image" />
+					<Image fluid src="/img/icons/blue/illustration2.png" alt="Wallet Image" />
 				</Col>
 
 				<Col>
@@ -61,7 +61,7 @@ export default function WalletSection() {
 							<Button className="btn-outline" variant="default">
 								<Row className="align-items-center">
 									<Col xs={"auto"}>
-										<Image fluid src="/image/apple.png" alt="Apple" />
+										<Image fluid src="/img/icons/apple.png" alt="Apple" />
 									</Col>
 									<Col className="ml-0 pl-0">APP STORE</Col>
 								</Row>
@@ -71,7 +71,7 @@ export default function WalletSection() {
 							<Button className="btn-outline" variant="default">
 								<Row className="align-items-center">
 									<Col xs={"auto"}>
-										<Image fluid src="/image/playstore.png" alt="Play" />
+										<Image fluid src="/img/icons/playstore.png" alt="Play" />
 									</Col>
 									<Col className="ml-0 pl-0">PLAY STORE</Col>
 								</Row>

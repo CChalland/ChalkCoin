@@ -22,7 +22,7 @@ export default function Privacy() {
 				</Col>
 				<Col>
 					<Fade up>
-						<Image fluid src="/image/illustration1.png" alt="illustration" />
+						<Image fluid src="/img/icons/illustration1.png" alt="illustration" />
 					</Fade>
 				</Col>
 			</Row>
