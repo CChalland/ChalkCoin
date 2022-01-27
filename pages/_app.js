@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { Fragment } from "react";
 import { Provider } from "next-auth/client";
-import { BlockchainProvider } from "../contexts/Blockchain.Context";
-import { SportProvider } from "../contexts/Sports.Context";
-import { BetProvider } from "../contexts/Bets.Context";
-import { UserProvider } from "../contexts/User.Context";
-import Layout from "../components/Layout/Layout";
+import { BlockchainProvider } from "../frontend/contexts/Blockchain.Context";
+import { SportProvider } from "../frontend/contexts/Sports.Context";
+import { BetProvider } from "../frontend/contexts/Bets.Context";
+import { UserProvider } from "../frontend/contexts/User.Context";
+import Layout from "../frontend/components/Layout/Layout";
 // Styles
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";

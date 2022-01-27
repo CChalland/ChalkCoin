@@ -1,4 +1,4 @@
-import prisma from "../../contexts/prisma";
+import prisma from "../../frontend/contexts/prisma";
 import axios from "axios";
 
 const CompletedBets = async (req, res) => {

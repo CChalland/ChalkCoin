@@ -2,10 +2,10 @@ import { useState, useEffect, useContext } from "react";
 import { Alert, Button, Card, Form, Collapse, Nav, Container, Row, Col, Tab } from "react-bootstrap";
 import { getSession } from "next-auth/client";
 import { useRouter } from "next/router";
-import { BetContext } from "../contexts/Bets.Context";
-import BetsTabs from "../components/User/BetsTabs";
+import { BetContext } from "../frontend/contexts/Bets.Context";
+import BetsTabs from "../frontend/components/User/BetsTabs";
 import axios from "axios";
-import prisma from "../contexts/prisma";
+import prisma from "../frontend/contexts/prisma";
 
 const emailValidation = (value) =>
 	/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value);

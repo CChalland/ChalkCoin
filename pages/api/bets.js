@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/client";
-import prisma from "../../contexts/prisma";
+import prisma from "../../frontend/contexts/prisma";
 
 const betSorter = async (bets) => {
 	let sportWithBets = [];

@@ -2,24 +2,24 @@ import { useRouter } from "next/router";
 import { getSession } from "next-auth/client";
 import { useContext, useEffect, useState, useRef } from "react";
 import { Alert, Container, Col, Row } from "react-bootstrap";
-import { UserContext } from "../contexts/User.Context";
-import { BetContext } from "../contexts/Bets.Context";
-import { SportContext } from "../contexts/Sports.Context";
-import { BlockchainContext } from "../contexts/Blockchain.Context";
-import prisma from "../contexts/prisma";
+import { UserContext } from "../frontend/contexts/User.Context";
+import { BetContext } from "../frontend/contexts/Bets.Context";
+import { SportContext } from "../frontend/contexts/Sports.Context";
+import { BlockchainContext } from "../frontend/contexts/Blockchain.Context";
+import prisma from "../frontend/contexts/prisma";
 // Components
 import NotificationAlert from "react-notification-alert";
-import Loading from "../components/Utility/Loading";
-import Banner from "../components/Index/CryptoModern/Banner";
-import Features from "../components/Index/CryptoModern/Features";
-import Privacy from "../components/Index/CryptoModern/Privacy";
-import WalletSection from "../components/Index/CryptoModern/WalletSection";
-import FaqSection from "../components/Index/CryptoModern/FaqSection";
+import Loading from "../frontend/components/Utility/Loading";
+import Banner from "../frontend/components/Index/CryptoModern/Banner";
+import Features from "../frontend/components/Index/CryptoModern/Features";
+import Privacy from "../frontend/components/Index/CryptoModern/Privacy";
+import WalletSection from "../frontend/components/Index/CryptoModern/WalletSection";
+import FaqSection from "../frontend/components/Index/CryptoModern/FaqSection";
 // User Components
-import UserCard from "../components/Index/User/UserCard";
-import ExpiringBets from "../components/Index/User/ExpiringBets";
-import UpcomingGames from "../components/Index/User/UpcomingGames";
-import PendingTransactions from "../components/Index/User/PendingTransactions";
+import UserCard from "../frontend/components/Index/User/UserCard";
+import ExpiringBets from "../frontend/components/Index/User/ExpiringBets";
+import UpcomingGames from "../frontend/components/Index/User/UpcomingGames";
+import PendingTransactions from "../frontend/components/Index/User/PendingTransactions";
 
 export default function IndexPage({ users }) {
 	const router = useRouter();

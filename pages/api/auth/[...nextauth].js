@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import Adapters from "next-auth/adapters";
-import prisma from "../../../contexts/prisma";
+import prisma from "../../../frontend/contexts/prisma";
 import { compareSync } from "bcrypt";
 
 const authHandler = (req, res) => NextAuth(req, res, options);

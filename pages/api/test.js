@@ -1,7 +1,7 @@
-import prisma from "../../contexts/prisma";
+import prisma from "../../frontend/contexts/prisma";
 import { getSession } from "next-auth/client";
 import axios from "axios";
-import { UserWallet } from "../../helpers/UserWallet";
+import { UserWallet } from "../../frontend/helpers/UserWallet";
 
 const Test = async (req, res) => {
 	const session = await getSession({ req });

@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Alert } from "react-bootstrap";
-import { BlockchainContext } from "../contexts/Blockchain.Context";
-import { UserContext } from "../contexts/User.Context";
-import PendingTransactions from "../components/Blockchain/PendingTransactions";
-import Chain from "../components/Blockchain/Chain";
-import SelectedBlock from "../components/Blockchain/SelectedBlock";
+import { BlockchainContext } from "../frontend/contexts/Blockchain.Context";
+import { UserContext } from "../frontend/contexts/User.Context";
+import PendingTransactions from "../frontend/components/Blockchain/PendingTransactions";
+import Chain from "../frontend/components/Blockchain/Chain";
+import SelectedBlock from "../frontend/components/Blockchain/SelectedBlock";
 
 export default function Blockchain() {
 	const currentUser = useContext(UserContext);

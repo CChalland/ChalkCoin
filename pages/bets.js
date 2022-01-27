@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Card, Form, InputGroup, Image, Button } from "react-bootstrap";
-import { UserContext } from "../contexts/User.Context";
-import { BetContext } from "../contexts/Bets.Context";
-import BetCard from "../components/Bet/BetCard";
-import Loading from "../components/Utility/Loading";
+import { UserContext } from "../frontend/contexts/User.Context";
+import { BetContext } from "../frontend/contexts/Bets.Context";
+import BetCard from "../frontend/components/Bet/BetCard";
+import Loading from "../frontend/components/Utility/Loading";
 import NotificationAlert from "react-notification-alert";
 
 export default function Bets() {
