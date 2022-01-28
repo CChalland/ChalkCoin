@@ -1,7 +1,7 @@
 import Block from "./block";
 import Transaction from "../wallet/transaction";
 import Wallet from "../wallet/wallet";
-import CONFIG from "../config";
+import { MINING_REWARD_INPUT } from "../config";
 
 class Blockchain {
 	/* Blockchain: a public ledger of transactions.

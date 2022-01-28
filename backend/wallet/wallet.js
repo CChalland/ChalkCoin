@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-import CONFIG from "../config";
+import { STARTING_BALANCE } from "../config";
 
 class Wallet {
 	/*  An individual wallet for a miner.

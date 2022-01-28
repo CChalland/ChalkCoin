@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import Wallet from "./wallet";
-import CONFIG from "../config";
+import { MINING_REWARD, MINING_REWARD_INPUT } from "../config";
 
 class Transaction {
 	/* Document of an exchange in currency from a sender to one

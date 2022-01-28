@@ -1,6 +1,6 @@
 import cryptoHash from "../util/cryptoHash";
 import hexToBinary from "../util/hexToBinary";
-import CONFIG from "../config";
+import { MINE_RATE } from "../config";
 
 const GENESIS_DATA = {
 	timestamp: 1,
