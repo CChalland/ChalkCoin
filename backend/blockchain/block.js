@@ -12,6 +12,8 @@ const GENESIS_DATA = {
 };
 
 class Block {
+	/* Block: a unit of storage.
+    Store transactions in a blockchain that supports a cryptocurrency. */
 	constructor(timestamp, last_hash, hash, data, difficulty, nonce) {
 		this.timestamp = timestamp;
 		this.last_hash = last_hash;
@@ -88,3 +90,5 @@ class Block {
 		}
 	}
 }
+
+export default Block;
